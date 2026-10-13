@@ -1,0 +1,2440 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper,oneside]{article}
+\usepackage[margin=25mm,headheight=15pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm,mathrsfs}
+\usepackage{booktabs,longtable,array,graphicx,calc}
+\usepackage{textcomp,etoolbox}
+\AtBeginEnvironment{longtable}{\small}
+\allowdisplaybreaks[2]
+\providecommand{\real}[1]{#1}
+\providecommand{\pandocbounded}[1]{#1}
+\usepackage{xcolor,enumitem,fancyhdr}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\usepackage{bookmark}
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{0em}{2.8em}}
+\makeatother
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{problem}[theorem]{Problem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Gm}{\mathbb G_m}
+\newcommand{\Gr}{\operatorname{Gr}}
+\newcommand{\Ext}{\operatorname{Ext}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\dR}{\mathrm{dR}}
+\newcommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setlength{\emergencystretch}{3em}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Visible Structures of Feynman Periods}
+\fancyhead[R]{\small Supplement}
+\fancyfoot[C]{\thepage}
+\hypersetup{pdftitle={Visible Structures and Renormalization of Feynman Periods},pdfauthor={Yu Zhehao}}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\numberwithin{equation}{section}
+\newtheorem*{maintheorem}{Structural Theorem}
+\setlist{itemsep=2pt,topsep=4pt}
+\newcommand{\otherref}[2]{\href{#1.pdf}{#2}}
+
+\renewcommand{\thesection}{S\arabic{section}}
+\title{Visible Structures and Renormalization\\of Feynman Periods\\[6pt]\large Supplement}
+\author{Yu Zhehao\\[4pt]\small School of Physics, Peking University}
+\date{October 13, 2026}
+\begin{document}\maketitle\tableofcontents
+\section*{About this supplement}
+This supplement forms part of the same paper as the main text. It contains further graph families, operational diagrams, longer forest arguments and formal inversion for critical exponents. Its section numbers begin with S.
+The principal structural proofs are given in the main text and are not repeated here. Cross-document references identify the main text or supplement explicitly.
+
+
+\section{Series graphs, physical sums, and finite skeletons}\label{supp:unified}
+
+\begingroup
+\providecommand{\Q}{\mathbb Q}\providecommand{\cC}{\mathcal C}
+\providecommand{\cS}{\mathcal S}\providecommand{\dR}{\mathrm{dR}}
+\providecommand{\rk}{\operatorname{rk}}\providecommand{\im}{\operatorname{im}}
+\subsection{Geometric descent for series subdivisions, multiple elliptic cores, and numerator selection}
+\label{unified:sec:serieselliptic}
+This section extends structural prediction to a class of complete two-loop integrals without first evaluating them.
+The graph is obtained by subdividing one edge of the three-propagator sunrise into a series path:
+the other two edges both have mass $m>0$, while the subdivided path has $r$ edges with masses
+$a_1,\ldots,a_r>0$, and the external momentum at every added bivalent vertex is exactly zero.
+It has $r+2$ edges, $r+1$ vertices, and two loops.
+For $r>1$, the graph itself is no longer a three-edge banana, but its reduced skeleton is still the sunrise.
+The conclusions below do not cover general multipoint graphs with nonzero momentum injected at bivalent vertices.
+
+The elliptic geometry of the sunrise and its inhomogeneous equation are classical results; see
+\cite[\S4--5]{abwsun} and \cite[\S3--4]{bkvsunset}.
+Here we directly prove relative Stokes descent and physical visibility for the present graph family,
+without claiming partial fractions or the ellipticity of the sunrise as new discoveries.
+
+\subsubsection{The graph and its complete parametric period: geometric elimination of the series variables}
+Set $\mu_j=a_j^2$ and $s=-p_E^2$, use the Euclidean normalization $d^2k/\pi$ per loop, and write
+\begin{align}
+ K_{\boldsymbol\mu}(s)
+ &=\int_{\mathbb R^2\times\mathbb R^2}
+ \frac{d^2k\,d^2\ell/\pi^2}
+ {(k^2+m^2)(\ell^2+m^2)
+       \prod_{j=1}^r((p_E-k-\ell)^2+\mu_j)}, \label{unified:eq:seriesmom}\\
+ S_\mu(s)&=K_{(\mu)}(s).
+\end{align}
+Positive masses and $s<0$ ensure absolute convergence; all continuations below start from this geometric chain.
+Let $x,y$ be the parameters of the two unsubdivided edges, and $\gamma_j$ those of the path, with $t=\sum_j\gamma_j$.
+Spanning trees and two-forests directly give
+\[
+ U=xy+(x+y)t,\qquad
+ F_{\boldsymbol\mu}
+ =\left(m^2x+m^2y+\sum_j\mu_j\gamma_j\right)U-sxyt.
+\]
+The Schwinger Gaussian integrals and the overall scale integral contribute the coefficient $\Gamma(r)=(r-1)!$,
+so the complete parametric form is
+\[
+ (r-1)!\,\frac{U^{r-1}\Omega_{r+1}}{F_{\boldsymbol\mu}^{\,r}}.
+\]
+On the positive chain, set $\gamma_j=t v_j$ and $\sum v_j=1$.
+This is an algebraic change of coordinates after blowing up the boundary, with Jacobian $t^{r-1}$.
+Impose $x+y+t=1$, let $\sigma_2$ be its positive triangle and $\Delta_{r-1}$ the $v$-simplex,
+and set $F_\mu=(m^2x+m^2y+\mu t)U-sxyt$ and $\bar\mu=\sum_j\mu_jv_j$. The resulting geometric parametric period is
+\begin{equation}\label{unified:eq:seriessimplex}
+ K_{\boldsymbol\mu}
+ =(r-1)!\int_{\sigma_2\times\Delta_{r-1}}
+ \frac{(tU)^{r-1}\Omega_2\wedge dv_1\wedge\cdots\wedge dv_{r-1}}
+ {F_{\bar\mu}^{\,r}}.
+\end{equation}
+This gives a complete parametric representation of the specified physical integral.
+The subsequent formal-period identities are proved in this geometric parametric model.
+They neither infer equality of motivic periods from numerical equality nor require an isomorphism between the entire momentum-space and parametric motives.
+
+\begin{proposition}[Geometric Stokes identity for series elimination]\label{unified:prop:seriesstokes}
+If $\mu_1,\ldots,\mu_r$ are pairwise distinct, the formal period defined by \eqref{unified:eq:seriessimplex} satisfies
+\begin{equation}\label{unified:eq:seriespartial}
+ K_{\boldsymbol\mu}^{\mathfrak m}
+ =\sum_{j=1}^r c_jS_{\mu_j}^{\mathfrak m},
+ \qquad c_j=\prod_{\ell\ne j}(\mu_\ell-\mu_j)^{-1}.
+\end{equation}
+The right-hand side consists of complete sunrise relative periods, including their boundary extensions, rather than only their maximal cuts.
+\end{proposition}
+\begin{proof}
+For $r\ge2$, use independent coordinates $v_1,\ldots,v_{r-1}$ with $v_r=1-\sum_{i<r}v_i$.
+On the product of $\sigma_2$ and the $v$-space, set
+\[
+ \eta=\frac{(r-2)!}{\mu_r-\mu_1}\,
+ \frac{(tU)^{r-2}}{F_{\bar\mu}^{\,r-1}}\,
+ \Omega_2\wedge dv_2\wedge\cdots\wedge dv_{r-1}.
+\]
+For $r=2$, the last exterior product is empty. Since the base is two-dimensional, derivatives in $x,y$ vanish when wedged with $\Omega_2$;
+the other $v_i$ derivatives also vanish because of repeated factors.
+Since $\partial_{v_1}F_{\bar\mu}=tU(\mu_1-\mu_r)$, we obtain
+\[
+ d\eta=(r-1)!\frac{(tU)^{r-1}}{F_{\bar\mu}^{\,r}}
+       \Omega_2\wedge dv_1\wedge\cdots\wedge dv_{r-1}.
+\]
+Only the two faces $v_1=0$ and $v_r=0$ have nonzero pullbacks; their induced orientations give
+\begin{equation}\label{unified:eq:seriesrec}
+ K_{(\mu_1,\ldots,\mu_r)}^{\mathfrak m}
+ =\frac{K_{(\mu_1,\ldots,\mu_{r-1})}^{\mathfrak m}
+        -K_{(\mu_2,\ldots,\mu_r)}^{\mathfrak m}}
+       {\mu_r-\mu_1}.
+\end{equation}
+We must check that no boundary of the base has been omitted. The pullback of $\Omega_2$ to each of the three coordinate edges is zero.
+Blow up the three vertices of $\sigma_2$ to separate the poles from the chain.
+Near $x=1$, write $(y,t)=\rho(u,v)$. Then
+$\Omega_2$ contains $\rho\,d\rho$, $tU$ vanishes to order two, and $F_{\bar\mu}$ to order one;
+the radial order of $\eta$ is $r-2\ge0$.
+The same holds near $y=1$. Near $t=1$, both $tU,F_{\bar\mu}$ vanish to order one,
+and $\eta$ has radial order zero. All these pullbacks contain $d\rho$,
+so their restrictions to the exceptional boundary vanish.
+The positive convex combination $\bar\mu>0$ of masses ensures that these local coefficients have no new zeros on the geometric positive chain.
+On the complex algebraic side, remove the strict transform of the polar divisor and take a common resolution as needed.
+The relative forms and chains above pull back, and their boundary restrictions remain identically zero.
+
+Thus this is a Stokes relation on a geometric pair; its formal version is given by the boundary morphism in relative cohomology.
+Induction from $r=1$ using \eqref{unified:eq:seriesrec}, or comparison of residues at the simple poles,
+gives \eqref{unified:eq:seriespartial}.
+\end{proof}
+
+In particular, for $r=2$ only one interval is needed:
+\[
+ \frac{\partial}{\partial v}\frac1{F_{\mu_2+v(\mu_1-\mu_2)}}
+ =(\mu_2-\mu_1)\frac{tU}{F_{\mu_2+v(\mu_1-\mu_2)}^2}.
+\]
+This identifies explicitly the two parametric endpoint faces that produce the two elliptic relative objects.
+The construction descends this particular complete period to their direct sum, rather than taking the tensor product of two sunrise motives.
+
+\subsubsection{The geometric upper bound: exactly one possible pure elliptic core at each endpoint}
+Let $E_a(s)\subset\mathbb P^2$ be the cubic $F_{a^2}=0$, and work on a common open parameter set of smooth fibers.
+Blow up the three coordinate vertices to obtain $X$; let $B$ be the total transform of the coordinate triangle and $\widetilde E_a$ the strict transform of the curve.
+The geometric carrier is
+\[
+ \mathcal M_a
+ =H^2(X\setminus\widetilde E_a,\ B\setminus\widetilde E_a).
+\]
+The surface $X$ is rational, and $B$ is a cycle of six rational components.
+Each component is punctured by $\widetilde E_a$, with intersection points independent of $s$.
+After a finite extension of the constant field if necessary, all points and boundary constituents are Tate.
+The Gysin sequence for $X\setminus\widetilde E_a$ gives
+\[
+ \operatorname{coker}\!\left(H^0(\widetilde E_a)(-1)\to H^2(X)\right)
+ \longrightarrow H^2(X\setminus\widetilde E_a)
+ \longrightarrow H^1(E_a)(-1)\longrightarrow0.
+\]
+The left-hand term is Tate; the right end uses $H^3(X)=0$.
+Since $H^2(B\setminus\widetilde E_a)=0$,
+the relative long exact sequence makes $\mathcal M_a$ surject onto the middle term, with kernel carried by boundary cohomology.
+Thus the non-Artin--Tate constituents of $\mathcal M_a$ consist of exactly one copy of
+\[
+ \mathcal V_a:=H^1(E_a)(-1).
+\]
+This is a statement about the constituents of the complete relative carrier; this step alone does not show that the physical framing detects them all.
+Equation~\eqref{unified:eq:seriespartial} gives $K_{\boldsymbol\mu}$ the upper bound
+$\bigoplus_j\mathcal V_{a_j}$, with each endpoint contributing at most once.
+Below we prove, under explicit conditions, that all these constituents do occur.
+
+\subsubsection{Threshold separation turns the geometric upper bound into a physical lower bound}
+The statements in this subsection concern the category of variations on the parameter curve and its regular singular differential realization.
+Monodromy transformations are not treated as Nori endomorphisms of a fixed fiber.
+Write
+\[
+ \mathcal D_a=\{0,\ a^2,\ (a-2m)^2,\ (a+2m)^2,\ \infty\},
+ \qquad \tau_a=(a+2m)^2.
+\]
+This set contains the geometric singular values; repeated values are counted only once,
+and apparent singularities of the scalar equation are not added to the geometric set.
+This can be checked directly on the cubic: its intersections with the coordinate edges away from the three vertices are smooth,
+and the linear term at each vertex is nonzero. On the torus, use $\alpha_i=e^{y_i}/m_i$ with $m_i=(m,m,a)$,
+and write $F/(\alpha_1\alpha_2\alpha_3)=AB-s$,
+where $A=\sum_i m_i e^{y_i}$ and $B=\sum_i m_i e^{-y_i}$.
+For $s\ne0$, we have $A,B\ne0$, and the critical equations give
+$m_i e^{y_i}B-m_i e^{-y_i}A=0$,
+so all $e^{2y_i}=A/B$. Modulo the common scale, only sign choices remain in the coordinates.
+The critical values are therefore $(\pm m\pm m\pm a)^2$; in addition, $s=0$ makes $F=UM$ reducible.
+At $\tau_a$, there is only the critical point corresponding to the positive mass sum, and the positive-definite Hessian gives an ordinary node.
+The fiber is smooth at the boundary, so there is no second singularity.
+If a reduced cubic splits into a line and a conic, Bézout forces either two intersections or a singularity of higher intersection multiplicity,
+so it cannot have only this one ordinary node; a union of three lines is likewise impossible.
+The normal-threshold fiber is therefore an irreducible nodal cubic.
+
+\begin{proposition}[Irreducibility and distinction of the endpoint elliptic variations]\label{unified:prop:seriesirred}
+The variation $\mathcal V_a$ is geometrically absolutely irreducible.
+If $\tau_a\notin\mathcal D_b$, then $\mathcal V_a$ and $\mathcal V_b$
+are nonisomorphic over the common base, and this distinction persists after every finite base cover.
+\end{proposition}
+\begin{proof}
+An irreducible nodal cubic is a multiplicative degeneration, so $j(E_a(s))$ has a pole at $\tau_a$;
+the family is nonisotrivial. A coordinate vertex gives it a section.
+Pass to a finite cover carrying a level-$n\ge3$ structure to obtain a nonconstant algebraic map to the base curve $Y(n)$.
+After removing finitely many branch values and their inverse images, this is a finite cover of an open subset of $Y(n)$;
+the image of the fundamental group has finite index in $\Gamma(n)$.
+Thus the geometric monodromy group of $H^1(E_a)$ is Zariski dense in $\operatorname{SL}_2$.
+The standard two-dimensional representation is absolutely irreducible, and a Tate twist does not change this conclusion.
+
+At $\tau_a$, the Picard--Lefschetz monodromy of $\mathcal V_a$ is a nontrivial unipotent transformation,
+whereas $\mathcal V_b$ extends smoothly over the same disk and has identity monodromy.
+After a finite cover, the former is replaced by a positive integral power and remains nontrivial,
+while the latter remains the identity. The two representations cannot be isomorphic.
+\end{proof}
+
+\begin{theorem}[Exact visible elliptic constituents of series two-loop graphs]\label{unified:thm:seriesvisible}
+Suppose that the masses are positive algebraic numbers, the $\mu_j$ are pairwise distinct, and
+\begin{equation}\label{unified:eq:seriesseparation}
+ \tau_{a_j}\notin\mathcal D_{a_\ell}\quad(j\ne\ell).
+\end{equation}
+Then, in the cohomological carrier convention, the non-Artin--Tate semisimple part
+of the minimal physical variation object of $K_{\boldsymbol\mu}$ is
+\[
+ \bigoplus_{j=1}^r H^1(E_{a_j})(-1),
+\]
+with each of the pairwise nonisomorphic elliptic constituents occurring exactly once.
+Under the homological framing convention used throughout the paper, the dual of this expression is required.
+Every nonzero homogeneous scalar differential operator over $\mathbb C(s)$ annihilating $K_{\boldsymbol\mu}(s)$
+has order at least $2r$.
+\end{theorem}
+\begin{proof}
+The upper bound follows from geometric relative Stokes descent and the endpoint carriers.
+Choose a lasso around $\tau_{a_j}$ reached from a common Euclidean base point.
+The other complete relative pairs are smooth near this value, and their boundary intersections do not collide, so their variation is zero.
+Hence
+\[
+ (T_j-1)K_{\boldsymbol\mu}
+      =c_j(T_j-1)S_{\mu_j}.
+\]
+The preceding Morse-threshold proof for all positive-mass two-dimensional bananas applies to this three-propagator integral:
+the intersection number of the positive chain with the vanishing tube has absolute value one,
+$\operatorname{Disc}S_{\mu_j}=2\pi i\,\rho_j$,
+and $\rho_j>0$ above threshold. The right-hand side is therefore a nonzero elliptic residue period,
+which $c_j\ne0$ cannot annihilate.
+By Proposition~\ref{unified:prop:seriesirred}, its continuation orbit generates the entire two-dimensional pure variation.
+Each $j$ thus gives a distinct protected lower bound, matching the upper bound of at most one copy of each constituent.
+
+If $LK_{\boldsymbol\mu}=0$, the differential operator commutes with analytic continuation,
+so $L$ annihilates all these nonzero cuts and their continuations.
+The minimal operator $L_j$ of each cut is irreducible of order two;
+right division shows that $L_j$ is a right factor of $L$.
+Their solution local systems are simple and pairwise nonisomorphic, so their sum is direct.
+The least common left multiple has order $2r$, and hence $\operatorname{ord}L\ge2r$.
+\end{proof}
+
+This determines the pure constituents exactly, without splitting the complete mixed extension.
+Constants, mass Kummer extensions, and relative-chain extensions must still be retained, and the full homogeneous order may exceed $2r$.
+The theorem does not imply that the elliptic curves remain pairwise nonisogenous at every specified algebraic $s$,
+still less that a particular numerical integral value lies outside the MZVs.
+
+\textbf{An explicit example requiring no integration.}
+Take $r=2$ and $a_1=3m,a_2=8m$. Then
+\[
+ \mathcal D_{3m}/m^2=\{0,1,9,25,\infty\},\qquad
+ \mathcal D_{8m}/m^2=\{0,36,64,100,\infty\}.
+\]
+Each of the two normal thresholds $25m^2,100m^2$ lies outside the singular set of the other family, and
+\[
+ K_{(9m^2,64m^2)}
+   =\frac{S_{9m^2}-S_{64m^2}}{55m^2}.
+\]
+The complete physical function of this four-edge two-loop graph therefore requires two nonisomorphic elliptic variations simultaneously;
+its non-Artin--Tate semisimple rank is exactly four, and its homogeneous scalar order is at least four.
+Although it is a positive integral in the Euclidean region, its expression is a difference of two relative periods.
+The two distinct thresholds prove that this difference cannot cancel either elliptic constituent.
+
+\subsubsection{Mass collisions and numerator functionals: how constituents disappear}
+\begin{corollary}[Confluent masses and propagator cancellation]\label{unified:cor:seriesselect}
+For the same subdivision topology, there are two distinct mechanisms for reducing the structure.
+\begin{enumerate}
+\item When all squared masses along the series path coalesce to $\mu>0$,
+\[
+ K_{(\mu,\ldots,\mu)}
+   =\frac{(-1)^{r-1}}{(r-1)!}\,\partial_\mu^{\,r-1}S_\mu .
+\]
+This functional belongs to the same sunrise relative Gauss--Manin object,
+so its non-Artin--Tate constituents comprise at most one copy of $H^1(E_{\sqrt\mu})(-1)$.
+\item In the case of distinct masses and separated thresholds, set $z=(p_E-k-\ell)^2$,
+and take a numerator $P(z)\in k[z]$ with $\deg P\le r-1$.
+The parametric formal period obtained after actual propagator cancellation is
+\[
+ K_{\boldsymbol\mu,P}^{\mathfrak m}
+    =\sum_j P(-\mu_j)c_jS_{\mu_j}^{\mathfrak m}.
+\]
+Its visible elliptic constituents are exactly those indexed by $P(-\mu_j)\ne0$,
+and the corresponding lower bound on the homogeneous order is twice the number of such indices.
+\end{enumerate}
+\end{corollary}
+\begin{proof}
+The first identity follows by repeated differentiation of the absolutely convergent Euclidean integral.
+It can also be checked directly in the parametric form using
+$\partial_\mu^{r-1}(1/F_\mu)
+=(-1)^{r-1}(r-1)!(tU)^{r-1}/F_\mu^r$;
+for equal masses, the $v$-simplex has volume $1/(r-1)!$, giving the same result.
+The formal version follows from the same geometric relative Gauss--Manin connection and the horizontal positive chain.
+Differentiation changes only the de Rham functional and cannot add simple constituents to the carrier.
+This also explains why the divergent coefficients in \eqref{unified:eq:seriespartial} cannot be taken to the limit separately.
+
+The input for the second identity is the finite algebraic identity
+\[
+ P(z)=\sum_j P(-\mu_j)c_j\prod_{\ell\ne j}(z+\mu_\ell).
+\]
+In each term, the numerator cancels the corresponding propagators one by one, leaving an actual sunrise integral.
+Before parametrization, this is already an equality of the same rational integrand form.
+Define the geometric parametric period with this insertion by linear Schwinger parametrization;
+the remaining endpoints agree with the relative boundaries in Proposition~\ref{unified:prop:seriesstokes}.
+The relations used thus consist of linearity of rational forms, actual propagator cancellation, and relative Stokes.
+They invoke neither injectivity of the numerical period map nor an isomorphism of momentum-space and parametric motives for arbitrary numerators.
+In the present degree range, all remaining integrals converge, so no UV counterterms need to be added for this identity.
+If a coefficient is zero, that endpoint disappears from the representation;
+if it is nonzero, the threshold lasso and the proof of Theorem~\ref{unified:thm:seriesvisible} apply verbatim.
+\end{proof}
+
+For example, with two masses, $P(z)=z+\mu_1$ gives $K_{\boldsymbol\mu,P}=S_{\mu_2}$:
+the numerator removes the first elliptic core, while the second is protected by its own threshold.
+In this section, ``contraction'' of a series segment means precisely this actual propagator cancellation or parametric endpoint face.
+Whether an arbitrary abstract edge contraction preserves the physical form still requires a separate proof.
+
+If local terms with Artin--Tate carriers are added, the preceding additive Serre theorem ensures that these
+non-Artin--Tate multiplicities remain unchanged. This is a scheme comparison supplied with carriers in the specified category,
+not an unconditional assertion about every renormalization scheme.
+The present class itself converges in two dimensions with positive masses, so the classification above does not require renormalization.
+
+\subsubsection{Structural predictions supplied by this acceptance rule}
+The finite input need only specify the series path, the zero-injection condition, the masses, and the numerator polynomial.
+Construct each $F_{\mu_j}$ and the finite set $\mathcal D_{a_j}$,
+check distinctness of the masses and \eqref{unified:eq:seriesseparation},
+and then test the finitely many values $P(-\mu_j)$ to obtain the exact visible elliptic constituents and the order lower bound.
+No complete special-function expression for the sunrise is needed first.
+If thresholds collide or the path has nonzero momentum injection, the rule explicitly leaves its exact branch:
+in the former case, the existing direct-sum upper bound remains valid, but noncancellation must be proved anew;
+in the latter, the Symanzik polynomials change, so even the descent formula cannot be reused unchanged.
+
+This example combines graph data, geometric boundary descent, pure cores, protection by the physical chain, and numerator selection.
+It explains why a topological label must include masses and functionals, and why multiple elliptic cores should be recorded through constituents and extensions
+instead of forcing a single ``elliptic'' label onto the entire graph.
+Discriminant pushforwards at general loop order, complete relative comparisons for nonseries graphs, and the interface with RG critical masses
+remain central directions in the overall program.
+
+
+
+
+\subsection{Multiplicities in physical sums and a threshold criterion for forest backgrounds}\label{unified:sec:physicalsum}
+\subsubsection{From protection of one graph to detection in the full combination}
+A physical output is usually a sum of several graphs, numerators, and counterterms. The same elliptic core can occur in different graphs;
+nonzero cuts for each graph do not imply that the sum retains every multiplicity. We now extend the preceding argument using a one-dimensional image line
+to isotypic factors and specify which jump data suffice to decide cancellation.
+The basic setting here is that of parameter local systems; Hodge and Nori objects at fixed fibers retain their separate descent requirements.
+
+Let $E$ be a finite-rank complex local system on a connected parameter base, equipped with a finite monodromy-invariant filtration $W$,
+with every $\operatorname{Gr}^W E$ semisimple. Fix a based monodromy transformation $T$ and write $N=T-1$.
+Choose an absolutely simple local system $V$, and suppose that the variation of $T$ on $V$ has rank $d>0$.
+We will repeatedly use the following conditions:
+\begin{equation}\label{unified:eq:strictvariation}
+ \begin{gathered}
+ \operatorname{Gr}^W N\text{ is nonzero only in weight }k\text{ on }V^{\oplus m}
+       \text{ (the isotypic block)},\\
+ \rk N=\rk(\operatorname{Gr}^W N)=md.
+ \end{gathered}
+\end{equation}
+The equality requires that the entire carrier have no additional weight-lowering variation; checking only the Picard--Lefschetz formula on $V$ is insufficient.
+If the same simple local system $V$ occurred in another weight, $T$ would also have variation rank $d$ there, contradicting the first line.
+Thus $m$ is the total multiplicity in $E$ of $V$.
+
+\begin{theorem}[Variation rank determines multiplicity on invariant subquotients]\label{unified:thm:strictmultiplicity}
+Under \eqref{unified:eq:strictvariation}, every monodromy-invariant subquotient $Q=R/P$ satisfies
+\begin{equation}\label{unified:eq:rankmultiplicity}
+ \rk(N|Q)=d[Q:V].
+\end{equation}
+In particular, $Q$ contains no $V$ if and only if $T$ acts as the identity on $Q$.
+This includes the case in which the same geometric core occurs in several graphs.
+\end{theorem}
+\begin{proof}
+Set $\Gamma=\im N$. The image of $N(W_kE)$ in $\operatorname{Gr}_k^WE$ already has dimension $md$,
+equal to $\dim\Gamma$, so
+\[
+ \Gamma=N(W_kE)\subset W_kE,\qquad
+ \Gamma\cap W_{k-1}E=0.
+\]
+Thus projection identifies $\Gamma$ isomorphically with $\im\overline N$, where
+$\overline N=\operatorname{Gr}_k^WN$.
+For every monodromy-invariant subobject $A\subset E$, the subobject $\overline A=\operatorname{Gr}_k^WA$
+has a monodromy-invariant complement in the semisimple local system $\operatorname{Gr}_k^WE$. Hence
+\[
+ \im\overline N\cap\overline A=\overline N(\overline A).
+\]
+If $\gamma\in\Gamma\cap A$, its projection can be written as $\overline N\bar a$. Choose
+$a\in A\cap W_kE$ lifting $\bar a$. The elements $\gamma$ and $Na$ have the same projection from $\Gamma$,
+so $\gamma=Na$. The reverse inclusion is immediate, and therefore
+\[
+ NA=\Gamma\cap A,\qquad
+ \rk(NA)=\rk(\overline N|\overline A)=d[A:V].
+\]
+Finally, $NR\cap P=\Gamma\cap P=NP$, so
+\[
+ \rk(N|R/P)=\dim NR-\dim NP
+           =d\bigl([R:V]-[P:V]\bigr).
+\]
+The proof uses complements in the semisimple associated graded, without assuming that the original mixed local system splits.
+\end{proof}
+
+This theorem turns the preceding argument for $m=d=1$ into a multiplicity formula.
+If the rank equality fails on the whole of $E$, hidden logarithmic extensions may also contribute jumps,
+and dividing by $d$ no longer gives the multiplicity of the geometric core. Conversely, even if one physical branch happens to have no jump,
+this does not imply that all its analytic continuation branches have no jump.
+
+\subsubsection{Finite continuations, derivatives, and an exact functional criterion}
+Now restrict the parameter base to a smooth algebraic curve $B$, removing all singularities of the connection and the functional.
+Let $n=\rk E$, let $\lambda$ be a single-valued algebraic de Rham functional,
+let $\sigma$ be a chain at the base point, and set $f(t)=\langle\lambda(t),\sigma(t)\rangle$.
+In the category of complex analytic local systems, define
+\[
+ R_\sigma^{\rm an}
+   =\operatorname{span}_{\mathbb C}\{\rho(\gamma)\sigma:\gamma\in\pi_1(B)\},
+ \quad
+ P_f^{\rm an}
+   =\{r\in R_\sigma^{\rm an}:
+               \langle\lambda(t),r(t)\rangle\equiv0\},
+ \quad Q_f^{\rm an}=R_\sigma^{\rm an}/P_f^{\rm an}.
+\]
+Every continuation of an identically zero analytic germ remains identically zero, so $P_f^{\rm an}$ is invariant.
+This quotient records only the function germ and its branches; it does not assume that every functional relation comes from a motivic morphism.
+
+\begin{proposition}[A finite matrix of jump derivatives]\label{unified:prop:jumpjet}
+Choose a finite symmetric generating set of $\pi_1(B)$. Applying all words of length at most $n-1$ to $\sigma$
+already spans $R_\sigma^{\rm an}$. Select finitely many generating chains $r_1,\ldots,r_\ell$ among them, and define
+\[
+ h_j(t)=\langle\lambda(t),(T-1)r_j(t)\rangle,\qquad
+ \mathcal J_T(f)=\bigl(\partial_t^i h_j(t)\bigr)_{
+                              0\leq i\leq n-1,\ 1\leq j\leq\ell}.
+\]
+Here $T-1$ acts first at the base point, followed by flat continuation; this fixes the branch and the order of multiplication.
+Over the field $\mathcal M$ of meromorphic germs at an ordinary point,
+\begin{equation}\label{unified:eq:jumpjetrank}
+ \rk_{\mathcal M}\mathcal J_T(f)=\rk(N|Q_f^{\rm an}).
+\end{equation}
+\end{proposition}
+\begin{proof}
+Let $R_j$ be the space generated by words of length at most $j$. If $R_j=R_{j+1}$,
+every generator preserves $R_j$, and the sequence stabilizes thereafter. Otherwise, its dimension increases by at least one at each step.
+Starting from $\dim R_0=1$, the full orbit space is reached in at most $n-1$ steps.
+The case $\sigma=0$ is trivial.
+
+The kernel of the chain-to-function map on $R_\sigma^{\rm an}$ is exactly $P_f^{\rm an}$.
+Since $NP_f^{\rm an}\subset P_f^{\rm an}$, the span of the $h_j$ over the complex constants
+is isomorphic to $NQ_f^{\rm an}$. Let its dimension be $r\leq n$.
+Derivatives preserve constant linear relations, so the matrix rank is at most $r$.
+Conversely, take $r$ meromorphic functions $g_1,\ldots,g_r$ linearly independent over the constants;
+their Wronskian is not identically zero. This fact follows directly by induction: where $g_1\ne0$, divide by $g_1$,
+and row and column elimination expresses the Wronskian as
+\[
+ g_1^r W\bigl((g_2/g_1)',\ldots,(g_r/g_1)'\bigr).
+\]
+A constant linear relation among the $r-1$ functions on the right would integrate to a constant linear relation among the $g_i$,
+contrary to the hypothesis. Induction gives nonvanishing. The meromorphic identity principle makes the conclusion independent of the chosen open neighborhood.
+The first $r$ rows therefore already contain a nonzero minor of order $r$, proving the reverse inequality.
+\end{proof}
+
+\begin{corollary}[Detection formula after physical summation]\label{unified:cor:physicalmultiplicity}
+Under \eqref{unified:eq:strictvariation},
+\begin{equation}\label{unified:eq:functionmultiplicity}
+ [Q_f^{\rm an}:V]=\frac{1}{d}\rk_{\mathcal M}\mathcal J_T(f).
+\end{equation}
+In particular, a nonzero jump in any actual continuation gives at least one copy of $V$;
+complete disappearance of $V$ from the function local system requires the jumps of all generating chains to vanish identically.
+If $M_f$ is a constructed Hodge or Nori variation subquotient carrying the same function,
+its complex local-system realization contains at least this many copies of $V$.
+\end{corollary}
+\begin{proof}
+Apply Theorem~\ref{unified:thm:strictmultiplicity} and
+Proposition~\ref{unified:prop:jumpjet} to $Q_f^{\rm an}$. For every framed subquotient in the specified category carrying $f$, the map from its chain orbit to function germs
+still has these analytic continuations as its image. Thus $Q_f^{\rm an}$ is a subquotient of that realization.
+Monotonicity of Jordan--Hölder multiplicities gives the final lower bound.
+\end{proof}
+
+The last lower bound generally cannot be replaced directly by equality with the Nori multiplicity at a fixed fiber.
+Whether the kernel of analytic identities is a subobject in the specified category, and how the parameter object descends, still require comparison.
+When a known geometric upper bound agrees with this lower bound, the two bounds yield an exact conclusion at the corresponding level.
+The preceding single-integral example with two elliptic constituents uses precisely this argument.
+
+This formula is a finite proof condition, not a procedure that has solved general identity testing for transcendental functions.
+Proving that a minor is nonzero at one ordinary point suffices for a lower bound; its vanishing at one point does not prove identical vanishing.
+Likewise, if $h(\varepsilon)=H(\varepsilon)\log\varepsilon+G(\varepsilon)$,
+annihilating only $H(0)$ does not annihilate $H$; $\varepsilon\log\varepsilon$ is a counterexample.
+To decide whether a physical numerator or a graph weight removes a geometric core, one must examine its action on the complete jump matrix,
+not merely the first threshold coefficient.
+
+\subsubsection{Exclusive degenerations and scheme protection for finite forests}
+The anchored forest formula has already supplied a difference carrier $L$ in the specified category.
+It is built from carriers of finitely many subgraph reference coefficients and quotient-graph differences by direct sums, tensor products, and subquotients.
+Let $\cS$ be the Serre closure of the tensor category generated by these carriers;
+this is not the tensor ideal containing the unit in the entire category of motives.
+Consider a codimension-one degeneration component $D$ in parameter space and its local monodromy $T_D$.
+
+\begin{theorem}[Protection by a background extending across the threshold]\label{unified:thm:forestthreshold}
+Suppose that the parameter local systems of these background generators all extend across $D$.
+More generally, first pull back to a common finite ramified cover and formulate the following conclusion on the covered base.
+If a simple variation factor $V$ on that base has nonidentity local monodromy at $D$,
+then $V$ does not belong to the Serre category of this background.
+Consequently, in a proved comparison of anchored schemes in the specified category,
+$p_b^{\mathfrak m}-p_a^{\mathfrak m}=[L,\tau,\eta]$,
+the parameter realizations of the minimal objects on the two sides have the same $V$-multiplicity.
+If the comparison and background are both constructed in the specified category, this is also a consequence of comparison in its Serre quotient.
+\end{theorem}
+\begin{proof}
+Extension makes $T_D$ the identity on every generating background local system, and hence on their finite direct sums,
+tensor products, duals, and subquotients. Every simple constituent of these objects has the same property.
+Taking the Serre closure allows further extensions but adds no new simple constituents.
+Thus the condition $T_D|V\ne1$ excludes $V$ from this category.
+The difference carrier in the specified category belongs to the background. Apply the exact quotient comparison of Theorem~\otherref{feynman_periods_long_paper_en}{2.1 of the main text}
+to obtain preservation of multiplicities outside the background. Alternatively, first take local-system realizations and apply the same proof in that category.
+For a finite cover, use $T_D^e$ in place of $T_D$, where $e>0$ is the ramification index,
+and formulate the conclusion in terms of the actual simple constituents after the cover.
+\end{proof}
+
+This criterion does not require the whole background to be Tate. The background may have elliptic degenerations elsewhere,
+provided that it is trivial at the present $D$ while the new core is nontrivial at $D$.
+For an ordinary elliptic node, $T_D=1+N$, $N^2=0$, and $N\ne0$,
+so every positive integral power remains nontrivial; a finite cover cannot remove this detection.
+
+Two requirements cannot be omitted. First, it is insufficient to check that one physical function of the background is analytic at $D$;
+the local system in the specified category carrying all branches must extend across it.
+Second, objects on which ``$T_D$ is the identity'' are generally not closed under extensions:
+a logarithmic extension may have nontrivial unipotent total monodromy even though all its simple constituents are locally trivial.
+The proof above uses composition factors; it does not incorrectly assert that the entire Serre background has no jumps.
+The coefficients of local polynomial counterterms are constant in the external kinematics,
+so their parameter local systems extend across the threshold; this does not prove that the arithmetic motives of those constants are Tate.
+If a contracted graph or a reference coefficient also degenerates at the same $D$, the criterion does not apply.
+One must return to the comparison of forests in the specified category; a decrease in loop number alone does not establish protection of a new core.
+
+\subsubsection{A complete crossing-symmetric graph combination: all three elliptic channels survive}
+Use the convergent two-dimensional four-edge graph of the preceding section, with all four masses equal to $m>0$,
+and write $I(s_A,s_B;s_C)$ for the integral with two edges along $AB$ and one each along $AC/CB$.
+Interchanging the variables $u,v$ gives $I(s_A,s_B;s_C)=I(s_B,s_A;s_C)$.
+Construct the graph function
+\begin{equation}\label{unified:eq:cyclicice}
+ \mathcal A_{\rm cyc}
+ =I(s_A,s_B;s_C)+I(s_B,s_C;s_A)+I(s_C,s_A;s_B).
+\end{equation}
+It is invariant under permutations of the three external invariants. This is a specified crossing-symmetric combination of graphs;
+it is not claimed to be the full amplitude of a particular Lagrangian.
+Define $V_A,V_B,V_C$ to be the three equal-mass sunrise elliptic local systems,
+pulled back along the three independent variables $s_A,s_B,s_C$, respectively.
+The accepted domain is the smooth open set of the preceding two sections, with other pinch collisions excluded at a general point of each normal threshold.
+
+\begin{proposition}[A three-channel lower bound after physical summation]\label{unified:prop:cyclicice}
+On this accepted domain, the function local system of $\mathcal A_{\rm cyc}$ contains at least
+one copy each of $V_A,V_B,V_C$; the minimal parameter object in the specified category carrying it has the same lower bound.
+The direct-sum carrier of the three graphs gives an upper bound of two copies of each, so
+\[
+ 1\leq[Q_{\mathcal A_{\rm cyc}}^{\rm an}:V_i]\leq2\quad(i=A,B,C),
+ \qquad
+ 6\leq\rk\bigl((Q_{\mathcal A_{\rm cyc}}^{\rm an})_{\rm nonAT}^{\rm ss}\bigr)
+      \leq12.
+\]
+The same bounds on constituents apply to the complex local-system realization of the minimal parameter subquotient in the specified category.
+This conclusion about a physical combination requires no evaluation of the complete integral; the proposition does not determine whether each of the three multiplicities is one or two.
+\end{proposition}
+\begin{proof}
+The non-AT carrier of each graph was shown in \otherref{feynman_periods_long_paper_en}{Section 2.8 of the main text} to consist of one copy of each of two boundary elliptic cores.
+The direct sum of the three graphs therefore contains two copies each of $V_A,V_B,V_C$, with all other graded pieces AT.
+The three local systems are absolutely simple. At a general point of $s_A=9m^2$, $V_A$ has an ordinary node,
+while $V_B,V_C$ are trivial, so they are pairwise nonisomorphic on the three-parameter base.
+
+Fix $s_B,s_C<0$ and set $\varepsilon=9m^2-s_A$.
+The first and third terms each have one ordinary boundary pinch proved in the preceding section;
+the second term has no pinch at a general such point in the $s_A$ direction, and its local system extends across it.
+Thus the total variation rank of the three-graph direct sum is two, exactly the variation rank on the two copies of $V_A$.
+This satisfies \eqref{unified:eq:strictvariation}, with isotypic multiplicity two and $d=1$.
+
+To show that excluding additional pinches is not an empty condition, take $s_B=s_C=-Rm^2$ with $R>0$,
+and use the mass scale to set $m=1$. For the second term, $s_A=9$ is a crossed channel.
+Set $q=x+y,r=x-y,w=u+v,d=u-v$. Its polar cubic is
+\[
+ 4\mathcal F=(q+(1+R)w)(q^2-r^2)+4q^2w-5qw^2+9qd^2.
+\]
+In the chart $q=1$, write $z=x(1-x)$ to obtain
+$\mathcal F=z+w+(1+R)zw-\frac54w^2+\frac94d^2$.
+Any additional stationary point must satisfy $d=0$ and either $x=1/2$ or $w=-1/(1+R)$.
+At these stationary points, $\mathcal F$ equals, respectively,
+$1/4+(5+R)^2/80$ and $-1/(1+R)-5/[4(1+R)^2]$, both nonzero.
+On the surface with $q=0,r\ne0$, we have $w=0$ and
+$\partial_w\mathcal F=-(1+R)r^2/4\ne0$.
+At $q=r=0$, there are only the two ordinary nodes $9d^2=5w^2$ already resolved in the preceding section.
+The two elliptic endpoint faces are smooth at parameter $-R$; the remaining conics on the other two endpoint faces are
+$qw-\frac54w^2+\frac94d^2=0$, which is nondegenerate.
+The fixed intersections with coordinate strata are treated by the same resolution, and the remaining intersection conditions hold for general $R$.
+Thus this crossed channel has no forced degeneration at $s_A=9$; the accepted open set of general points is nonempty.
+
+Setting $a=b=m$ in the leading term for the positive chain from the preceding section gives
+\begin{align*}
+ \mathcal A_{\rm cyc}
+   &=-D_A\log\varepsilon+O(1),\\
+ D_A&=\frac{\sqrt3\,\pi}{m^2}
+       \left(\frac1{9m^2-s_B-2s_C}
+             +\frac1{9m^2-s_C-2s_B}\right)>0 .
+\end{align*}
+The two coefficients add, with no cancellation of the leading term. The analytic coefficient of the logarithm is nonzero,
+so the counterclockwise variation has limit $-2\pi iD_A\ne0$.
+Theorem~\ref{unified:thm:strictmultiplicity} gives at least one copy of $V_A$ in the subquotient framed by the function.
+Permuting the indices gives the same result for $V_B,V_C$. The direct sum of the three graphs gives at most two copies of each.
+Each simple factor has rank two, yielding all the stated bounds.
+\end{proof}
+
+Unlike the single graph in the preceding section, summation here introduces a genuine isotypic multiplicity problem.
+We therefore do not infer that both copies are detected merely from a nonzero leading term.
+To determine exact multiplicities, apply \eqref{unified:eq:functionmultiplicity} on a curve
+along which these factors remain simple and distinct, or use the same function-span criterion on the multiparameter base.
+Preservation of simplicity and independence under restriction to a curve also requires proof.
+Signed graph weights, actual numerators, and symmetry projections can change the rank of this matrix.
+This supplies a rigorous interface from combinations to physical outputs in the overall program:
+first determine the upper bound from carriers in the specified category, then use the variation of the full combination to determine lower bounds or multiplicities,
+and finally use the forest background extending across the threshold to decide which constituents are protected under scheme changes.
+It neither treats a graph-by-graph geometric table as a classification of observables nor claims an uncomputed matrix rank to be known.
+
+
+
+\subsection{Finite skeletons and infinite graph families: from edge lists to exact elliptic support}
+\label{unified:sec:finitecores}
+This section turns the preceding geometric conditions into an acceptance rule that can be applied directly to the input.
+We first separate two questions: how many reduced topologies occur at a fixed loop number, and how many distinct visible pure cores
+can arise from the masses and framings on these topologies. The first has an elementary finiteness theorem; the second has no
+rank bound depending only on loop number, even at two loops. We then give an exact support formula for theta graphs
+in which all three paths may be subdivided arbitrarily, without evaluating the complete integral. Graph reduction and partial fractions are classical operations;
+the task here is to prove their validity for the chosen complete relative periods and to establish physical noncancellation conditions.
+The elliptic geometry of the sunrise with arbitrary masses has already been studied in \cite{abwsun,bkvsunset}.
+The multiple-path argument below uses relative forms and normal thresholds, without requiring the complete special-function solution.
+
+\subsubsection{Finite skeletons at fixed loop number and number of external markings}
+Consider a connected finite multigraph, allowing self-loops, with each self-loop contributing two to the degree. Mark every vertex
+at which external momentum may be injected, and let their number be $n$; retain each specified marking even if its net injection happens to vanish.
+Momentum injection at an unmarked vertex is identically zero. Write the loop number as $h=E-V+1$.
+First repeatedly delete unmarked univalent vertices and their edges; then suppress unmarked bivalent vertices,
+replacing each series path of two adjacent edges by one edge. Marked vertices must not be suppressed.
+For a pure cycle without markings, retain one vertex and one self-loop as a separate case.
+The case in which only an isolated vertex remains is also retained separately.
+
+\begin{proposition}[Bounds on the numbers of vertices and edges of finite skeletons]\label{unified:prop:finitecore}
+Apart from the two exceptional cases above, an isolated vertex and an unmarked pure cycle, the resulting skeleton $C$ satisfies
+\[
+ V(C)\le 2h+2n-2,\qquad E(C)\le 3h+2n-3.
+\]
+If $C$ has no bridges, the stronger bounds hold:
+\[
+ V(C)\le 2h+n-2,\qquad E(C)\le 3h+n-3.
+\]
+Thus, for fixed $h,n$, there are only finitely many isomorphism types of such skeletons.
+These are topological types without mass lists on edges, propagator powers, or numerators.
+\end{proposition}
+\begin{proof}
+Deleting leaves and suppressing bivalent vertices both preserve $E-V$, and hence $h$; they also preserve connectedness.
+In a nonexceptional terminal graph, unmarked vertices have degree at least three and marked vertices have degree at least one.
+The handshaking lemma and $E=h+V-1$ give
+\[
+ 2h+2V-2=2E\ge3(V-n)+n=3V-2n,
+\]
+which yields the first pair of bounds. If the graph has no bridges and is not an isolated vertex, every vertex has degree at least two.
+The contribution from the marked vertices can therefore be replaced by $2n$, giving the second pair.
+A finite number of vertices and a bounded total number of edges allow only finitely many multigraph adjacency data; the total edge bound also controls self-loops.
+If suppression produces an isolated self-loop, its connected component must be the entire graph.
+Without markings, this is exactly the exceptional pure cycle already listed.
+\end{proof}
+
+In the scalar integrand with unit numerator and propagator powers, each deleted unmarked leaf edge carries zero momentum
+and gives an algebraic factor $1/\mu_e$; here we assume $\mu_e>0$ and omit the distributional factor imposing overall momentum conservation.
+All edges of a suppressed path $P$ carry the same momentum up to sign, so their squared momenta are a common $Z_P$.
+If the squared masses along the path are pairwise distinct, the rational-function identity is
+\begin{equation}\label{unified:eq:corepartial}
+ \prod_{j=1}^{r}\frac1{Z_P+\mu_j}
+ =\sum_{j=1}^{r}\frac{c_j}{Z_P+\mu_j},\qquad
+ c_j=\prod_{\ell\ne j}(\mu_\ell-\mu_j)^{-1}.
+\end{equation}
+Multiplying by the common denominator and evaluating at each $Z_P=-\mu_j$ proves the identity.
+For repeated masses, Hermite partial fractions give skeleton propagators with powers;
+moreover, in a domain where differentiation under the integral is valid,
+\[
+ (Z_P+\mu)^{-a}
+ =\frac{(-1)^{a-1}}{(a-1)!}\,
+       \partial_\mu^{a-1}(Z_P+\mu)^{-1}.
+\]
+
+An analytic and geometric check remains essential: \eqref{unified:eq:corepartial} is initially only an integrand identity.
+For example, the two-dimensional integral
+$\int d^2k/((k^2+\mu_1)(k^2+\mu_2))$ converges,
+whereas the two one-propagator tadpoles on the decomposed right-hand side diverge separately.
+The finite-skeleton theorem therefore does not automatically give a direct-sum theorem for renormalized periods, still less the minimal object of an arbitrary forest.
+Lifting this reduction to formal periods requires a separate convergent relative Stokes relation
+or a geometric subtraction comparison compatible with the reduction. The entire theta family below satisfies the first condition.
+
+\subsubsection{Geometric relative descent for three arbitrarily long paths}
+Let $G_{\mathbf r}$ consist of two endpoints $A,B$ and three paths from $A$ to $B$ with pairwise disjoint internal vertices,
+of lengths $r_a\ge1$, $a=1,2,3$.
+Only $A,B$ carry $p,-p$; the internal bivalent vertices have no external injection.
+Suppressing these vertices leaves exactly three parallel edges. Write
+\[
+ N=r_1+r_2+r_3,\quad h=2,\quad
+ m_{aj}>0,\quad\mu_{aj}=m_{aj}^2 .
+\]
+The masses are positive algebraic numbers. Take $D=2$, unit propagator powers, $s=-p_E^2$, and $d^2k/\pi$ per loop.
+The squared momenta of the three paths are
+$Z_1=k^2,\ Z_2=\ell^2,\ Z_3=(p_E-k-\ell)^2$.
+The Euclidean positive chain defines
+\[
+ I_{\mathbf r}(s)=
+ \int_{\mathbb R^4}\frac{d^2k\,d^2\ell}{\pi^2}
+       \prod_{a=1}^3\prod_{j=1}^{r_a}(Z_a+\mu_{aj})^{-1}.
+\]
+Every loop contains at least two positive-mass propagators, and the entire graph at least three.
+The corresponding two-dimensional UV degrees are strictly negative, and positive masses exclude IR divergences.
+Canceling series propagators one by one until one remains on each path still leaves a convergent integral.
+
+Set $A_a=\sum_j\alpha_{aj}$. Spanning trees and two-forests give
+\begin{equation}\label{unified:eq:thetaUF}
+ U=A_1A_2+A_1A_3+A_2A_3,\qquad
+ F=\left(\sum_{a,j}\mu_{aj}\alpha_{aj}\right)U-sA_1A_2A_3 .
+\end{equation}
+The two Gaussian loop integrals and the scale integral give the complete parametric form
+$\Gamma(N-2)U^{N-3}\Omega_{N-1}/F^{N-2}$.
+Write $\alpha_{aj}=A_av_{aj}$, $\sum_jv_{aj}=1$, and
+$\sum_a A_a=1$, and set $\bar\mu_a=\sum_j\mu_{aj}v_{aj}$.
+On the geometric positive chain after blowing up the boundary, the form becomes
+\begin{equation}\label{unified:eq:thetaproduct}
+ \Gamma(N-2)\,
+ \frac{U^{N-3}\prod_a A_a^{r_a-1}}
+      {F_{\bar{\boldsymbol\mu}}^{\,N-2}}\,
+ \Omega_2\wedge\bigwedge_{a=1}^3 dv_a ,
+\end{equation}
+where $dv_a$ is the oriented volume form of $\Delta_{r_a-1}$, equal to $1$ in dimension zero.
+All formal periods below refer to this geometric parametric model and the linear parametrization of its propagator insertions.
+
+\begin{proposition}[Complete Stokes descent along all three paths]\label{unified:prop:thetastokes}
+Suppose that the $\mu_{aj}$ are pairwise distinct within each path. For
+$t=(i_1,i_2,i_3)$, set
+\[
+ c_t=\prod_{a=1}^3\prod_{j\ne i_a}(\mu_{aj}-\mu_{ai_a})^{-1}.
+\]
+Let $S_t$ be the complete two-dimensional sunrise relative period with masses $m_{1i_1},m_{2i_2},m_{3i_3}$.
+Then the following geometric formal-period relation holds:
+\begin{equation}\label{unified:eq:thetaformal}
+ I_{\mathbf r}^{\mathfrak m}=\sum_{i_1=1}^{r_1}
+       \sum_{i_2=1}^{r_2}\sum_{i_3=1}^{r_3}c_tS_t^{\mathfrak m}.
+\end{equation}
+It retains the boundary and mixed extensions of the endpoint sunrise periods; it is more than an equality of cuts.
+\end{proposition}
+\begin{proof}
+Choose a path with $r_a\ge2$, using $v_{a1},\ldots,v_{a,r_a-1}$ as independent coordinates.
+Remove $dv_{a1}$ from the volume form and choose the wedge sign so that exterior differentiation has positive sign. Define the primitive
+\[
+ \eta=
+ \frac{\Gamma(N-3)}{\mu_{a,r_a}-\mu_{a1}}\,
+ \frac{U^{N-4}A_a^{r_a-2}\prod_{b\ne a}A_b^{r_b-1}}
+      {F_{\bar{\boldsymbol\mu}}^{\,N-3}}\,
+ \Omega_2\wedge (dv_1\wedge dv_2\wedge dv_3)_{\widehat{a1}} .
+\]
+We have
+$\partial_{v_{a1}}F=A_aU(\mu_{a1}-\mu_{a,r_a})$.
+The other fiber derivatives repeat a wedge factor, while derivatives on the base repeat a factor in the top-degree form $\Omega_2$, so $d\eta$
+is exactly \eqref{unified:eq:thetaproduct}.
+Among the faces of path $a$, only $v_{a1}=0$ and $v_{a,r_a}=0$ have nonzero pullbacks.
+The full volume form of every other path pulls back to zero on each of its faces.
+This gives the recursion
+\[
+ I_{\mathbf r}^{\mathfrak m}
+ =\frac{I_{\text{last mass on path $a$ omitted}}^{\mathfrak m}
+          -I_{\text{first mass on path $a$ omitted}}^{\mathfrak m}}
+        {\mu_{a,r_a}-\mu_{a1}} .
+\]
+Omitting a parameter here means passing to the parametric endpoint face of a series edge, thereby shortening the path; it does not mean abstractly deleting an edge and disconnecting the path.
+
+The boundary of the base must also be checked. In the interior of each coordinate edge, $F>0$, and the restriction of $\Omega_2$ vanishes.
+Near $A_i=1$, set the sum of the other two $A$ coordinates equal to $\rho$.
+Both $U,F$ then vanish to order one, and $\Omega_2$ contains $\rho\,d\rho$.
+If path $i$ is being shortened, the radial order of $\eta$ is
+$\sum_{b\ne i}(r_b-1)\ge0$;
+if another path $a$ is being shortened, the order is
+$\sum_{b\ne i}(r_b-1)-1\ge0$, since $r_a\ge2$.
+All pullbacks contain $d\rho$, so the exceptional boundary restrictions vanish.
+The inequalities $\bar\mu_a>0$ make this check uniform on the closed fiber simplices.
+Removing the strict transform of the polar divisor and taking a common resolution on the complex algebraic side gives geometric relative forms and boundary morphisms.
+The recursion is therefore a geometric Stokes relation and cannot be replaced by a numerical equality alone.
+
+Iterating the recursion leaves one edge on each of the three paths. The coefficients are determined by
+the unique simple partial fractions in \eqref{unified:eq:corepartial}, and are precisely $c_t$.
+Every parametric integral that occurs converges; no undeclared UV counterterms enter the process.
+\end{proof}
+
+\subsubsection{An exact acceptance condition determined entirely by the masses}
+Each triple $t$ gives an elliptic curve
+\[
+ E_t(s):\
+ (\mu_{1i_1}X+\mu_{2i_2}Y+\mu_{3i_3}Z)(XY+XZ+YZ)-sXYZ=0.
+\]
+Set
+\begin{align}
+ \mathcal D_t&=\{0,\infty\}\cup
+ \{(\epsilon_1m_{1i_1}+\epsilon_2m_{2i_2}
+                       +\epsilon_3m_{3i_3})^2:\epsilon_a=\pm1\},\label{unified:eq:thetadiscr}\\
+ \tau_t&=(m_{1i_1}+m_{2i_2}+m_{3i_3})^2 .\nonumber
+\end{align}
+Reversing all signs leaves the square unchanged, so the sign choices give at most four distinct values.
+On the common smooth base, take $\mathcal V_t=H^1(E_t)(-1)$.
+The additional acceptance condition for the exact branch is
+\begin{equation}\label{unified:eq:thetaprivate}
+             \tau_t\notin\mathcal D_u\quad\text{for all }t\ne u .
+\end{equation}
+This is the negation of finitely many equalities of algebraic numbers and requires no prior computation of integrals or monodromy matrices.
+It is a sufficient condition for applying the rule, not a claimed necessary condition for independence of the cores.
+
+\begin{theorem}[Exact elliptic support of the theta subdivision family]\label{unified:thm:thetavisible}
+Under the conditions above of positive masses, zero internal injection, distinctness within each path, and \eqref{unified:eq:thetaprivate},
+the non-Artin--Tate semisimple part of the minimal variation object of the complete physical function is, in the cohomological convention,
+\begin{equation}\label{unified:eq:thetass}
+       \bigoplus_t\mathcal V_t,\qquad
+       \dim(\text{non-Artin--Tate semisimple part})=2r_1r_2r_3 .
+\end{equation}
+Each summand is geometrically absolutely irreducible, the summands are pairwise nonisomorphic, and each occurs exactly once.
+The homological framing convention requires the dual. Every nonzero homogeneous scalar differential operator over $\mathbb C(s)$
+annihilating this complete function has order at least $2r_1r_2r_3$.
+\end{theorem}
+\begin{proof}
+First obtain an upper bound without integration. For each $E_t$, blow up the three coordinate vertices.
+The ambient space is a rational surface, and the boundary consists of a cycle of rational curves and finitely many points.
+The third intersection point on each coordinate edge is determined solely by the corresponding mass ratio; the tangent lines at the coordinate vertices are also independent of $s$.
+The relative boundary therefore has only Artin--Tate constituents.
+The same Gysin and relative long exact sequences as in Section~\ref{unified:sec:serieselliptic}
+show that the non-Artin--Tate constituents of the complete sunrise carrier consist of exactly one copy of $\mathcal V_t$.
+Equation~\eqref{unified:eq:thetaformal} gives the direct-sum upper bound for the minimally framed object.
+
+Equation~\eqref{unified:eq:thetadiscr} can be checked directly. The torus coordinates
+$\alpha_a=e^{y_a}/m_{ai_a}$ give
+$F/(\alpha_1\alpha_2\alpha_3)=AB-s$,
+where $A=\sum_a m_{ai_a}e^{y_a}$ and $B=\sum_a m_{ai_a}e^{-y_a}$.
+For $s\ne0$, the critical equations force all $e^{2y_a}$ to be equal.
+Modulo the common scale, three signs remain, giving the critical values above.
+The reducible fiber at $s=0$ is included separately. Intersections on coordinate edges and blown-up vertices undergo no further collisions as $s$ varies.
+Thus $\mathcal D_t$ contains every finite degeneration value of the complete relative pair;
+apparent singularities of the scalar PF equation are not counted as geometric degenerations here.
+
+At $\tau_t$, the all-positive signs give the unique critical point, and positive masses make its Hessian in logarithmic coordinates positive definite.
+The cubic has only this one ordinary node. By Bézout, it cannot split into a line and a conic,
+so it is an irreducible nodal cubic. Its $j$-invariant is nonconstant,
+and the argument using a finite level cover mapping to the modular curve gives $\operatorname{SL}_2$-dense monodromy,
+as in the proof of Proposition~\ref{unified:prop:seriesirred}. Thus $\mathcal V_t$ is absolutely irreducible.
+Condition~\eqref{unified:eq:thetaprivate} makes its monodromy nontrivial unipotent at its own $\tau_t$,
+while that of every other $\mathcal V_u$ is the identity. The summands are therefore nonisomorphic, and finite base covers do not remove this distinction.
+
+Now choose lassos from a common Euclidean base point. The other complete relative pairs extend smoothly across $\tau_t$, so
+\[
+ (T_t-1)I_{\mathbf r}=c_t(T_t-1)S_t .
+\]
+The normal-threshold Morse pinch of the positive chain gives a nonzero vanishing period, and the three-body spectral density is positive above threshold.
+Here we use the local tube variation for positive-mass bananas proved earlier.
+Since $c_t\ne0$, the right-hand side is nonzero, and its continuation orbit generates the entire $\mathcal V_t$.
+All triples $t$ give pairwise nonisomorphic lower bounds, exactly matching the upper bound of one copy of each.
+This lower bound in the parameter-variation realization also forces the corresponding factors to occur in the variation carrier in the specified category,
+because the upper bound is already a geometric formal-period representation in the same relative parametric model.
+No injectivity of the numerical period map is used.
+
+Finally, an operator annihilating $I_{\mathbf r}$ also annihilates every jump and all its continuations.
+The sum of these pairwise nonisomorphic simple two-dimensional solution local systems is direct,
+so its solution space has dimension at least $2r_1r_2r_3$, giving the order lower bound.
+This is neither the exact total rank of the complete mixed object nor an equality for the homogeneous operator order.
+\end{proof}
+
+\subsubsection{Numerators turn the structural table into a selectable support table}
+Let $P(Z_1,Z_2,Z_3)$ have coefficients in the number field containing the masses, with
+$\deg_{Z_a}P\le r_a-1$.
+The allowed numerators are these polynomials in the squared path momenta; they are not all claimed to arise from one
+fixed renormalizable Lagrangian. Denote the complete integral with this insertion by $I_{\mathbf r,P}$.
+Define the evaluations on the finite grid by
+\[
+ p_t=P(-\mu_{1i_1},-\mu_{2i_2},-\mu_{3i_3}),\qquad
+ \mathcal A(P)=\{t:p_t\ne0\}.
+\]
+
+\begin{theorem}[Necessary and sufficient support criterion for physical numerators]\label{unified:thm:thetanumerator}
+On the accepted domain of Theorem~\ref{unified:thm:thetavisible},
+\begin{equation}\label{unified:eq:thetapinsert}
+ I_{\mathbf r,P}^{\mathfrak m}=\sum_t p_tc_tS_t^{\mathfrak m},
+ \qquad
+ \operatorname{ss}_{\mathrm{nonAT}} I_{\mathbf r,P}
+       =\bigoplus_{t\in\mathcal A(P)}\mathcal V_t .
+\end{equation}
+Thus $\mathcal V_t$ is visible if and only if $p_t\ne0$.
+Every subset of triples is realized by an explicit numerator in the degree range above.
+\end{theorem}
+\begin{proof}
+Multivariate interpolation in the rectangular degree range is the tensor product of three univariate interpolations, giving the polynomial identity
+\[
+ P(\mathbf Z)=\sum_t p_tc_t
+       \prod_{a=1}^3\prod_{j\ne i_a}(Z_a+\mu_{aj}).
+\]
+Multiplying by the original product of propagators, each numerator directly cancels the series propagators, leaving $c_tp_tS_t$.
+Before parametrization, this is a finite linear identity of the same rational form.
+Define the geometric parametric period with the insertion by linear Schwinger parametrization after propagator cancellation.
+All remaining integrals are still absolutely convergent, and the endpoints agree with Proposition~\ref{unified:prop:thetastokes}.
+The formal relation therefore uses only algebraic linearity, actual cancellation, and relative Stokes;
+it requires no assertion that arbitrary momentum-space and parametric motives are isomorphic in their entirety.
+
+If $p_t=0$, the direct-sum upper bound excludes that factor. If $p_t\ne0$, only
+$c_tp_tS_t$ contributes at its own normal threshold, and the nonzero-cut argument of the preceding theorem gives the entire $\mathcal V_t$.
+Set
+\[
+ L_{ai}(Z)=
+ \prod_{j\ne i}\frac{Z+\mu_{aj}}{\mu_{aj}-\mu_{ai}} ,
+ \qquad
+ P_{\mathcal A}(\mathbf Z)=
+       \sum_{(i_1,i_2,i_3)\in\mathcal A}\prod_{a=1}^3L_{ai_a}(Z_a).
+\]
+Since $L_{ai}(-\mu_{aj})=\delta_{ij}$, the polynomial $P_{\mathcal A}$ equals $1$ on the selected grid points
+and $0$ on the others, while satisfying the degree bounds. This proves the last assertion.
+\end{proof}
+
+A general numerator may have negative coefficients; noncancellation here follows from the exclusive thresholds and does not rely on positivity of the total numerator.
+If higher multidegrees are allowed, partial fractions produce additional contact terms or divergent integrals,
+and the theorem no longer applies unchanged. If masses coalesce, the confluent derivatives still belong to the
+Gauss--Manin carrier of the corresponding mass family, but the divergent $c_t$ cannot be taken to the limit separately, and the generic rank equality
+in \eqref{unified:eq:thetass} cannot be retained.
+
+\subsubsection{Infinitely many examples requiring no evaluation, and the limits of classification by loop number}
+\begin{corollary}[No uniform upper bound on visible rank at two loops]\label{unified:cor:thetaunbounded}
+For any $r_1,r_2,r_3\ge1$, assign to all $N$ edges pairwise distinct nonnegative integers $e_{aj}$,
+and set
+\[
+                    m_{aj}=M\,5^{e_{aj}},\qquad M>0
+\]
+with a positive algebraic scale. Then \eqref{unified:eq:thetaprivate} always holds.
+With unit numerator, the non-Artin--Tate semisimple rank is exactly $2r_1r_2r_3$.
+Consequently, even with $h=2$ and two external marked vertices fixed,
+allowing arbitrarily long zero-injection subdivisions and arbitrarily many edge masses
+leaves both the visible non-Artin--Tate rank and the homogeneous differential order without a uniform finite upper bound.
+\end{corollary}
+\begin{proof}
+If the square of the positive mass sum of one triple equals the square of a signed mass sum of another,
+taking square roots and choosing an overall sign gives
+$\sum_e d_e5^e=0$, where $d_e\in\{-2,-1,0,1,2\}$.
+Let $L$ be the largest exponent with nonzero coefficient. Then
+\[
+ |d_L|5^L\ge5^L>
+       2\sum_{e=0}^{L-1}5^e=(5^L-1)/2,
+\]
+a contradiction. Hence all $d_e=0$. Since the edge exponents are pairwise distinct,
+equality is possible only when the two triples use exactly the same three edges with matching signs;
+distinct triples are excluded. The positive sum is also nonzero, so the acceptance condition holds.
+Distinctness of the masses within each path is immediate, and Theorem~\ref{unified:thm:thetavisible} gives the rank formula.
+Taking $r_1=r_2=r_3=r\to\infty$ gives $2r^3\to\infty$,
+while every graph still has exactly two loops, two external marked vertices, and the same theta skeleton.
+\end{proof}
+
+This does not conflict with finiteness of periods under additional restrictions on the type, such as a fixed number of mass parameters:
+here the mass list is allowed to grow with the graph. Nor is it claimed that curves of arbitrary genus occur;
+what grows is the number of nonisomorphic genus-one cores.
+The bivalent vertices at which masses change and the chosen polynomial numerators are part of the graph input with its physical data.
+They do not automatically belong to the allowed vertices of a fixed Lagrangian with finitely many fields.
+
+This section therefore gives a complete theoretical rule that can reject inputs failing its conditions.
+First identify the three paths from the edge list and external markings, and check zero injection.
+Then generate the triples, curves, and finite degeneration sets from the positive algebraic masses.
+Check distinctness within each path and separation of the normal thresholds.
+Finally, use the values of $P$ on the finite grid to output the exact visible elliptic support, multiplicities, and differential-order lower bound.
+If $R=r_1r_2r_3$, then, after identifying the paths, at most $4R(R-1)$ comparisons of squared signed sums
+and $R$ numerator evaluations are required. With standard exact representations of the given algebraic numbers, these operations are decidable.
+This is only a count of algebraic operations; it does not hide the bit complexity associated with degrees and heights of algebraic numbers in a constant.
+The computation uses only finite graph operations and comparisons of algebraic numbers, with no complete integration, interval transport, or numerical identification of monodromy.
+The geometric descent and physical-threshold proofs above establish the correctness of every step.
+
+If the separation condition fails, output the still-valid direct-sum upper bound and the specific collision conditions;
+this failure does not justify declaring an elliptic factor invisible. If there is nonzero internal injection, even
+\eqref{unified:eq:thetaUF} changes, and one must use geometric constructions such as \otherref{feynman_periods_long_paper_en}{Section 2.8 of the main text}.
+This section determines the pure constituents and numerator support of an infinite accepted family, without classifying all its mixed extensions or arithmetic at fixed points.
+Finite skeletons organize general graphs, but their pushforwards, boundary gluing, and generation by framings
+still require proofs for each class. Finiteness of skeletons does not bypass the comparisons involving contractions, forests, RG, and fixed algebraic points in the overall program.
+
+
+
+\subsection{Correctness of rule composition and the main gaps in the overall program}
+\subsubsection{What a finite derivation can guarantee}
+Each rule must supply an applicability predicate, a geometric model, a comparison of forms and chains, the pure core and boundary,
+and the strength of its output. A node may return only one of the following:
+an exact minimal object, a geometric upper bound, a protected lower bound, a conditional conclusion, or a declaration that the current rule does not apply.
+Rejecting a graph cannot yield ``non-MPL''; a high-order equation cannot directly yield ``K3.''
+
+\begin{theorem}[Soundness of finite composition]
+If every leaf of a finite derivation tree has input in the specified category and every internal step satisfies the hypotheses of its proof,
+then the final upper bounds, lower bounds, and exact outputs hold.
+Simple multiplicities can be determined by matching upper and lower bounds; the complete minimal mixed object additionally requires gluing and identification of the framings.
+\end{theorem}
+\begin{proof}
+Proceed by induction over the nodes. For operations on objects, use Proposition~\otherref{feynman_periods_long_paper_en}{2.3 of the main text};
+for cuts, use Proposition~\otherref{feynman_periods_long_paper_en}{2.4 of the main text};
+for finite schemes, use Theorem~\otherref{feynman_periods_long_paper_en}{2.2 of the main text};
+for framing minimization, use the definition by subquotients in the specified category.
+Retaining the base field, parameter level, and chain conditions throughout ensures that no step passes to a physical object without comparison.
+Exactness follows at the end from the multiplicity bounds and the proved gluing.
+\end{proof}
+This proves soundness, not computability for arbitrary graphs.
+The conic-star recognition and branching modules and the composition module have finitely terminating procedures;
+general subquotients in the specified category, nonvanishing of extensions, and physical chains still require effective input.
+Nor does a finite collision stratification replace a potentially infinite classification of arithmetic special points.
+
+
+\endgroup
+
+
+\section{The linear algebra of minimal framing}\label{ch:frames}
+
+\begingroup
+
+\subsection{Objects determined jointly by chains and functionals}
+Let $\mathcal C$ be a neutral Tannakian category over the rationals, equipped with a faithful exact Betti fiber functor and a compatible de Rham realization. Given $E\in\mathcal C$, a set of chain framings $\Sigma\subset E_B$, and a set of functionals $\Omega\subset E_{\dR}^{\vee}$, define
+\begin{equation}\label{eq:visible}
+ R_\Sigma=\bigcap_{\Sigma\subset J_B}J,\qquad
+ I_\Omega=\sum_{\Omega|J_{\dR}=0}J,\qquad
+ V_{\Sigma,\Omega}=R_\Sigma/(R_\Sigma\cap I_\Omega).
+\end{equation}
+Both the intersection and the sum are taken over subobjects in the specified category. Finite length ensures that the descending and ascending processes stabilize, so these objects exist. Taking the part generated by the chains and then quotienting out its unobservable part gives the minimal object compatible with both framings.
+
+\begin{proposition}[Twofold monotonicity]\label{prop:visible}
+Fixing the functionals and adding chain framings gives a natural injection of visible objects. Fixing the chains and adding functionals gives a natural surjection from the object with more functionals to the object with fewer. If a morphism in the specified category carries one set of framings to another, is surjective on the generated objects, and has kernel annihilated by the functionals, then the corresponding minimal objects are isomorphic.
+\end{proposition}
+\begin{proof}
+In the first case, $R_\Sigma$ increases while $I_\Omega$ is unchanged, and passage to the same quotient gives an injection. In the second, $I_\Omega$ decreases while $R_\Sigma$ is unchanged, and the quotient map gives the stated surjection. In the last case, the morphism maps the object generated by the chains surjectively onto the generated target object. Pulling back the functionals makes its kernel invisible, and the image of every invisible subobject remains invisible. The universal properties of the two maximal invisible subobjects then give the quotient isomorphism.
+\end{proof}
+
+Thus ``visibility'' generally forms a diagram of subquotients. A filtration by inclusions arises only after choosing a compatible flag of observations on the same object, or explicitly constructing the residue kernels introduced below. The four terms combinatorial, geometric, arithmetic, and physical cannot simply be arranged into an unproved descending chain.
+
+
+\subsection{Finite operational models and Hankel rank}
+As a finite representation model for the problem in the specified category, let a family of operators $M_i$ act on $k^d$, with a column matrix $B$ specifying inputs and a row matrix $C$ specifying functionals. For a word $w=i_1\cdots i_r$, write $M_w=M_{i_1}\cdots M_{i_r}$. Define
+\begin{equation}
+ \mathcal R=\sum_w\im(M_wB),\qquad
+ \mathcal N=\mathcal R\cap\bigcap_w\ker(CM_w),\qquad
+ \mathcal Q=\mathcal R/\mathcal N.
+\end{equation}
+The associated two-sided Hankel matrix is $H_{u,v}=CM_uM_vB$. The ascending chain of reachable spaces undergoes at most $d-1$ strict increases; the unobservable space has the same bound by the dual ascending chain. Left and right contexts of length at most $d-1$ therefore suffice to determine $\mathcal Q$, and
+\begin{equation}\label{eq:hankel}
+ \dim\mathcal Q=\rank H.
+\end{equation}
+This is the rank of the operational representation; it cannot be called a Nori rank without a comparison. Minimal representations of weighted automata provide established background for this finite model\cite{kiefer}.
+
+For a formal relation $r(M)=0$ to descend to the visible object, one must check
+\begin{equation}
+ CM_u\,r(M)\,M_vB=0
+ \quad\text{for all necessary left and right contexts }u,v.
+\end{equation}
+Checking only the initial matrix coefficient $Cr(M)B$ is insufficient. A commutator may annihilate the original period without annihilating a successor period obtained after one operation. This is precisely the additional proof obligation when passing from a single integral expression to its closure under operations.
+
+
+\subsection{Multiplicities in the semisimple case and limitations beyond it}
+Over an algebraically closed field, suppose that a semisimple representation decomposes as $\bigoplus_i V_i\otimes k^{m_i}$, with the distinct $V_i$ pairwise nonisomorphic. Write the components of the framings in the $i$th block as
+\begin{equation}
+ b_i=\sum_a b_{ia}\otimes e_a,\qquad
+ c_i=\sum_a c_{ia}\otimes e_a^*,\qquad
+ Z_i=\sum_a b_{ia}\otimes c_{ia}.
+\end{equation}
+By the blockwise action of the simple algebras, the minimal multiplicity of the matrix coefficient in the $i$th isomorphism class is the rank of the tensor $Z_i$ viewed as a linear map. This formula requires the stated coefficient field and semisimplicity assumptions. When additional endomorphism division algebras occur, multiplicities must be computed over the corresponding division algebra; in the nonsemisimple case, extensions must also be recorded.
+
+The banana example below gives an important counterexample: a mixed object can have only scalar endomorphisms while containing a nonzero invisible Tate subobject. This subobject is not a direct summand. Geometric intuition based on semisimple blocks therefore cannot replace an argument establishing the minimal quotient in the specified category for a three-step extension.
+
+
+\subsection{Cyclic sources and protection by the head}
+Let $\mathcal A$ be a finite-dimensional algebra of operations, let $W=\mathcal A\delta$ be the cyclic module generated by a single source $\delta$, and let $J(\mathcal A)$ be the Jacobson radical. The semisimple head is
+\begin{equation}
+ \operatorname{head}(W)=W/J(\mathcal A)W.
+\end{equation}
+A testable protection question is whether every nonzero quotient retaining the source must contain a specified simple module $V$. The exact algebraic criterion is that all simple composition factors of the head are isomorphic to $V$.
+
+\begin{proof}
+If the head contains a simple factor of another type, mapping $W$ onto that simple quotient gives a counterexample. Conversely, every nonzero quotient has a nonzero head. Its simple quotients are also simple quotients of $W$, and hence must be $V$. The cyclic source still generates every nonzero quotient, so retaining the source is compatible here with passing to a nonzero quotient.
+\end{proof}
+
+This criterion quantifies over all algebraically admissible module quotients. Physical projections form only a subset, realized by actual numerators, chains, or identities. Thus the original protection manuscript gives a necessary and sufficient condition at the algebraic level. Promoting it to a necessary and sufficient condition for a class of physical observables also requires proving that the allowed quotients can be realized.
+
+For rank-one local transformations $T_i-I=\delta_i\ell_i$, set $B_{ij}=\ell_i(\delta_j)$ and define directed propagation edges by $B_{ij}\ne0$. Under suitable closure and stability assumptions, strong connectivity and $\rank B>0$ reduce the protection problem to the unique simple head of the module generated by the vanishing vectors. The entire relevant algebra of operations must be used: a convenient subset of monodromy generators does not automatically establish global protection.
+
+
+\subsection{Physical positivity, numerator ideals, and morphisms in the specified category}
+The complete sum over physical intermediate states sometimes gives a positive form $\sum_\lambda|\mathcal A_\lambda|^2$. If the physical real branch is Zariski dense in the corresponding on-shell algebraic variety, and clearing denominators is legitimate in the region under consideration, then identical vanishing of this complete sum can be converted into the condition that each numerator after clearing denominators vanishes in the corresponding radical ideal. An individual interference term generally lacks positivity and cannot be treated in the same way.
+
+This suggests a theoretical route: first prove that physical identities induce relations in the visible representation, then test the relation ideal in all left and right contexts, and finally construct the corresponding subquotients in the specified category. Gauge Ward identities apply only in models with gauge symmetry; the scalar $\phi^4$ benchmark of this paper has no gauge Ward condition that needs to be invented.
+
+There is also a fundamental distinction: the algebra of operations is usually generated by monodromy, derivatives, or formal operations, whereas motivic endomorphisms must be compatible with all realizations. These are different notions. The specified K3 below has only scalar Hodge endomorphisms, while its Picard--Lefschetz reflections are nonscalar, providing a direct counterexample.
+
+
+\subsection{Arithmetic boundary data cannot be recovered from differential equations alone}
+The functions $\log z$ and $\log z+c$ have the same derivative and the same local geometric monodromy, but the constant $c$ may change the framed period and its arithmetic boundary data. A pure Picard--Fuchs system determines a local system without automatically determining every comparison entry of the relative extension. Specified initial values, boundary units, and integration chains are additional data.
+
+This paper fills that gap with a geometric Kummer comparison and a regulator. A general compiler must likewise output the homogeneous core, inhomogeneous source, extensions, and framings together; recovering the pure differential equation cannot be the endpoint of a complete classification.
+
+
+
+
+\endgroup
+
+
+\section{Diagrams of operations in the specified category and criteria for morphisms}\label{ch:ops}
+
+\begingroup
+\providecommand{\Q}{\mathbb Q}
+\providecommand{\C}{\mathbb C}
+\providecommand{\dR}{\mathrm{dR}}
+\providecommand{\id}{\operatorname{id}}
+\providecommand{\im}{\operatorname{im}}
+\providecommand{\End}{\operatorname{End}}
+\providecommand{\Hom}{\operatorname{Hom}}
+\providecommand{\Vis}{\operatorname{Vis}}
+\providecommand{\soc}{\operatorname{soc}}
+\providecommand{\head}{\operatorname{head}}
+\providecommand{\rank}{\operatorname{rank}}
+\subsection{The problem and its inputs: first specify the category of operations}
+\subsubsection{Three distinct objects}
+Suppose that a Feynman problem comes with relative geometry, an integration chain, a form, and a subtraction scheme.
+Three structures often appear in the same study: the monodromy representation generated by analytic continuation of functions;
+the linear system consisting of finite matrices and allowed operations; and an object in the motivic category carrying Betti, de Rham, and Hodge realizations.
+All three admit the language of kernels, images, cyclic generation, and matrix coefficients, but their subobjects and morphisms generally differ.
+
+The head criterion in the original manuscript \nolinkurl{protected_period_network} applies to a correctly constructed monodromy module.
+The Hankel minimization in the original manuscript \nolinkurl{framed_exact_classification} applies to a supplied finite operational representation.
+Both scopes must be retained. The purpose of this paper is not to rename the original matrices as motives,
+but to establish the closure, descent, and framing conditions required to relate objects in the specified category to operations.
+
+The existence and uniqueness of minimal matrix-coefficient objects are established theory; see Brown\cite[\S2.4]{brownperiods}.
+For neutral Tannaka equivalence and its full faithfulness, see Deligne--Milne\cite[Theorem 2.11]{delignemilne}.
+Building on these foundations, this paper directly proves the interfaces needed for the project and classifies the specified objects; it claims no priority for the foundational theory.
+
+\subsubsection{Conventions}
+Fix a field $k$ of characteristic zero and a neutral Tannakian category $\mathcal C$ over it,
+together with a faithful exact Betti fiber functor $\omega_B$.
+There is also a compatible de Rham fiber functor $\omega_{\dR}$; for simplicity, both take values over the same field $k$ for now.
+For the specified $\Q$-fibers in this paper, both realizations are $\Q$-vector spaces.
+For motives over a more general number field, if the de Rham coefficients are extended, the subobjects below must still be taken in the original category.
+The descent condition cannot be omitted, nor can an invariant subspace after scalar extension be identified directly with a rational subobject over the original field.
+
+Use the homological convention for the object $E$, the chain $\sigma\in E_B$, and the functional
+$\lambda\in E_{\dR}^{\vee}$. The cohomological object of the framed period is then $E^\vee$,
+which has the same rank. For a subobject $J\subset E$ in the specified category,
+``$\lambda$ annihilates $J$'' means $\lambda|J_{\dR}=0$,
+not merely that a particular integral $\lambda(c(\sigma))=0$ vanishes.
+
+Finite length follows from the faithful exact finite-dimensional realization. Define
+\begin{equation}\label{ops:eq:basic}
+ R_\Sigma=\bigcap_{\Sigma\subset J_B}J,
+ \qquad I_\Omega=\sum_{\Omega|J_{\dR}=0}J,
+ \qquad \Vis(E;\Sigma,\Omega)=R_\Sigma/(R_\Sigma\cap I_\Omega).
+\end{equation}
+Both the intersection and the sum are taken over subobjects in the specified category. They are, respectively, the categorical closure of the chains and the maximal subobject invisible to the functionals.
+When $\Sigma,\Omega$ are each one-dimensional, \eqref{ops:eq:basic} is the homological description of the minimal period object.
+
+
+\subsection{Compatible minimization of diagrams in the specified category}
+\subsubsection{Diagrams, inputs, and all subsequent observations}
+Let $D$ be a finite directed diagram, possibly with cycles. Each vertex $v$ carries an object $E_v\in\mathcal C$,
+and each arrow $a:v\to w$ carries a morphism $f_a:E_v\to E_w$ \emph{whose existence in the specified category has already been proved}.
+Let the input chain spaces be $\Sigma_v\subset(E_v)_B$,
+and the local functional spaces be $\Omega_v\subset(E_v)_{\dR}^{\vee}$.
+The empty path denotes the identity morphism; for a path $p:v\to w$, write $f_p$ for its composite.
+
+An input invisible at $v$ need not remain invisible after passing along $v\to w$.
+All path functionals must therefore be retained simultaneously, rather than minimizing at each vertex first and then adding arbitrary operations.
+Set $R_v^0=R_{\Sigma_v}$ and $I_v^0=I_{\Omega_v}$, and define
+\begin{align}
+ R_v^{r+1}&=R_v^r+\sum_{a:u\to v}f_a(R_u^r),\label{ops:eq:Riter}\\
+ I_v^{r+1}&=I_v^0\cap\bigcap_{a:v\to w}f_a^{-1}(I_w^r).
+ \label{ops:eq:Iiter}
+\end{align}
+With no input, $R_v^0=0$; with no local functional, $I_v^0=E_v$.
+Inverse images, intersections, and images are all defined in $\mathcal C$.
+
+\begin{theorem}[Finite closure in the specified category]\label{ops:thm:network}
+Let $d=\sum_v\dim(E_v)_B$. The sequences \eqref{ops:eq:Riter}--\eqref{ops:eq:Iiter}
+are ascending and descending, respectively, and each stabilizes after at most $d$ strict changes.
+Their stable values satisfy
+\begin{align}
+ R_v&=\sum_{p:u\to v}f_p(R_u^0),\label{ops:eq:Rpaths}\\
+ I_v&=\bigcap_{p:v\to w}f_p^{-1}(I_w^0).\label{ops:eq:Ipaths}
+\end{align}
+Consequently, $K_v=R_v\cap I_v$ form a subdiagram, and
+\begin{equation}\label{ops:eq:networkQ}
+ Q_v=R_v/K_v
+\end{equation}
+and all induced arrows are objects and morphisms in the specified category.
+All framed formal periods of the original inputs along arbitrary paths are preserved.
+The reduced diagram is generated by its inputs in the category and has no nonzero subdiagram annihilated by all local functionals.
+\end{theorem}
+\begin{proof}
+Induction on path length shows that $R_v^r$ is the sum of path images of length at most $r$,
+and $I_v^r$ is the intersection of path inverse images of length at most $r$.
+Thus both sequences are monotone. Each strict change increases or decreases the total dimension of the realizations by at least one,
+while that dimension lies between $0$ and $d$.
+If all vertices remain unchanged at one step, the recursion gives the same result at the next step, so growth cannot resume after stabilization.
+This proves both finite termination and \eqref{ops:eq:Rpaths}--\eqref{ops:eq:Ipaths}.
+
+Composition of paths gives $f_a(R_v)\subset R_w$ and $f_a(I_v)\subset I_w$,
+so $f_a(K_v)\subset K_w$ and the quotient arrows exist in the specified category.
+The inputs lie in $R_v$, and every subsequent functional annihilates $K_v$.
+Functoriality of formal periods then gives equality for all path framings, without requiring injectivity of the period evaluation map.
+
+If a subdiagram of $Q$ contains all reduced inputs, its inverse image in $R$ still contains the original inputs.
+By minimality of $R$, that inverse image is $R$, so the subdiagram is $Q$.
+If $L\subset Q$ is a subdiagram invisible to all local functionals, its inverse image in $R$
+remains invisible along every path and hence lies in $I$. It has already been quotiented out by $K=R\cap I$, so $L=0$.
+\end{proof}
+
+This theorem gives a construction using finite length, \emph{not} a ready-made effective algorithm for computing Nori subobjects from an edge list.
+The initial objects $R_v^0,I_v^0$ already require knowledge of the closures in the specified category.
+Even with the termination bound $d$, if these subobjects or the morphisms in that category are unknown,
+the missing steps cannot be presented as completed linear algebra.
+
+\subsubsection{Why adding operations may invalidate the old quotient}
+Suppose that $Q_v=R_v/K_v$ have been obtained, and one now proposes to add $f:E_v\to E_w$.
+Even if $f$ is a morphism in the specified category, the old quotients carry this new arrow only if
+\begin{equation}\label{ops:eq:descent}
+ f(R_v)\subset R_w,\qquad f(K_v)\subset K_w
+\end{equation}
+holds. The first condition prevents new states outside the old reachable object;
+the second prevents a discarded state from becoming observable.
+
+The smallest linear counterexample is on $k^2$, with only the identity operation and with both input and functional supported on the first coordinate.
+The old minimal space is one-dimensional. After adding the matrix that interchanges the two coordinates,
+the second coordinate can be reached and then returned to the first; the old quotient no longer supports every response.
+This is only a counterexample for operational representations; it does not assert that the interchange matrix is a morphism of some unknown motive.
+
+\begin{corollary}[Permissible uses of physical relations]
+If numerator relations, boundary relations, or symmetry identities have been realized as morphism relations in the above diagram in the specified category,
+they remain valid in \eqref{ops:eq:networkQ}.
+A single vanishing numerical response, or a functional identity along a single path,
+does not suffice to quotient out the corresponding direction throughout the diagram.
+\end{corollary}
+\begin{proof}
+Relations among morphisms in the specified category remain valid after restriction to subobjects and passage to quotients.
+The second assertion follows from the definition: $I_v$ quantifies over all subsequent paths,
+and the vanishing of one specified response does not supply these conditions.
+\end{proof}
+
+
+\subsection{From Betti operations to motivic morphisms: an exact criterion on quotients}
+\subsubsection{The group to be tested is the actual group}
+In a neutral Tannakian subcategory containing the relevant objects, let
+$G=\operatorname{Aut}^{\otimes}(\omega_B)$.
+Given subquotients $Q_i=R_i/K_i$ and $Q_j=R_j/K_j$ in the specified category,
+suppose that a $k$-linear Betti operation $L:(E_i)_B\to(E_j)_B$ already satisfies
+\eqref{ops:eq:descent}. It induces a vector-space map $\bar L:(Q_i)_B\to(Q_j)_B$.
+For now, $L$ is not assumed to be a motivic morphism on the ambient objects.
+
+\begin{theorem}[Comodule descent criterion]\label{ops:thm:intertwine}
+The map $\bar L$ above comes from a unique morphism $Q_i\to Q_j$ in the specified category if and only if
+\begin{equation}\label{ops:eq:commutator}
+ \bigl(\rho_j(g)L-L\rho_i(g)\bigr)(R_i\otimes A)
+       \subset K_j\otimes A
+\end{equation}
+holds for every $k$-algebra $A$ and every $g\in G(A)$.
+Equivalently, let $q_j:(R_j)_B\to(Q_j)_B$, and denote the coaction by
+$\delta_i:(R_i)_B\to(R_i)_B\otimes\mathcal O(G)$. Then
+\begin{equation}\label{ops:eq:comodule}
+ (q_j\otimes\id)\delta_j L|_{R_i}
+       =(q_jL|_{R_i}\otimes\id)\delta_i.
+\end{equation}
+If an intended de Rham map is also specified, one must check that it agrees with the
+de Rham realization of this unique morphism in the category.
+\end{theorem}
+\begin{proof}
+Since $R_i,K_i,R_j,K_j$ are subobjects in the specified category, their Betti realizations are $G$-stable.
+Thus \eqref{ops:eq:commutator} says exactly that $\bar L$ is $G$-equivariant,
+and \eqref{ops:eq:comodule} expresses the same condition in terms of the coordinate ring.
+Fullness of the neutral Tannaka equivalence gives the morphism in the category; faithfulness gives uniqueness.
+The converse follows from the naturality of morphisms in the category with respect to all tensor automorphisms of the fiber functor.
+\end{proof}
+
+This criterion has two uses. First, $L$ may fail to be equivariant on the ambient objects but become equivariant after the invisible kernel is quotiented out;
+requiring the ambient commutator to vanish identically may therefore be too strong. Second, $G$ cannot be replaced by an easily computed
+monodromy subgroup or a collection of formal operations. Equivariance under a smaller group generally gives only a necessary condition.
+If the actual group is not yet known, the theorem remains a condition to be checked; it does not provide an automatic lift for arbitrary graphs.
+
+On finite-dimensional representations, the two sides of \eqref{ops:eq:comodule} use only finitely many coordinate functions.
+They can therefore be converted into finitely many linear conditions \emph{once the actual coaction has been supplied}.
+This does not require working only with $G(k)$, nor does it assume that the rational points are Zariski dense.
+
+\subsubsection{A direct obstruction to endomorphisms}
+\begin{corollary}\label{ops:cor:scalar}
+If $R=E,K=0$ and $\End_{\mathcal C}(E)=k$,
+then the Betti operations that can be endomorphisms of this fixed minimal object are exactly the scalar matrices.
+In particular, a nonscalar monodromy reflection cannot be declared a motivic endomorphism of this object merely because ``it preserves the pairing.''
+\end{corollary}
+\begin{proof}
+Theorem~\ref{ops:thm:intertwine} identifies the allowed maps with
+$\End_G(E_B)=\End_{\mathcal C}(E)$, namely the scalars.
+Preserving a pairing says only that a matrix belongs to an isometry group, not that it commutes with the actual Galois action.
+\end{proof}
+
+This does not exclude genuine cut operations. The tube morphism dual to a residue is usually
+$f:C\to E$, whose \emph{source is another object in the specified category, with a Tate twist};
+it is not an arbitrary prescribed matrix $E\to E$.
+One must verify the categorical origin of $f$, its chain marking, and $f^*\lambda$, rather than identify local monodromy itself with $f$.
+
+
+\subsection{Reusable rules and work still required}
+This supplement adds three directly applicable theoretical rules to the unified classification program.
+
+First, closure under operations must start from a diagram in the specified category and account for all subsequent functionals.
+Theorem~\ref{ops:thm:network} gives the canonical reduced diagram.
+Before adding an operator to an existing quotient, check that it preserves the reachable subobject and the invisible kernel.
+
+Second, even a linear operation that has descended must pass the equivariance test for the actual coaction.
+Theorem~\ref{ops:thm:intertwine} formulates this obligation precisely on the quotient,
+without incorrectly demanding ambient equivariance or treating monodromy, preservation of a pairing, or Hodge compatibility as motivicity.
+
+Third, in an object of the specified category whose simple socle has been identified,
+a nonzero functional on the pure core can be much stronger than protection by the head alone.
+The complete table for the specified banana gives all minimal objects with two framings and the numerator stratification for a fixed chain;
+the simultaneous retention of the mixed extensions follows from the subobject structure in the specified category.
+
+These rules do not construct the still-missing Nori groups for general graphs, all gauge projections,
+a uniform relative model for arbitrary numerators, or a realization of every physical quotient.
+The geometric objects of positive-mass zero-momentum forests can serve as diagram vertices,
+but subtraction or local RG extraction still needs its own geometric comparison to become an arrow.
+Nor does the present work regard the existing convergence proof for forests at zero momentum as having been reaudited in this section.
+
+Further theoretical work could begin with a finite family having an explicit relative numerator class,
+write $L$ and the restriction maps in the same object, and derive concrete linear vanishing conditions;
+alternatively, it could supply a diagram morphism for a geometric subtraction or local projection.
+Both routes rest on geometric definitions and proofs; enlarging numerical matrices is no substitute.
+
+
+
+\endgroup
+
+
+\section{Higher derivatives, mass logarithms and the specified fiber}\label{supp:deriv}
+\begingroup
+\providecommand{\Q}{\mathbb Q}
+\providecommand{\C}{\mathbb C}
+\providecommand{\dR}{\mathrm{dR}}
+\providecommand{\Ann}{\operatorname{Ann}}
+\providecommand{\Gr}{\operatorname{Gr}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\rk}{\operatorname{rk}}
+\providecommand{\cE}{\mathcal E}
+\providecommand{\cM}{\mathcal M}
+\subsection{Generation at order three and extraction of Kummer periods}
+\subsubsection{Functionals for the mass logarithms}
+In $F^1\cM\cap\Ann(K)$ define the three unique sections $\kappa_r$ by
+\begin{equation}\label{deriv:eq:kappa}
+ \kappa_r|K=0,\quad \kappa_r(\beta_j)=\delta_{rj}\ (1\le j\le3),
+ \quad \kappa_r(e)=0.
+\end{equation}
+Define the functional $\xi$ on the top quotient by
+\begin{equation}\label{deriv:eq:xi}
+ \xi|K=0,\quad\xi(\beta_j)=0,\quad\xi(e)=1.
+\end{equation}
+These definitions take place in the de Rham realization of the object. They do not require $\kappa_r$ to be a motivic morphism.
+
+\begin{proposition}[The dual Kummer connection]\label{deriv:prop:kummer}
+Put $r_r=x_r/x_4$. Then
+\begin{equation}\label{deriv:eq:kummerconnection}
+ \nabla\kappa_r=-d\log r_r\,\xi,\qquad \nabla\xi=0.
+\end{equation}
+Consequently, $\mathcal J^3=\cM$.
+\end{proposition}
+\begin{proof}
+Since $K$ is horizontal and $\kappa_r|K=0$, the derivative $\nabla\kappa_r$ still annihilates $K$. The identity $\nabla\beta_j=C_{j\bullet}\in K$ shows that it also annihilates the three $\beta_j$. Evaluating on $e$, \otherref{feynman_periods_long_paper_en}{main-text equation (6.12)} gives
+\[
+ (\nabla_{D_i}\kappa_r)(e)=
+ \begin{cases}-\delta_{ri},&i\le3,\\+1,&i=4.\end{cases}
+\]
+This proves the first identity. For the second, every derivative of the frame lies in $K+\langle\beta_1,\beta_2,\beta_3\rangle$. By \otherref{feynman_periods_long_paper_en}{main-text Proposition 6.5}, $\kappa_r\in\mathcal J^2$. Differentiating its local second-order expression gives an element of $\mathcal J^3$, and $-\nabla_{D_r}\kappa_r=\xi$. Since $\xi\notin F^1\cM$, the nine-dimensional space at order two becomes ten-dimensional at order three.
+\end{proof}
+
+\begin{theorem}[Derivative filtration of the physical form]\label{deriv:thm:jets}
+On the specified marked smooth open set of the four-parameter family, the normalized physical form satisfies
+\begin{equation}\label{deriv:eq:jets}
+ \boxed{\mathcal J^r=F^{3-r}\cM\quad(0\le r\le3),
+ \qquad (\rk\mathcal J^0,\rk\mathcal J^1,\rk\mathcal J^2,\rk\mathcal J^3)
+ =(1,5,9,10).}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Apply, in order, \otherref{feynman_periods_long_paper_en}{main-text equation (6.24)}, \otherref{feynman_periods_long_paper_en}{main-text Proposition 6.5}, and Proposition~\ref{deriv:prop:kummer}.
+\end{proof}
+
+\subsubsection{Constructing second-order operators before evaluating the integral}
+The existence argument gives a finite construction by rational linear algebra, without further period calculations. With the ten symmetric indices $i\le j$ as columns, form the four-row matrix
+\begin{equation}\label{deriv:eq:Bmatrix}
+ \mathcal B_{\bullet,(ij)}=
+ (Y_{ij},(T_1)_{ij},(T_2)_{ij},(T_3)_{ij})^{\mathsf t}.
+\end{equation}
+Its rank is four. On an open set where a chosen four-by-four minor is nonzero, solve
+\[
+ \mathcal Bc=(0,\delta_{1r},\delta_{2r},\delta_{3r})^{\mathsf t}
+\]
+to obtain $h_r=\sum_{i\le j}c_{ij}\lambda_{ij}$. Its difference from the desired $\kappa_r$ annihilates $\Omega,\beta_1,\beta_2,\beta_3,e$ and hence belongs to $F^2\cM$. Subtract this difference uniquely in the known basis $\lambda,\lambda_1,\ldots,\lambda_4$. This gives
+\begin{equation}\label{deriv:eq:operator}
+ \kappa_r=\mathscr P_r\lambda,
+ \quad\mathscr P_r=
+ \sum_{i\le j}c_{ij}D_jD_i+\sum_i a_iD_i+a_0,
+ \quad c_{ij},a_i,a_0\in\Q(x).
+\end{equation}
+The required rational expressions for the pure restrictions and their pairings are supplied by the constructed connection. We prove that this construction can be completed; we do not print the potentially long expanded coefficients or claim to have generated a new operator file. Different minor charts may give different operators, but their functionals all equal the uniquely defined $\kappa_r$.
+
+Derivatives of the coefficients must be included. Thus the third-order operator extracting the constant is the composition $-D_r\circ\mathscr P_r$, not an expression in which $D_r$ acts only on the final integral factor.
+
+\subsubsection{Exact values and signs on the physical chain}
+The mass 1-motive is $[\mathbb Z\to\mathbb G_m^3]$, with units $(r_1,r_2,r_3)$. Retain the de Rham residue basis $P$, the 1-motive cocharacter basis $-P$, and $\nu=e_F-\sigma_{\rm phys}$. The mass comparison fixes the three middle coordinates of $\nu$ as $+\log r_r$. On the positive real branch,
+\begin{equation}\label{deriv:eq:physicalextract}
+ \boxed{\mathscr P_rJ=-\log(x_r/x_4),\qquad
+       -D_r(\mathscr P_rJ)=1.}
+\end{equation}
+These logarithms are not fitted after evaluating the full amplitude. The Kummer quotient and its chain marking fix the integration constant in the first identity; the second also follows directly from \eqref{deriv:eq:kummerconnection}. A connection without a specified chain would in general leave an integration constant, which could not be set to zero. Here we use the already normalized physical chain, rather than an arbitrary Betti lift of the top class.
+
+At the specified point the three functionals give $6\log2,4\log2,2\log2$. They do not represent three independent mass directions. This accounts for the restriction from rank ten to rank eight below.
+
+\subsection{The specified rank-eight object and the first possible elimination orders}
+\subsubsection{Restricting the Hodge filtration to the active object}
+The specified object has the established filtration and simple pure part
+\begin{equation}\label{deriv:eq:active}
+ 0\subset A\subset N_*\subset E_*,\quad
+ A=K_{x_*}(3),\quad N_*/A=\Q(1),\quad E_*/N_*=\mathbf1.
+\end{equation}
+The middle lift is $\beta_c=3\beta_1+2\beta_2+\beta_3$. The full $U_{13}$ action shows that the only subobjects are $0,A,N_*,E_*$, and the original physical chain generates $E_*$. The resulting classification is as follows. A functional nonzero on $A$ has minimal object $E_*$. A functional annihilating $A$ but not $N_*$ has the rank-two Kummer quotient as minimal object. A nonzero functional annihilating $N_*$ gives the unit object.
+
+\begin{theorem}[Derivative dimensions and first occurrence at the specified point]\label{deriv:thm:fixed}
+Evaluate the four-parameter derivatives at $x_*$ and restrict them to $E_*$. The spaces through orders zero to three are
+\begin{equation}\label{deriv:eq:fixedjets}
+ \boxed{J_*^r=F^{3-r}(E_*^\vee)_{\dR},\qquad
+ (\dim J_*^0,\dim J_*^1,\dim J_*^2,\dim J_*^3)=(1,5,7,8).}
+\end{equation}
+With the original physical chain fixed, every nonzero functional of order at most one has minimal rank eight. The first possible derivative order for a nonzero rank-two functional is two; for a nonzero rank-one functional it is three.
+\end{theorem}
+\begin{proof}
+The dual of the inclusion $E_*\hookrightarrow\cE_{x_*}(3)$ is a surjection of Hodge structures and is therefore strict for the Hodge filtration. Theorem~\ref{deriv:thm:jets} descends to \eqref{deriv:eq:fixedjets}. This uses strictness at a single fiber, not horizontality of the rank-eight object over the four-parameter base.
+
+Restriction from $F^2E_*^\vee$ to $A$ is injective: its pure image is the five-dimensional $F^2A^\vee$, whereas $\Ann(A)$ has only the top type $(0,0)$ and middle type $(1,1)$. A nonzero functional of order at most one therefore cannot annihilate $A$, and the subobject classification gives minimal rank eight.
+
+Inside $F^1E_*^\vee$, the annihilator of $A$ is one-dimensional. It is generated by the Kummer functional with $\kappa_c(\beta_c)=1$ and $\kappa_c(e)=0$. Restriction gives $\kappa_r|E_*=c_r\kappa_c$, where $(c_1,c_2,c_3)=(3,2,1)$. Order two already generates this functional, and $\kappa_c(\sigma_{\rm phys})=2\log2$. Its minimal object is the nonsplit rank-two quotient.
+
+Finally, $\Ann(N_*)$ is spanned by $\xi$. Since $\xi(e)=1$, it does not belong to $F^1E_*^\vee$. A nonzero unit functional cannot occur at order at most two; at order three it is realized by $\xi$, with period one.
+\end{proof}
+
+\begin{center}\small
+\begin{tabular}{c|c|c|p{65mm}}
+\toprule
+Order & Family dimension & Active dimension & Newly available physical functional\\
+\midrule
+$0$&$1$&$1$&Original mixed K3 amplitude\\
+$1$&$5$&$5$&All nonzero functionals retain the full rank-eight object\\
+$2$&$9$&$7$&Mass Kummer functional (minimal rank two)\\
+$3$&$10$&$8$&Constant Tate functional (minimal rank one)\\
+\bottomrule
+\end{tabular}
+\end{center}
+Relations can give the zero functional at any order; the table concerns nonzero objects. Obtaining the pure rank-six maximal cut still requires changing the chain. The original physical chain is fixed throughout this discussion.
+
+\subsubsection{The unique first-order annihilation relation in the original variables}
+\begin{corollary}[The Euler relation exhausts the first-order exceptions]\label{deriv:cor:Euler}
+At the specified point, take rational coefficients $a,v_s,v_1,\ldots,v_4$ and consider
+\begin{equation}\label{deriv:eq:firstop}
+ \Bigl(a+v_s\partial_s+\sum_iv_i\partial_{\mu_i}\Bigr)I.
+\end{equation}
+Its restriction to the pure K3 part vanishes if and only if there is a $t\in\Q$ such that
+\begin{equation}\label{deriv:eq:Eulervector}
+ a=t,\qquad v_s=ts,\qquad v_i=t\mu_i.
+\end{equation}
+In that case the entire functional is zero. Every other combination in \eqref{deriv:eq:firstop} has the full rank-eight $E_*$ as its minimal framed object.
+\end{corollary}
+\begin{proof}
+In the five-parameter presentation, the pure derivatives of the unnormalized residue $\omega=\Omega/s$, modulo the holomorphic line, give the differential of the parameter period map. The local Torelli argument above identifies its kernel with the common scaling direction $\mathsf E=s\partial_s+\sum\mu_i\partial_{\mu_i}$. Vanishing of the pure restriction therefore first forces $v=t\mathsf E$. Homogeneity gives $\nabla_{\mathsf E}\omega=-\omega$, so $(a-t)\omega=0$, and hence $a=t$.
+
+The converse holds for the whole form. By \otherref{feynman_periods_long_paper_en}{main-text equation (6.18)}, the numerator of the combined form is
+\[
+ aP+v_s-\sum_i v_i\alpha_iN.
+\]
+Substitution of \eqref{deriv:eq:Eulervector} makes it identically zero. Thus the unique exception comes from the identity of full forms
+\begin{equation}\label{deriv:eq:Euler}
+ \boxed{\Bigl(1+s\partial_s+\sum_i\mu_i\partial_{\mu_i}\Bigr)I=0.}
+\end{equation}
+Every other combination has nonzero pure restriction, so Theorem~\ref{deriv:thm:fixed} and the subobject classification apply.
+\end{proof}
+The coefficients in \eqref{deriv:eq:firstop} specify the zeroth and first jets at the point. For parameter-dependent coefficients, the corollary applies pointwise. It does not identify accidental numerical cancellation with vanishing of a form or class. In particular, each individual first mass or momentum derivative retains the entire mixed object at the specified point.
+\endgroup
+
+
+\section{The multiple-residue complex}\label{supp:cut}
+\begingroup
+\subsection{Multiple residues and a filtration}\label{sec:cut:3}
+Let \(D=\bigcup_{i=1}^mD_i\) be a labeled simple-normal-crossing divisor, and let $B$ meet all its intersection strata transversely. For an ordered set \(C=(i_1,\ldots,i_r)\), define
+\begin{equation}
+Z_C=(D_{i_1}\cap\cdots\cap D_{i_r})
+                         \setminus\bigcup_{j\notin C}D_j,
+ \quad B_C=B\cap Z_C,
+ \quad M=H^n(X\setminus D,B\setminus D).
+\end{equation}
+Successive application of \otherref{feynman_periods_long_paper_en}{main-text equation (7.4)} gives
+\begin{equation}
+r_C:M\longrightarrow N_C:=H^{n-r}(Z_C,B_C)(-r).       \label{eq:cut:3.1}
+\end{equation}
+At each step, restore only the next divisor along which the residue is to be taken; all uncut components remain deleted. This avoids incorrectly requiring the residue form to be regular at their intersections.
+
+Locally take the coefficient of \(dz_{i_1}/z_{i_1}\wedge\cdots\wedge dz_{i_r}/z_{i_r}\) in that order. Interchanging two divisors changes both the residue sign and the orientation of the ordered normal tube. Once the order is fixed,
+\begin{equation}
+\int_{\operatorname{Tub}_C\gamma}\omega
+       =(2\pi i)^r\int_\gamma\operatorname{res}_C\omega.\label{eq:cut:3.2}
+\end{equation}
+This is the relative version of the classical iterated-residue formula; see Theorems 17--18 of \cite{muhlbauer} for the basic absolute formula. No novelty is claimed for the residue theorem.
+
+Combine all size-$r$ cuts into \(r^{(r)}=\oplus r_C\), with \(r^{(0)}=id_M\), and define
+\begin{equation}
+K_r=\ker r^{(r)},\qquad E=M^\vee,\qquad
+ T_r=\operatorname{im}\bigl((r^{(r)})^\vee\bigr).
+                                                               \label{eq:cut:3.3}
+\end{equation}
+An empty intersection or negative cohomological degree gives the zero target. For \(r>\min(n,\dim X,m)\), set \(K_r=M\) and \(T_r=0\).
+
+\begin{theorem}[Residue filtration of a fixed model]\label{thm:cut:3.1}
+\begin{equation}
+0=K_0\subseteq K_1\subseteq K_2\subseteq\cdots\subseteq M,
+ \qquad E=T_0\supseteq T_1\supseteq T_2\supseteq\cdots\supseteq0,
+ \qquad T_r=K_r^\perp\simeq(M/K_r)^\vee.              \label{eq:cut:3.4}
+\end{equation}
+All terms are subobjects in the specified category.
+\end{theorem}
+\begin{proof}
+Every $(r+1)$-fold residue factors as an $r$-fold residue followed by one further residue. Thus vanishing of all $r$-fold residues implies vanishing of all $(r+1)$-fold residues, giving \(K_r\subset K_{r+1}\). Duality in a neutral Tannakian category is exact; the image of the dual map is the annihilator of the original kernel. This proves the remaining assertions. Changing the order affects signs but not kernels or images.
+\end{proof}
+
+These inclusions define a filtration whose input is a fixed labeled normal-crossing model. They are more precise than an informal division into combinatorial, geometric and physical layers. We have not proved equality with the weight or coradical filtration, nor invariance under the addition of arbitrary exceptional components in a resolution. Residues are compatible with pullback preserving the labels and transversality conditions. Comparison under a general blowup requires a separate geometric diagram.
+
+For a single divisor, \otherref{feynman_periods_long_paper_en}{main-text equation (7.2)} also gives
+\begin{equation}
+K_1=\operatorname{im}\{H^n(X,B)\to M\}.              \label{eq:cut:3.5}
+\end{equation}
+All tube periods therefore miss these classes extending across $D$. Cut data alone do not unconditionally recover the original period.
+\endgroup
+
+
+\section{Scale comparison and finite subtraction}\label{supp:primitive}
+\begingroup
+\subsection{Common scaling, MS comparison and coaction}\label{sec:primitive:8}
+Let \(\kappa=\lambda\kappa_0\) scale every mass squared and every external momentum-squared invariant by \(\lambda>0\), keeping all ratios fixed. Then \(F_\kappa=\lambda F_0\), and \(r=\lambda^{-1}\) is constant on the \(\alpha\) base. The product pair and the K\"unneth isomorphism give
+\begin{equation}
+R_G^{\mathfrak m}(\lambda\kappa_0,\kappa_0)
+                       =-p_G^{\mathfrak m}\log^{\mathfrak m}\lambda,
+ \qquad \frac{dR_G}{d\log\lambda}=-p_G
+                         =-h\operatorname{Res}_{\epsilon=0}I_\epsilon.      \label{eq:primitive:20}
+\end{equation}
+The UV period defined by \(\eta,\sigma\) on the common base agrees with that of the larger constant model through the geometric restriction relation. Equation~\eqref{eq:primitive:20} does not apply to varying only the external momentum at fixed masses; that variation usually changes the angles as well. A physical \(\beta\)-function additionally requires coupling powers, graph weights, operators and an RG-time convention. It is not simply \(p_G\).
+
+Use Brown's right de Rham coaction convention\cite{brownperiods}, with \(L^{\mathrm{dr}}\) the character of $\mathbb Q(-1)$. Then
+\begin{equation}
+\Delta\log^{\mathfrak m}\lambda
+   =\log^{\mathfrak m}\lambda\otimes L^{dr}
+                         +1\otimes\log^{dr}\lambda,
+\end{equation}
+\begin{equation}
+\Delta R_G^{\mathfrak m}
+  =-\Delta p_G^{\mathfrak m}
+       \big(\log^{\mathfrak m}\lambda\otimes L^{dr}
+                              +1\otimes\log^{dr}\lambda\big).              \label{eq:primitive:21}
+\end{equation}
+The full coaction of \(p_G\) must be retained. If its arithmetic object is not Tate, those directions cannot be discarded merely because the dependence on \(\lambda\) is a single logarithm. For general \(\kappa\), \otherref{feynman_periods_long_paper_en}{main-text equation (9.14)} still has its canonical coaction, but \eqref{eq:primitive:21} does not give all its entries explicitly.
+
+For nonzero \(p_G\), the scale amplitude satisfies \((\lambda\partial_\lambda)^2R_G=0\), and its minimal homogeneous differential order over \(k(\lambda)\) is exactly two. Continuation around \(\lambda=0\) sends $\log\lambda$ to $\log\lambda+2\pi i$; the branches span the two independent functions $1$ and $\log\lambda$. This parameter differential order differs from the rank of the fixed arithmetic object needed for \(p_G\). The argument uses functional monodromy, not a Nori automorphism of a fixed fiber.
+
+Finally, in the same regularization convention write \(I_\epsilon(\kappa)=p_G/(h\epsilon)+f(\kappa)+O(\epsilon)\). Then
+\begin{equation}
+R_G(\kappa,\kappa_0)=f(\kappa)-f(\kappa_0),\qquad
+                 C_{MS}(G)=-p_G/(h\epsilon).                    \label{eq:primitive:22}
+\end{equation}
+This is the precise comparison between the MS pole and the finite point-subtracted amplitude of a primitive graph. Without further normalization, $f$ can contain Euler's constant or measure constants. Equation~\otherref{feynman_periods_long_paper_en}{(9.14) of the main text} does not make every unadjusted MS finite part an ordinary Nori period. Common regularization constants cancel in the difference. Nor does \eqref{eq:primitive:22} replace the finite scheme transformation of a coupling defined by several graphs.
+
+\subsection{A physical counterexample and the scope of the result}\label{sec:primitive:9}
+The four-dimensional massive one-loop bubble with unit propagator powers satisfies \otherref{feynman_periods_long_paper_en}{main-text condition (9.1)}, with \(U=\alpha_1+\alpha_2\) and \(p_G=1\). In the positive-density representation on \(\sum\alpha=1\),
+\begin{equation}
+R_G(Q^2,Q_0^2)=\int_0^1
+ \log\frac{m_1^2x+m_2^2(1-x)+Q_0^2x(1-x)}
+          {m_1^2x+m_2^2(1-x)+Q^2x(1-x)}\,dx,\qquad
+ \partial_{Q^2}R_G=-\int_0^1\frac{x(1-x)}{F_Q(x)}dx<0.            \label{eq:primitive:23}
+\end{equation}
+The denominator is positive in the Euclidean region with positive masses. All these data have the same UV period and simple MS pole, yet the finite subtracted amplitude varies strictly with $Q^2$. This analytic counterexample from a physical graph shows that UV data cannot reconstruct the full finite amplitude. Evaluating the full integral is unnecessary.
+
+Under the stated hypotheses, we have constructed a global relative period in the range of \otherref{feynman_periods_long_paper_en}{main-text condition (9.1)}, a Kummer model with separated endpoints and a quotient by the pushforward kernel. We have also proved the formal subtraction-point identity, a one-parameter differential upper bound, and the explicit coaction and MS-pole comparison along a scaling ray. These results retain the finite-amplitude geometry beyond its UV period. The primitive model does not cover all graphs with overlapping subdivergences.
+
+With subdivergences, the forest boundary poles must be canceled in a common geometric pair, and the relative framing must be compared with the specified global subtraction scheme. \otherref{feynman_periods_long_paper_en}{Main-text Section 9} treats the common-lift criterion and a two-loop example; \otherref{feynman_periods_long_paper_en}{Section 10} treats positive-mass zero-momentum logarithmic forests. Divergent logarithmic terms cannot be treated separately by \otherref{feynman_periods_long_paper_en}{main-text equation (9.14)} and then added.
+\endgroup
+
+
+\section{A two-loop example of the common forest lift}\label{supp:forest}
+
+\begingroup
+
+\subsection{The two-loop graph and independent subtraction conditions}\label{sec:forest:2}
+
+Take three vertices u,v,w, with parallel edges a,b joining u to v, an edge c joining u to w, and an edge d joining v to w. Every edge has power one, \(D=4- 2\epsilon \), and the Euclidean measure per loop is normalized by \(\pi ^{- D/2}\). The four squared masses \(\mu _a,\)\ldots{}\(,\mu _d\) are strictly positive and fixed. The external momenta satisfy \(p_u+p_v+p_w=0\); write
+
+\begin{equation}
+A=p_u^2,\qquad B=p_v^2,\qquad S=p_w^2,
+ \qquad \kappa=(A,B,S).
+\end{equation}
+
+Both \(\kappa \) and the overall reference \(\kappa _0\) are data realized by Euclidean momenta. The reference squared external invariant for the bubble subgraph \(\gamma ={a,b}\) is \(\nu \ge 0\). One may choose \(\nu \) independently of \(\kappa _0\); once chosen, it remains fixed during the overall subtraction.
+
+The graph G has \(h=2\) and \(N=4\), and its only proper UV-divergent edge subgraph is \(\gamma \). Both this subgraph and the quotient \(c=G/\gamma \) are logarithmically divergent bubbles. To distinguish the quotient from the edge c, we henceforth denote the quotient by C and retain c,d for the edges. Spanning trees and two-forests give
+
+\begin{equation}
+U_\gamma=a+b,\quad U_C=c+d,\quad V=U_\gamma U_C,
+ \quad U_G=V+ab,                                                \label{eq:forest:7}
+\end{equation}
+
+\begin{equation}
+F_G(\kappa)=S(a+b)cd+ab(Ac+Bd)
+                +U_G(\mu_a a+\mu_b b+\mu_c c+\mu_d d),           \label{eq:forest:8}
+\end{equation}
+
+\begin{equation}
+F_\gamma^\nu=\nu ab+(a+b)(\mu_a a+\mu_b b),\quad
+ F_C^S=S cd+(c+d)(\mu_c c+\mu_d d),
+\end{equation}
+
+\begin{equation}
+K_\nu(\kappa)=U_\gamma F_C^S+U_C F_\gamma^\nu.                  \label{eq:forest:9}
+\end{equation}
+
+This is the Dunce's-cap graph of \cite{bk2012}, Section~5, with edges relabeled as \(a=A_3\), \(b=A_4\), \(c=A_1\), and \(d=A_2\). Its two-forest formula agrees with \eqref{eq:forest:8}, with masses added through \(U\sum \mu \alpha \). The classical graph polynomials and forest formula are explicitly attributed to that source.
+
+Define \(I_G\), \(I_\gamma \), and \(I_C\) using the same \(\epsilon \) and \(\mu _R\). The scheme used here is explicitly
+
+\begin{equation}
+R_\nu(\kappa,\kappa_0)=\lim_{\epsilon\to0}
+ \left[I_G(\kappa)-I_G(\kappa_0)
+ -I_\gamma(\nu)\{I_C(S)-I_C(S_0)\}\right].                       \label{eq:forest:10}
+\end{equation}
+
+Thus we first use \(- I_\gamma (\nu )\) as the constant subgraph counterterm and then subtract the entire prepared amplitude at \(\kappa _0\). This is the specified momentum-subtraction scheme, not MS. No \(\phi ^{4}\) coupling or graph symmetry factor has been included.
+
+
+\subsection{Deriving the forest formula from Schwinger parameters}\label{sec:forest:3}
+
+The bare integrals above converge for sufficiently small \(Re \epsilon >0\). For G, the formula is
+
+\begin{equation}
+I_G(\kappa)=\mu_R^{4\epsilon}\Gamma(2\epsilon)
+             \int_\sigma \Omega_G
+                  U_G^{-2+3\epsilon}F_G(\kappa)^{-2\epsilon}.    \label{eq:forest:11}
+\end{equation}
+
+The two independent overall Schwinger scales of the subgraph and quotient can also be combined into one overall scale. The exponent is \(F_\gamma ^\nu/U_\gamma +F_C^S/U_C=K_\nu /V\), and the determinant factor is \(V^{-D/2}\). Hence
+
+\begin{equation}
+I_\gamma(\nu)I_C(S)=\mu_R^{4\epsilon}\Gamma(2\epsilon)
+             \int_\sigma\Omega_G V^{-2+3\epsilon}
+                                      K_\nu(\kappa)^{-2\epsilon}.          \label{eq:forest:12}
+\end{equation}
+
+Equation~\eqref{eq:forest:12} is a change of variables in the product integral, including the full Gamma and scale factors; it does more than match poles. All chains carry the positive Schwinger orientation.
+
+Substituting into \eqref{eq:forest:10}, with the uniform boundary control needed to exchange the limit proved in the next section, gives
+
+\begin{equation}
+R_\nu=\int_\sigma\Omega_G
+ \left\{\frac{\log(F_0/F)}{U_G^2}
+      -\frac{\log(K_0/K)}{V^2}\right\}.                         \label{eq:forest:13}
+\end{equation}
+
+Here \(F=F_G(\kappa )\), \(F_0=F_G(\kappa _0)\), \(K=K_\nu (\kappa )\), and \(K_0=K_\nu (\kappa _0)\). The sign is fixed by \eqref{eq:forest:10} and is opposite to some amplitude conventions in the literature; it cannot be inferred solely from the order of logarithms in those conventions.
+
+Using a common parameter u, lift \eqref{eq:forest:13} to
+
+\begin{equation}
+\Xi_\nu=\Omega_G\wedge du\left[
+ \frac{F_0-F}{U_G^2\{(1-u)F+uF_0\}}
+ -
+ \frac{K_0-K}{V^2\{(1-u)K+uK_0\}}\right].                       \label{eq:forest:14}
+\end{equation}
+
+This is a combined rational form on a single space. Its two terms may diverge separately, so they cannot first be assigned ordinary convergent periods individually.
+
+
+\subsection{Checking every boundary and corner}\label{sec:forest:4}
+
+Let X be the smooth toric model of P\textsuperscript{3} associated with complete coordinate flags. Each boundary divisor is labeled by a nonempty proper edge subset T, and the subsets T in a local Hepp flag are nested. For \(\omega _U=\Omega _G/U_G^{2}\) and \(\omega _V=\Omega _G/V^{2}\), the respective boundary exponents are \(|T|- 2h_G(T)- 1\) and \(|T|- 2h_V(T)- 1\), where
+
+\begin{equation}
+h_V(T)=\mathbf1_{\{a,b\}\subset T}+\mathbf1_{\{c,d\}\subset T}.
+\end{equation}
+
+The following cases exhaust the possibilities without enumerating individual subsets:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lrrp{0.38\linewidth}@{}}
+\toprule\noalign{}
+Edge subset \(T\) & \(h_G(T)\) & \(h_V(T)\) & Possible logarithmic pole \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Single edge & 0 & 0 & None \\
+\{a,b\} & 1 & 1 & Both terms \\
+\{c,d\} & 0 & 1 & Counterterm form only \\
+Other two-edge subsets & 0 & 0 & None \\
+Any three-edge subset & 1 & 1 & None \\
+\end{longtable}
+}
+
+The two types of logarithmic face in the table do not occur in the same flag, and the exponents at all other corners are nonnegative. Positive masses give positive lower bounds for the sector cofactors of F and \(F_0\) relative to \(U_G\), and of K and \(K_0\) relative to V. Thus both ratios are algebraic units in a neighborhood of the positive chain.
+
+At the \(\gamma \)-face, set \(a=t\alpha \) and \(b=t\beta \), leaving c,d unscaled. Then
+
+\begin{equation}
+U_G=t(\alpha+\beta)(c+d)+O(t^2),\quad
+ V=t(\alpha+\beta)(c+d),
+\end{equation}
+
+\begin{equation}
+F=t(\alpha+\beta)F_C^S+O(t^2),\qquad
+ K=t(\alpha+\beta)F_C^S+O(t^2).                                 \label{eq:forest:15}
+\end{equation}
+
+The leading terms of \(F_0\) and \(K_0\) also agree. Hence \(\omega _U\) and \(\omega _V\) have the same residue, and both ratios restrict to \(F_C^{S0}/F_C^S\). Incorporating the counterterm's minus sign into \(\eta _2=- \omega _V\), the residues cancel within the same group in the theorem of \otherref{feynman_periods_long_paper_en}{Section~9.5 of the main text}.
+
+At the \{c,d\}-face, instead set \(c=t\chi \) and \(d=t\delta \). Then
+
+\begin{equation}
+K=t(\chi+\delta)F_\gamma^\nu+O(t^2),\qquad
+ K_0-K=t^2(a+b)(S_0-S)\chi\delta.                              \label{eq:forest:16}
+\end{equation}
+
+Thus \(K_0/K\) restricts to 1 and belongs to the group requiring no additional residue condition in the theorem of \otherref{feynman_periods_long_paper_en}{Section~9.5 of the main text}. This face is a potential pole introduced by the counterterm, absent from the original graph; the overall subtraction at the reference point cancels it exactly. Checking only the original graph's \(\gamma \)-face would miss this step.
+
+The table and \eqref{eq:forest:15}--\eqref{eq:forest:16} show that \eqref{eq:forest:14} is regular at all coordinate boundaries and corners. For the small-\(\epsilon \) versions of \eqref{eq:forest:11}--\eqref{eq:forest:12}, the normalized leading terms at the \(\gamma \)-face remain exactly equal for every \(\epsilon \); their difference gains one factor of t. At the other potential logarithmic face, the extra t in \(K_0- K\) supplies the same additional factor in the difference quotient. All other exponents and positive lower bounds remain stable for small \(\epsilon \), and finitely many \(\epsilon \)-derivatives introduce at most integrable logarithms. This establishes the dominated convergence needed for \eqref{eq:forest:13}, rather than inferring the limit merely from formal pole cancellation at \(\epsilon =0\).
+
+
+\subsection{The geometric renormalized object and its explicit physical functional}\label{sec:forest:5}
+
+Remove from X the nonboundary strict transforms of \(U_G\), V, F, \(F_0\), K, and \(K_0\), obtaining an open space X° that still contains the entire positive chain; let D° be the remaining coordinate boundary. From \(X^\circ\times A^{1}_u\), further remove the nonboundary zero loci of the two interpolation denominators in \eqref{eq:forest:14}, and denote the result by \(Y_\nu \). First cancel the coordinate monomial factors in the denominators as in Section~\ref{sec:forest:4}; the remaining factors are nonzero on the lifted \(\sigma \times [0,1]\). Set
+
+\begin{equation}
+B_\nu=(D^\circ\times\mathbb A^1
+            \ \cup\ X^\circ\times\{0,1\})\cap Y_\nu,\qquad
+ M_\nu=H^4(Y_\nu,B_\nu).                                       \label{eq:forest:17}
+\end{equation}
+
+\begin{theorem}
+
+\label{thm:forest:5.1} For algebraic data consisting of positive masses, Euclidean reference data, and \(\nu \), equation~\eqref{eq:forest:10} is represented by the following Nori formal period of the geometric object:
+
+\begin{equation}
+R_\nu^{\mathfrak m}
+       =[M_\nu,[\Xi_\nu],[\widetilde\sigma\times[0,1]]]^{\mathfrak m}.       \label{eq:forest:18}
+\end{equation}
+
+All finite subtraction data enter the geometric pair and its framing; when \(\kappa =\kappa _0\), the form \(\Xi _\nu \) vanishes identically.
+
+\end{theorem}
+
+\begin{proof}
+
+Section~\ref{sec:forest:4} and the theorem in \otherref{feynman_periods_long_paper_en}{Section~9.5 of the main text} show that \(\Xi _\nu \) extends to a regular top-degree form on \(Y_\nu \). The chain is compact and its boundary lies in \(B_\nu \); comparison gives the geometric period \eqref{eq:forest:13}. Sections~\ref{sec:forest:3}--\ref{sec:forest:4} identify it with the prescribed regularized forest limit \eqref{eq:forest:10}. Numerical equality is not treated as an arbitrary motivic isomorphism, and no formal periods are assigned separately to divergent forest terms.
+
+\end{proof}
+
+The canonical coaction exists on the geometric object in \eqref{eq:forest:18}. Determining all comparison entries and the minimal object still requires further work. The presence of two forest terms alone does not imply rank two or a coaction with only two terms. The interpolation denominators of \(Y_\nu \) retain the geometry of the finite kinematics, which cannot be replaced by the UV subgraph and quotient alone.
+
+
+\subsection{A geometric product law for changing the subgraph subtraction point}\label{sec:forest:6}
+
+Fix \(\kappa \), \(\kappa _0\), and the masses, and change \(\nu \) to \(\nu '\ge 0\). Define the convergent one-loop finite differences
+
+\begin{equation}
+R_\gamma(\nu',\nu)=\int_0^1
+              \log\frac{f_\nu(x)}{f_{\nu'}(x)}dx,\qquad
+ R_C(S,S_0)=\int_0^1\log\frac{g_{S0}(y)}{g_S(y)}dy,             \label{eq:forest:19}
+\end{equation}
+
+where
+
+\begin{equation}
+f_\nu(x)=\mu_a x+\mu_b(1-x)+\nu x(1-x),\quad
+ g_S(y)=\mu_c y+\mu_d(1-y)+S y(1-y).
+\end{equation}
+
+These use the same conventions as the geometric primitive periods in \otherref{feynman_periods_long_paper_en}{Section~9 of the main text}.
+
+\begin{theorem}[A formal-period relation for finite scheme changes]
+
+\label{thm:forest:6.1} Over a common base field containing both sets of reference data,
+
+\begin{equation}
+R_{\nu'}^{\mathfrak m}(\kappa,\kappa_0)
+     -R_\nu^{\mathfrak m}(\kappa,\kappa_0)
+       =-R_\gamma^{\mathfrak m}(\nu',\nu)\,
+                         R_C^{\mathfrak m}(S,S_0).              \label{eq:forest:20}
+\end{equation}
+
+Subtracting \eqref{eq:forest:10} in the convergent \(\epsilon \)-domain and then taking the limit already gives the numerical relation. The formal-period relation additionally requires a geometric proof. We now give an algebraic Stokes proof using only positive denominators.
+
+First restrict \(Y_\nu \) and \(Y_\nu '\) to a common open subset obtained by removing both sets of denominators. The positive chain still avoids the removed loci. Geometric pullback and chain-pushforward relations allow subtraction in the same relative period ring, so cancellation of the original-graph terms is a formal-period relation. For the common counterterm form in the difference, set
+
+\begin{equation}
+a=\rho x,\ b=\rho(1-x),\quad
+ c=(1-\rho)y,\ d=(1-\rho)(1-y),\quad 0\le\rho,x,y\le1.
+\end{equation}
+
+With the positive-chain orientation, \(\Omega _G/V^{2}=d\rho \,dx\,dy/[\rho (1- \rho )]\). First blow up the two disjoint coordinate lines \({a=b=0}\) and \({c=d=0}\), so that \(\rho =0,1\) retain the boundary directions x,y. Then take a common coordinate refinement with X, lifting both the algebraic change of variables and the positive chain. Set
+
+\begin{equation}
+f=f_\nu,\quad f'=f_{\nu'},\quad g=g_S,\quad g_0=g_{S0},
+ \quad g_u=(1-u)g+ug_0.
+\end{equation}
+
+The original-graph terms in \eqref{eq:forest:14} cancel. After canceling \(\rho (1- \rho )\) in the remaining two terms, the rational form of the difference is
+
+\begin{equation}
+\frac{(f'-f)(g_0-g)}
+  {\{\rho f'+(1-\rho)g_u\}\{\rho f+(1-\rho)g_u\}}\,
+                                 d\rho\,dx\,dy\,du.             \label{eq:forest:21}
+\end{equation}
+
+It is regular on the entire real cube; no \(\rho \)-endpoint requiring a finite-part prescription remains in the difference.
+
+Introduce \(v\in [0,1]\) and \(f_v=(1- v)f+vf'\). For positive H,H', one has the identity
+
+\begin{equation}
+\frac1{HH'}=\int_0^1\frac{dv}{\{(1-v)H+vH'\}^2},              \label{eq:forest:22}
+\end{equation}
+
+with rational antiderivative \(v/[H\{H+v(H'- H)\}]\). Next use
+
+\begin{equation}
+\int_0^1\frac{d\rho}{\{\rho f_v+(1-\rho)g_u\}^2}
+       =\frac1{f_vg_u},                                       \label{eq:forest:23}
+\end{equation}
+
+with rational antiderivative \(\rho /[g_u\{g_u+\rho (f_v- g_u)\}]\). Every denominator is nonzero on the positive chain and its endpoints, including when \(f_v=g_u\); there is no division by \(f_v- g_u\).
+
+Equations~\eqref{eq:forest:22}--\eqref{eq:forest:23} are algebraic relative Stokes relations, beyond numerical quadrature identities. Adjoining v to the geometric compact chain and evaluating the boundary of the rational antiderivative transforms the formal period in \eqref{eq:forest:21} into
+
+\begin{equation}
+\left(\int_0^1\!\!\int_0^1\frac{f'-f}{f_v}\,dv\,dx\right)
+ \left(\int_0^1\!\!\int_0^1\frac{g_0-g}{g_u}\,du\,dy\right)
+       =-R_\gamma^{\mathfrak m}(\nu',\nu)\,
+                         R_C^{\mathfrak m}(S,S_0).
+\end{equation}
+
+The last step uses the geometric external product and a change of variables for the primitive Kummer chains. Thus \eqref{eq:forest:20} holds in the formal period ring, without invoking injectivity of the period map. This completes the proof.
+
+In particular,
+
+\begin{equation}
+\Delta(R_{\nu'}^{\mathfrak m}-R_\nu^{\mathfrak m})
+       =-\Delta R_\gamma^{\mathfrak m}\,\Delta R_C^{\mathfrak m}.            \label{eq:forest:24}
+\end{equation}
+
+The full coactions of both one-loop factors must be retained; the finite subgraph counterterm cannot be treated merely as a number to be discarded.
+
+If \(A_{\mathrm{sub}}\) is a subalgebra containing these two primitive formal periods, then
+
+\begin{equation}
+A_{\rm sub}[R_\nu^{\mathfrak m}]
+        =A_{\rm sub}[R_{\nu'}^{\mathfrak m}].                   \label{eq:forest:25}
+\end{equation}
+
+By the established theorem on minimal formal-period objects, adjoining these two lower objects makes the two schemes generate the same full tensor subcategory. This conclusion neither requires the isolated objects \(M(R_\nu )\) and \(M(R_\nu ')\) to be isomorphic nor excludes an accidental cancellation for a specified functional.
+
+\end{theorem}
+
+
+\subsection{How local counterterms produce nonlocal finite responses}\label{sec:forest:7}
+
+When \(\nu '\ne \nu \), one has \(f_{\nu '}- f_\nu =(\nu '- \nu )x(1- x)\), so \(R_\gamma (\nu ',\nu )\) is strictly nonzero and has sign opposite to \(\nu '- \nu \). Moreover,
+
+\begin{equation}
+\partial_S R_C(S,S_0)
+       =-\int_0^1\frac{y(1-y)}{g_S(y)}dy<0.                    \label{eq:forest:26}
+\end{equation}
+
+The right-hand side of \eqref{eq:forest:20} is therefore generally a nonconstant function of the current external kinematics. The change concerns a local constant subtraction for the subgraph, but after insertion into the contracted graph it gives a nonlocal finite change in the whole graph. This physical graph illustrates the principle in Section~\ref{ch:rg} that finite terms must not be discarded before insertion.
+
+Only the subgraph reference \(\nu \) changes here; the overall reference \(\kappa _0\) remains fixed. If the overall reference also changes, its additional contribution must be treated as the difference of the prepared amplitude at the two reference points. The two changes cannot be conflated into a universal constant. Comparing schemes for a complete observable also requires reparametrizing the couplings and summing all relevant graphs; \eqref{eq:forest:20} tracks only one such subgraph-counterterm change. Graph weights, model couplings, and sums over graphs must still be supplied separately when passing to the physical observable.
+
+
+
+\endgroup
+
+
+\section{Scales and finite schemes}\label{supp:descent}
+\begingroup
+\providecommand{\Q}{\mathbb Q}
+\providecommand{\dR}{\mathrm{dR}}
+\providecommand{\Res}{\operatorname{Res}}
+\providecommand{\im}{\operatorname{im}}
+\providecommand{\rk}{\operatorname{rk}}
+\providecommand{\cR}{\mathcal R}
+\providecommand{\cH}{\mathcal H}
+\subsection{Scaling, finite schemes and physical consequences}
+\subsubsection{Simultaneous scaling and a fixed reference point}
+Multiply all masses squared and all external momentum-squared invariants by $\lambda>0$. Then $M\mapsto\lambda M$ and $q_B\mapsto\lambda q_B$, so every term of \otherref{feynman_periods_long_paper_en}{main-text equation (10.15)} is unchanged. Hence
+\begin{equation}\label{descent:eq:euler}
+ \left(\sum_e\mu_e\partial_{\mu_e}
+              +\sum_a\kappa_a\partial_{\kappa_a}\right)R_G=0.
+\end{equation}
+In the common model this is an identity of forms and gives the zero Euler class. The masses in every counterterm are scaled as well. This is different from the logarithmic response obtained by holding an independent nonzero reference scale fixed. Equation~\eqref{descent:eq:euler} does not imply that the quantum-field-theory $\beta$-function vanishes.
+
+\subsubsection{A subcounterterm change can have a nonlocal response}
+The rational Stokes argument for the Dunce's cap gives the finite subgraph-reference relation
+\begin{equation}\label{descent:eq:scheme}
+ R_{\nu'}^{\mathfrak m}-R_\nu^{\mathfrak m}
+   =-R_\gamma^{\mathfrak m}(\nu',\nu)\,
+                         R_C^{\mathfrak m}(S,S_0).
+\end{equation}
+When the reference points are fixed and a mass varies, the derivative is
+\begin{equation}\label{descent:eq:schemederivative}
+ \partial_\mu(R_{\nu'}-R_\nu)
+ =-(\partial_\mu R_\gamma)R_C
+                        -R_\gamma\partial_\mu R_C.
+\end{equation}
+This follows from the Leibniz connection on the geometric external product, so it also holds for the formal periods with differentiated framings. Keeping only the second term would omit the mass-dependent finite counterterm. If only the whole-graph external parameter $S$ varies, $R_\gamma$ is constant and
+\[
+ \partial_SR_C=-\int_0^1
+       \frac{y(1-y)}{\mu_cy+\mu_d(1-y)+S y(1-y)}\,dy<0.
+\]
+Thus a finite change of a local subcounterterm produces a nonlocal response after insertion into the quotient graph. Endpoint descent retains this information; it does not reduce every derivative to a UV constant.
+
+\subsubsection{What the construction provides}
+We have a sequence of geometric constructions:
+\[
+ \begin{gathered}
+ \text{graph with physical data}
+ \longrightarrow\text{combined relative forest form}\\
+ \xrightarrow{\nabla}\text{relative endpoint object}
+ \longrightarrow\text{minimal formal-period object of the derivative}.
+ \end{gathered}
+\]
+It applies to the full graph class specified in \otherref{feynman_periods_long_paper_en}{main-text Section 10}, allowing arbitrary nesting and overlap of forests, without requiring evaluation of the full integral. The connection morphisms make the resulting period relations compatible with the canonical motivic coaction. This does not identify the renormalization Hopf algebra with the coordinate ring of the motivic group.
+
+This construction alone does not classify the pure factors of general endpoint geometry or compute their ranks effectively. Nonzero subgraph reference points and normal Taylor jets for power divergences require the separate constructions in the main text. Threshold and infrared continuation, and local RG coefficients and critical responses after the full graph sum, require further arguments. Removing one integration variable does not by itself lower the motivic weight or unipotent depth, or eliminate all non-Tate directions. Such conclusions need additional proofs about weights, extensions and framings.
+\endgroup
+
+
+\section{Mass-dependent reference points}\label{supp:finitemom}
+\begingroup
+\providecommand{\Q}{\mathbb Q}
+\providecommand{\cP}{\mathcal P}
+\providecommand{\cC}{\mathcal C}
+\providecommand{\ev}{\operatorname{ev}}
+\providecommand{\per}{\operatorname{per}}
+\providecommand{\eps}{\varepsilon_H}
+\subsection{Differentiating masses and reference conditions}
+\subsubsection{The chain-rule term for a moving reference point}
+On a common smooth parameter open set, take all reference assignments to be algebraic sections remaining in the positive-mass Euclidean region. Use Gauss--Manin differentiation for the constructed formal periods as families of period functions. From $\Phi_\rho=f_\rho*\Phi_0$ we obtain
+\begin{equation}\label{finitemom:eq:leibniz}
+ d\Phi_\rho=(df_\rho)*\Phi_0+f_\rho*d\Phi_0.
+\end{equation}
+This retains mass derivatives of the subcounterterms. Finite local coefficients are not treated as constants in every parameter.
+
+For the subgraph reference-evaluation operator $t_\rho F(\mu)=F(\rho(\mu),\mu)$, the chain rule gives
+\begin{equation}\label{finitemom:eq:movingreference}
+ [\partial_\mu,t_\rho]F
+    =\sum_j(\partial_\mu\rho_j)
+                           (\partial_{q_j}F)(\rho(\mu),\mu).
+\end{equation}
+The mass-insertion theorem using $[\partial_\mu,t_0]=0$ remains valid, but cannot be applied unchanged to a mass-dependent reference such as $\rho=c\mu$. The right-hand side vanishes when the nonzero reference coordinates themselves are fixed. Equation~\eqref{finitemom:eq:movingreference} concerns derivative functionals; at zero momentum these can use the geometric endpoint-descent construction of the main text.
+
+\subsubsection{Flatness of the infinitesimal finite-scheme change}
+Define the right logarithmic derivative in the group of local characters by
+\begin{equation}\label{finitemom:eq:connection}
+ \vartheta_\rho=(df_\rho)*f_\rho^{-1}.
+\end{equation}
+For each tangent vector $v$, $\vartheta_\rho(v)$ is an infinitesimal character:
+\begin{equation}\label{finitemom:eq:infchar}
+ \vartheta(v)(xy)=\vartheta(v)(x)\eps(y)
+                              +\eps(x)\vartheta(v)(y).
+\end{equation}
+Differentiate $f(xy)=f(x)f(y)$ and use the convolution inverse to remove the factors of $f$. Equation~\eqref{finitemom:eq:leibniz} becomes
+\begin{equation}\label{finitemom:eq:gauge}
+ d\Phi_\rho=\vartheta_\rho*\Phi_\rho+f_\rho*d\Phi_0.
+\end{equation}
+\begin{proposition}[Flatness identity for scheme changes]\label{finitemom:prop:flat}
+For commuting parameter directions $v,w$,
+\begin{equation}\label{finitemom:eq:flat}
+ v\vartheta(w)-w\vartheta(v)
+                   -[\vartheta(v),\vartheta(w)]_*=0.
+\end{equation}
+Equivalently, $d\vartheta-\vartheta\wedge_*\vartheta=0$.
+\end{proposition}
+\begin{proof}
+From $f*f^{-1}=\eps$ we have $v(f^{-1})=-f^{-1}*(vf)*f^{-1}$. Thus
+\[
+ v\vartheta(w)=(vwf)*f^{-1}-\vartheta(w)*\vartheta(v).
+\]
+Interchange $v,w$ and subtract to obtain \eqref{finitemom:eq:flat}. The sign of the commutator is determined by the use of the right logarithmic derivative.
+\end{proof}
+The identity tracks the parameter dependence of finite counterterms, whose coefficients are generally period functions. It supplies neither a rational connection matrix nor an identification of a fixed mixed motivic group. Its role is to retain all local insertions caused by changes of mass or reference point and thereby give a precise comparison rule for derivatives in different schemes.
+\endgroup
+
+
+\section{Local renormalization groups and formal critical inversion}\label{ch:rg}
+\begingroup
+\subsection{Three stages and their mathematical types}\label{sec:rg:1}
+Fix the action, coupling and operator bases, dimensional regularization, infrared prescription, subtraction scheme and loop order $L$. Let $A$ be a commutative rational algebra in which the normalization factors to be inverted are units. Use a connected graded graph Hopf algebra $H$ for the allowed graphs with local insertions. The regularized Feynman rules are a multiplicative character
+\begin{equation}
+\Phi:H\longrightarrow A((\epsilon)).
+\end{equation}
+At finite loop order only finitely many graphs and Laurent coefficients are required, but the data must include every subgraph counterterm and every local insertion in a quotient graph.
+
+Let $F_L$ take these inputs, through forests, graph summation, operator projection and RG extraction, to the vector of finite-order local coefficients. Let $T_L$ take the local coefficients to the critical coefficients:
+\begin{equation}
+\text{regularized inputs with relations}\ \xrightarrow{F_L}\
+ r_L\ \xrightarrow{T_L}\ c_L.                    \label{eq:rg:1}
+\end{equation}
+Both $F_L$ and $T_L$ are generally polynomial maps, not linear morphisms between single motives. Linear structures enter through tangent maps, derivations on coefficients and tensor objects carrying products.
+
+We use a motivic version only when the Laurent coefficients have been constructed as formal periods in the specified category. A published numerical MZV expression can be given its standard motivic MZV lift. Proving that this lift equals the specified matrix coefficient of the graph's relative motive is a separate task.
+
+\subsection{Naturality of forests and the tangent map}\label{sec:rg:2}
+Let $K$ project onto negative Laurent powers. For a positive-degree graph $x$,
+\begin{equation}
+\bar\Phi(x)=\Phi(x)+\sum_{(x)}C_\Phi(x')\Phi(x''),\qquad
+ C_\Phi(x)=-K\bar\Phi(x),\qquad
+ R_\Phi(x)=(1-K)\bar\Phi(x).                        \label{eq:rg:2}
+\end{equation}
+The $x'$ in the reduced coproduct include allowed products of disjoint subgraphs; recursive counterterms handle nesting. The overlap rules of a particular theory reside in $H$ and the definition of local insertions. The notation cannot supply missing physical data.
+
+\begin{proposition}\label{thm:rg:2.1}
+If $h$ is an algebra homomorphism fixing $\epsilon$ and compatible with $K$ and local insertions, then
+\begin{equation}
+h(C_\Phi)=C_{h\Phi},\qquad h(R_\Phi)=R_{h\Phi}.
+\end{equation}
+The proof is induction on degree. Apply $h$ to \eqref{eq:rg:2}; multiplicativity handles the forest products, compatibility with $K$ handles pole projection, and induction replaces the lower-degree counterterms. The recursion and initial values are unchanged. This is the relevant form of naturality for algebraic Birkhoff decomposition; see \cite[Theorem 3.2]{guozhang}.
+
+For a derivation $\delta$ from $A$ to an $A$-module $J$, use the square-zero extension $A\oplus J$ and the map $a\mapsto a+\delta(a)$. The $J$ component of \eqref{eq:rg:2} is
+\begin{equation}
+\delta C(x)=-K\left[\delta\Phi(x)+
+ \sum_{(x)}\{\delta C(x')\Phi(x'')+
+                 C(x')\delta\Phi(x'')\}\right].    \label{eq:rg:3}
+\end{equation}
+In general $\delta\Phi$ is not a character, so \eqref{eq:rg:3} cannot be denoted $C_{\delta\Phi}$. Multiple subgraph components are differentiated one at a time by the Leibniz rule. A motivic coaction that is already a compatible algebra homomorphism is natural in the same sense. This does not make the graph coproduct and motivic coaction the same map.
+
+Multiplication also determines the finite Laurent budget. If factor $i$ has lowest power $v_i$, then to obtain the coefficient of $\epsilon^k$ in the product, it suffices to compute factor $i$ through
+\begin{equation}
+q_i=k-\sum_{j\ne i}v_j                            \label{eq:rg:4}
+\end{equation}
+Missing coefficients are not zero coefficients.
+
+\textbf{Finite terms cannot be discarded before insertion.}
+Consider a formal Hopf-algebra example with primitive elements $x,y$ and reduced coproduct $x\otimes y$ for $z$. Set $\Phi(x)=a/\epsilon$, $\Phi(y)=\theta$ and $\Phi(z)=0$. Then $C(x)=-a/\epsilon$ and $C(y)=0$, but $C(z)=a\theta/\epsilon$. This is an algebraic character counterexample, not a claimed integral for a particular physical graph. It shows that the kernel of local extraction is not an ideal under multiplication by factors with poles. Whether a term occurs in a physical graph depends on the actual input, but an algorithm discarding every finite coefficient term by term is already invalid.
+\end{proposition}
+
+\subsection{Locality acts on the prepared differential module}\label{sec:rg:3}
+Let $k$ contain the required constants, and work with finite-rank differential modules over $k(s)$ in a kinematic variable $s$. Suppose the finite Laurent inputs and forest products have been organized into a differential module $M$, and the prepared pole map
+\begin{equation}
+U:M\longrightarrow\mathbf1^{\oplus q}             \label{eq:rg:5}
+\end{equation}
+has been proved horizontal. Local polynomials, regarded as rational functions in $k(s)$, belong to the trivial module. If mass ratios occur, one must specify which parameters are fixed and which remain base variables.
+
+\begin{proposition}[Local selection]\label{thm:rg:3.1}
+If $V$ is a nontrivial simple subobject of $M$, then $U|V=0$. More generally, the image of $U$ has only trivial simple constituents.
+\end{proposition}
+\begin{proof}
+A nonzero image of a simple object is isomorphic to that object, while every subquotient of a trivial module is trivial. Such an image is therefore impossible for nontrivial $V$. The argument requires a horizontal morphism, not a numerical equality. Commutation of coefficient extraction with $\partial_s$ is needed for horizontality, but one must also check that the map is well defined on the quotient by the differential relations and that unsubtracted infrared poles are absent.
+
+Triviality here means trivial connection in $s$. The constant coefficients may still have non-Tate arithmetic. Evaluation at one kinematic point is not in general horizontal: for example, $f(s)=s-s_0$ evaluates to zero, while its derivative evaluates to one. An arbitrary point evaluation or singular mass limit cannot simply be substituted for \eqref{eq:rg:5}.
+\end{proof}
+
+\subsubsection{Forest tensor products cannot be tested factor by factor}\label{sec:rg:3.2}
+If the coefficients in a forest $F$ are realized by objects $V_{F,j}$, their product is realized by
+\begin{equation}
+W_F=\bigotimes_j V_{F,j}.
+\end{equation}
+Suppose the finite sum is carried by $W=\oplus_F W_F$, multiplication gives a horizontal surjection $W\to M$, and the local functional has also been lifted to a horizontal morphism $M\to1^q$. A necessary condition for the composite to be nonzero on $W_F$ is
+\begin{equation}
+\operatorname{Hom}_{\nabla}(W_F,\mathbf1)\ne0.     \label{eq:rg:6}
+\end{equation}
+In a neutral differential Tannakian realization, this space is the space of differential-Galois invariants in $W_F^\vee$. Merely knowing that $M$ is an arbitrary subquotient of $W$ is insufficient: a horizontal functional on a subobject need not extend to $W$.
+
+Even when $\operatorname{Hom}(V,1)=\operatorname{Hom}(V^\vee,1)=0$, the evaluation morphism
+\begin{equation}
+V\otimes V^\vee\longrightarrow\mathbf1
+\end{equation}
+is nonzero. For a self-dual pure K3 local system, the polarization gives the corresponding pairing into a constant Tate line. Thus one cannot eliminate every nontrivial factor separately when testing a forest product for a local RG contribution. Equation~\eqref{eq:rg:6} is only a necessary condition. The graphs, numerators and summation coefficients must still be shown to select a nonzero functional.
+
+A nonzero horizontal witness for a simple $V$ shows that $V$ survives that linear map. It does not exclude cancellation against other graphs, or identify the invisible kernels of the finite amplitude, UV coefficients and critical exponents. For general graphs, \eqref{eq:rg:5} remains a conditional construction; graph topology alone has not supplied it here.
+
+\subsection{Formal inversion for one normalized coupling}\label{sec:rg:4}
+Take
+\begin{equation}
+\beta(g,e)=-eg+gB(g),\quad
+ B(g)=b_1g+b_2g^2+\cdots,\quad b_1\in A^\times,
+\end{equation}
+\begin{equation}
+\gamma_m(g)=\sum_{\ell\ge1}c_\ell g^\ell,\qquad
+ \gamma_\phi(g)=\sum_{\ell\ge2}d_\ell g^\ell.         \label{eq:rg:7}
+\end{equation}
+Here $e=4-D$, the RG time is $\log\mu$, $\gamma_m$ uses the mass-squared convention, and the thermal direction does not mix. The quantum coefficients have no explicit $e$ dependence and the one-loop field anomalous dimension vanishes. No convergence of the series is assumed.
+
+The unique non-Gaussian formal branch at the origin satisfies $B(G(e))=e$ and $G=e/b_1+O(e^2)$. Define
+\begin{equation}
+\omega=GB'(G),\quad
+ \nu=(2+\gamma_m(G))^{-1},\quad
+ \eta=2\gamma_\phi(G).                             \label{eq:rg:8}
+\end{equation}
+
+\begin{theorem}[Inversion from the complete critical triple]\label{thm:rg:4.1}
+For fixed $b_1$, the data in \eqref{eq:rg:7} correspond bijectively to $\omega=e+O(e^2)$, $\nu=1/2+O(e)$ and $\eta=O(e^2)$. The inverse is
+\begin{equation}
+G(e)=\frac e{b_1}
+ \exp\int_0^e\left(\frac1{\omega(t)}-\frac1t\right)dt,\qquad
+ B=G^{\langle-1\rangle},                            \label{eq:rg:9}
+\end{equation}
+\begin{equation}
+\gamma_m(g)=\nu(B(g))^{-1}-2,\qquad
+ \gamma_\phi(g)=\tfrac12\eta(B(g)).                 \label{eq:rg:10}
+\end{equation}
+\end{theorem}
+\begin{proof}
+From $B'(G)G'=1$ and \eqref{eq:rg:8}, we obtain $G'/G=1/\omega$. Since $\omega=t+O(t^2)$, the integrand in \eqref{eq:rg:9} is an ordinary power series. Formal integration, exponentiation and the specified leading term determine $G$ uniquely. Its compositional inverse exists, and \eqref{eq:rg:10} then determines both anomalous dimensions. Substitution recovers \eqref{eq:rg:8} and proves the converse. Integration divides only by positive integers, so the argument works over any rational algebra, including rings with nilpotents. A consistency relation for the $\beta$-function alone appears in \cite[equation (3)]{antipin}. We use the formal branch at the origin, without claiming reconstruction of a global flow.
+
+Set $K=\mathbb Q[b_1,b_1^{-1}]$, take $L\geq2$, and write
+\begin{equation}
+r_L=(b_2,\ldots,b_L,c_1,\ldots,c_L,d_2,\ldots,d_L),\qquad
+ c_L=(\omega_2,\ldots,\omega_L,\nu_1,\ldots,\nu_L,
+                    \eta_2,\ldots,\eta_L).
+\end{equation}
+Both vectors have length $3L-2$. Knowing $\omega$ through $e^L$ determines $G$ through $e^L$ and hence $B$ through $g^L$. The orders required in \eqref{eq:rg:10} do not exceed $L$ either. Thus $T_L$ and its inverse are polynomials over $K$, and
+\begin{equation}
+K[r_L]=K[c_L].                                    \label{eq:rg:11}
+\end{equation}
+This is an equality inside the same ring and a polynomial isomorphism of the universal normalized coefficient spaces. It remains true after imposing existing relations, without algebraic independence of numerical periods. Fixing $b_1$ is essential: otherwise $\omega=e$ corresponds to every $B=b_1g$.
+\end{proof}
+
+\subsection{Locating information loss in the forest construction}\label{sec:rg:5}
+\begin{theorem}[No additional kernel]\label{thm:rg:5.1}
+Let $F_L$ be the local-coefficient map formed as in Section~\ref{sec:rg:1}, with output satisfying \eqref{eq:rg:7}. For allowed first-order deformations at fixed $b_1$,
+\begin{equation}
+\ker D(T_L\circ F_L)=\ker DF_L.                   \label{eq:rg:12}
+\end{equation}
+More strongly, for any two allowed $A$-valued inputs $x,y$,
+\begin{equation}
+(T_LF_L)(x)=(T_LF_L)(y)
+       \quad\Longleftrightarrow\quad F_L(x)=F_L(y). \label{eq:rg:13}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Apply the polynomial inverse of $T_L$ to obtain \eqref{eq:rg:13}. Applying the same inverse to square-zero points in $A\oplus J$, or differentiating the inverse-map identity, gives \eqref{eq:rg:12}. No injectivity or surjectivity of $F_L$, or smoothness of its input space, is required.
+
+Equivalently, for every coefficient derivation $\delta$ fixing $b_1$,
+\begin{equation}
+\delta r_L=0\quad\Longleftrightarrow\quad\delta c_L=0. \label{eq:rg:14}
+\end{equation}
+Propagating $\delta$ from graph inputs by \eqref{eq:rg:3}, then applying \eqref{eq:rg:14}, gives a necessary and sufficient test for critical response to the forest variation. Cancellation among graphs, local projection, operator relations and loss of finite information may all occur in $F_L$. For the complete critical triple, $T_L$ adds no kernel. This statement does not hold for $\omega$ alone, for three numbers at one fixed dimension, or for an incomplete expansion.
+\end{proof}
+
+\subsubsection{Preservation when formal-period lifts are available}\label{sec:rg:5.2}
+If $r_L,c_L$ lie in the same Tannakian formal-period ring and $b_1$ is a nonzero rational number, then
+\begin{equation}
+\langle M(r_L)\rangle_\otimes
+       =\langle M(c_L)\rangle_\otimes.              \label{eq:rg:15}
+\end{equation}
+Every period on the right is realized by a rational polynomial in those on the left, so its minimal object belongs to their closure under finite direct sums, tensor products and subquotients. The inverse gives the opposite inclusion. We use the minimal framed object of Section~\ref{ch:frames}.
+
+The generated Tannaka groups are therefore canonically the same for a fixed fiber functor. If $C_0$ is a full Tannakian subcategory closed under subquotients and tensor operations, then
+\begin{equation}
+\text{all }M(r_{L,j})\in C_0
+ \quad\Longleftrightarrow\quad
+ \text{all }M(c_{L,j})\in C_0.                    \label{eq:rg:16}
+\end{equation}
+In particular, over a fixed ground field all local coefficients are mixed Tate if and only if all critical coefficients are mixed Tate. A proven non-Tate local coefficient prevents all critical coefficients from being Tate objects simultaneously.
+
+Equation~\eqref{eq:rg:15} does not identify the minimal objects coefficient by coefficient or force a given pure factor to occur unchanged in one critical coefficient. Tensor operations may generate new simple factors. Nor is the ordinary coefficient subalgebra necessarily closed under coaction. If a Galois-stable algebra is required, take the coaction closures on both sides; \eqref{eq:rg:11} makes these closures equal. Without a formal lift of the graph periods, \eqref{eq:rg:15} does not supply the missing comparison.
+
+\subsection{Scheme invariance and inversion}\label{sec:rg:6}
+Let $h=f(g,e)$, with $f(0,e)=0$ and $\partial_gf(0,0)$ a unit, and with no explicit RG-time dependence. The transformation law is
+\begin{equation}
+\widetilde\beta(f(g,e),e)=f_g(g,e)\beta(g,e).       \label{eq:rg:17}
+\end{equation}
+At corresponding fixed points, the term $f_{gg}\beta$ in the derivative vanishes, so the stability exponent $\omega$ is unchanged. Finite field or mass normalizations add $\beta$ times a logarithmic derivative to the anomalous dimensions, which also vanishes at the fixed point. The parameter $e$ must be retained throughout; the explicit $e$ dependence produced by reparametrization cannot first be discarded.
+
+\begin{proposition}[Rigidity of the MS-type section]\label{thm:rg:6.1}
+Suppose $f$ is independent of $e$ and both the original and transformed functions have exactly the form minus $e$ times the coupling plus a quantum term with no explicit $e$ dependence. Then $f(g)=ag$. If the one-loop normalization $b_1$ is fixed, $a=1$.
+\end{proposition}
+\begin{proof}
+Comparing the coefficients of $e$ in \eqref{eq:rg:17} gives $gf'(g)=f(g)$. In characteristic zero, comparison of powers eliminates every coefficient of degree at least two. Scaling changes $b_1$ to $b_1/a$, so fixing $b_1$ forces $a=1$.
+
+More generally, allow a regular $e$-dependent scheme transformation, but suppose both endpoints satisfy \eqref{eq:rg:7}, have the same $b_1$ and give the same critical triple. Theorem~\ref{thm:rg:4.1} then identifies their $B$, $\gamma_m$ and $\gamma_\phi$. This is uniqueness of endpoint data, not a claim that the intermediate reparametrization is the identity. Flow along the same vector field can give a nontrivial self-conjugacy.
+
+\textbf{An explicit example.}
+In $A[\xi]/(\xi^2)$, let $\beta_0=-eg+bg^2$ and $h=g+\xi g^3$. Then
+\begin{equation}
+\widetilde\beta(h,e)=-eh+b h^{2}+
+                 \xi(-2e h^{3}+b h^{4}).               \label{eq:rg:18}
+\end{equation}
+The new coefficients contain $\xi$, but $\omega$ remains $e$. This lies outside the section \eqref{eq:rg:7}, so it does not contradict \eqref{eq:rg:11}. It also shows why the algebra of all raw coefficients in a general scheme cannot unconditionally be called a universal physical period algebra. To compare all critical indices, the complete anomalous dimensions must be transformed, retaining the explicit $e$ terms.
+
+For several couplings, let $O$ be a set of physical functionals that form local coordinates. Write $b=\delta\beta$, $q=\delta O$ and $J=D_gO$, with $J$ invertible. The first-order formula is
+\begin{equation}
+{\cal B}_{\rm phys}=Jb+Dq\,\beta-D(J\beta)J^{-1}q. \label{eq:rg:19}
+\end{equation}
+At fixed physical coordinates $y=O$, we have $\delta g=-J^{-1}q$, and the chain rule gives \eqref{eq:rg:19}. A reparametrization direction $v$ produces
+\begin{equation}
+b_v=Dv\,\beta-D\beta\,v,\qquad q_v=-Jv.
+\end{equation}
+Set $v=-J^{-1}q$. Using $D(Jv)\beta=(DJ[\beta])v+JDv\beta$ and symmetry of the Hessian gives
+\begin{equation}
+{\cal B}_{\rm phys}=J(b-b_v).
+\end{equation}
+Its kernel is therefore exactly the image of these scheme directions. Without the finite matching term $q$, or with noninvertible $J$, the converse is unavailable. This does not prove an analogue of single-coupling invertibility of $T_L$ for a multicoupling critical spectrum.
+\end{proof}
+
+\subsection{First arithmetic directions and a six-loop application}\label{sec:rg:7}
+Suppose $\delta$ annihilates all $b,c,d$ below loop order $L$ and fixes $b_1$. Set $u=\delta b_L$, $v=\delta c_L$ and $w=\delta d_L$. Applying $\delta$ to $B(G)=e$ gives
+\begin{equation}
+\delta G=-\frac{u}{b_1^{L+1}}e^L+O(e^{L+1}).
+\end{equation}
+In $\delta\omega$, the direct term is $Lu e^L/b_1^L$, while the fixed-point displacement contributes $-u e^L/b_1^L$. Using the constant term $1/2$ of $\nu$ and $d_1=0$ for $\eta$, we find
+\begin{equation}
+\begin{pmatrix}[e^L]\delta\omega\\{}[e^L]\delta\nu\\{}[e^L]\delta\eta\end{pmatrix}
+ =
+ \begin{pmatrix}
+ (L-1)/b_1^L&0&0\\
+ c_1/(4b_1^{L+1})&-1/(4b_1^L)&0\\
+ 0&0&2/b_1^L
+ \end{pmatrix}
+ \begin{pmatrix}u\\v\\w\end{pmatrix}.               \label{eq:rg:20}
+\end{equation}
+The determinant is $-(L-1)/(2b_1^{3L})$, which is invertible for $L\geq2$. This is a formal proof at arbitrary loop order. Nonvanishing is required for the complete local direction; nonvanishing of a single graph does not suffice.
+
+\subsubsection{The arithmetic derivation}\label{sec:rg:7.1}
+The source conventions in \cite[equation (17)]{kp} and \cite[equation (2.6)]{brownmzv} use increasing summation:
+\begin{equation}
+Z_{35}=\sum_{0<n<m}\frac1{n^3m^5}.
+\end{equation}
+This is $\zeta(5,3)$ in the common decreasing-index convention. In the $f$-alphabet realization chosen in \cite[Section 6.1]{brownmzv}, the derivations deleting the leftmost letter satisfy
+\begin{equation}
+\partial_3 Z_{35}^{\mathfrak m}=0,\qquad
+ \partial_5 Z_{35}^{\mathfrak m}=-5\zeta^{\mathfrak m}(3).
+\end{equation}
+With the rightmost operator acting first,
+\begin{equation}
+\delta_{35}=\partial_5\partial_3-\partial_3\partial_5,
+ \qquad \delta_{35} Z_{35}^{\mathfrak m}=5.         \label{eq:rg:21}
+\end{equation}
+The commutator is again a derivation and annihilates the multiplicative subalgebra generated by single zeta values. Unlike Brown's tensor-valued $D_{2n+1}$, our $\partial$ denotes the scalar derivation obtained by projection onto the standard odd-weight generator. Earlier notation $D_3,D_5$ in the research archive is to be read in this sense. Equation~\eqref{eq:rg:21} follows from the iterated-integral formulas in the primary source, independently of claims made by earlier word-cutting code.
+
+\subsubsection{Three entries from the published six-loop result}\label{sec:rg:7.2}
+Kompaniets--Panzer\cite[equations (16), (18), (19)]{kp} use $D=4-2\epsilon_{\mathrm{src}}$, so $e=2\epsilon_{\mathrm{src}}$ here. Their result gives
+\begin{equation}
+b_1=(N+8)/3,\quad c_1=-(N+2)/3,
+\end{equation}
+\begin{equation}
+[Z_{35}]b_6=-\frac{16}{675}Q(N),\qquad
+ [Z_{35}]c_6=-\frac4{225}(N+2)R(N),\qquad
+ [Z_{35}]d_6=0,
+\end{equation}
+\begin{equation}
+Q=42N^3+2623N^2+25074N+59984,\quad
+ R=14N^2+189N+526.                                 \label{eq:rg:22}
+\end{equation}
+All lower-loop entries and the remaining six-loop terms are annihilated by \eqref{eq:rg:21}. The denominators can be checked directly against the source: the $\beta$ term is $-995328Q/41990400=-16Q/675$, and the mass term is $-1152\cdot144(N+2)R/9331200=-4(N+2)R/225$.
+
+Thus $u=-16Q/135$, $v=-4(N+2)R/45$ and $w=0$. Setting $L=6$ in \eqref{eq:rg:20} gives
+\begin{equation}
+[e^6]\delta_{35}\omega=-\frac{432Q(N)}{(N+8)^6},
+\end{equation}
+\begin{equation}
+[e^6]\delta_{35}\nu=
+ \frac{27(N+2)(42N^3+2279N^2+21282N+50512)}{(N+8)^7},
+ \qquad [e^6]\delta_{35}\eta=0.                    \label{eq:rg:23}
+\end{equation}
+This holds in the formal range where $N+8$ is invertible; $N=-8$ is outside this inverse branch.
+
+For $N=1$, $Q=87723$, $R=729$, $u=-51984/5$, $v=-972/5$, $b_1=3$ and $c_1=-1$. Consequently,
+\begin{equation}
+[e^6]\delta_{35}\omega=\frac5{3^6}\frac{-51984}5
+      =-\frac{5776}{81},
+\end{equation}
+\begin{equation}
+[e^6]\delta_{35}\nu
+   =\frac{51984+2916}{20\cdot2187}
+   =\frac{305}{243},\qquad [e^6]\delta_{35}\eta=0.   \label{eq:rg:24}
+\end{equation}
+This is an exact formal response for the specified MZV lifts. It assumes no proven independence of $Z_{35}$ as a real number, performs no new six-loop integration or forest calculation, and does not describe an experimental continuous variation of zeta values.
+
+Equations~\eqref{eq:rg:21} and \eqref{eq:rg:24} show that these lifts of $\omega_6$ and $\nu_6$ do not belong to the multiplicative subalgebra generated by single zeta values. This is an explicit witness of arithmetic structure within the mixed Tate category; it gives no non-Tate conclusion. The zero response of $\eta_6$ excludes only this derivation, not every arithmetic direction. A corresponding assertion that the numerical values cannot be expressed using single zeta values would require an additional injectivity input for the period map.
+
+\subsection{Relation to the structural classification}\label{sec:rg:8}
+The discussion distinguishes three precisely defined forms of visibility:
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item The local projection of a kinematic differential module satisfies \eqref{eq:rg:5}. It must be tested on the full forest tensor products in \eqref{eq:rg:6}.
+\item Regularized coefficients enter $F_L$ through the complete physical sum. Its kernel can include cancellation among graphs, numerator constraints and loss of finite information.
+\item On the section \eqref{eq:rg:7}, $T_L$ is invertible. It preserves the finite coefficient algebra, allowed first-order directions and, when formal-period lifts exist, their generated tensor category.
+\end{enumerate}
+This gives a precise route from structural classification to RG observables. Valid coefficient relations supplied by geometry descend through forest naturality. Every nonzero complete local direction is detected by the complete critical triple. If a local coefficient is proved to lie outside a specified tensor subcategory, the critical coefficients cannot all lie inside it. Conversely, critical coefficients do not reconstruct the full finite kinematic objects of the graphs.
+
+Further work is required on geometric local projections for arbitrary graphs, comparisons of contraction with normal cones and blowups, the head/character constructions beyond the operational diagrams and accepted covering classes treated here, complete multicoupling observables, and the remaining error and same-order optical-theorem checks of the scattering benchmark. Minimality of the K3 object for the convergent two-dimensional banana does not automatically yield a non-Tate $\beta$ coefficient in four-dimensional $\phi^4$ theory.
+\endgroup
+
+
+
+\begin{thebibliography}{99}
+\addcontentsline{toc}{section}{References}
+\bibitem{bek} S. Bloch, H. Esnault and D. Kreimer, \emph{On Motives Associated to Graph Polynomials}, \href{https://arxiv.org/abs/math/0510011}{arXiv:math/0510011}.
+\bibitem{bkv} S. Bloch, M. Kerr and P. Vanhove, \emph{A Feynman integral via higher normal functions}, Compositio Mathematica \textbf{151} (2015), 2329--2375, \href{https://arxiv.org/abs/1406.2664}{arXiv:1406.2664}.
+\bibitem{bv} S. Bloch and P. Vanhove, \emph{The elliptic dilogarithm for the sunset graph}, \href{https://arxiv.org/abs/1309.5865}{arXiv:1309.5865}.
+\bibitem{brownperiods} F. Brown, \emph{Notes on Motivic Periods}, \href{https://arxiv.org/abs/1512.06410}{arXiv:1512.06410}.
+\bibitem{browncosmic} F. Brown, \emph{Feynman amplitudes, coaction principle, and cosmic Galois group}, \href{https://arxiv.org/abs/1512.06409}{arXiv:1512.06409}.
+\bibitem{abv} J. Ayoub and L. Barbieri-Viale, \emph{Nori 1-motives}, \href{https://arxiv.org/abs/1206.5923}{arXiv:1206.5923}, Theorem 8.12.
+\bibitem{tubach} S. Tubach, \emph{On the Nori and Hodge realisations of Voevodsky motives},
+Compositio Math. \textbf{161} (2025), 2155--2201.
+\href{https://doi.org/10.1112/S0010437X25102431}{doi:10.1112/S0010437X25102431}.
+Published Theorem 6.5 and Corollary 6.8 (Theorem 4.5 and Corollary 4.8 in arXiv:2309.11999v4).
+\bibitem{eskandari} P. Eskandari, \emph{Tannakian fundamental groups of blended extensions}, \href{https://arxiv.org/abs/2407.01379}{arXiv:2407.01379}.
+\bibitem{charles} F. Charles, \emph{On the Picard number of K3 surfaces over number fields}, \href{https://www.imo.universite-paris-saclay.fr/~francois.charles/Picard.pdf}{author's manuscript}, especially Section 2.2.
+\bibitem{zarhin} Yu. G. Zarhin, \emph{Hodge groups of K3 surfaces}, Journal für die reine und angewandte Mathematik \textbf{341} (1983), 193--220. \href{https://doi.org/10.1515/crll.1983.341.193}{doi:10.1515/crll.1983.341.193}.
+\bibitem{ej} A.-S. Elsenhans and J. Jahnel, \emph{On the component group of the algebraic monodromy group of a K3 surface}, \href{https://wwwuser.gwdguser.de/~jjahnel/Arbeiten/Komponentengruppe_v4f.pdf}{author's manuscript, 10 January 2024}, Theorems 7.5 and 7.7. The normality result is used only under the stated CM hypotheses.
+\bibitem{dvgeemen} E. Dardanelli and B. van Geemen, \emph{Hessians and the moduli space of cubic surfaces}, \href{https://arxiv.org/abs/math/0409322}{arXiv:math/0409322}, Section 1.6. The full integral Hessian lattice and its applicability to this family are addressed in the project proof of lattice primitivity.
+\bibitem{dualcritical} Z. Király and S. Kisfaludi-Bak, \emph{Notes on dual-critical graphs}, \href{https://arxiv.org/abs/1410.1653}{arXiv:1410.1653} (2014).
+\bibitem{kiefer} S. Kiefer, \emph{Notes on equivalence and minimization of weighted automata}, \href{https://arxiv.org/abs/2009.01217}{arXiv:2009.01217}.
+\bibitem{muhlbauer} M. Mühlbauer, \emph{Cutkosky's Theorem for Massive One-Loop Feynman Integrals---Part 1}, \href{https://arxiv.org/abs/2206.08402}{arXiv:2206.08402}. We use the residue and variation framework within the hypotheses of its one-loop physical theorem.
+\bibitem{bbr} C. Bergbauer, R. Brunetti and D. Kreimer, \emph{Renormalization and resolution of singularities}, \href{https://arxiv.org/abs/0908.0633}{arXiv:0908.0633}.
+\bibitem{bk2008} S. Bloch and D. Kreimer, \emph{Mixed Hodge Structures and Renormalization in Physics}, \href{https://arxiv.org/abs/0804.4399}{arXiv:0804.4399}.
+\bibitem{bk2011} F. Brown and D. Kreimer, \emph{Angles, scales and parametric renormalization}, \href{https://arxiv.org/abs/1112.1180}{arXiv:1112.1180}, especially Proposition 34 and Theorems 40, 66.
+\bibitem{bk2012} F. Brown and D. Kreimer, \emph{Decomposing Feynman rules}, \href{https://arxiv.org/abs/1212.3923}{arXiv:1212.3923}.
+\bibitem{guozhang} L. Guo and B. Zhang, \emph{Differential Birkhoff decomposition and the renormalization of multiple zeta values}, \href{https://arxiv.org/abs/0710.0432}{arXiv:0710.0432}, Theorem 3.2.
+\bibitem{antipin} O. Antipin, A. Pinoy, F. Sannino and S. Vatani, \emph{Consistency Relation for Fixed Point Dynamics}, \href{https://arxiv.org/abs/2504.05988}{arXiv:2504.05988}.
+\bibitem{kp} M. V. Kompaniets and E. Panzer, \emph{Minimally subtracted six loop renormalization of O(n)-symmetric phi4 theory and critical exponents}, \href{https://arxiv.org/abs/1705.06483}{arXiv:1705.06483}, equations (16)--(19).
+\bibitem{brownmzv} F. Brown, \emph{On the decomposition of motivic multiple zeta values}, \href{https://arxiv.org/abs/1102.1310}{arXiv:1102.1310}.
+\bibitem{pdg} Particle Data Group, \emph{Kinematics}, Review of Particle Physics, \href{https://pdg.lbl.gov/2025/reviews/rpp2025-rev-kinematics.pdf}{2025 review}. The identical-final-state factorial and $d\Phi_n$ convention are fixed separately here.
+
+\bibitem{stacks}The Stacks Project,
+\href{https://stacks.math.columbia.edu/tag/02MS}{Tag 02MS},
+Lemma 12.10.6. Serre quotients and the exact quotient functor.
+
+\bibitem{KR}E. Kani and M. Rosen,
+\emph{Idempotent relations and factors of Jacobians},
+Math. Ann. 284 (1989), 307--327.
+\href{https://eudml.org/doc/164555}{Publication record}.
+
+
+\bibitem{HHMZ}J. D. Hauenstein, R. Huang, D. Mehta and Y. Zhang,
+\emph{Global Structure of Curves from Generalized Unitarity Cut of Three-loop Diagrams},
+\href{https://arxiv.org/abs/1408.3355}{arXiv:1408.3355}.
+The genus of chain-type White-house graphs is an earlier result. Equality of genera does not identify the star-type graph with them.
+
+\bibitem{bkone}S. Bloch and D. Kreimer,
+\emph{Feynman Amplitudes and Landau Singularities for 1-loop graphs},
+\href{https://arxiv.org/abs/1007.0338}{arXiv:1007.0338v2},
+\S7--10, especially Proposition 10.1. A standard source for one-loop Hodge structures and dilogarithms.
+
+\bibitem{svone}M. Spradlin and A. Volovich,
+\emph{Symbols of One-Loop Integrals From Mixed Tate Motives},
+\href{https://arxiv.org/abs/1105.2024}{arXiv:1105.2024}.
+Background on quadratic forms and symbol recursion for even-dimensional polygons; we do not claim to implement that algorithm.
+
+\bibitem{abwsun}L. Adams, C. Bogner and S. Weinzierl,
+\emph{The two-loop sunrise graph with arbitrary masses},
+\href{https://arxiv.org/abs/1302.7004}{arXiv:1302.7004},
+\S4--5, equations (24)--(32). Our normalization does not include an arbitrary mass-scale multiplier.
+
+\bibitem{bkvsunset}S. Bloch, M. Kerr and P. Vanhove,
+\emph{Local mirror symmetry and the sunset Feynman integral},
+\href{https://arxiv.org/abs/1601.08181}{arXiv:1601.08181v3},
+\S3--4. Its parameter $s$ is the reciprocal of the external momentum squared; our variable convention differs.
+
+\bibitem{dhv2023}C. F. Doran, A. Harder and P. Vanhove,
+\emph{Motivic Geometry of Two-Loop Feynman Integrals},
+\href{https://arxiv.org/abs/2302.14840}{arXiv:2302.14840v1},
+\S7.3, equations (120)--(121), Proposition 7.6.
+This provides earlier work on the absolute surface and local system. The arguments for relative faces and framings are given separately here; a complete priority assessment is not claimed.
+
+\bibitem{internalproofs} Feynman Periods Research Project, internal geometric and theoretical proof manuscripts (2026). This paper and its supplement provide the objects, operational diagrams, finite MOM construction, parameter derivatives and RG endpoint proofs. The accompanying editorial manifest records source locations. Finite certification relies on the original certificates specified in the text. This entry does not imply external peer review or a completed novelty assessment.
+\bibitem{delignemilne}P. Deligne and J. S. Milne,
+\emph{Tannakian Categories}, in \emph{Hodge Cycles, Motives, and Shimura Varieties},
+Lecture Notes in Mathematics 900, Springer (1982), pp. 101--228.
+We use Theorem 2.11 in the author-maintained version:
+\url{https://www.jmilne.org/math/xnotes/tc.pdf}.
+
+\bibitem{huybrechts}D. Huybrechts,
+\emph{Lectures on K3 Surfaces}, author manuscript,
+Chapter 6, \S2, especially the period-map differential and Proposition 2.8.
+\url{https://www.math.uni-bonn.de/people/huybrech/K3Global.pdf}.
+The general theory of the period-map differential and local Torelli is taken from this reference.
+
+\bibitem{conneskreimer}A. Connes and D. Kreimer,
+\emph{Renormalization in quantum field theory and the Riemann--Hilbert problem I:
+the Hopf algebra structure of graphs and the main theorem},
+Commun. Math. Phys. \textbf{210} (2000), 249--273.
+\url{https://arxiv.org/abs/hep-th/9912092}.
+
+\end{thebibliography}
+\end{document}
