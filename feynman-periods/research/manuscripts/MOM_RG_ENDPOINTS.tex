@@ -1,0 +1,521 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage[margin=26mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,fancyhdr,xcolor}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheoremstyle{cnplain}{7pt}{7pt}{\normalfont}{}{\bfseries}{。}{0.5em}{}
+\theoremstyle{cnplain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{注}
+\renewcommand{\proofname}{证明}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\SR}{S_{\mathrm R}}
+\newcommand{\gphi}{\gamma_\phi}
+\newcommand{\dd}{\mathcal D}
+\newcommand{\Z}{\mathcal Z}
+\setlength{\emergencystretch}{2em}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 费曼周期：实际MOM流与有理紫外出口}
+\fancyhead[R]{\small 理论补篇}\fancyfoot[C]{\thepage}
+\title{从实际减除周期到两圈MOM重整化群\\[4pt]
+\large 显式端点核、质量坐标与紫外结构消失}
+\author{费曼周期研究项目\quad 理论证明稿}
+\date{2026年10月13日}
+\begin{document}
+\maketitle
+\begin{abstract}
+本文把已构造的四维二点 sunset 与对数四点森林接成同一物理方案的实际尺度响应。
+在非例外欧氏对称四点和二点值/斜率条件下，给出有限正质量的两圈
+$\beta$ 函数、场反常维数及质量流。
+四点贡献由三个 bubble、三个双 bubble 和六个 wineglass 的手工拓扑计数得到；
+先求导再拉回移动减除点，将全部尺度系数化成显式有理端点周期。
+特别地，有限质量的两圈 $\beta$ 不再只用未求出的 $V_2$ 符号表示。
+通过控制同时逼近的参数角点，严格证明质量/尺度比趋零时的极限，
+并以有理及 Kummer 的实际积分恒等式恢复经典系数
+$\beta=3u^2-\frac{17}{3}u^3+\cdots$、$\gamma_\phi=u^2/12+\cdots$。
+另一方面，二点值/斜率定义的质量满足含加性项的精确运动学恒等式；
+其原点不是自动不变的无质量截面。
+这解释了为何不能把本篇的质量跑动直接代入此前 MS 型单耦合临界反演。
+全篇采用解析推导，不使用数值积分或新增图枚举程序。
+\end{abstract}
+
+\section{同一方案中的二点、四点及尺度}
+考虑四维单实标量 $\lambda\phi^4/4!$，令
+$u=\lambda/(16\pi^2)$，内部质量平方记为 $\mu>0$。
+单图的 Schwinger 核沿用每圈 $d^4k/\pi^2$ 的归一化；
+$u$ 已吸收通常的圈因子。
+本篇取欧氏非例外对称四点配置 $\kappa_z$：
+\begin{equation}\label{eq:symmetric}
+ p_i^2=\frac{3z}{4},\quad p_i\cdot p_j=-\frac z4\ (i\ne j),
+ \quad \sum_i p_i=0,\qquad z=Q^2>0.
+\end{equation}
+于是任意两腿通道的平方均为 $z$。
+例如 $p_i$ 可取 $\sqrt z/2$ 乘以四个正四面体的符号向量。
+这是离壳欧氏配置，不是旧散射基准的在壳交叉对称点。
+
+二点条件和耦合条件同时定义为
+\begin{equation}\label{eq:conditions}
+ \Gamma_Q^{(2)}(z)=z+\mu_Q,\qquad
+ (\Gamma_Q^{(2)})'(z)=1,\qquad
+ \Gamma_Q^{(4)}(\kappa_z)=16\pi^2u_Q.
+\end{equation}
+所有外腿对称性和局部四点反项均按这些共同条件处理。
+RG 时间是 $\log Q$；取导数时固定同一裸理论，
+因此新 $u_Q,\mu_Q$ 随参考点同时改变。
+在微扰语言中，可以固定某个旧参考及其全部重整化参数来实现这一操作。
+这不意味求导时把新 $\mu_Q,u_Q$ 人为冻结。
+
+前批二点证明给出实际相对周期 $\SR(z;\rho;\mu)$，
+其中 $\rho$ 是固定旧二点参考，且
+\begin{equation}\label{eq:sunset-input}
+ \Gamma_\rho^{(2)}(z)
+ =z+\mu-\frac{u_\rho^2}{6}\SR(z;\rho;\mu)+O(u_\rho^3),
+ \qquad
+ K(z;\mu)=\partial_z^2\SR(z;\rho;\mu)>0.
+\end{equation}
+三个内部质量在此相同。
+明确地，对三边参数 $\alpha,\beta,\gamma$，
+\begin{equation}\label{eq:K}
+ K(z;\mu)=\int_\Delta
+ \frac{(\alpha\beta\gamma)^2\Omega}
+ {U_s^3\{\mu(\alpha+\beta+\gamma)U_s+z\alpha\beta\gamma\}},
+ \quad U_s=\alpha\beta+\alpha\gamma+\beta\gamma.
+\end{equation}
+它是已有二维端点对象的实际周期，而不只是候选数值表示。
+记质量/尺度比 $r=\mu/z$，定义
+\begin{equation}\label{eq:threshold-sunset}
+ T(r)=zK(z;\mu).
+\end{equation}
+齐次性使右侧仅依赖 $r$。已知 $0<T(r)<1/2$，
+$T(0^+)=1/2$，$T(+\infty)=0$；
+该紫外端点的形式周期为 $\frac12\,1^{\mathfrak m}$。
+
+\section{质量不是自动乘性跑动的坐标}\label{sec:mass}
+\begin{theorem}[二点值/斜率的精确质量流]\label{thm:mass}
+固定裸理论，令旧场坐标中的二点逆传播子为 $F(z)$，
+并假设 $F'(z)$ 可逆；形式微扰中其常数项为一。
+定义新场因子 $\zeta=F'(z)$，则
+\begin{equation}\label{eq:mass-coordinate}
+ \mu_Q=\frac{F(z)}{F'(z)}-z,\qquad
+ \gphi=-z\frac{F''(z)}{F'(z)}.
+\end{equation}
+因此有精确恒等式
+\begin{equation}\label{eq:mass-flow}
+ Q\frac{d\mu_Q}{dQ}=2(z+\mu_Q)\gphi,\qquad
+ Q\frac{dr_Q}{dQ}=-2r_Q+2(1+r_Q)\gphi,
+ \quad r_Q=\mu_Q/Q^2.
+\end{equation}
+在前批实际二圈范围内，它给出
+\begin{equation}\label{eq:mass-two}
+ \gphi=\frac{u_Q^2}{6}T(r_Q)+O(u_Q^3),\qquad
+ \dot r_Q=-2r_Q+\frac{u_Q^2}{3}(1+r_Q)T(r_Q)+O(u_Q^3).
+\end{equation}
+\end{theorem}
+\begin{proof}
+新二点函数为 $F/F'(z)$，在参考点的斜率为一；
+值条件立即给出 $\mu_Q$。
+由 $\phi_{\rm bare}=Z_Q^{1/2}\phi_Q$ 和
+$Z_Q=Z_\rho/\zeta$，定义
+$\gphi=\frac12Qd\log Z_Q/dQ|_{\rm bare}$，即得第二式。
+直接求导，
+\[
+ \frac{d}{dz}\left(\frac F{F'}-z\right)
+ =-\frac{FF''}{(F')^2}
+ =-(z+\mu_Q)\frac{F''}{F'}.
+\]
+乘上 $2z$ 并除去无量纲质量的经典尺度项，得到
+\eqref{eq:mass-flow}。
+代入 \eqref{eq:sunset-input}，再在本阶换写为新参数，
+得到 \eqref{eq:mass-two}。
+精确恒等式是条件性运动学结论，不主张已经构造任意高圈的实际周期。
+\end{proof}
+
+式 \eqref{eq:mass-flow} 含 $2Q^2\gphi$，故不是
+$\dot\mu=\gamma_m\mu$ 的乘性形式。
+仅对 $\mu_Q\ne0$ 强行定义对数导数，会产生
+$2(1+1/r_Q)\gphi$，它不能自动认作 MS 方案中的质量反常维数。
+本篇未改变旧基准的极点质量；这里的 $\mu_Q$ 是逆传播子在参考点切线的截距。
+
+\section{四点森林的完整非局部部分}\label{sec:forests}
+\subsection{无需程序的拓扑与系数}
+对四条带标签外腿，含 $V$ 个四价顶点的图有
+$I=2V-2$、$L=V-1$。
+一圈无 tadpole 的 1PI 图是三个通道 bubble，各有平行边对称因子 $1/2$。
+两圈、三个顶点的外腿分配，除去 tadpole 和一粒子可约图，
+只有 $(2,2,0)$ 与 $(2,1,1)$。
+前者由度数方程唯一给出双 bubble，三个通道各权重 $1/(2!2!)=1/4$；
+后者唯一给出 wineglass，双外腿顶点有 $\binom42=6$ 种选择，
+双边的对称因子给每图 $1/2$。
+一圈 tadpole 自能与其质量反项在本方案完整相消；
+外腿可约项不属于 1PI 顶点。
+因此以下表达穷尽所需非局部四点部分，局部常数由共同耦合条件固定。
+
+\subsection{显式正质量核}
+固定旧参考 $\rho>0$。置
+\begin{equation}\label{eq:one-loop}
+ X=x(1-x),\quad Y=y(1-y),\quad
+ L_\rho(z)=\int_0^1\log\frac{\mu+zX}{\mu+\rho X}\,dx.
+\end{equation}
+重整化标量 bubble 本身是 $-L_\rho$；欧氏四点一圈顶点带相反号。
+对 wineglass 取边 $a=AB,b=AC,c=BC,d=BC$，A 接两条外腿。
+生成树及二森林直接给出
+\begin{equation}\label{eq:wine-polynomial}
+ U=cd+(a+b)(c+d),\quad
+ F_z=\mu(a+b+c+d)U
+       +z\left[ab(c+d)+\frac34(a+b)cd\right].
+\end{equation}
+其经典图多项式可与文献\cite[第5节]{BK}逐项比较；
+本篇的 $3/4$ 来自 \eqref{eq:symmetric}，不能照搬在壳值。
+
+采用 $a=\ell x,b=\ell(1-x),c=\ell t y,d=\ell t(1-y)$，定义
+\begin{align}
+ A_t&=1+tY,& D_z&=\mu+zX,& C_\rho&=\mu+\rho Y, \notag\\
+ Q_z&=\mu(1+t)A_t+z\left(X+\frac34tY\right).
+                                                        \label{eq:Q}
+\end{align}
+按同一个 Schwinger 截断先作子 bubble 减除、再作总体减除，
+积分总尺度后得到
+\begin{equation}\label{eq:W}
+ W_\rho(z)=\int_0^1dx\int_0^1dy\int_0^\infty\frac{dt}{t}
+ \left[
+  \log\frac{D_z+tC_\rho}{D_\rho+tC_\rho}
+  -\frac1{A_t^2}\log\frac{Q_z}{Q_\rho}
+ \right].
+\end{equation}
+符号由“当前裸积分减参考裸积分”及子反项决定，
+与本篇欧氏顶点约定一起使用；不直接沿用任意文献的整体图符号。
+
+式 \eqref{eq:W} 是前述正质量单子图森林实际周期在对称族上的拉回。
+总尺度积分前，裸项指数为 $-\ell Q_z/A_t$，
+子反项乘积指数为 $-\ell(D_z+tC_\rho)$，
+相对密度分别为 $1/(tA_t^2)$ 与 $1/t$；
+这一检查直接固定 \eqref{eq:W} 的符号和系数。
+正质量的合并收敛及实际四维相对载体沿用已证单子图模型，
+不分别把两个发散项解释成周期。
+
+\begin{proposition}[有限顶点与场匹配]\label{prop:vertex}
+在旧二点、四点参考均为 $\rho$ 的方案中，
+\begin{equation}\label{eq:vertex}
+ \frac{\Gamma_\rho^{(4)}(\kappa_z)}{16\pi^2}
+ =u_\rho+\frac32u_\rho^2L_\rho(z)
+    +u_\rho^3\left[\frac34L_\rho(z)^2+3W_\rho(z)\right]
+    +O(u_\rho^4).
+\end{equation}
+令 $A_s(z)=\partial_z\SR(z;\rho;\mu)$。
+变到新场坐标并在 $\kappa_z$ 定义耦合，得到
+\begin{equation}\label{eq:matching}
+ u_Q=u_\rho+u_\rho^2 f_1(z)+u_\rho^3 f_2(z)+O(u_\rho^4),
+ \quad
+ \begin{cases}
+ f_1=\frac32L_\rho,\\
+ f_2=\frac34L_\rho^2+3W_\rho+\frac13A_s.
+ \end{cases}
+\end{equation}
+\end{proposition}
+\begin{proof}
+双 bubble 的准备式减去总体参考后成为 $L_\rho^2$；
+三个图给 $3/4$。六个 wineglass 权重和为三。
+二圈欧氏 1PI 四点顶点的符号为正，一圈为负，
+与标量 bubble 的 $-L_\rho$ 结合给出 \eqref{eq:vertex}。
+这些系数也可由有效作用量的微扰展开确定。
+一圈子反项插入已包含在各准备式中，不另加一次。
+最后，新四点顶点乘以
+$\zeta^{-2}=1+u_\rho^2 A_s/3+O(u_\rho^3)$，
+即得 \eqref{eq:matching}。
+这保留了此前已证明的场归一化项。
+\end{proof}
+
+\section{先求导再拉回参考点：两圈实际端点}\label{sec:beta}
+令 $\dd=Q\partial_Q=2z\partial_z$，求导保持旧 $\rho,\mu,u_\rho$ 固定。
+形式反演 \eqref{eq:matching} 给
+\begin{equation}\label{eq:beta-old}
+ \beta_Q=u_Q^2\dd f_1+
+ u_Q^3\{\dd f_2-2f_1\dd f_1\}+O(u_Q^4).
+\end{equation}
+于是三阶系数为
+\begin{equation}\label{eq:beta-combination}
+ 6z\{W_\rho'(z)-L_\rho(z)L_\rho'(z)\}
+                   +\frac{2z}{3}K(z;\mu).
+\end{equation}
+
+\begin{lemma}[旧参考的精确消去]\label{lem:reference}
+组合 $W_\rho'-L_\rho L_\rho'$ 不依赖旧参考 $\rho$。
+它等于先对 $W_\rho(z)$ 的当前变量求导、再置 $\rho=z$ 的结果，
+而不是恒零函数 $W_z(z)$ 的全导数。
+\end{lemma}
+\begin{proof}
+改变旧参考为 $\sigma$ 时，
+$L_\sigma(z)=L_\rho(z)-L_\rho(\sigma)$，而
+\[
+ W_\sigma'(z)-W_\rho'(z)
+ =\int dx\,dy\int_0^\infty\frac{dt}{t}\,
+ X\left[\frac1{D_z+tC_\sigma}-\frac1{D_z+tC_\rho}\right]
+ =-L_\rho(\sigma)L_\rho'(z).
+\]
+最后一步是收敛的有理 Frullani 恒等式；
+也可以在相对 Kummer 模型中用有理变量替换和链加法证明。
+两项因而恰好相消。
+先求导后的 $L_\rho(z)$ 在 $\rho=z$ 为零，给出所述拉回。
+若一开始沿对角求全导数，会错误地连物理响应也消去。
+\end{proof}
+
+令 $r=\mu/z$，保持 $X,Y,A_t$ 的定义，置
+\[
+ q_r=r(1+t)A_t+X+\frac34tY,\qquad
+ j_r(x,y,t)=\frac1t
+ \left[
+  \frac{X}{r+X+t(r+Y)}
+       -\frac{X+\frac34tY}{A_t^2q_r}
+ \right].
+\]
+定义实际端点积分
+\begin{equation}\label{eq:J}
+ J(r)=\int_0^1dx\int_0^1dy\int_0^\infty j_r(x,y,t)\,dt.
+\end{equation}
+
+\begin{theorem}[有限正质量的两圈RG核]\label{thm:beta}
+在 \eqref{eq:conditions} 的同一方案中，
+\begin{align}
+ \beta(u,r)&=b_1(r)u^2+b_2(r)u^3+O(u^4),\label{eq:beta}\\
+ b_1(r)&=3\int_0^1\frac{X}{r+X}\,dx,\qquad
+ b_2(r)=6J(r)+\frac23T(r),\label{eq:b12}\\
+ \gphi(u,r)&=\frac{u^2}{6}T(r)+O(u^3),\qquad
+ \dot r=-2r+\frac{u^2}{3}(1+r)T(r)+O(u^3).
+                                                        \label{eq:vector}
+\end{align}
+这里 $r$ 最终取新质量比 $r_Q$。
+在任意正代数 $r$，所显示的系数均为已构造的实际形式周期；
+不需预先求出整个四点函数或 sunset 的特殊函数表达式。
+\end{theorem}
+\begin{proof}
+将引理\ref{lem:reference}代入 \eqref{eq:beta-combination}，
+按 \eqref{eq:Q} 对当前 $z$ 求导，便得到
+$zW_\rho'|_{\rho=z}=J(r)$。
+一圈来自 $\dd f_1=3zL_\rho'$，其余两式是定理\ref{thm:mass}。
+旧质量换成新质量的差从 $O(u^2)$ 开始，
+故其代入一圈四点项只影响 $O(u^4)$；
+耦合换参则已由 $-2f_1\dd f_1$ 计入。
+
+实际性需在几何层面解释：$W_\rho$ 的共同有理对数提升，
+在当前参数求导后给端点有理三形式；
+子图面相消在求导及 $\rho=z$ 的代数拉回下保持。
+这是已有单子图相对对的态射与限制，不是从数值等式逆推。
+积分 $J(r)$ 的合并核正是该拉回形式。
+$T(r)$ 来自二点端点，$b_1$ 来自 bubble 端点。
+有限和与有理系数在直和载体上实现。
+下一节还直接证明这些合并积分的绝对收敛及紫外边界控制。
+\end{proof}
+
+\section{同时角点的控制及紫外精确求值}\label{sec:bounds}
+把质量直接置零之前，必须排除 $x,y,t$ 端点与 $r$ 同时趋边界产生的额外项。
+以下分解完成这一点，亦证明正质量 $J$ 的合并绝对收敛。
+记 $d=r+X$、$c=3/4$，则
+\begin{align}
+ j_r={}&\frac{X}{d}\frac1t
+ \left[\frac1{1+t(r+Y)/d}-\frac1{A_t^2}\right]
+ +R_r,\label{eq:decomposition}\\
+ R_r={}&\frac{r\{X(1+Y+tY)-cY\}}{d A_t^2q_r}.
+                                                        \label{eq:R}
+\end{align}
+这只是通分后的有理恒等式，保留了小 $t$ 的相消。
+
+\begin{lemma}[统一可积性与质量极限]\label{lem:domination}
+当 $r\downarrow0$ 时，$J(r)$ 收敛到将 $r=0$ 代入合并核的积分；
+没有额外边界常数。并且当 $r\to\infty$，$J(r)=O(1/r)$。
+\end{lemma}
+\begin{proof}
+先将 \eqref{eq:decomposition} 第一项对 $t$ 积分。结果是
+\begin{equation}\label{eq:main-integrated}
+ \frac{X}{r+X}
+       \left[1+\log\frac{(r+X)Y}{r+Y}\right].
+\end{equation}
+其绝对积分可由 $1-\log X-\log Y$ 控制：
+事实上 $XY\leq(r+X)Y/(r+Y)<1$。
+将两个有理分式以 $1/(1+tY)$ 为中间项拆开，
+第一部分定号，第二部分非负，
+还给出原 $t$ 积分绝对值的同一控制。
+所以对 $x,y$ 的支配收敛成立，极限是 $1+\log X$。
+
+对余项，分别控制其 $X$ 和 $cY$ 两部分。
+因 $q_r\geq r(1+t)A_t$、$X/d\leq1$，
+正部分的绝对值不超过
+\begin{equation}\label{eq:Rplus-bound}
+ \frac{2}{(1+t)(1+tY)^2}.
+\end{equation}
+它的 $t$ 积分至多 $3-2\log Y$：
+分成 $0<t<1$、$1<t<1/Y$ 及 $t>1/Y$ 即可。
+另一方面，$q_r\geq X+ctY$、$r/d\leq1$ 给
+\begin{equation}\label{eq:Rminus-bound}
+ \frac{cY}{(1+tY)^2(X+ctY)}.
+\end{equation}
+令 $v=tY$，其积分由
+$\log(1+c/X)+1/2$ 控制；这在 $x$ 上可积。
+每个内部点的 $R_r$ 均趋零，故上述统一控制给 $\int R_r\to0$。
+这同时控制了耦合角点，不是仅逐个开面取极限。
+
+最后当 $r\geq1$，第一项的 $X/(r+X)\leq1/(4r)$，
+而对数仍由 $-\log X-\log Y$ 控制。
+余项改用 $q_r\geq r(1+t)A_t$ 及 $d\geq r$，
+得到 $1/r$ 乘同类可积函数。
+于是 $J(r)=O(1/r)$。
+\end{proof}
+
+\begin{theorem}[有理紫外系数与低能衰减]\label{thm:UV}
+实际系数满足
+\begin{equation}\label{eq:UV}
+ b_1(0^+)=3,\qquad J(0^+)=-1,\qquad
+ b_2(0^+)=-\frac{17}{3}.
+\end{equation}
+紫外端点的实际形式周期分别为这些有理数乘单位对象。
+在另一端，$b_1(r)\sim1/(2r)$，
+$b_2(r)=O(1/r)$，$T(r)=O(1/r)$。
+因此耦合与场的这些量子响应在固定正质量、低减除尺度的极限衰减；
+无量纲质量流还含 $1+r$ 因子，不能据此说其量子项也趋零。
+\end{theorem}
+\begin{proof}
+一圈用支配收敛；$X$ 的区间积分为 $1/6$，也给出大 $r$ 首项。
+两圈由引理\ref{lem:domination}，可以使用
+\begin{equation}\label{eq:massless}
+ J(0)=\int dx\,dy\int_0^\infty\frac{dt}{t}
+       \left[\frac{X}{X+tY}-\frac1{(1+tY)^2}\right].
+\end{equation}
+作代数换元 $v=tY$ 后，内层积分恰为 $1+\log X$。
+故
+\[
+ J(0)=\int_0^1[1+\log x+\log(1-x)]\,dx=1-1-1=-1.
+\]
+形式周期等式亦有实际证明：$v$ 积分分成一个有理端点周期 $1$
+和 Kummer 周期 $\log^{\mathfrak m}X$；
+Kummer 乘法律把它拆成 $\log^{\mathfrak m}x+\log^{\mathfrak m}(1-x)$。
+再以实际有向三角链
+$\log x=-\int_x^1dt/t$ 得
+$\int_0^1\log^{\mathfrak m}x\,dx=-1^{\mathfrak m}$，
+交换两维链顺序后内层长度为 $t$，其相消是代数推前或 Stokes 关系。
+另一个对数同理。
+这无需假定数值周期映射单射。
+二点已证 $T(0)=1/2$，故 $6(-1)+(2/3)(1/2)=-17/3$。
+
+大 $r$ 的 $J$ 已在引理中处理；
+由 \eqref{eq:K}，固定单形质量和后
+$T(r)\leq C_s/r$，
+其中 $C_s$ 是正质量端点正则性已保证有限的有理核积分。
+其余结论随之成立。
+\end{proof}
+
+因此在本规范的逐阶紫外边界，
+\begin{equation}\label{eq:classical}
+ \beta_{\rm UV}=3u^2-\frac{17}{3}u^3+O(u^4),
+ \qquad \gamma_{\phi,\rm UV}=\frac{u^2}{12}+O(u^3).
+\end{equation}
+这些是经典系数，和文献\cite[第II节及式(19)]{KP}的 $n=1$ 约定一致；
+本篇不主张发现了新系数。
+新接合在于从实际相对周期、先微分后拉回和受控退化得到它们。
+特别地，若丢弃场项，就会得到错误的两圈值 $-6$；
+正确的 $1/3$ 补项具有明确二点来源。
+这展示了图级几何与最终局部读出之间的真实筛选，
+不等于每个固定椭圆纤维都有到单位对象的普遍投影。
+
+\section{临界坐标的障碍及与MS反演的边界}\label{sec:critical}
+\subsection{零截距面并不自动不变}
+由 \eqref{eq:mass-two} 的受控 $r\to0$ 系数极限，
+\begin{equation}\label{eq:r-zero}
+ \left.\dot r\right|_{r=0}
+ =\frac{u^2}{6}+O(u^3).
+\end{equation}
+所以不能把 $r=0$ 直接当作此方案的不变无质量流。
+对本篇显示的两圈截断向量场，若存在 $C^2$ 不变图 $r=h(u)\geq0$，
+$h(0)=h'(0)=0$，则 $h'=O(u)$。
+其不变性条件
+$h'(u)\beta=\dot r|_{r=h(u)}$ 强制
+\begin{equation}\label{eq:critical-graph}
+ h(u)=\frac{u^2}{12}+o(u^2).
+\end{equation}
+因为左端为 $O(u^3)$，而右端为 $-2h+u^2/6+o(u^2)$。
+这只是截断场的必要首项，不是完整临界流形存在性定理；
+推广到全场还需控制高圈余项沿该质量边界的行为。
+
+也可直接检验逆易感率的扰动条件。
+在参考 $z=Q^2$，前批二点公式给
+\[
+ \Gamma_Q^{(2)}(0)=\mu_Q-\frac{u_Q^2}{6}\SR(0;z;\mu_Q)+O(u_Q^3),
+ \qquad
+ \SR(0;z;\mu)=\int_0^z sK(s;\mu)\,ds.
+\]
+由于 $0<sK(s;\mu)<1/2$，当 $\mu/z\to0$ 时
+$\SR(0;z;\mu)/z\to1/2$。
+因此截断到已证明阶数的 $\Gamma_Q^{(2)}(0)=0$ 条件也给
+$\mu_Q/Q^2=u_Q^2/12$ 的首项。
+更高阶在临界边界的统一控制、真实临界流形及稳定指数仍需独立证明。
+
+\subsection{质量边界并非普通二变量形式幂级数}
+问题还不止是坐标平移。一圈已出现
+\begin{equation}\label{eq:b1-nonanalytic}
+ b_1(r)=3\left[1-r\int_0^1\frac{dx}{r+x(1-x)}\right]
+       =3-6r\log(1/r)+O(r),\qquad r\downarrow0.
+\end{equation}
+这可把积分在 $x=1/2$ 对称分开，再作一次有理积分证明；
+精确表达为
+\[
+ \int_0^1\frac{dx}{r+x(1-x)}
+ =\frac4{\sqrt{1+4r}}
+       \operatorname{artanh}\frac1{\sqrt{1+4r}}.
+\]
+故向量场虽在每个 $r>0$ 解析，不能直接当作
+$\Q[[u,r]]$ 中的原点正则形式向量场。
+有限质量系数存在连续紫外极限，不等于所有质量导数都能与该极限交换。
+
+此前 RG--临界展开反演有明确前提：
+一个归一化单耦合截面、
+$\beta=-\epsilon u+uB(u)$、量子系数无额外 $\epsilon$ 依赖，
+以及已经识别的乘性热方向。
+本篇的 $\mu_Q$ 是切线截距，满足 \eqref{eq:mass-flow}；
+不能把其对数导数塞入该反演式就得到热指数 $\nu$。
+真正的比较还需正则临界坐标或适当的复合算符插入，
+并证明它与固定方案的实际周期及流相容。
+相同的紫外 $\beta$、$\gamma_\phi$ 首项也不足以替代这项证明。
+
+\section{本批得到的实际操作与未完成部分}
+对于声明的有限阶物理输入，已经有以下经过证明的路径：
+\[
+ \begin{gathered}
+ \text{正质量图与共同MOM条件}
+ \longrightarrow \text{实际森林及二点相对周期}\\
+ \longrightarrow \text{参数导数与对角拉回}
+ \longrightarrow (\beta,\gamma_\phi,\dot r).
+ \end{gathered}
+\]
+单个图的高维或椭圆环境没有被直接等同于最后的局部周期。
+有限质量的端点给实际对象，特定紫外边界的有理化另由收敛与形式
+Stokes/Kummer 关系证明。
+这也是“操作规律”必须携带参考点、参数方向及标架的一个具体实例。
+
+本篇没有完成一般图的动机分类、任意幂次森林、全阶RG，
+也没有把欧氏计算当作全部物理切割或在壳比较。
+它补齐的是既有两圈实际模型的耦合与质量尺度接口，
+并明确指出临界质量出口还缺什么。
+整个证明没有新增数值验证程序、图枚举或积分采样；
+参考文献中的经典系数保留原作者归属。
+
+\begin{thebibliography}{9}\raggedright
+\bibitem{BK} F. Brown and D. Kreimer,
+\emph{Decomposing Feynman rules},
+\href{https://arxiv.org/abs/1212.3923}{arXiv:1212.3923}.
+本篇核对第5节图多项式、对称减除及森林式；
+欧氏物理顶点的整体符号与质量规范在正文独立固定。
+\bibitem{KP} M. V. Kompaniets and E. Panzer,
+\emph{Minimally subtracted six loop renormalization of
+$O(n)$-symmetric $\phi^4$ theory and critical exponents},
+\href{https://arxiv.org/abs/1705.06483}{arXiv:1705.06483}.
+第II节给本篇比较的耦合和场约定；已发表MS系数只作经典来源比较，
+不作为有限质量MOM推导或临界质量坐标的替代。
+\bibitem{internal} 本项目理论稿：
+《四维sunset的二次减除、实际相对周期》；
+《森林相消的有理提升及有限方案关系》；
+《非零动量减除点的实际周期与有限方案变换》；
+《局部RG可见性与临界展开反演》。
+前批实际对象和归一化沿用其已声明范围，旧PDF及证书保持不变。
+\end{thebibliography}
+\end{document}

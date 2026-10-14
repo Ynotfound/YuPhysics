@@ -1,0 +1,434 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage[margin=26mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage{fancyhdr,xcolor,enumitem}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheoremstyle{cnplain}{7pt}{7pt}{\normalfont}{}{\bfseries}{。}{0.5em}{}
+\theoremstyle{cnplain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{注}
+\renewcommand{\proofname}{证明}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\cP}{\mathcal P}
+\newcommand{\cC}{\mathcal C}
+\newcommand{\ev}{\operatorname{ev}}
+\newcommand{\per}{\operatorname{per}}
+\newcommand{\eps}{\varepsilon_H}
+\setlength{\emergencystretch}{2em}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 费曼周期：非零减除点与实际方案比较}
+\fancyhead[R]{\small 理论补篇}
+\fancyfoot[C]{\thepage}
+\title{非零动量减除点的实际周期与有限方案变换\\[5pt]
+\large 正质量对数图类的递归构造及低圈结构保持}
+\author{费曼周期研究项目\quad 理论证明稿}
+\date{2026年10月13日}
+\begin{document}
+\maketitle
+\begin{abstract}
+已建立的零外动量森林周期可以生成一整类非零动量减除方案。
+本文在正质量、四维、全部子图至多对数发散的图类中，给每个带外结构的连通图指定代数欧氏参考点，递归构造唯一的有限局部 character，使变换后的振幅满足这些参考条件。
+用同一逐边 Schwinger 截断，证明该递归的数值周期等于规定的非零点 BPHZ 极限；在形式周期环中，有限和、张量积及已有相对对象给出实际 Nori 载体。
+方案间的有限 character 满足精确复合律。
+固定整图减除点，或先减去共同物理锚点后，两方案的差只由严格低圈图的周期组成，因而在加入相应低圈对象后生成同一张量范畴。
+若整体参考点也改变，则必须保留同圈数的常数周期；不能无条件宣称各方案的孤立最小对象相同。
+进一步给出质量依赖参考条件的导数项与有限方案的平坦变化公式。
+所有结论通过理论推导得到，不要求求值完整积分。
+\end{abstract}
+
+\section{输入与相容参考条件}
+\subsection{图类和零点输入}
+沿用项目已有零点森林定理的范围：$D=4$，单位标量传播子，
+\begin{equation}\label{eq:class}
+ |E(G)|=2h_G>0,\qquad |J|-2b_1(G|J)\geq0\quad(J\subseteq E(G)).
+\end{equation}
+所有质量平方严格正，外数据为守恒欧氏动量。
+图的边、外腿及收缩后的外结构均保留标记。
+抽取非空对数子图并收缩后，仍属于这一图类。
+记相应连通分次 Hopf 代数为 $H$，余积写为
+\begin{equation}\label{eq:coproduct}
+ \Delta G=G\otimes1+1\otimes G+
+       \sum_{\varnothing\ne\gamma\subsetneq G}\gamma\otimes G/\gamma.
+\end{equation}
+求和含嵌入重数，$\gamma$ 可为许可的不交连通子图乘积。
+次数取圈数；约化余积两侧的每个非单位因子次数均严格降低。
+
+已有零点规则记为 $\Phi_0(G;\kappa)$，对应所有子图和整体均在零外动量减除。
+在代数的正质量欧氏数据上，已有实际形式周期
+\begin{equation}\label{eq:zero}
+ \Phi_0^{\mathfrak m}(G;\kappa)\in\cP_k^{\mathfrak m},
+ \qquad \Phi_0^{\mathfrak m}(G;0)=0,
+\end{equation}
+并且其数值周期与零点 BPHZ 振幅相同。
+不连通图取实际外积，单位图的值为 $1$。
+这里 $k$ 是包含本次全部质量和参考 Gram 数据、带指定实嵌入的数域。
+任意实数据可先得到解析结论，但不据此称其为 $k$ 上的周期。
+
+\subsection{参考点分配的精确定义}
+给每个需要出现的连通带标记图 $X$ 指定一个欧氏参考点 $\rho_X$，质量保持该图原边质量。
+同一带标记图在不同余积分解中出现时使用同一分配；不连通图按分量乘法延拓。
+外数据在收缩下的继承映射记为
+\begin{equation}\label{eq:projection}
+ \pi_\gamma:\mathcal K_G\longrightarrow\mathcal K_{G/\gamma}.
+\end{equation}
+它通过合并顶点上的外动量之和定义，连续收缩必须满足相应复合关系。
+继承的欧氏数据仍然欧氏。
+
+\emph{不要求} $\rho_{G/\gamma}=\pi_\gamma(\rho_G)$。
+左边是商图自身选定的减除点，右边是将整图参考点限制到该商图的评价点，两者在递归中有不同作用。
+把它们混同会错误排除独立子图参考条件。
+
+本文的方案是逐图的零次局部 MOM 条件。
+若要来自某个固定拉格朗日量的一组耦合重整化条件，还需参考分配尊重外腿对称性、顶点类型和图求和；这些条件并不由任意逐图分配自动满足。
+这里也不包含幂次发散所需的多阶 Taylor 反项。
+
+\subsection{局部 character 的作用}
+局部 character $f$ 对不交并乘法，$f(1)=1$，其系数可依赖质量和参考数据，却不依赖当前外动量 $\kappa$。
+它对振幅规则的作用定义为
+\begin{equation}\label{eq:action}
+ (f*\Phi)(G;\kappa)=\Phi(G;\kappa)+f(G)
+   +\sum_{\varnothing\ne\gamma\subsetneq G}
+        f(\gamma)\Phi(G/\gamma;\pi_\gamma\kappa).
+\end{equation}
+所有子图系数的质量变量按原边标签拉回。
+不同图的运动学空间不必相同；式\eqref{eq:action}明确这些拉回，避免把它们当成未经说明的同一变量空间。
+局部 character 之间的卷积由\eqref{eq:coproduct}定义，余结合性及\eqref{eq:projection}的复合性给
+\begin{equation}\label{eq:associative}
+ (f*g)*\Phi=f*(g*\Phi),\qquad f^{-1}=f\circ S_H.
+\end{equation}
+有限圈数上这些公式均为有限多项式，不涉及无限级数收敛。
+
+\section{有限局部反项的递归构造}
+\begin{theorem}[非零参考点的实际周期提升]\label{thm:construction}
+对上述参考分配 $\rho$，存在唯一局部 character $f_\rho^{\mathfrak m}$，使
+\begin{equation}\label{eq:lift}
+ \Phi_\rho^{\mathfrak m}=f_\rho^{\mathfrak m}*\Phi_0^{\mathfrak m},
+ \qquad \Phi_\rho^{\mathfrak m}(G;\rho_G)=0
+\end{equation}
+对每个非单位连通图成立。其递归为
+\begin{align}\label{eq:recursion}
+ f_\rho^{\mathfrak m}(G)={}&-\Phi_0^{\mathfrak m}(G;\rho_G)\nonumber\\
+ &-\sum_{\varnothing\ne\gamma\subsetneq G}
+ f_\rho^{\mathfrak m}(\gamma)
+ \Phi_0^{\mathfrak m}(G/\gamma;\pi_\gamma\rho_G).
+\end{align}
+每个 $f_\rho^{\mathfrak m}(G)$ 和 $\Phi_\rho^{\mathfrak m}(G;\kappa)$ 都有由有限直和、张量积及零点相对对象构成的实际 Nori 载体。
+该构造允许任意有限层嵌套与重叠，不需先求出周期数值。
+\end{theorem}
+\begin{proof}
+给单位赋值 $1$，再按圈数递增使用\eqref{eq:recursion}，对不交并乘法延拓。
+右侧的 $f_\rho(\gamma)$ 只涉及更低圈数，所以递归终止且唯一。
+代入\eqref{eq:action}，在 $\kappa=\rho_G$ 处三个部分恰好相消；这是形式周期环中的精确等式。
+反过来，条件\eqref{eq:lift}逐阶强制\eqref{eq:recursion}，所以唯一性也成立。
+
+每个零点值由既有实际几何对给出。
+乘积由张量积载体、和由直和载体、负号由有理标架给出。
+逐次应用这些实际操作即可构造本定理的载体。
+全部参考及继承评价点在有限的子图--收缩闭包内出现，固定最大圈数后只需要有限个几何输入。
+此处的载体未必最小，最小对象还需按实际标架取子商。
+\end{proof}
+
+\begin{remark}
+这里从既定零点实际周期构造了一个相容的非零点形式周期提升。
+不能把另一个独立提出的非零点几何模型仅凭数值相等就宣布与它具有相同形式周期。
+不同几何模型之间仍需实际态射、变量变换或相对 Stokes 比较。
+本定理证明实际载体的存在及下节的物理读出，不声称已将所有方案合成一个最小的共同有理核。
+\end{remark}
+
+\section{与规定的物理 BPHZ 规则比较}
+\subsection{一个可乘且相容的截断}
+采用逐边 Schwinger 截断 $\alpha_e\geq a>0$。对连通图定义
+\begin{equation}\label{eq:cutoff}
+ \phi_a(G;\kappa)=\int_{[a,\infty)^{E(G)}}
+    U_G^{-2}\exp\left(-M_G-\frac{\Phi_G(\kappa)}{U_G}\right)
+                                  \prod_e d\alpha_e.
+\end{equation}
+这采用前述欧氏测度，不含耦合与对称因子。
+固定 $a>0$ 时，生成树正系数及 $\alpha_e\geq a$ 给 $U_G\geq a^{h_G}$；质量指数控制无穷远。
+故每个裸积分绝对收敛。
+边标签使子图与商图乘积使用互不重叠的同一组截断变量，因此规则对不交并乘法。
+这是理论上的辅助截断，不需要执行任何截断积分。
+
+在截断层定义局部反项
+\begin{equation}\label{eq:counterterm}
+ C_{\rho,a}(G)=-\phi_a(G;\rho_G)
+  -\sum_{\varnothing\ne\gamma\subsetneq G}
+       C_{\rho,a}(\gamma)\phi_a(G/\gamma;\pi_\gamma\rho_G).
+\end{equation}
+这正是先减子发散、再对准备后图作 $\rho_G$ 点零次取值的递归。
+记
+\begin{equation}\label{eq:regulated}
+ \Phi_{\rho,a}=C_{\rho,a}*\phi_a,
+ \qquad f_{\rho,a}=C_{\rho,a}*C_{0,a}^{-1}.
+\end{equation}
+由式\eqref{eq:associative}，
+\begin{equation}\label{eq:regulatedaction}
+ \Phi_{\rho,a}=f_{\rho,a}*\Phi_{0,a}.
+\end{equation}
+各 $C_{\rho,a}$ 可随 $a\downarrow0$ 发散；我们并不对它们分别赋予有限周期。
+
+\subsection{只需零点的绝对收敛作为解析输入}
+零点反项为零点评价规则与反极的复合。
+展开其准备映射 $\mathcal R(G)=\sum c_{A,B}A\otimes B$，将各块放回原边变量，得到
+\begin{equation}\label{eq:zerodensity}
+ \Phi_{0,a}(G;\kappa)=
+ \int_{[a,\infty)^{E(G)}}
+ \sum_{A,B}c_{A,B}
+ \frac{e^{-M_E-q_B(\kappa)}-e^{-M_E}}{U_A^2U_B^2}
+                                  \prod_e d\alpha_e.
+\end{equation}
+本项目零点森林证明已给出括号中\emph{合并密度}在全正正交体上的绝对可积性，含所有 UV 角点及整体尺度。
+因此以该绝对可积密度为支配函数，直接有
+\begin{equation}\label{eq:zerolimit}
+ \lim_{a\downarrow0}\Phi_{0,a}(G;\kappa)
+              =\Phi_0(G;\kappa)=\per\Phi_0^{\mathfrak m}(G;\kappa).
+\end{equation}
+这里没有未经证明地换用维数正规化的极限，也没有逐项取发散森林积分的极限。
+
+\begin{theorem}[物理比较及有限性]\label{thm:physical}
+对每个图及规定的代数欧氏参考分配，$f_{\rho,a}(G)$ 有有限极限，且
+\begin{equation}\label{eq:physical}
+ \lim_{a\downarrow0} f_{\rho,a}(G)=\per f_\rho^{\mathfrak m}(G),
+ \qquad
+ \lim_{a\downarrow0}\Phi_{\rho,a}(G;\kappa)
+                         =\per\Phi_\rho^{\mathfrak m}(G;\kappa).
+\end{equation}
+所以第\ref{thm:construction}定理构造的实际周期给出了该非零点对数 BPHZ 方案的振幅。
+\end{theorem}
+\begin{proof}
+对任意 $a>0$，$\Phi_{\rho,a}(G;\rho_G)=0$。
+将\eqref{eq:regulatedaction}在该点展开，得到与\eqref{eq:recursion}完全相同的递归，只把 $\Phi_0$ 换成 $\Phi_{0,a}$。
+由\eqref{eq:zerolimit}及对圈数的归纳，右侧每个低阶系数和零点评价都有有限极限。
+有限和与乘积可逐项取这些\emph{已经有限的}极限，得到第一个等式。
+随后在任意当前点展开\eqref{eq:regulatedaction}，便得第二个等式。
+局部性在每一步都明确：$f_\rho(G)$ 无当前外动量依赖，反项只有零次局部插入。
+\end{proof}
+
+这给出规定截断和递归下的全图类物理比较。
+若要与另一种正规化的有限部分或 MS 约定比较，仍须那一方案自身的归一化关系；本定理不把各正规化的裸有限部分自动视为同一个周期。
+
+\section{实际方案之间的复合律}
+对方案 $a,b,c$，以下下标表示参考分配，与上一节已取极限的截断变量不再混用。
+定义
+\begin{equation}\label{eq:transition}
+ g_{ba}^{\mathfrak m}=f_b^{\mathfrak m}*(f_a^{\mathfrak m})^{-1}.
+\end{equation}
+连通分次性使逆 character 的每个分量都是有限多项式。
+从而
+\begin{equation}\label{eq:cocycle}
+ \Phi_b^{\mathfrak m}=g_{ba}^{\mathfrak m}*\Phi_a^{\mathfrak m},
+ \quad g_{cb}^{\mathfrak m}*g_{ba}^{\mathfrak m}=g_{ca}^{\mathfrak m},
+ \quad g_{aa}^{\mathfrak m}=\eps.
+\end{equation}
+这是图 character 的方案复合，不是对固定费曼动机随意规定一个自同态。
+
+转换系数也可直接从方案 $a$ 递归恢复：
+\begin{align}\label{eq:directtransition}
+ g_{ba}^{\mathfrak m}(G)={}&-\Phi_a^{\mathfrak m}(G;\rho_G^b)\nonumber\\
+ &-\sum_{\varnothing\ne\gamma\subsetneq G}
+ g_{ba}^{\mathfrak m}(\gamma)
+ \Phi_a^{\mathfrak m}(G/\gamma;\pi_\gamma\rho_G^b).
+\end{align}
+因为 $\Phi_b(G;\rho_G^b)=0$，此式由\eqref{eq:action}直接得到。
+注意 $\Phi_a(G;\rho_G^b)$ 一般不为零。
+
+实际动机 coaction 是形式周期环的代数同态，故上述每个有限多项式恒等式均与其相容。
+例如对每项乘积要使用 $\Delta^{\mathfrak m}(pq)=\Delta^{\mathfrak m}(p)\Delta^{\mathfrak m}(q)$。
+这不将图余积 $\Delta_H$ 与动机 coaction 识别为同一个映射。
+
+\section{固定锚点之后，哪些算术结构不随方案改变}
+\subsection{整体常数为什么需要单独处理}
+式\eqref{eq:action}含 $g_{ba}(G)$，其中\eqref{eq:directtransition}可能出现整图本身在另一个参考点的周期。
+这个项与当前外动量无关，但其圈数仍为 $h_G$。
+局部常数不意味着它由低圈图的周期构成。
+
+对一个本原图，转换已经简化为
+\begin{equation}\label{eq:primitive}
+ \Phi_b(G;\kappa)-\Phi_a(G;\kappa)
+   =\Phi_0(G;\rho_G^a)-\Phi_0(G;\rho_G^b).
+\end{equation}
+右侧没有真子图；它是明确的同圈数参考周期差。
+
+\subsection{锚定差及严格低圈三角关系}
+给整图选共同的代数欧氏锚点 $\kappa_*$，定义
+\begin{equation}\label{eq:anchor}
+ \widehat\Phi_a(G;\kappa,\kappa_*)
+       =\Phi_a(G;\kappa)-\Phi_a(G;\kappa_*).
+\end{equation}
+商图锚点始终是 $\pi_\gamma\kappa_*$，不强行改成商图自身的参考点。
+
+\begin{theorem}[锚定后的低圈保持]\label{thm:anchor}
+在形式周期环中有
+\begin{align}\label{eq:triangular}
+ \widehat\Phi_b^{\mathfrak m}(G;\kappa,\kappa_*)
+ ={}&\widehat\Phi_a^{\mathfrak m}(G;\kappa,\kappa_*)\nonumber\\
+ &+\sum_{\varnothing\ne\gamma\subsetneq G}
+ g_{ba}^{\mathfrak m}(\gamma)
+ \widehat\Phi_a^{\mathfrak m}
+       (G/\gamma;\pi_\gamma\kappa,\pi_\gamma\kappa_*).
+\end{align}
+右侧增量只使用圈数严格小于 $h_G$ 的图及其产品。
+若两方案的整图参考点本来相同，取该共同点为 $\kappa_*$，则原振幅本身满足同一个低圈关系。
+\end{theorem}
+\begin{proof}
+将\eqref{eq:cocycle}分别在 $\kappa,\kappa_*$ 展开相减。
+局部常数 $g_{ba}(G)$ 消失，单位项给原振幅差，约化余积项给\eqref{eq:triangular}。
+真非空对数子图及非空商图均严格低圈；$g_{ba}(\gamma)$ 的递归只需 $\gamma$ 及更低圈图，所以全部增量具有所述范围。
+若 $\rho_G^a=\rho_G^b=\kappa_*$，两项在锚点均为形式周期零，锚定不改变当前振幅。
+\end{proof}
+
+令 $\mathcal A_{<G}$ 为包含此次转换所需全部低圈形式周期的代数。
+具体只需有限子图--收缩闭包、两方案参考点及所用当前/锚点评价点；必要时加入反向转换的同类数据。
+式\eqref{eq:triangular}及其反向关系给
+\begin{equation}\label{eq:algebra}
+ \mathcal A_{<G}[\widehat\Phi_a^{\mathfrak m}(G)]
+       =\mathcal A_{<G}[\widehat\Phi_b^{\mathfrak m}(G)].
+\end{equation}
+这是有基底代数的等式，不是两个数值生成域未经条件的等式。
+
+\begin{corollary}[稳定的实际张量范畴]\label{cor:category}
+令 $\cC_{<G}$ 为上述低圈实际载体生成的满张量子范畴，$M(p)$ 为形式周期 $p$ 的最小对象。
+则
+\begin{equation}\label{eq:category}
+ \langle\cC_{<G},M(\widehat\Phi_a^{\mathfrak m}(G))\rangle_\otimes
+ =\langle\cC_{<G},M(\widehat\Phi_b^{\mathfrak m}(G))\rangle_\otimes.
+\end{equation}
+\end{corollary}
+\begin{proof}
+式\eqref{eq:triangular}将右方案的形式周期写成左方案周期和低圈周期乘积的有限和。
+这些和、乘积由实际直和与张量积承载，其最小矩阵系数对象为该载体的子商\cite{brown}。
+故右侧生成范畴包含于左侧；反向方案公式给另一包含。
+没有使用数值周期映射单射性。
+\end{proof}
+
+若所关心的结构子范畴对子商和张量操作封闭，并且包含 $\cC_{<G}$，则锚定振幅的最小对象在两方案中属于该子范畴的条件等价。
+例如全部相关低圈载体均 mixed Tate 时，锚定振幅的 mixed Tate 归属性具有这个方案保持性。
+这不证明未锚定振幅的孤立对象同构，也不排除某个具体数值的偶然抵消。
+
+\subsection{一圈反例说明未锚定对象可改变}
+等质量 bubble 的零点值为
+\begin{equation}\label{eq:bubble}
+ \Phi_0(z)=\int_0^1\log\frac{\mu}{\mu+z x(1-x)}\,dx,
+ \quad \mu>0,\quad z\geq0.
+\end{equation}
+在当前点 $z=0$，零点方案的形式周期为零。
+另取参考点 $z_0>0$，其振幅为 $\Phi_b(0)=-\Phi_0(z_0)>0$。
+严格正性由被积函数的符号直接给出，不求完整积分。
+因此后者形式周期非零，最小对象非零，而前者最小对象为零。
+这已经反驳了 ``任意改变整图减除点仍保持孤立最小对象''；无需提出任何尚未证明的超越性结论。
+
+\section{质量及参考条件变化的微分规则}
+\subsection{参考点随质量移动时的链式项}
+在一个共同光滑参数开集上，将所有参考分配取为代数且保持正质量欧氏的截面。
+各已构造形式周期作为周期函数族使用 Gauss--Manin 导数。
+从 $\Phi_\rho=f_\rho*\Phi_0$ 直接得到
+\begin{equation}\label{eq:leibniz}
+ d\Phi_\rho=(df_\rho)*\Phi_0+f_\rho*d\Phi_0.
+\end{equation}
+这保留子反项的质量导数，不把有限局部系数当作对所有参数都不变的数。
+
+对一个子图的参考取值算子
+$t_\rho F(\mu)=F(\rho(\mu),\mu)$，链式法则给
+\begin{equation}\label{eq:movingreference}
+ [\partial_\mu,t_\rho]F
+    =\sum_j(\partial_\mu\rho_j)
+                           (\partial_{q_j}F)(\rho(\mu),\mu).
+\end{equation}
+所以此前 $[\partial_\mu,t_0]=0$ 的质量插入定理仍正确，但不能原样用于例如 $\rho=c\mu$ 的质量依赖参考条件。
+若非零参考坐标本身固定，右侧才为零。
+式\eqref{eq:movingreference}只涉及导数读出；相应零点导数可使用上一补篇的实际端点下降构造。
+
+\subsection{有限方案的一阶变化满足平坦性}
+定义局部 character 群的右对数导数
+\begin{equation}\label{eq:connection}
+ \vartheta_\rho=(df_\rho)*f_\rho^{-1}.
+\end{equation}
+对每个切向量 $v$，$\vartheta_\rho(v)$ 是 infinitesimal character，即
+\begin{equation}\label{eq:infchar}
+ \vartheta(v)(xy)=\vartheta(v)(x)\eps(y)
+                              +\eps(x)\vartheta(v)(y).
+\end{equation}
+这可对 $f(xy)=f(x)f(y)$ 求导，再以卷积逆消去两侧的 $f$ 得到。
+于是\eqref{eq:leibniz}可改写为
+\begin{equation}\label{eq:gauge}
+ d\Phi_\rho=\vartheta_\rho*\Phi_\rho+f_\rho*d\Phi_0.
+\end{equation}
+
+\begin{proposition}[方案变化的平坦恒等式]\label{prop:flat}
+对可交换参数方向 $v,w$，
+\begin{equation}\label{eq:flat}
+ v\vartheta(w)-w\vartheta(v)
+                   -[\vartheta(v),\vartheta(w)]_*=0.
+\end{equation}
+等价地，$d\vartheta-\vartheta\wedge_*\vartheta=0$。
+\end{proposition}
+\begin{proof}
+由 $f*f^{-1}=\eps$，有
+$v(f^{-1})=-f^{-1}*(vf)*f^{-1}$。
+故
+\[
+ v\vartheta(w)=(vwf)*f^{-1}-\vartheta(w)*\vartheta(v).
+\]
+交换 $v,w$ 后相减即得\eqref{eq:flat}。
+采用的是右对数导数，故交换子前的符号如式中所示。
+\end{proof}
+
+该式追踪有限反项随参数的变化，系数通常为周期函数。
+它不提供有理连接矩阵，也不识别固定混合动机群。
+其用途是保留质量或参考点变化所产生的全部局部插入，使不同方案的读出导数具有明确的比较规则。
+
+\section{与旧两圈例子及整体研究的衔接}
+对只有一个本原子图 $\gamma$ 的 Dunce's cap，固定整体参考点，仅把子图参考 $\nu$ 改为 $\nu'$。
+式\eqref{eq:directtransition}给
+\[
+ g_{ba}(\gamma)=-R_\gamma(\nu',\nu).
+\]
+式\eqref{eq:triangular}随即给
+\begin{equation}\label{eq:dunce}
+ R_{\nu'}(G;\kappa)-R_\nu(G;\kappa)
+     =-R_\gamma(\nu',\nu)R_{G/\gamma}(\pi_\gamma\kappa,
+                                                    \pi_\gamma\kappa_*).
+\end{equation}
+这与此前用实际有理 Stokes 独立证明的两圈乘积律同号。
+该已完成的几何比较连接两种构造；一般图若另有直接参数模型，仍逐项承担自己的形式周期比较责任。
+
+本篇关闭的是：所声明图类中，任意相容代数欧氏 MOM 参考分配的实际周期载体存在、规定物理极限、有限转换复合律及锚定后的低圈保持。
+其载体由有限直和张量构造，可大于最小对象。
+不同方案的单一共同核、最小对象的完全分类、幂次发散和 IR 延拓仍未由本篇证明。
+
+在完整量子场论的物理出口，还要执行对称因子及图求和、耦合的有限换参、场和复合算符归一化，才能比较 $\beta$ 函数、反常维数与临界响应。
+逐图 character 的实际周期结论为这些步骤提供兼容输入，不代替这些步骤。
+原 banana、K3 格和绝对比较证书保持其原范围，不因本篇引入新数值或重新计算。
+
+\section*{来源与证据范围}
+图 Hopf 代数、森林反项和有限 character 的代数框架来自经典重整化理论\cite{ck,bk}。
+Brown--Kreimer 的综述\cite[\S\,3.2--4]{bk}明确讨论对数图森林公式与卷积分解，且指出一般发散度还需要额外修正。
+本文不把这些经典结构当作新的优先权主张。
+
+项目《正质量零外动量方案的森林减除动机》提供本篇唯一的全局收敛/实际几何输入。
+上一补篇《森林减除的参数导数与端点动机》给出参考评价导数所需的端点关系。
+本文另作直接证明的是：以逐边截断将有限递归与该输入比较、相容的实际形式周期提升，以及锚定条件下的低圈张量范畴保持。
+形式周期最小对象的背景见\cite{brown}。
+
+前批原函数审阅已重新检查初端点、右单位、全右收缩和相对 cone 的乘积取向，未发现需要改变其所声明零点范围的结论。
+没有新增枚举、求积、采样、矩阵扩展或旧证书重放。
+本文仍是内部理论证明稿，等待进一步独立数学审阅。
+
+\begin{thebibliography}{9}\small\raggedright
+\bibitem{ck} A. Connes and D. Kreimer,
+\emph{Renormalization in quantum field theory and the Riemann--Hilbert problem I:
+the Hopf algebra structure of graphs and the main theorem},
+Commun. Math. Phys. \textbf{210} (2000), 249--273.
+\url{https://arxiv.org/abs/hep-th/9912092}.
+\bibitem{bk} F. Brown and D. Kreimer,
+\emph{Decomposing Feynman rules}, arXiv:1212.3923 (2012), \S\,3.2--4.
+\url{https://arxiv.org/html/1212.3923}.
+\bibitem{brown} F. Brown, \emph{Notes on motivic periods},
+Commun. Number Theory Phys. \textbf{11} (2017), 557--655, \S\,2.4--2.5.
+\url{https://arxiv.org/abs/1512.06410}.
+\end{thebibliography}
+\end{document}

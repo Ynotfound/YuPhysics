@@ -1,0 +1,4015 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper,oneside]{ctexrep}
+\usepackage[margin=25mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm,mathrsfs}
+\usepackage{booktabs,longtable,array,graphicx,calc}
+\usepackage{textcomp}
+\usepackage{etoolbox}
+\AtBeginEnvironment{longtable}{\small}
+\allowdisplaybreaks[2]
+\providecommand{\real}[1]{#1}
+\providecommand{\pandocbounded}[1]{#1}
+\usepackage{xcolor,enumitem,fancyhdr}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\usepackage{bookmark}
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+\newtheoremstyle{cnplain}{6pt}{6pt}{\normalfont}{}{\bfseries}{。}{0.5em}{}
+\theoremstyle{cnplain}
+\newtheorem{theorem}{定理}[chapter]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{example}[theorem]{例}
+\newtheorem{problem}[theorem]{问题}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{注}
+\renewcommand{\proofname}{证明}
+\renewcommand{\thechapter}{\arabic{chapter}}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Gm}{\mathbb G_m}
+\newcommand{\Gr}{\operatorname{Gr}}
+\newcommand{\Ext}{\operatorname{Ext}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\dR}{\mathrm{dR}}
+\newcommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setlength{\emergencystretch}{3em}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small 费曼周期的结构、可见性与物理实现}
+\fancyhead[R]{\small 学术交流稿}
+\fancyfoot[C]{\thepage}
+\hypersetup{pdftitle={费曼周期的结构、可见性与物理实现},pdfauthor={费曼周期研究项目}}
+\begin{document}
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+\centering
+\vspace*{22mm}
+{\LARGE\bfseries 费曼周期的结构、可见性与物理实现\par}
+\vspace{8mm}
+{\Large 研究综述、理论推导与总体研究方案\par}
+\vspace{13mm}
+{\large Structures, Visibility and Physical Realizations\par}
+\vspace{2mm}
+{\large of Feynman Periods\par}
+\vfill
+{\large 数学物理研究项目\par}
+\vspace{5mm}
+{\large 2026 年 10 月 13 日\par}
+\vspace{10mm}
+\begin{minipage}{0.83\textwidth}
+本稿汇集项目的实际相对动机、混合 Hodge 结构、regulator、最小标架、单值整格、重整化及 RG 研究，并提出后续统一分类方案。它是供学术交流与逐条审阅的阶段性完整研究稿；定理的适用条件、有限证书输入及未解决问题在正文中分别说明。
+\end{minipage}
+\vspace{12mm}
+\end{titlepage}
+\hypersetup{pageanchor=true}
+\pagenumbering{roman}
+\chapter*{摘要}
+\addcontentsline{toc}{chapter}{摘要}
+给定带质量、外运动学、积分链、分子及减除方案的费曼图，如何在求出完整积分之前预测其周期所需要的几何核、算术结构与混合扩张，并确定这些结构经过切割、收缩、重整化和物理投影后进入哪些可观测量？本稿以带标架的实际相对对象为共同语言，组织组合判据、几何构造、变分与群、物理操作以及有限范围的有效方法。
+
+核心实例为二维四传播子 banana 图。我们详细说明有效 Nori 相对对象的构造、边界复形与权重过滤、质量比 Kummer 一动机、投影高阶 regulator，以及三步扩张的最小化。对于指定有理纤维，现有证明稿与有限证书给出最小秩八、十三维幺幂根基、纯整格及绝对比较；很一般参数、等质量退化及 Picard 跳跃分别讨论。一般图部分解释能量字符支撑与动机分解的区别，建立割与收缩的几何接口，展开本原减除、共同森林提升及正质量零动量对数森林的实际相对周期构造。最后讨论局部 RG 与临界展开的形式关系，并以独立四维标量理论检验物理归一化。
+
+全文区分内部证明稿、严格有限认证、普通数值检查及研究目标。任意图的无条件动机分类、一般方案下的全部物理操作以及数值周期的代数独立性不作为既成结果。后续研究优先推进这些理论接口，计算仅用于不可替代的有限证明输入。
+
+\noindent\textbf{关键词：}费曼周期；相对动机；混合 Hodge 结构；K3 曲面；Kummer 扩张；regulator；最小标架；重整化；临界指数。
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+% CONTENT_START
+\chapter{研究问题、分类语言与总体结构}\label{ch:intro}
+\section{问题的准确表述}
+费曼积分的困难并不只在于求出一个数值。更基础的问题是：积分所需的函数、代数几何和算术结构，能否在完整积分之前被识别？进一步说，同一结构在最大割、子图收缩、减除、图求和及物理读出之后，是否还保留？这要求同时研究承载周期的对象和探测该对象的标架。
+
+本项目的总目标是建立从带物理数据的图到物理可观测量的结构分类理论。所谓统一，不是为每张裸图贴上一个互斥的函数标签，而是提供可以比较的几何对象、扩张类、操作态射及最小性判据。基本输入写作
+\begin{equation}\label{eq:input}
+ \mathfrak P=(G,D,(a_e),(\mu_e),\kappa,N,k,\sigma,\mathscr R,Q).
+\end{equation}
+这里 $G$ 是带标签的有限图，$D$ 是时空维数，$a_e$ 是传播子幂次，$\mu_e$ 是质量平方，$\kappa$ 是外运动学，$N$ 是分子，$k$ 是基域，$\sigma$ 同时记录积分链及解析支，$\mathscr R$ 是正规化与减除方案，$Q$ 是最终的可观测量。规范理论还须指定场内容、规范固定和实际成立的对称恒等式。
+
+边表只决定输入的一部分。同一图在等质量、一般质量、阈值、零外动量或无质量极限下，可能具有不同的纯核、Picard 数和扩张秩。即使环境几何不变，改变分子和积分链也可能改变最小可见对象。因此，任何只以 $G$ 为输入的结论，都必须说明它量化的是哪些物理数据：泛参数、所有参数、某个开集，还是一个固定纤维。
+
+\begin{definition}[结构分类的四类输出]
+对给定的 $\mathfrak P$，分类结果分别记录：函数表示的类别；纯几何核及其权重、Hodge 数和极化；算术基域与混合扩张；由物理链和读出确定的最小带标架对象。输出中的必要条件、充分条件、等价判据及条件结论分别标明。
+\end{definition}
+
+第一类输出可以包括有理函数、多重对数、椭圆迭代积分或更高维周期表示。第二类输出可以包括 Tate 对象、椭圆曲线的 $H^1$、K3 超越上同调和较高维几何。第三类输出涉及质量单位、Kummer 类、高阶 Chow 循环、regulator 和非平凡粘合。第四类输出确定其中哪些方向真正进入振幅、局部 RG 系数或临界指数。
+
+这些输出不构成一张互斥的标签表。MZV 是特定常数类，MPL 是函数表示语言，混合 Tate 是范畴性质；K3 本身是二维 Calabi--Yau。一个费曼对象可以有 K3 纯核、Tate 边界及非零扩张，并通过一个特定读出仅显示其中部分方向。全文采用这种分层语义。
+
+\section{周期、形式周期与最小对象}
+设 $(X,B)$ 是定义在 $k\subset\C$ 上的代数几何对，$\omega$ 是代数 de Rham 类，$\gamma$ 是相对 Betti 同调类。其周期为
+\begin{equation}
+ I=\langle\omega,\gamma\rangle=\int_\gamma\omega.
+\end{equation}
+一个积分写成这种形式并不自动确定唯一的最小对象：可以添加不被标架探测的直和项，也可以改变几何表示。形式周期的定义将线性关系和实际态射关系纳入同一框架\cite{brownperiods}。它的最小子商描述矩阵系数真正使用的部分，因而适合作为分类的物理出口。
+
+我们采用实际 Nori 对象，并保留 Betti、de Rham 和 Hodge 实现。``实际''表示对象和箭头来自规定范畴中的构造；写出具有相同尺寸的矩阵，或者发现一个 Hodge 空间同构，并不能单独提供动机态射。本文关于六运算、相对对偶和一动机商所用的基础分别来自\cite{tubach,abv}。本文不假定一个普遍的周期映射单射定理。
+
+\begin{remark}[四种不同的消失]
+某个数值在一点为零、一个解析函数恒为零、一个形式周期为零、一个读出在实际子对象上为零，是不同的断言。只有最后两类在满足相应范畴条件时直接支持动机最小化。普通数值近零不能替代它们。
+\end{remark}
+
+因此，环境动机含非 Tate 因子不自动说明每个周期都非 Tate；最小形式周期对象非 Tate，也不在没有额外输入时证明其复数求值不能偶然等于某个 MZV 组合。本文的结构结论首先作用于对象及形式周期，而非未经证明的复数算术独立性。
+
+\section{三条研究主线及其共同接口}
+数学基础主线研究图的组合约束、几何核、边界一动机、扩张及实际群。物理实现主线研究切割、收缩、重整化、分子和可观测量的作用。有效方法主线将这些结果组织为有明确终止范围与证明责任的分层过程。共同接口是带标架的相对对象及其真实态射：
+\begin{equation}
+\begin{gathered}
+ \text{图与物理数据}\longrightarrow\text{实际几何对}
+ \longrightarrow\text{纯核与扩张},\\
+ \text{链、读出及操作}\longrightarrow\text{可见子商}
+ \longrightarrow\text{振幅或局部可观测量}.
+\end{gathered}
+\end{equation}
+这里的箭头表示需要分别构造和证明的步骤，不表示已经存在一个适用于任意图的单一函子。尤其是组合角色投影与动机投影之间、局部单值与固定纤维动机态射之间、森林 Hopf 代数与周期 coaction 之间，都有必须另证的接口。
+
+``不求完整积分''的工作原则，是先利用几何、边界、变分、极化和对称性给出结构结论。它不要求拒绝所有周期计算。指定代数点的扩张非零、绝对归一化或整格标记，可能需要不可替代的有限证据；但一般理论不能被持续增加数值精度所取代。
+
+\section{证据等级、来源与本文的阅读方式}
+本文将现有成果分为四种状态。第一种是在项目证明稿中已给出定义、假设和论证的理论命题；第二种是依赖明确有限认证输入的命题；第三种是普通高精度求积及相容性检查；第四种是尚待完成的研究问题。前两类仍须接受学术审阅，本稿不把项目内部证明稿表述为已通过外部同行评议。
+
+有限证书的作用是给特定论证提供可复核输入。例如，拓扑整性先说明一个迹是整数，严格区间再确定它是哪一个整数。区间本身不证明整性，接近整数的十进制打印更不证明整格。类似地，Frobenius 多项式、几何单值和固定 Hodge 群承担不同任务，不能相互替代。
+
+图超曲面与费曼动机的背景见\cite{bek,browncosmic}，椭圆与 K3 图族的具体高阶正规函数背景见\cite{bv,bkv}，参数重整化及其几何来源见\cite{bk2008,bk2011,bk2012,bbr}。本稿对经典结论给出引用，对项目中的进一步组合、比较和最小性论证给出证明责任，不以独立推导作为原创性或优先权的充分依据。
+
+\section{主要结论的适用范围}
+二维四传播子 banana 的几何模型提供本稿最完整的链条：实际相对对象、边界正交纯核、质量 Kummer 商、投影 regulator、物理最小化、混合群、整格与绝对比较。指定 $m=(1,2,4,8)$、$s=-64$、$k=\Q$ 的结论不靠``很一般''自动外推；两种范围分别有各自证据。
+
+一般图方面，能量字符支撑有精确组合判据；切割与收缩在规定正常交叉模型上有实际几何箭头；本原减除和一类正质量零动量对数森林有实际相对周期构造。尚未形成任意图的无条件几何类型分类。独立的四维 $\phi^4$ 基准用于检查全图权、减除、LSZ、交叉和幺正性，其一般数值结果与严格粗界分别陈述。
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+范围 & 主要最小秩结论 & 必要限制\\
+\midrule
+指定不等质量 banana & $8$ & 固定质量、基点、基域及认证输入\\
+四参数很一般 banana & $10$ & 排除可数个真解析条件\\
+等质量很一般 banana & $4$ & 先剔除额外代数方向\\
+一般带数据图 & 条件性子商判据 & 尚无统一无条件分类\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{记号与实现约定}\label{sec:notation}
+$\Q(j)$ 的权重为 $-2j$，其标准 Tate 周期记为 $(2\pi i)^j$，同调与上同调之间通过对偶和扭转转换。本文通常以同调对象 $E$ 记录物理链，以 $E^\vee$ 的 de Rham 元记录读出。某些几何计算先在上同调完成，再明确转换到这一约定。
+
+$G_H$ 表示相应有理 Hodge 结构生成范畴的群，$G_N$ 表示所述基域上的 Nori 群。纯权重零 K3 型结构的 Hodge 群采用连通表述。$U=R_uG$ 为幺幂根基，$R$ 为分级生成群。选 Levi 分裂仅用于显示矩阵，不使原对象的过滤或最小商依赖这一选择。
+
+符号 $\kappa$ 在一般输入中表示运动学数据；banana 章节中专门表示独立质量 Kummer 方向数时，均重新定义。$U_G,F_G$ 是图多项式，开曲面 $U_s$ 和幺幂群 $U$ 由上下文区分。$h_G$ 是圈数；最大割章节用 $h$ 计传播子数时明确说明，避免将四传播子误称为四圈。
+
+\chapter{最小标架、保护判据及组合到动机的接口}\label{ch:frames}
+\section{由链与读出同时决定的对象}
+设 $\mathcal C$ 为有理中性 Tannakian 范畴，带忠实正合 Betti 纤维函子和相容 de Rham 实现。给定 $E\in\mathcal C$、链标架集合 $\Sigma\subset E_B$ 及读出集合 $\Omega\subset E_{\dR}^{\vee}$，定义
+\begin{equation}\label{eq:visible}
+ R_\Sigma=\bigcap_{\Sigma\subset J_B}J,\qquad
+ I_\Omega=\sum_{\Omega|J_{\dR}=0}J,\qquad
+ V_{\Sigma,\Omega}=R_\Sigma/(R_\Sigma\cap I_\Omega).
+\end{equation}
+交、和均取在实际子对象中。有限长度使递降、递升过程稳定，所以定义存在。先取链生成的部分，再除去其中不可观察的部分，是同时满足两个标架的最小化。
+
+\begin{proposition}[双重单调性]\label{prop:visible}
+固定读出并增加链标架，得到可见对象的自然单射。固定链并增加读出，得到由较多读出对象到较少读出对象的自然满射。若实际态射把一组标架送到另一组，并在生成对象上满射且其核被读出消去，则相应最小对象同构。
+\end{proposition}
+\begin{proof}
+第一种情形中 $R_\Sigma$ 增大而 $I_\Omega$ 不变，取同一商后得到单射。第二种情形中 $I_\Omega$ 缩小而 $R_\Sigma$ 不变，商映射给出所述满射。最后一种情形中，态射把链生成对象满射到目标生成对象；拉回读出使其核不可见，且任一不可见子对象的像仍不可见。用两个最大不可见子对象的泛性质即可得到商同构。
+\end{proof}
+
+这说明``可见性''一般是一张子商图。只有在同一对象上选定相容观察旗标，或明确构造后文的留数核，才能得到包含关系意义的过滤。不能把组合、几何、算术、物理四个名词直接写成一条未经证明的下降链。
+
+\section{有限操作模型与 Hankel 秩}
+作为实际范畴问题的有限表示模型，设一组算符 $M_i$ 作用于 $k^d$，列矩阵 $B$ 给输入，行矩阵 $C$ 给读出。对词 $w=i_1\cdots i_r$ 记 $M_w=M_{i_1}\cdots M_{i_r}$。定义
+\begin{equation}
+ \mathcal R=\sum_w\im(M_wB),\qquad
+ \mathcal N=\mathcal R\cap\bigcap_w\ker(CM_w),\qquad
+ \mathcal Q=\mathcal R/\mathcal N.
+\end{equation}
+关联的双侧 Hankel 矩阵为 $H_{u,v}=CM_uM_vB$。可达空间的递增链最多经历 $d-1$ 次严格增长；不可观察空间通过对偶递增链有同一界。因此，长度不超过 $d-1$ 的左右上下文已足够决定 $\mathcal Q$，并有
+\begin{equation}\label{eq:hankel}
+ \dim\mathcal Q=\rank H.
+\end{equation}
+这里的秩属于操作表示，不能未加比较就称为 Nori 秩。加权自动机的最小表示为这一有限模型提供已有背景\cite{kiefer}。
+
+若某形式关系 $r(M)=0$ 拟下降到可见对象，必须检查
+\begin{equation}
+ CM_u\,r(M)\,M_vB=0
+ \quad\text{对全部必要左右上下文 }u,v.
+\end{equation}
+只检查起始矩阵系数 $Cr(M)B$ 不够。某个交换子可能消去原始周期，却不消去对它作用一次之后的后继周期。这正是从一个积分表达式推广到操作闭包时必须增加的证明责任。
+
+\section{半单情形的重数与非半单情形的限制}
+在代数闭域上设半单表示分解为 $\bigoplus_i V_i\otimes k^{m_i}$，不同 $V_i$ 两两非同构。写标架在第 $i$ 块的分量为
+\begin{equation}
+ b_i=\sum_a b_{ia}\otimes e_a,\qquad
+ c_i=\sum_a c_{ia}\otimes e_a^*,\qquad
+ Z_i=\sum_a b_{ia}\otimes c_{ia}.
+\end{equation}
+由简单代数分块作用，矩阵系数在第 $i$ 类中的最小重数是张量 $Z_i$ 作为线性映射的秩。该公式须保留系数域与半单假设；有额外自同态除环时重数应在相应除环上计算，非半单时还必须记录扩张。
+
+后文 banana 给出一个重要反例：一个混合对象可以只有标量自同态，却含非零不可见 Tate 子对象。这个子对象不是直和因子。故由半单分块得出的几何直觉不能替代三步扩张中的实际最小商论证。
+
+\section{循环源与 head 保护}
+令 $\mathcal A$ 是有限维操作代数，$W=\mathcal A\delta$ 为单一源 $\delta$ 生成的循环模，$J(\mathcal A)$ 为 Jacobson 根基。半单头部为
+\begin{equation}
+ \operatorname{head}(W)=W/J(\mathcal A)W.
+\end{equation}
+一个可检验的保护问题是：每个保留源的非零商是否都必须出现指定简单模 $V$？其精确代数判据是 head 的全部简单组成因子都同构于 $V$。
+
+\begin{proof}
+若 head 含另一种简单因子，将 $W$ 映到该简单商便给出反例。反之，任意非零商都有非零 head；它的简单商也是 $W$ 的简单商，故必为 $V$。循环源在非零商中仍生成，所以这里的保留源条件与非零商相容。
+\end{proof}
+
+这个判据量化所有逻辑允许的模商。物理投影只构成其中一个由实际分子、链或恒等式实现的子集合。因此，原保护文稿给出代数层面的充要条件，而把它升级为某类物理可观测量的充要条件，还须证明允许商的可实现性。
+
+对于秩一局部变换 $T_i-I=\delta_i\ell_i$，令 $B_{ij}=\ell_i(\delta_j)$，以 $B_{ij}\ne0$ 定义传播有向边。在适当的闭包与稳定性假设下，强连通和 $\rank B>0$ 将保护问题化为由消失向量生成模的唯一简单头部。这里必须使用整个相关操作代数；只取方便的一部分单值生成元不能自动给出全局保护。
+
+\section{物理正性、分子理想与实际态射}
+完整物理中间态求和有时给出正形式 $\sum_\lambda|\mathcal A_\lambda|^2$。若物理实支在相应在壳代数簇中 Zariski 稠密，且清分母在所论区域合法，则这个完整和恒零可转化为各清分母分子在相应根理想中的消失条件。单个干涉项一般没有正性，不能同样处理。
+
+这提示一条理论路径：先证明物理恒等式诱导可见表示中的关系，再以所有左右上下文检查关系理想，最后构造相应实际子商。规范 Ward 恒等式只能在存在规范对称性的模型中使用；本稿的标量 $\phi^4$ 基准不存在需要额外虚构的规范 Ward 条件。
+
+还有一个根本区别：操作代数通常是由单值、导数或形式运算生成的代数；动机自同态则必须与所有实现相容。二者不等同。后文指定 K3 的 Hodge 自同态仅为标量，而 Picard--Lefschetz 反射非标量，已经提供直接反例。
+
+\section{算术边界数据不能由微分方程单独恢复}
+函数 $\log z$ 与 $\log z+c$ 具有相同导数和相同局部几何单值；常数 $c$ 却可能改变标架周期及其边界算术信息。纯 Picard--Fuchs 系统确定一个局部系统，并不自动确定相对扩张的全部比较条目。指定初值、边界单位及积分链是额外数据。
+
+本稿以实际 Kummer 比较和 regulator 补足这一缺口。一般编译器也必须同时输出齐次核、非齐次源、扩张及标架，不能以恢复纯微分方程作为完整分类的终点。
+
+
+\chapter{能量字符支撑与覆盖几何}\label{ch:graph}
+本章研究泛独立能量下的组合支撑。其结论先处于有理函数层；从支撑到实际周期对象的比较另行提出。Dual-critical 图的图论背景见\cite{dualcritical}。
+\section{对象、输入与输出}\label{sec:graph:1}
+
+图 \(G=(V,E)\) 有 \(n\geq1\) 个顶点，边以输入顺序编号 \(0,\ldots,m-1\)，允许平行边和自环。根变量 \(\omega_e\) 彼此独立；顶点能量 \(p_v\) 除 \(\sum_vp_v=0\) 外独立。先在正实根和实欧氏能量处定义收敛能量积分，再使用其有理延拓。传播子幂均为一，无分子和反项。原稿另论高次幂，本章不把它加入算法定理。
+
+令 \(R_e\) 翻转 \(\omega_e\)，
+
+\begin{equation}
+e_S=2^{-m}\sum_{\epsilon\in\{\pm1\}^{E}}
+       \left(\prod_{e\in S}\epsilon_e\right)R_\epsilon,\qquad
+ \mathcal V(G)=\{S\subset E:e_S\mathscr E_G\not\equiv0\}.
+\end{equation}
+
+这里``不恒为零''是有理函数意义。固定外腿能量、质量关系或其他物理约束后，某些字符可能消失。一般支撑给出特化支撑的上界，不能逐点保证非零。
+
+记 \(\delta(A)\) 为割边，\(W(A)=\sum_{\delta(A)}\omega_e\)，\(p(A)=\sum_{v\in A}p_v\)。以下固定能量核的规范：
+
+\begin{equation}
+\mathscr E_G=
+ \frac1{\prod_e2\omega_e}
+ \sum_{\pi\in S_n}\prod_{j=1}^{n-1}
+ \frac1{W(A_{\pi,j})+ip(A_{\pi,j})}.                 \label{eq:graph:1}
+\end{equation}
+
+单顶点图的空乘积为一。自环只贡献 \(1/(2\omega_e)\)，故每个非零字符必须含全部自环。
+
+程序接受 JSON 的 n 与 edges，拒绝不连通图、无效端点及超出给定资源界的请求。默认顶点上界12，总奇偶掩码/子集状态预算 \(2^{22}\)；这不意味着接受所有十二顶点图。预算拒绝不是数学上的零支撑，也不是不可判定结论。输出包含边束、自环强制标签、每种保留奇偶图、全部可达子集位表、存在时的好排序、支撑总数和按删边数计数的因式化多项式。
+
+\section{支撑定理及极点证明的审阅}\label{sec:graph:2}
+
+无自环多重图 \(H\) 称为 dual-critical，如果存在排序 \(v_1,\ldots,v_n\)，使每个 \(j>1\) 与此前顶点之间有奇数条边，按重数计。单顶点空图满足定义。该术语、好排序及奇割递归属于既有图论；见 Király--Kisfaludi-Bak \cite{dualcritical} 第1--3页。不能把某个奇度顶点的存在当作充分条件。
+
+\begin{theorem}[泛能量字符支撑]
+
+\label{thm:graph:1} 在上述一般参数范围内，
+
+\begin{equation}
+e_S\mathscr E_G\not\equiv0
+ \quad\Longleftrightarrow\quad G\setminus S\text{ 是 dual-critical}.       \label{eq:graph:2}
+\end{equation}
+
+右侧若留有自环即判否。
+
+\end{theorem}
+
+\subsection{极点公式}\label{sec:graph:2.1}
+
+设 \(V=A\sqcup B\)，两侧诱导图均连通，\(C=\delta(A)\)，\(u=W(C)+ip(A)\)。在 \(u=0\) 上令
+
+\begin{equation}
+\widetilde p_v=
+ \begin{cases}
+ p_v-i\sum_{e\in C:e\ni v}\omega_e,&v\in A,\\
+ p_v+i\sum_{e\in C:e\ni v}\omega_e,&v\in B.
+ \end{cases}
+\end{equation}
+
+两侧分别守恒。在这一规范下，留数表示 \(u^{-1}\) 的系数，不含 \(2\pi i\)：
+
+\begin{equation}
+\operatorname{Res}_{u=0}\mathscr E_G
+ =\left(\prod_{e\in C}(2\omega_e)^{-1}\right)
+   \mathscr E_{G[A]}(\widetilde p_A)
+   \mathscr E_{G[B]}(\widetilde p_B).                         \label{eq:graph:3}
+\end{equation}
+
+在排序式中，产生此极点的排序把 A 放在 B 之前；去掉这一个分母后，两侧的前缀分母恰是移位能量下的式\eqref{eq:graph:1}。内部根翻号与上述移位交换。跨边根只有全不翻、全翻能够产生同一个一般超平面；全翻项对应 B 在 A 前，另有分母的负号。因此
+
+\begin{equation}
+\operatorname{Res}_{u=0}(e_S\mathscr E_G)=
+ \frac{1+(-1)^{|C|+|S\cap C|+1}}{2^{|C|}}
+ \left(\prod_{e\in C}(2\omega_e)^{-1}\right)
+ (e_{S\cap E(A)}\mathscr E_{G[A]})
+ (e_{S\cap E(B)}\mathscr E_{G[B]}).                         \label{eq:graph:4}
+\end{equation}
+
+所有下图能量取 \(\widetilde p\)。系数非零等价于 \(|C\setminus S|\) 为奇数。
+
+\subsection{不连通侧的伪极点相消：一个有理桥极限证明}\label{sec:graph:2.2}
+
+补充原稿弱指数正规化论证，避免用分布极限代替有理恒等式。对有 \(c>1\) 个分量的图 H，仍以式\eqref{eq:graph:1}的有限排序和定义其形式核，顶点能量只作总守恒。用 \(c-1\) 条桥把分量连成树，每条桥根取 \(\eta\)，得到连通 \(H_\eta\)。
+
+在一般分量能量处，排序式每个分母都有非零的 \(\eta=0\) 极限，所以
+
+\begin{equation}
+\mathscr E_H^{\rm formal}
+ =\lim_{\eta\to0}(2\eta)^{c-1}\mathscr E_{H_\eta}.          \label{eq:graph:5}
+\end{equation}
+
+另一方面，新边均为桥，其能量由桥一侧的外能量总和 \(P_b\) 固定，不形成新圈。沿桥逐个分解原能量积分得
+
+\begin{equation}
+\mathscr E_{H_\eta}
+ =\prod_b(P_b^2+\eta^2)^{-1}
+   \prod_\alpha\mathscr E_{H_\alpha}(p^\alpha).
+\end{equation}
+
+\(p^\alpha\) 由桥能量向附件顶点的注入得到，分别守恒，且不依赖 \(\eta\)。在一般 \(P_b\ne0\) 处乘 \((2\eta)^{c-1}\) 后极限为零。故形式核恒为零。这是有限有理函数的极限，无须交换不绝对收敛的时间积分。将此结论用于式\eqref{eq:graph:3}的一侧，证明不连通分割的候选留数为零。
+
+\subsection{归纳}\label{sec:graph:2.3}
+
+充分性：令 \(H=G\setminus S\) dual-critical，取好排序的最后顶点 v。\(H-v\) 仍 dual-critical 且跨边保留数为奇数。特别地 \(G-v\) 连通。式\eqref{eq:graph:4}的系数及按归纳所得下图投影均非零。极点超平面上的下图守恒能量仍是独立参数，所以留数非零。
+
+必要性：当 \(n>1\)，式\eqref{eq:graph:1}关于独立外能量只有线性候选极点，且沿各一般超平面至多一阶。若所有留数为零，则投影是这些外能量的多项式；但沿一般方向 \(p\mapsto\lambda p\)，每个排序项为 \(O(\lambda^{-(n-1)})\)，只能恒零。非零投影因而有一个非零留数。其极点可能含带符号根；利用投影在任意根翻号下为特征向量，可把它移到式\eqref{eq:graph:4}的标准极点。第\ref{sec:graph:2.2}节排除不连通侧，式\eqref{eq:graph:4}及归纳遂给出两个 dual-critical 诱导子图和奇数保留跨边。文献\cite{dualcritical} Theorem3 的奇割递归等价性给出 H dual-critical。单顶点为归纳起点。证毕。
+
+证明决定恒零项，有限域证书只额外验证实现和某个特化上的非零性。
+
+\section{平行边压缩与精确计数}\label{sec:graph:3}
+
+令 q 为自环数，非空无序端点边束为 \(B_1,\ldots,B_b\)，重数 \(r_j\ge1\)，于是 \(\sum_jr_j=m-q\)。对删边字符 S 定义
+
+\begin{equation}
+p_j=|B_j\setminus S|\bmod2.
+\end{equation}
+
+令 \(H_p\) 在第 j 对端点上有一条边当且仅当 \(p_j=1\)。
+
+\begin{theorem}[压缩输出]
+
+\label{thm:graph:2} S 属于支撑，当且仅当它包含全部自环且 \(H_p\) dual-critical。因此
+
+\begin{equation}
+|\mathcal V(G)|=2^{m-q-b}
+    \#\{p\in\{0,1\}^b:H_p\text{ dual-critical}\},             \label{eq:graph:6}
+\end{equation}
+
+并有删边度数生成函数
+
+\begin{equation}
+\sum_{S\in\mathcal V(G)}z^{|S|}
+ =z^q\sum_{p:H_p\ {\rm dual\mbox{-}critical}}
+   \prod_{j=1}^b
+   \frac{(1+z)^{r_j}+(-1)^{r_j-p_j}(1-z)^{r_j}}2.           \label{eq:graph:7}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+
+对任意固定顶点顺序，每个向前边数的奇偶性只取决于对应边束保留数的奇偶性；这也就是文献\cite{dualcritical} Proposition4 的删除平行边对不变性。应用定理\ref{thm:graph:1}即可。固定 \(p_j\) 时，束内删边子集大小须满足 \(|S\cap B_j|\equiv r_j-p_j\pmod2\)，恰有 \(2^{r_j-1}\) 种。各束独立，自环强制，给式\eqref{eq:graph:6}。偶/奇二项式筛选给式\eqref{eq:graph:7}。
+
+\end{proof}
+
+式\eqref{eq:graph:6}按字符计数一次，不按可能不唯一的好排序计重。证明不是声称平行边不影响能量核的数值或几何。
+
+例如，m 条平行边的 banana 只需两个奇偶图，接受奇数保留边的一个分支，支撑数 \(2^{m-1}\)。\(m=100\) 时为 \(633825300114114700748351602688\)。显式列出全部字符不可能具有关于 m 的多项式输出长度。
+
+\section{判定递推、复杂度与资源契约}\label{sec:graph:4}
+
+对每个 \(H_p\) 置 \(D[\varnothing]=0\)、\(D[\{v\}]=1\)，其余
+
+\begin{equation}
+D[A]=\bigvee_{v\in A}
+   \bigl(D[A\setminus\{v\}]
+     \land(\deg_{H_p}(v,A\setminus\{v\})\equiv1\bmod2)\bigr). \label{eq:graph:8}
+\end{equation}
+
+从最后顶点删除与逆向添加立即证明正确性。每一步子集大小下降，因此终止；记录最后顶点即可重建好排序。拒绝证书用完整递推位表，独立重放也可穷举排序。
+
+在一个顶点掩码可装入机器字的计算模型中，每个奇偶图耗 \(O(n2^n+b)\) 个图运算，完整压缩输出耗
+
+\begin{equation}
+O(m+b\log b+2^b(n2^n+b)).
+\end{equation}
+
+只保留当前图时工作空间 \(O(m+2^n+n)\)；现有程序还保留全部证书，空间/输出大小包括 \(O(2^b(2^n+bn))\) 比特及标签和计数所需的多项式附加项。可达位表按字节打包，避免逐项增长的大整数求和。任意精度整数计数和根数值计算不能免费计作机器字操作；位复杂度仍有界于
+
+\begin{equation}
+2^{O(n^2)}\operatorname{poly}(m,n),
+\end{equation}
+
+因 \(b\le n(n-1)/2\)。所以压缩问题关于顶点数 n 是 FPT，\textbf{不声称关于圈数、树宽或任意其他参数的 FPT}，也不声称全支撑显式列表有同一复杂度。
+
+默认预算预先检查 \(2^{n+b}\)，再开始枚举；超限抛出明确错误，不返回伪``空支撑''。压缩查询还检查字符标签唯一且在范围内。图输入不包含质量和动量，因此不能承诺专化支撑。
+
+
+\section{圈星图的多重二次覆盖}
+原圈星文稿提供一个具有明确传播子支撑的无限图族。取 $k+1$ 个圈变量，中心圈标为 $0$，叶圈标为 $1,\ldots,k$；每圈恰有三条只依赖自身圈动量的传播子，另有 $k$ 条共享传播子分别依赖 $(0,i)$。圈数为 $k+1$，内边数为 $4k+3$。从生成树及基本圈矩阵检查这一证书，可识别该类，而非先知道积分结果再命名图族。
+
+在三重割有理化所需的有限代数运动学覆盖上，每个圈先化为有理二次曲线，共享传播子给双次数 $(2,2)$ 的关系。因此最大割函数域具有形式
+\begin{equation}
+ k(C)=k(z)(\sqrt{\Delta_1(z)},\ldots,\sqrt{\Delta_k(z)}),
+ \qquad\deg\Delta_i\le4.
+\end{equation}
+以下亏格计算假设四次判别式平方自由、两两没有公共根且平方类独立。覆盖群为 $(\Z/2)^k$，每个非零字符 $S$ 对应
+\begin{equation}
+ C_S:\quad y_S^2=\prod_{i\in S}\Delta_i(z).
+\end{equation}
+字符投影由实际覆盖群作用定义，所以在这一特定几何中确有上同调分解。它与能量核翻号角色的抽象投影属于不同构造，只有给出两种作用之间的实际比较后才能相互识别。
+
+\begin{proposition}[一般覆盖的亏格]
+在上述假设下，$g(C_S)=2|S|-1$，且
+\begin{equation}
+ g(C)=\sum_{S\ne\varnothing}g(C_S)=1+2^k(k-1).
+\end{equation}
+\end{proposition}
+\begin{proof}
+$C_S\to\mathbf P^1$ 的分支点有 $4|S|$ 个，偶次数使无穷远不再分歧。Riemann--Hurwitz 给 $2g(C_S)-2=-4+4|S|$。全部非平凡字符组成 $H^1(C)$；利用 $\sum_S|S|=k2^{k-1}$ 求和即得第二式。也可直接对次数 $2^k$ 的覆盖应用 Riemann--Hurwitz：每个分支点的惯性群阶为二。
+\end{proof}
+
+标量最大割的规范形式只选出全乘积字符，其宿主为
+\begin{equation}
+ Y^2=\prod_{i=1}^k\Delta_i(z),\qquad
+ \omega=c\,\frac{z^{k-1}\,dz}{Y},\qquad g=2k-1.
+\end{equation}
+因此整个覆盖的亏格并不是标量读出的最小几何秩。分子可改变所选字符；共享根、平方类依赖及无穷远分歧则改变正规化后的分支计数。程序或理论规则必须先处理这些退化，不能把泛参数公式直接套到特殊点。
+
+原圈星稿还给出充分独立离壳外部源下的参数占优及一般单值论证，主张所选超椭圆部分具有 $\mathrm{Sp}_{4k-2}$ 几何单值和一般绝对简单 Jacobian。本文将其保留为原稿中的族结果；把它接入统一实际动机范畴、固定四点物理切片及完整未割振幅仍有独立证明责任。它不意味着任意运动学专化都保持相同群。
+
+\section{极化障碍与不能跨越的逻辑缺口}
+极化给候选几何子商施加双线性形式、权重和签名约束。若某局部模型的全部可用子商都不满足目标 K3 的极化要求，则该模型不能承担所声称的纯 K3 核。这是排除一个比较方案的证据，不是对完整积分所有可能表示的否定。
+
+原质量分室文稿讨论了局部八维立方体模型与六维 K3 极化子商之间的障碍。由于其结论依赖具体局部模型、配对及允许子商范畴，本综述不把``八维中没有六维子商''写成一般线性代数断言；统一稿的后续任务是逐一列出这些假设，给出与真实几何对的比较或反例。正文已严格使用的 K3 纯核来自边界 Chow 投影与相对长正合列，独立于该局部候选模型。
+
+\section{组合模块的已知范围与后续问题}
+现有有限证据覆盖五顶点以内的全部 $1099$ 个简单图、$432$ 个重边或自环输入以及细分 $K_4$ 的奇偶模式。后者得到 $59=9+50$ 个支撑字符，$50$ 为独立生成树计数；这些数字计数角色，不计数周期空间维数。百边 banana 的支撑数 $2^{99}$ 可压缩表示，但不能在多项式长度内逐项打印。
+
+带符号权图的``全部非平凡割严格为正''是另一个判定问题。原稿的 coNP 完全性归约只针对它，不适用于全部 dual-critical 判定、割曲线亏格或动机分类。指数算法、NP 困难、coNP 完全和不可判定必须分开。本文对组合支撑给出有限终止界，不由此宣称一般几何模块已完成。
+
+
+\chapter{四传播子 banana：实际对象、扩张与最小性}\label{ch:core}
+本章集中给出本项目核心实例的理论链条。结论采用项目内部证明稿的范围；指定纤维的有限输入将在第\ref{ch:lattice}至\ref{ch:fixed}章说明。一般参数与指定代数点分开处理。
+\section{对象、参数与主结果}\label{sec:core:1}
+
+令 k 为带指定实嵌入的特征零域，采用有理系数的 Nori 动机范畴。固定
+
+\begin{equation}
+\mu_i=m_i^2>0\quad(1\leq i\leq4),\qquad s<0,
+\end{equation}
+
+并置
+
+\begin{equation}
+U_G=abc+abd+acd+bcd,\qquad
+ M=\mu_1a+\mu_2b+\mu_3c+\mu_4d,\qquad
+ F_s=M U_G-sabcd.                                      \label{eq:core:1.1}
+\end{equation}
+
+本文的物理量是去除动量积分外部归一化后的参数积分
+
+\begin{equation}
+I(s)=\int_{\sigma_+}\frac{\Omega_{\mathbb P^3}}{F_s},
+ \qquad \sigma_+=\{[a:b:c:d]:a,b,c,d\geq0\}.             \label{eq:core:1.2}
+\end{equation}
+
+积分形式和链采用使欧氏积分为正的相容取向。
+
+记 \(\mathbb T=\mathbb P^3\setminus\{abcd=0\}\)、 \(U_s=\{F_s=0\}\cap\mathbb T\)。令 \(X_s\) 是相应节点四次曲面的最小解消，D 为其二十条有理边界曲线。以 \(H_{\rm res}\) 表示从 \(H^2(X_s)\) 剔除边界除子所张成十六维空间后的实际纯因子。暂不把它写成完整超越因子；后者还要求 \(\rho(X_s)=16\)。置
+
+\begin{equation}
+A=H_{\rm res}(3),\qquad B=\mathbb Q(1),\qquad
+ \kappa=\dim_{\mathbb Q}\langle[\mu_1/\mu_4],
+ [\mu_2/\mu_4],[\mu_3/\mu_4]\rangle\subset k^\times\otimes\mathbb Q.
+                                                               \label{eq:core:1.3}
+\end{equation}
+
+\begin{theorem}[实际对象及比较]
+
+\label{thm:core:A} 上述模型给出秩十五的有效对象 \(E_{\rm env}=H^3_{\rm N}(\mathbb T,U_s)(3)\)。其最大一动机商是
+
+\begin{equation}
+K_{\rm bd}=\left[\mathbb Z\longrightarrow\mathbb G_m^8,\quad
+ 1\longmapsto(\mu_1/\mu_4,\mu_2/\mu_4,\mu_3/\mu_4,1,1,1,1,1)\right]_{\mathbb Q},
+                                                               \label{eq:core:1.4}
+\end{equation}
+
+核实际同构于 A。拉回该点生成的最小子环面给出
+
+\begin{equation}
+0\subset A\subset N\subset E=E_{\rm act},\qquad
+ \operatorname{Gr}^W E=(A,B^\kappa,\mathbf1),\qquad
+ \operatorname{rank}E=7+\kappa.                           \label{eq:core:1.5}
+\end{equation}
+
+正物理链属于 \(E_B\)，物理读出属于 \(F^3E_{\rm dR}^{\vee}\)。下层扩张的各个边界方向等于相应高阶 Chow 循环的投影 Nori regulator。这里一动机的同调余字符基取负的留数基；第\ref{sec:core:4}节固定这个符号。
+
+\end{theorem}
+
+\begin{theorem}[最小化与幺幂群]
+
+\label{thm:core:B} 对第\ref{sec:core:6}节所列三步扩张假设，令 \(n=\dim A>1\)、\(D_A=\operatorname{End}(A)\)，下层扩张的 \(D_A\) 秩为 \(r>0\)，有理关系空间维数为 d。则
+
+\begin{equation}
+\dim R_uG(E)=nr+\kappa+n,\qquad
+ \operatorname{End}(E)=\mathbb Q.                         \label{eq:core:1.6}
+\end{equation}
+
+对顶层非零的链和在 A 上非零的物理 Hodge 读出，最小对象是 \(\bar E=E/\widetilde B_0\)，其中 \(\widetilde B_0\simeq B^d\) 是下层关系方向的唯一 Tate 提升。特别地
+
+\begin{equation}
+\operatorname{rank}\bar E=n+\kappa+1-d,
+ \qquad 1\longrightarrow\mathbb V(B^d)
+ \longrightarrow G(E)\longrightarrow G(\bar E)\longrightarrow1. \label{eq:core:1.7}
+\end{equation}
+
+核位于幺幂根基的中心；在整个群中，它仍按 Tate 角色受共轭作用。不可分解性和框架最小性因而不是同一条件。
+
+\end{theorem}
+
+\begin{theorem}[banana 的两个适用范围]
+
+\label{thm:core:C}
+
+\begin{itemize}
+\tightlist
+\item
+  对 \(m=(1,2,4,8),s=-64,k=\mathbb Q\)，使用第\ref{ch:comparison}--\ref{ch:fixed}章列出的几何及认证输入，\(\kappa=r=1,d=0\)。物理形式周期的最小秩为八，Hodge/Nori 幺幂根基均为十三维；其分级群分别为 \(SO(q)\times\mathbb G_m\)、\(O(q)\times\mathbb G_m\)。
+\item
+  在四参数族很一般正质量欧氏点，\(\kappa=r=3,d=0\)。最小秩为十，两个幺幂根基均为二十七维，群维数均为四十三。此处并未统一判定 Nori 群的行列式分支。
+\item
+  在等质量一参数族很一般欧氏点，先剔除三个额外代数方向，得到纯秩三核被顶层扩张的秩四最小对象。其深度为一，Hodge/Nori群均为三维向量群与三维正交相似群的半直积，总维数七，见第\ref{sec:core:8.1}节。
+\end{itemize}
+
+``很一般''指排除可数个真解析条件；它不保证某个给定代数点满足结论。全文讨论形式周期对象及其群，不断言复数求值之间的代数独立性。
+
+\end{theorem}
+
+\section{正链、有效性与相对对偶}\label{sec:core:2}
+
+对一个排列 p，取 Hepp 扇区坐标
+
+\begin{equation}
+\alpha_{p_0}=1,\quad\alpha_{p_1}=t_1,\quad
+ \alpha_{p_2}=t_1t_2,\quad\alpha_{p_3}=t_1t_2t_3,
+ \qquad 0\leq t_i\leq1.
+\end{equation}
+
+记 \(q=t_1t_2t_3\)、\(V=1+t_3+t_2t_3+q\)。直接代入得
+
+\begin{equation}
+F_s=t_1^2t_2\,(M_pV-sq),\qquad
+ \Omega_{\mathbb P^3}=t_1^2t_2\,dt_1dt_2dt_3,
+ \qquad M_pV-sq\geq\mu_{p_0}>0.                        \label{eq:core:2.1}
+\end{equation}
+
+因此二十四个扇区上的形式延伸且可积，正链不接触严格变换的图超曲面。由同一估计
+
+\begin{equation}
+0<I(s)\leq6\sum_{i=1}^4\mu_i^{-1}.       \label{eq:core:2.2}
+\end{equation}
+
+这是几何收敛与正性的证明，不需要先求数值积分。
+
+依次处理坐标顶点、坐标线和额外边节点，并作边界解消，得到光滑射影三维 P，使 X 与 Y 的并为正常交叉除子；X 是图超曲面一侧，Y 是坐标边界一侧，\(Z=X\cap Y\)。解消不改变 \(P\setminus Y\simeq\mathbb T\) 与 \(X\setminus Z\simeq U_s\)。局部形式沿吹起中心的阶数是 \(c- 1- m\)：普通节点给 \(3- 1- 2=0\)，边线给 \(2- 1- 1=0\)；结合\eqref{eq:core:2.1}得到物理链及读出的相对类。
+
+关键不是仅给出 Hodge 空间同构，而是实际构造
+
+\begin{equation}
+H^3_{\rm N}(P\setminus Y,X\setminus Z)(3)
+       \simeq H^{\rm N}_3(P\setminus X,Y\setminus Z).   \label{eq:core:2.3}
+\end{equation}
+
+在正常交叉局部乘积上，交换两种开延拓的自然交换态射在 Betti 实现下为同构。Nori 六运算提供该态射与 Verdier 对偶；忠实正合 Betti 实现使其锥为零，故\eqref{eq:core:2.3}是实际同构。右侧是有效相对同调对象。这说明为什么可以使用有效 Nori 一动机商定理，而不是从左侧的 Tate 扭转外观推断有效性。
+
+这一标准相对对偶的拓扑形式见 Bloch--Kerr--Vanhove §6.1，实际六运算相容性采用 Tubach Theorem 4.5/Corollary 4.8。\cite{bkv,tubach} 本模型的解消、交换态射与保守性论证见 第\ref{ch:core}章、第\ref{ch:core}章。
+
+\section{从边界复形得到权重与实际纯核}\label{sec:core:3}
+
+Hessian 坐标
+
+\begin{equation}
+y_i=\mu_i\alpha_i\ (i\leq4),\qquad y_5=-M,\qquad
+ \sum_{i=1}^5y_i=0
+\end{equation}
+
+把四次曲面写成
+
+\begin{equation}
+\sum_{i=1}^5\lambda_i\prod_{j\ne i}y_j=0,
+ \qquad (\lambda_1,\ldots,\lambda_5)=(\mu_1,\ldots,\mu_4,s).
+                                                               \label{eq:core:3.1}
+\end{equation}
+
+其边界由 \(V_i,E_{ij},C_{ij},F_i\) 共二十条有理曲线组成。各自平方为\(- 2\)；非零横截交点为
+
+\begin{equation}
+C_{ij}\cdot V_i=C_{ij}\cdot V_j=C_{ij}\cdot E_{ij}=1,
+ \qquad E_{ij}\cdot F_k=E_{ij}\cdot F_l=1,
+ \quad\{k,l\}=\{1,2,3,4\}\setminus\{i,j\}.             \label{eq:core:3.2}
+\end{equation}
+
+对偶图 \(\Gamma \) 连通，有二十顶点、三十边，故 \(b_1(\Gamma)=11\)。四个单位 a/d、b/d、c/d、M/d 的主除子给出四个独立关系。由\eqref{eq:core:3.2}选取十六条非退化边界类，配对行列式\(- 48\)，得到边界张成空间的秩恰十六，而非只知道其 Gram 秩。
+
+对正常交叉边界的 Gysin 复形，曲线的奇上同调为零，遂有
+
+\begin{equation}
+0\longrightarrow H_{\rm res}\longrightarrow H^2(U_s)
+ \longrightarrow H_1(\Gamma,\mathbb Q)(-2)\longrightarrow0,
+ \qquad \dim H^2(U_s)=6+11=17.                          \label{eq:core:3.3}
+\end{equation}
+
+\(H^2(\mathbb T)=\mathbb Q(-2)^3\) 的双留数矩阵 Z 在三条指定旗标上有单位子矩阵，因而注入\eqref{eq:core:3.3}的右端。又 \(H^3(U_s)=0\)，因为 \(U_s\) 是光滑仿射曲面。相对长正合列给
+
+\begin{equation}
+0\to N_{\rm env}\to E_{\rm env}\to\mathbf1\to0,
+ \qquad 0\to A\to N_{\rm env}\to B^8\to0.              \label{eq:core:3.4}
+\end{equation}
+
+为把 A 识别为实际动机，取上述十六条边界类 \(D_i\)、Gram 矩阵 G 和有理系数次数一零循环。边界投影子
+
+\begin{equation}
+\pi_D=\sum_{i,j}(G^{-1})_{ij}[D_i\times D_j]
+\end{equation}
+
+满足 \(\pi_D^2=\pi_D\)，因为复合系数是 \(G^{-1}GG^{-1}\)。剔除次数零、四及边界投影子，得到 \(\pi_{\rm res}\)。它在 Nori 实现中切出 \(H_{\rm res}\)。该因子经限制到 \(U_s\)、再经相对连接映入\eqref{eq:core:3.4}：限制只杀死边界类，而连接的核来自纯权重四的 \(H^2(\mathbb T)\)，与纯权重二因子无交。于是这是一条实际单射，不是事后猜测的 Hodge 同构。
+
+环境权重分级秩为6、8、1，对应权重\(- 4\)、\(- 2\)、0。纯核的 Hodge 型为
+
+\begin{equation}
+(-1,-3),\quad(-2,-2)^4,\quad(-3,-1).
+\end{equation}
+
+所以活动对象的过滤维数为
+
+\begin{equation}
+(\dim F^0,\dim F^{-1},\dim F^{-2},\dim F^{-3})
+                  =(1,\kappa+2,\kappa+6,\kappa+7).       \label{eq:core:3.5}
+\end{equation}
+
+这是同一几何复形的结论；不能从``相对上同调''四字直接推出预设的三步过滤。完整相对复形还在其他次数有上同调，例如 \(H^2(\mathbb T,U_s)=\mathbb Q(-1)\)。
+
+\section{质量 Kummer 商与物理链的活动化}\label{sec:core:4}
+
+由\eqref{eq:core:2.3}及 Ayoub--Barbieri-Viale Theorem 8.12，\([3] E_{\mathrm{env}}\) 有实际最大一动机商。其 Hodge 实现的核恰为\eqref{eq:core:3.4}的权重\(- 4\)部分。上一节的实际 A 映入此核，二者同秩六，故实际同构。还需确定一动机的点；秩和 Hodge 型本身不提供\eqref{eq:core:1.4}。
+
+取有序符号
+
+\begin{equation}
+\xi=\{a/d,b/d,c/d\}\in H^3_{\mathcal M}(U_s,\mathbb Q(3)).
+\end{equation}
+
+沿二十条曲线及其交点作两次局部化。顶点---线和边---线旗标的贡献由 Steinberg 关系消去；余下十二条 E---F 旗标的值都是 \([\mu_i]-[\mu_j]\)。例如
+
+\begin{equation}
+E_{12}\to F_3:[\mu_1]-[\mu_2],\qquad
+ E_{12}\to F_4:-[\mu_1]+[\mu_2].                         \label{eq:core:4.1}
+\end{equation}
+
+这些值属于图循环空间 \(\ker\partial\)，模去 Z 的三维像后，质量矩阵秩三。以其前三个独立质量列完成八维留数基 P，坐标是
+
+\begin{equation}
+\bigl([\mu_1/\mu_4],[\mu_2/\mu_4],[\mu_3/\mu_4],0^5\bigr).
+                                                               \label{eq:core:4.2}
+\end{equation}
+
+这里需把符号的局部化与相对对象连接起来。用有序三个单位的杯积给顶层 \(\mathbf1\to R\Gamma(\mathbb T)(3)[3]\)，限制到 \(U_s\) 后取同伦纤维。由于 \(H^3(U_s)=0\)，其第零上同调是由 \(H^2(U_s)(3)\) 扩张顶层的对象；再商去来自 \(H^2(\mathbb T)(3)\) 的三维部分，正是 \(E_{\mathrm{env}}\)。把该构造推出到每个双留数坐标，得到由\eqref{eq:core:4.2}表示的 Kummer 扩张。这条实际态射链同时说明为何不能仅由对数值反推动机比较。
+
+在 P 留数基中使用 \(\nu=e_F-e_B\)，Kummer 类的坐标是正的 \(\log(\mu_i/\mu_4)\)。同调一动机 \([\mathbb Z\to\mathbb G_m,1\mapsto u]\) 的对应约定给 \(-\log u\)，故其余字符基是 \(- P\)；在这个基中得到\eqref{eq:core:1.4}。完整旗标及同伦纤维图见 第\ref{ch:core}章。
+
+三个单位生成的最小子环面有维数 \(\kappa \)。推出到补商后，一动机扩张分裂，且 \(\operatorname{Hom}(\mathbf1,B)=0\) 使分裂唯一。拉回该活动一动机即得 E，且
+
+\begin{equation}
+E_{\rm env}/E\simeq B^{8-\kappa}.    \label{eq:core:4.3}
+\end{equation}
+
+所有边界曲线与交点均在 k 上分裂；\eqref{eq:core:4.3}不是根据 Hodge 型排除 Artin 扭曲。复共轭在这个 Tate 商上为\(- 1\)，在正实链上为+1，故物理链在商中的像为零，因而确实属于 E。
+
+\section{下层扩张是投影 regulator}\label{sec:core:5}
+
+对图循环 \(c=(c_e)\in H_1(\Gamma,\mathbb Q)\)，在每条有理曲线 \(D_i\) 上取有理函数 \(f_i\)，使
+
+\begin{equation}
+\operatorname{div}(f_i)=-\sum_e\partial_{i,e}c_e\,p_e.
+                                                               \label{eq:core:5.1}
+\end{equation}
+
+图循环条件使右端次数为零；有理曲线上任意此类除子可由函数实现。清分母后，每个交点的两侧系数抵消，故
+
+\begin{equation}
+Z_c=\sum_i(D_i,f_i)\in CH^2(X_s,1)_{\mathbb Q}. 
+                                                               \label{eq:core:5.2}
+\end{equation}
+
+换 \(f_i\) 的常数会增加边界除子乘单位的可分解类，其在 \(\pi_{\rm res}\) 下为零。
+
+\begin{proposition}
+
+\label{thm:core:5.1} 令 \(\eta\in\operatorname{Ext}^1(B^8,A)\) 为\eqref{eq:core:3.4}的下层类。在 P 留数约定下，边界方向 c 的拉回满足
+
+\begin{equation}
+(c^*\eta)(-1)
+                 =r_{{\rm N},{\rm res}}(Z_c)
+       \quad\text{于 }\operatorname{Ext}^1_{\rm N}
+                  (\mathbf1,H_{\rm res}(2)).             \label{eq:core:5.3}
+\end{equation}
+
+其中先把 c 模去 Z，或者使用与该商相容的代表。
+
+\end{proposition}
+
+\begin{proof}
+
+置 \(\mathcal S=R\Gamma_D(X_s)(2)[3]\)。支持的 Mayer--Vietoris 与纯性给 \(H^0\mathcal S=H_1(\Gamma,\mathbb Q)\)；其相邻次数还含曲线和曲面的 Tate 项，不能删去整个复形。式\eqref{eq:core:5.1}在动机支持复形中给出 \(\alpha_c:\mathbf1\to\mathcal S\)。从支持到整体的态射，再经 Chow 投影，得到
+
+\begin{equation}
+g:\mathcal S\longrightarrow H_{\rm res}(2)[1].
+\end{equation}
+
+\(H^0\operatorname{Fib}(g)\) 是图循环空间被 \(H_{\rm res}(2)\) 扩张的对象。局部化三角给从 \(H^2(U_s)(2)\) 到它的态射，在两端均为恒等，故是同构。沿 \(\alpha_c\) 拉回时，扩张类正是复合 \(g\alpha_c\)；支持类忘记支持后为\eqref{eq:core:5.2}，所以同一复合又是其投影 regulator。最后商去三项环面二次杯积并作 Tate 扭转，得到\eqref{eq:core:5.3}。
+
+\end{proof}
+
+这个比较使用实际支持态射，不需要从任意 Hodge 扩张中提升动机态射。详尽复形与符号见 第\ref{ch:core}章。它还给出三个由全局单位杯积产生的 Tate 直和因子；这属于环境对象，不能与下面活动对象的不可分解性混淆。
+
+因为 \(F^0N=0\)，顶层1有唯一Hodge提升 \(e_F\in F^0E\)。若 \(e_B\) 是有理提升，则
+
+\begin{equation}
+\nu_E=[e_F-e_B]\in N_{\mathbb C}/N_{\mathbb Q}
+       =\operatorname{Ext}^1_{\rm MHS}(\mathbf1,N).
+\end{equation}
+
+它向 \(B^\kappa_{\mathbb C}/B^\kappa_{\mathbb Q}\) 的投影是已算出的Kummer类，但纯核方向仍有自由度。固定N及该边界类、且有提升时，提升类形成 \(\operatorname{Ext}^1_{\rm MHS}(\mathbf1,A)\) 的挠子；这由\(\operatorname{Hom}(1,B)=0\)及Ext长正合列得到。这一Hodge描述不自动提供每个提升的动机来源。实际E选定其中一个提升；取 \(e_B=\sigma\) 时，物理Hodge读出消去 \(e_F\)，故 \(I=-\langle\omega,\nu_E\rangle\)。
+
+相邻扩张 \(\eta\in\operatorname{Ext}^1(B^\kappa,A)\)、 \(\xi\in\operatorname{Ext}^1(\mathbf1,B^\kappa)\) 来自实际 E，故 \(\eta\circ\xi=0\)。理由是 E 已将 \(\xi \) 提升到 N 的扩张。这个零乘积不决定提升的全部比较条目，也不等于宣称所有 Ext\textsuperscript{2} 消失。
+
+\section{三步扩张的群：两种秩必须分开}\label{sec:core:6}
+
+本节在有理中性 Tannakian 范畴中证明。假设：A 简单，\(\dim A=n>1\)；B 可逆；三块权重分别为\(- 4\)、\(- 2\)、0；分级生成群 R 约化；\(S=A\otimes B^{-1}\) 与 B 非同构。上层 \(\kappa \) 个扩张类 \(\xi _i\) 有理独立。令
+
+\begin{equation}
+D_A=\operatorname{End}(A),\quad
+ r=\dim_{D_A}\langle\eta_1,\ldots,\eta_\kappa\rangle,
+ \quad V_0=\ker\bigl[L_\eta:\mathbb Q^\kappa\to
+             \operatorname{Ext}^1(B,A)\bigr],\quad d=\dim V_0.  \label{eq:core:6.1}
+\end{equation}
+
+除环按推出作用于 Ext，使用左系数。以下假定 \(r>0\)。
+
+权重过滤在原范畴中由实际子对象给出，分级群带按这些权重作用的中央权重余特征；本项目的Nori/Hodge实现满足这一条件。第\ref{sec:core:7}节另使用相容且严格的Hodge实现。所有最小化均在原有理范畴中进行；de Rham系数域扩大后，不能把任意新增不变子空间当成已经下降的子对象。
+
+选 Levi 因子及相容分裂。下层幺幂像是 \(X\subset S^\kappa\)。对 \(a_i\in D_A\)，有
+
+\begin{equation}
+\sum_i a_i\eta_i=0
+        \quad\Longleftrightarrow\quad
+       \left.\sum_i a_ix_i\right|_X=0.                   \label{eq:core:6.2}
+\end{equation}
+
+正向来自分裂扩张；反向中，相应推出扩张的幺幂作用消失，表示降到约化分级群，因而半单并分裂。由于 R 约化、S 简单，X 是若干个 S 的直和；\eqref{eq:core:6.2}的消去关系确定其重数恰为 r。因此 \(X\simeq S^r\)、\(\dim X=nr\)。同理，上层的全部像为 \(Y=B^\kappa\)。
+
+S 与 B 非同构，排除了 X 与 Y 的对角耦合，所以联合像是 \(X\oplus Y\)。严格三角矩阵的交换子为
+
+\begin{equation}
+[(x,y,z),(x',y',z')]=(0,0,xy'-x'y).                     \label{eq:core:6.3}
+\end{equation}
+
+X 非零、Y 为全部中间层，评价像 \(X\otimes Y\to A\) 非零；A 简单迫使像为整个 A。因而实际幺幂群为
+
+\begin{equation}
+U=\left\{\begin{pmatrix}I_A&x&z\\0&I_\kappa&y\\0&0&1\end{pmatrix}
+           :x\in X,\ y\in B^\kappa,\ z\in A\right\}.    \label{eq:core:6.4}
+\end{equation}
+
+特别地
+
+\begin{equation}
+\dim U=nr+\kappa+n,\qquad [U,U]=A,\qquad
+ Z(U)=A\oplus(B\otimes V_0).                            \label{eq:core:6.5}
+\end{equation}
+
+中心的 x 块必须与所有 y 对易，故 \(x=0\)；其 y 必须被全部 X 消去，由\eqref{eq:core:6.2}的有理关系恰等于 \(B\otimes V_{0}\)。
+
+最大幺幂群的条件是 \(r=\kappa \)。若 \(D_A=\mathbb Q\)，它等价于 \(d=0\)；一般不能互换。例如非零 \(\eta \) 与 \(\alpha\eta\)，\(\alpha\in D_A\setminus\mathbb Q\)，有理独立而在 \(D_A\) 上只张成一维。这个例子说明两种秩的差异，不额外声称任意指定三步几何扩张存在。
+
+一般混合扩张的 Tannakian 框架可比较 Eskandari。\cite{eskandari} 上述相邻像与交换子论证在本项目中承担明确假设下的群等号；不以形式上允许这些矩阵作为证明。
+
+\section{不可见中心与最小商：进一步的理论结论}\label{sec:core:7}
+
+保留第\ref{sec:core:6}节假设。令 \(\sigma \in E_B\) 在顶层非零，\(\omega\in F^3E_{\rm dR}^\vee\) 且 \(\omega|A\ne0\)。不同实现中的这些条件通过实际子对象比较，不把 Betti 与 de Rham 向量擅自当作同一基下的向量。
+
+本节以同调一侧记最小对象 \(\bar E\)；通常形式周期记号中的最小上同调对象是 \(\bar E^\vee\)，二者秩相同。
+
+\begin{theorem}
+
+\label{thm:core:7.1} 定理\ref{thm:core:B} 的全部结论成立；还满足
+
+\begin{equation}
+\operatorname{End}(\bar E)=\mathbb Q,\qquad
+ \dim U(\bar E)=nr+(\kappa-d)+n.                         \label{eq:core:7.1}
+\end{equation}
+
+最小化只消去幺幂中心中的 \(B\otimes V_{0}\) 方向，保持纯核 A、交换子 \([U,U]=A\) 和下层 \(D_A\) 秩 r。
+
+\end{theorem}
+
+\begin{proof}
+
+首先，\(\eta|_{B\otimes V_0}=0\)，因此 \(B\otimes V_{0}\) 有进入 N 的截面。两个截面之差属于 \(\operatorname{Hom}(B\otimes V_0,A)=0\)，故截面唯一，记像为 \(\widetilde B_0\)。其 Hodge 型为\((- 1,- 1)\)，所以 \(\omega \) 消去它。
+
+其次，\(\sigma \) 生成整个 E。事实上，\eqref{eq:core:6.4}的全部 z 平移作用于顶层非零的 \(\sigma \)，产生 A；再用全部 y 平移，模 A 得到 \(B^\kappa \)，最后保留顶层便得到 E。这一生成性在 \(r>0\) 的群已识别后，不再需要数值正性来证明。
+
+设 \(J\subset E\) 被 \(\omega \) 消去。若 \(J\cap A\ne 0\)，则 A 简单给 \(A\subset J\)，与 \(\omega|A\ne0\) 矛盾。若 J 在顶层非零，同一生成性论证给 \(J=E\)，仍矛盾。所以 \(J\subset N\) 且 \(J\cap A=0\)。其在 \(B^\kappa \) 中的像 B' 给下层扩张沿 B' 的分裂，故 \(B'\subset B\otimes V_{0}\)。唯一提升性质于是给 \(J\subset\widetilde B_0\)。反之该 Tate 提升已被 \(\omega \) 消去，故它正是最大不可见子对象。最小矩阵系数对象因此是 \(\bar E=E/\widetilde B_0\)，得到秩公式。
+
+选 V 的有理补空间 \(V=V_0\oplus V_1\)。X 消去 V\textsubscript{0}，所以在商对象上，x 和 z 完全保留，y 只保留其在 \(B\otimes V_{1}\) 中的像。因 \(r>0\)，\(\dim V_1=\kappa-d>0\)，商对象的分级仍同时包含 A 与 B；分级表示仍忠实于原 R。故 \(G(E)\to G(\bar E)\) 的核没有额外约化部分，其矩阵恰为
+
+\begin{equation}
+\begin{pmatrix}I_A&0&0\\0&I_\kappa&y_0\\0&0&1\end{pmatrix},
+                 \qquad y_0\in B\otimes V_0.             \label{eq:core:7.2}
+\end{equation}
+
+它作为 U 的子群是中心的。由于上层到中间层的共轭角色是 B，它通常不是整个 G 的中心。这证明\eqref{eq:core:1.7}及\eqref{eq:core:7.1}的群维数式。补空间用于显示矩阵；核与商本身由 \(\widetilde B_0\) 规范确定。
+
+最后证明 \(\operatorname{End}(E)=\mathbb Q\)，这一步并不要求 X 最大。与所选 Levi 中的权重环面交换，任意自同态是 \(\operatorname{diag}(a,h,\lambda )\)。与所有 z 交换给 \(a=\lambda I_A\)；与所有 y 交换给 \(h=\lambda I_\kappa \)。故只有标量。商对象仍满足相同 \(r>0\)、全部中心和全部上层条件，同理 \(\operatorname{End}(\bar E)=\mathbb Q\)。
+
+\end{proof}
+
+\begin{corollary}
+
+\label{thm:core:7.2} 若 \(d>0\)，\(\widetilde B_0\subset E\) 是非零不可见子对象，却不可能是直和因子；否则存在非平凡幂等元，与 \(\operatorname{End}(E)=\mathbb Q\) 矛盾。因此``找不到直和分解''不足以证明物理最小性。
+
+\end{corollary}
+
+\begin{corollary}
+
+\label{thm:core:7.3} 这些物理形式周期在最小对象上的幺幂深度仍恰为二，不要求\(r=\kappa \)。确实，三次严格降层的作用必为零。另一方面，所有X的像之和是A：它是非零R子表示，A简单。故对非零 \(\alpha=\omega|A\)，存在\(x\in X\)及\(y\in B^\kappa \)使\(\alpha xy\ne 0\)。对偶表示中先作用x、再作用y，得到非零顶层对偶坐标。\(\sigma \)生成E使相应形式系数不消失，从而深度至少二。商掉 \(\widetilde B_0\) 不改变这个复合，因为全部X都消去该子对象。
+
+因此幺幂深度二、\(\operatorname{End}(E)=\mathbb Q\)、最小对象秩以及U是否最大，是需要分别判断的四个性质。
+
+\end{corollary}
+
+\subsection{下层全部分裂的两种结局}\label{sec:core:7.4}
+
+若\(r=0\)于当前实际范畴，\(\operatorname{Hom}(B,A)=0\)使下层\(N=A\oplus B^\kappa \)的分裂唯一。商去唯一B提升，得到Z及规范顶到底类\(\zeta \)；同时\(E=Z\times _{1}K\)。若\(\zeta \ne 0\)，简单性给\(U(E)=A\oplus B^\kappa \)，整个群的z、y作用使\(\sigma \)生成E，最大不可见部分恰\(B^\kappa \)，最小对象Z的秩n+1、深度一。E仍只有标量自同态。
+
+若\(\zeta =0\)，则\(E=A\oplus K\)，物理F\textsuperscript{3}读出消去K。在\(I>0\)的物理框架中，链的A分量非零，最小对象为A、秩n、深度零；\(\operatorname{End}(E)=\operatorname{End}(A)\times Q\)。深度零是纯对象承载，不是代数数判据。\(\kappa =0\)也按\(\zeta \)这两支处理，不能套用\(r>0\)的定理\ref{thm:core:7.1}。
+
+这里还有群核的细节：\(\kappa >0\)时删掉全部B可能遗失一个Tate根。令\(T_{0}=\operatorname{ker}[G(A\oplus B)\to G(A)]\)，则到最小对象群的核是\(B^\kappa \)向量群被T\textsubscript{0}扩张；选Levi后为半直积。极化\(A\otimes A\to B^{4}\)只保证\(T_{0}\subset \mu _{4}\)。六维分级形式\((H,t)=(t^{2}g,t)\)、\(g\in SO\)或O的这个核实际是\(\mu _{4}\)。\(r>0\)时留下至少一个B，故定理\ref{thm:core:7.1}没有这种额外有限核。
+
+\subsection{额外除子方向的实际下降}\label{sec:core:7.5}
+
+对Picard跳跃纤维，取有限Galois扩域上完整NS除子基及非退化Gram矩阵\(G_{\mathrm{NS}}\)，构造\(\sum_{i,j}(G_{\mathrm{NS}}^{-1})_{ij}[D_i\times D_j]\)。K3的\(Pic^{0}=0\)使该对应Galois不变；corestriction除以扩域次数给k上投影。限制在有理Chow群中单射，故投影恒等式也下降。
+
+令\(\pi _{\mathrm{alg}}=\pi _{\mathrm{NS}}- \pi _D\)、\(\pi _T=\pi _{2}- \pi _{\mathrm{NS}}\)。由边界空间非退化且包含在NS中，两投影正交，给实际分解\(H_{\mathrm{res}}(3)=T(X)(3)\oplus C_{\mathrm{alg}}\)，其中\(\dim C_{\mathrm{alg}}=\rho - 16\)。\(C_{\mathrm{alg}}\)为Artin表示扭转Q(2)，不必在k上分裂成Tate直和。其对偶全为(2,2)型，故被物理F\textsuperscript{3}形式消去。
+
+实际商\(E_T=E/C_{\mathrm{alg}}\)保存同一物理矩阵系数，纯核变为简单的T(X)(3)，秩\(n=22- \rho \)。将\(\eta \)投向这一纯核后即可应用第\ref{sec:core:6}--\ref{sec:core:7.4}节。这个构造解决理论上的纯核与下降问题，不自动算出任意纤维的\(\rho \)或regulator。
+
+\section{纯理论的很一般非消失与秩十}\label{sec:core:8}
+
+令 \(\rho(X_s)=16\) 暂作为结论待得。四个独立 Hessian 参数给四维 K3 周期域。局部 Torelli 的适用在本族可具体核对：十个节点的射影位置固定；若一阶抽象变形平凡，\(H^1(\mathcal O_X)=0\) 使极化线丛唯一延伸，四个截面恢复四次曲面。节点的例外\((- 2)\)曲线刚性迫使诱导射影变换固定节点。四个 \([e_i-e_5]\) 与其余节点强迫该变换为标量；\eqref{eq:core:3.1}中五个单项式独立，参数仅剩共同缩放。因此四个有效参数的 Kodaira--Spencer 映射单射。详细线丛与节点论证见 第\ref{ch:core}章。
+
+型 IV 域维数也是四，故周期像局部开。每个非零有理向量成为额外(1,1)类的条件是真超平面条件；每个非标量有理算子保持全纯周期线的条件也是真解析条件。后者若含开集，将迫使非退化不可约二次曲面落在有限个真特征子空间之并，矛盾。排除可数并后，\(\rho=16\) 且 \(\operatorname{End}_{\rm Hdg}T=\mathbb Q\)。
+
+在仿射坐标 \(\alpha=(a,b,c,1)\) 中，设
+
+\begin{equation}
+f=(\textstyle\sum_i\mu_i\alpha_i)(\sum_i\alpha_i^{-1}),
+ \quad\omega=\operatorname{Res}\frac{d\log a\wedge d\log b\wedge d\log c}{f-s},
+ \quad\beta_i=-s\frac{\mu_i\alpha_i}{M}\omega.
+\end{equation}
+
+在商去来自 \(H^2(\mathbb T)\) 的杯积之后，实际 Cartan 计算给下层对象中的恒等式
+
+\begin{equation}
+\sum_i\beta_i=-s\omega,\qquad
+             \nabla_s\beta_i=\mu_i\nabla_{\mu_i}\omega. \label{eq:core:8.1}
+\end{equation}
+
+\(\beta _i\) 是第 i 质量留数方向的 Hodge 提升。对非零 \(c\in\mathbb Q^3\)，令 \(\beta_c=\sum_{i=1}^3c_i\beta_i\)。若其下层扩张在参数开集有平坦有理 Hodge 截面 q，则因纯层 \(F^2\) 一维，必有 \(q=\beta _c+h\omega \)。沿 s 求导并模 \(F^2\)，\eqref{eq:core:8.1}要求质量方向 \((c_1\mu_1,c_2\mu_2,c_3\mu_3,0,0)\) 与 s 方向、共同缩放在周期切空间中相关。上述局部 Torelli 排除了这一点。
+
+故每个非零有理 c 都不能在非空开集分裂。单连通标记图表中的有理平坦提升只有可数多个；每个成为 Hodge 截面的条件是真解析条件。对 c、提升和图表取可数并，得到很一般点三个下层扩张有理独立。加上 \(\operatorname{End}_{\mathrm{Hdg}} T=Q\)，此时 \(D_A\) 秩也为三。
+
+上层独立性另由 \(\prod_i(\mu_i/\mu_4)^{a_i}=1\) 的可数个真关系超曲面排除得到。复真解析条件不可能含正质量欧氏实开集，否则由全纯唯一性在复开集恒成立。于是同一很一般实参数集合上 \(\kappa =r=3\)、\(d=0\)；定理\ref{thm:core:B} 给 U27 与最小秩十。
+
+Zarhin 的 K3 群定理\cite{zarhin}给权重零纯结构 \(S=T(1)\) 的 Hodge 群 SO(q)。Tate 角色与该半单群独立，故分级群为 \(SO(q)\times \mathbb G_m\)，维数16。Nori 群夹在 Hodge 下界与极化上界之间，两个幺幂根基均已达最大，群维数均为43。不能据此决定每个基域上的行列式分支，也未计算整个秩十绝对比较矩阵。
+
+\subsection{等质量子族：最小秩四、深度一与七维群}\label{sec:core:8.1}
+
+归一化\(\mu _i=1\)后，\(t=s/m^{2}<0\)，Kummer活动秩\(\kappa =0\)。BKV §3.2给出的Verrill族一般Picard数为十九，且有十九维除子局部子系统。\cite{bkv} 这项已有几何输入与第\ref{sec:core:7.5}节结合，把原秩七活动对象商成
+
+\begin{equation}
+0\to T(X_t)(3)\to Z_t\to\mathbf1\to0,
+                    \qquad \operatorname{rank}Z_t=4.
+\end{equation}
+
+在局部平坦的除子商上，唯一顶层Hodge提升满足\(\nabla _t e_F=\delta \omega _t\)。非零全纯二形式不被NS投影杀死，故\(e_F\)不在任何非空开集平坦。每个有理平坦提升q与\(e_F\)相等的点集离散；提升及图表可数，所以Hodge分裂只可能落在可数例外集。其外\(\zeta _H\ne 0\)，进而\(\zeta _N\ne 0\)；第\ref{sec:core:7.4}节给最小秩四、深度一。没有把这个很一般结论套用任意指定代数t。
+
+秩三K3超越结构的\(\operatorname{End}_{\mathrm{Hdg}}\)只能是Q：Zarhin 的全实/CM 域分类\cite{zarhin}排除奇次数CM；三次全实域的每个特征空间一维，容不下同一实嵌入下独立的H\textsuperscript{20}和H\textsuperscript{02}。故纯Hodge群含SO\textsubscript{3}，连同权重标量是GO\textsubscript{3}。对三维\(H^{\mathsf t}qH=\lambda q\)，\(c=detH/\lambda \)、\(g=c^{-1}H\)给\(GO(q)=\mathbb G_m\times SO(q)\)，为连通四维群。
+
+实际杯积极化给相同Nori上界，因此纯群亦为GO\textsubscript{3}；\(\zeta _H\)非零使两种幺幂核均为整个三维\(T(X_t)(3)\)。于是选Levi后
+
+\begin{equation}
+G_H(Z_t)=G_N(Z_t)=\mathbb V(A_T)\rtimes GO(q),
+                    \qquad\dim G=7.
+\end{equation}
+
+其Hodge过滤维数为(1,2,3,4)，比较块\((P_A,f\);0,1)的结构式为\(\Delta f=P_A\otimes z+f\otimes 1\)。该结论不计算新的绝对周期矩阵，也不恢复一个不存在的质量对数中间层。外部族几何的输入范围保留上述很一般参数条件。
+
+
+\chapter{实际 coaction、幺幂过滤与物理深度}\label{ch:coaction}
+本章以已构造的实际对象为前提讨论 coaction。群的允许块形与实际群等号是不同命题；前章通过扩张像和交换子论证承担后者。
+\section{形式 coaction、可见子商与幺幂深度}\label{sec:coaction:9}
+
+一般观察资料 \(\Sigma\subset E_B\)、\(\Omega\subset E_{\rm dR}^\vee\) 的规范对象是
+
+\begin{equation}
+R_\Sigma=\bigcap_{\Sigma\subset J_B}J,\qquad
+ I_\Omega=\sum_{\Omega|J_{\rm dR}=0}J,\qquad
+ V_{\Sigma,\Omega}=R_\Sigma/(R_\Sigma\cap I_\Omega).     \label{eq:coaction:9.1}
+\end{equation}
+
+交与和取在实际子对象中，有限长度保证存在。固定读出增加链给单射；固定链增加读出给反向满射。两种变化不能拼成未经证明的包含链。单观察的最小对象是标准矩阵系数理论的一部分；这里采用 Brown §2.4的形式周期约定。\cite{brownperiods}
+
+选实际比较矩阵 \(C_E\)，并固定右 coaction 为 \(\Delta C_E=C_Eg_E\)。最大幺幂情形，分裂后
+
+\begin{equation}
+g_E=\begin{pmatrix}H&X&z\\0&tI_\kappa&y\\0&0&1\end{pmatrix},
+ \qquad H=t^2g,\quad g\in R_{\rm pure}.
+\end{equation}
+
+若比较矩阵相应块为 \(P_A,p,f;\ 0,\tau I,q;\ 0,0,1\)，则
+
+\begin{equation}
+\Delta p=P_A\otimes X+p\otimes t,\qquad
+ \Delta q=\tau\otimes y+q\otimes1,\qquad
+ \Delta f=P_A\otimes z+p\otimes y+f\otimes1.              \label{eq:coaction:9.2}
+\end{equation}
+
+这些是实际对象的公式；数值求值为零的单个组合不自动给出可在此商去的子动机。实际矩阵关系须在对应 de Rham 框架中写出，不把 Betti 的整数 Gram 矩阵直接挪作 de Rham 配对。
+
+定义标准 coradical 过滤
+
+\begin{equation}
+C_{-1}E=0,\qquad C_iE/C_{i-1}E=(E/C_{i-1}E)^U.
+\end{equation}
+
+由\eqref{eq:core:6.4}直接计算，在 \(r>0\) 的一般情形
+
+\begin{equation}
+C_0E=A\oplus\widetilde B_0,\quad C_1E=N,\quad C_2E=E.
+                                                               \label{eq:coaction:9.3}
+\end{equation}
+
+对最小商，\(C_0\bar E=A,C_1\bar E=\bar N,C_2\bar E=\bar E\)，恰与三步权重对应。这个对应是实际作用的结论，不是所有混合对象的通则；分裂对象的 C\textsubscript{0}就是整个对象。
+
+对上述最小商取 \(M=\bar E^\vee\)，\(r>0\)时满足 \(C_0M=\mathbf1,C_1M=\operatorname{Ann}(A),C_2M=M\)。\(\sigma \)生成E使系数映射 \(M_{\rm dR}\to\mathcal P^{\mathfrak m}\) 单射：在比较挠子上，恒零系数消去全部群轨道 \(\sigma \)，故消去整个 E。于是 \(\omega|A\ne0\) 给
+
+\begin{equation}
+I^{\mathfrak m}\in C_2\setminus C_1. 
+                                                               \label{eq:coaction:9.4}
+\end{equation}
+
+这也给出推论7.3的过滤证明。以下轨道维数式另假定原对象U最大且\(d=0\)。最大 U 对 \(\omega=(\alpha,\beta,\gamma)\) 的作用为
+
+\begin{equation}
+(\alpha,\ \beta-\alpha X,\ \gamma-\beta y+\alpha Xy-\alpha z).
+\end{equation}
+
+故幺幂轨道的张成维数为 \(\kappa +2\)，完整群轨道为\(6+\kappa +1\)：指定点分别为3与8，很一般秩十点分别为5与10。纯 K3 表示仍是 coaction 的必要部分，深度二不构成多对数类别判据。
+
+由第\ref{sec:core:7}节的 \(\operatorname{End}(E)=\mathbb Q\)，固定活动对象上的任何有限翻号群都只能作标量作用。四边 banana 的泛能量核有八个非零字符，故这些字符不能同时成为该固定 E 上的八个动机直和投影。可能的参数覆盖、较大对象或跨纤维对应需要另行构造；组合支撑定理本身没有提供它们。
+
+
+\chapter{从几何初值到绝对混合比较}\label{ch:comparison}
+\section{比较矩阵承担的数学任务}
+纯 Gauss--Manin 方程给出水平运输；绝对比较矩阵还要求真实 Betti 循环、de Rham 框架及其尺度。没有几何初值时，对基本解矩阵右乘任意常矩阵仍满足同一个系统。因此，恢复微分方程、认证全局单值和识别绝对周期是不同步骤。
+
+固定 $m=(1,2,4,8)$，纯极化系统的有限节点为 $1,9,25,49,81,121,169,225$，另有零点的幺幂退化。规定上半平面路径将消失球送到共同基点。局部反射不能直接相乘求共同基点迹；必须先用同一框架作运输或同时共轭。零点存在共振，不能把未经修正的原留数直接指数化。
+
+现有证书以精确有理中心、Frobenius 残差及逐段包围实现这一过程。论文所需的是其数学界，而不是运行日志。若 $P$ 是近似水平解，$\mathcal R=P'-AP$，则真实误差满足变常数公式；用已证明的传播范数界控制积分项，同时计入初值误差和舍入误差。矩阵求逆另需以残差小于一的界保证可逆性，而非直接使用数值逆。
+
+\section{裸留数、Morse 球与 Tate 归一化}
+在射影环面图上取
+\begin{equation}
+ \omega_s^{\mathrm{abs}}=\Res_{f=s}
+ \frac{d\log a\wedge d\log b\wedge d\log c}{f-s},\qquad
+ f=M\left(\frac1a+\frac1b+\frac1c+1\right).
+\end{equation}
+节点附近的非退化二次首项提供消失球周期的首项尺度。这里需要同时固定平方根支、球取向和 Poincaré 留数约定。现有 Morse 定标给出相应规范中的
+\begin{equation}
+ \rho=512\sqrt2\,\pi(1+i),\qquad
+ P_D^{\mathsf t}K_DP_D=8\pi^2Q_6.
+\end{equation}
+因而在本文标准 Tate 约定下，真实代数杯积是公开配对矩阵的 $-2$ 倍。框架中的纯对偶末项应相应乘 $-1/2$；忽略这一变化会使物理读出和比较行列式同时出现尺度错误。
+
+已认证的裸留数六循环矩阵 $P_6$ 采用明确有理 de Rham 框架，在 $s=-64$ 的统一误差小于 $2^{-85}$。原六循环为指数二子格的有理基；后章证明饱和后，右乘相应有理换基矩阵得到完整整 Betti 基的周期矩阵，其误差分别小于 $2^{-84}$ 和标准整基中的 $2^{-81}$。纯整基的结论不自动给出混合对象的完整整基。
+
+\section{下层扩张的实分裂障碍}
+设 $V_c$ 是未扭转下层七维对象。纯周期之外，还需选定质量方向的 $\beta$ 周期。实际消失球在节点收缩为零给出混合初值；沿已有纯解的积分产生混合条目。这个零初值是几何事实，不能用方便的积分常数替代。
+
+在实 Hodge 分裂的假设下，相关纯与混合周期满足一个实线性相容关系。对三个指定球取 $\operatorname{Re}p,\operatorname{Im}p,\operatorname{Im}b$ 所成的三阶矩阵，其行列式必须为零。现有证书在节点 $1,9,25$ 的对应循环上得到
+\begin{equation}
+ 8.77<\det\begin{pmatrix}
+ \Re p_1&\Im p_1&\Im b_1\\
+ \Re p_2&\Im p_2&\Im b_2\\
+ \Re p_3&\Im p_3&\Im b_3
+ \end{pmatrix}<8.78,
+\end{equation}
+误差小于 $1.2\cdot10^{-27}$。这里 $p_i,b_i$ 依已有几何框架定义；改变归一化必须同步改变判据。该障碍证明指定纤维的实 Hodge 扩张非零，实际 Nori 扩张若分裂则其 Hodge 实现分裂，故 Nori 扩张亦非零。反方向一般不成立。
+
+这一证据与 $\log2\ne0$ 所给的上层 Kummer 非零相互独立。两者共同输入三步扩张定理，得到 $r=\kappa=1,d=0$、物理最小秩八及十三维幺幂根基。不能只计算上层质量对数便宣称完整混合对象最小。
+
+\section{第六混合周期与边界 Tate 列}
+第六球为 $\delta_6=T_0\delta_1$。其纯周期可由纯 $T_0$ 作用得到，混合周期还必须包括绕零的积分类增量。以既有局部原函数行 $j_*$ 和框架 $W$ 记，完整公式具有
+\begin{equation}
+ b_6=b_1+j_*W^{-1}(v_6-v_1)
+\end{equation}
+的形式。它使用零点解析规范和全混合连接，而非仅将纯矩阵作用到一个拼接向量。
+
+边界第七列由双留数为 $+1$ 的小整环面给出：纯列为零，$\beta$ 周期为 $(2\pi i)^2$。这与六个纯循环一起确定完整 $P_7$。现有 $49$ 项比较矩阵误差小于 $2^{-85}$，第六 $\beta$ 条目误差小于 $2^{-88}$。该矩阵是 $V_c$ 的有理 Betti 比较；物理下层为 $N=V_c(3)$。
+
+\section{顶层相对膜、物理链与八维比较}
+顶层的实际 Cartan 公式为
+\begin{equation}
+ \nabla_s e=\delta\omega,\qquad
+ \mu_i\nabla_{\mu_i}e=\delta\beta_i.
+\end{equation}
+六个相对消失膜的收缩零初值固定纯核方向的顶层比较。边界环面先作环境像校正，再取与实共轭相容的填充；由此固定 Kummer 项的符号
+\begin{equation}
+ q_7=-2(2\pi i)^2\log2.
+\end{equation}
+正物理链标记还需要膜支撑避让及有序三环面交数，不能只根据数值正性猜测链坐标。
+
+令 $z=2\pi i$，采用已经核对的相对对偶整体符号，完整比较为
+\begin{equation}
+ C_E=z^{-3}P_8^{\mathsf t},\qquad C_M=C_E^{-\mathsf t}=z^3P_8^{-1},
+ \qquad M=E^\vee.
+\end{equation}
+$P_8$ 的 $64$ 项在明确有理基下有误差小于 $2^{-85}$ 的认证。若 $\nu=e_F-\sigma$，几何配对 $C_{\mathrm{geom}}(\omega,w)=-2$ 给出
+\begin{equation}
+ I=-2\nu_w,\qquad I^{\mathfrak m}=2(C_M^{\mathfrak m})_{8,6},\qquad
+ \Delta I^{\mathfrak m}=2\sum_{j=1}^8(C_M^{\mathfrak m})_{8,j}\otimes(g_M)_{j,6}.
+\end{equation}
+最后一式是选定框架中的实际八项 coaction；它不声称每一项都是一个未加额外标记的图割。指定欧氏积分满足
+\begin{equation}
+ 0.73554702266148<I(-64)<0.73554702266149.
+\end{equation}
+完整比较不等于所有条目具有经典特殊函数闭式，也不等于已经认证完整混合整 Betti 基。上述几何膜、实填充和对偶符号均有独立专题审阅；外部审稿仍应检查这些识别，而不只重放浮点数。
+
+
+\chapter{消失球、交叉格与实际饱和}\label{ch:lattice}
+本章固定 $m=(1,2,4,8),s=-64$。已认证的六循环 Gram 为下式；前五个循环来自节点 $1,9,25,49,81$，第六个为 $T_0\delta_1$。
+\begin{equation}Q_6=\begin{pmatrix}
+-2&-2&-2&4&-2&-2\\-2&-2&0&2&0&-4\\-2&0&-2&2&0&-4\\
+4&2&2&-2&0&8\\-2&0&0&0&-2&-4\\-2&-4&-4&8&-4&-2
+\end{pmatrix}.\label{eq:gram}\end{equation}
+设 $R_i=T_i-I$。Picard--Lefschetz 公式给
+\begin{equation}\operatorname{tr}(R_iR_j)=q_{ij}^2,\qquad
+\operatorname{tr}(R_iR_jR_k)=q_{ij}q_{jk}q_{ki}.\end{equation}
+十五个对迹依字典序为
+\begin{equation}(4,4,16,4,4,0,4,0,16,4,0,16,0,64,16).\end{equation}
+六个三迹按 $(124),(126),(134),(136),(146),(156)$ 的顺序为
+\begin{equation}(-16,-16,-16,-16,-64,-16).\end{equation}
+拓扑先给整性，严格误差不超过 $2^{-69}$ 的区间再唯一识别这些整数。取 $A_0=T_0-I$，由 $A_0^2=0$ 及正交性得 $A_0^*=-A_0$，从而 $q_{16}=\delta_1^2=-2$；第六球取向并非独立任意选择。
+
+矩阵的秩为六、签名 $(2,4)$、行列式 $192$。完整超越格的既有几何证明给
+\begin{equation}T\simeq U\oplus U(2)\oplus A_2(-2),\qquad |\det T|=48.\end{equation}
+因此 $L=\sum\Z\delta_i$ 满足 $[T:L]^2=192/48=4$。下文证明实际饱和类唯一为 $w=(\delta_1+\delta_2+\delta_3+\delta_4)/2$。这里完整 $T$ 的输入依赖 Hessian 格和本原性证明，不能仅由秩与行列式推出\cite{dvgeemen}。
+
+\section{二阶判别式型的不变量}\label{sec:lattice:2}
+
+对非退化偶整格 K，记
+
+\begin{equation}
+A_K=K^\vee/K,\qquad
+ q_K(\bar x)=(x,x)\pmod{2\mathbb Z}.
+\end{equation}
+
+考虑性质
+
+\begin{equation}
+\mathcal P(K):\quad q_K(A_K[2])\subset\mathbb Z/2\mathbb Z.       \label{eq:lattice:2}
+\end{equation}
+
+它只要求二阶挠元上的二次型值为整数模2；不要求整个判别群的值都为整数。特别是本例的三阶部分不在断言中。
+
+式 \eqref{eq:lattice:2} 在整格同构下不变。选 Gram 矩阵 G 后，每个二阶挠元唯一写为 \(\varepsilon/2\) 模 K，其中 \(\varepsilon\in\{0,1\}^{\operatorname{rk}K}\)，并满足
+
+\begin{equation}
+G\varepsilon\equiv0\pmod2,\qquad
+ q_K(\varepsilon/2)=\frac{\varepsilon^{\mathsf t}G\varepsilon}{4}
+                      \pmod{2\mathbb Z}.                         \label{eq:lattice:3}
+\end{equation}
+
+所以这是至多 \(2^{\operatorname{rk}K}\) 次整系数判定，不需要数值运算或格同构搜索。
+
+\begin{lemma}
+
+\(\mathcal P(T_{\rm std})\) 成立。
+
+\end{lemma}
+
+\begin{proof}
+
+U 是幺模格，没有非零判别元。U(2) 的 Gram 为 \(\left(\begin{smallmatrix}0&2\\2&0\end{smallmatrix}\right)\)，故 \(q((a,b)/2)=ab\)，为整数。\(A2(- 2)\) 的 Gram 为 \(\left(\begin{smallmatrix}-4&2\\2&-4\end{smallmatrix}\right)\)，其所有二阶类由 \((c,d)/2\) 表示，二次型值
+
+\begin{equation}
+-c^2+cd-d^2
+\end{equation}
+
+也为整数。直和给出 \eqref{eq:lattice:2}。其二阶子群共16个元素。
+
+\end{proof}
+
+\section{穷尽所有指数二补全}\label{sec:lattice:3}
+
+由 \([T:L]=2\)，有 \(2T\subset L\)。所以任一可能的 T 都形如
+
+\begin{equation}
+K_v=L+\mathbb Z(v/2),\qquad
+ 0\ne v\in\{0,1\}^6.                                           \label{eq:lattice:4}
+\end{equation}
+
+整配对与偶性分别等价于
+
+\begin{equation}
+Q_6v\equiv0\pmod2,\qquad v^{\mathsf t}Q_6v\equiv0\pmod8.         \label{eq:lattice:5}
+\end{equation}
+
+第一条件因 Q6 所有条目为偶数而自动满足。六十三个非零 v 中，恰十一种满足第二条件。
+
+对每个 v，令 \(p(v)\) 为首个非零坐标，取基矩阵 \(B_v\) 为单位阵把第 p(v) 列替换为 v/2，令 \(G_v=B_v^{\mathsf t}Q_6B_v\)。以下 \(\varepsilon=e_j\) 均是这个特定 \(B_v\) 基中的坐标；并不是原六循环基的第 j 个半球。
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+v（按六个坐标连写）
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+判别元见证 \(\varepsilon\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(G_v\varepsilon\) 模2
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(q_{K_v}(\varepsilon/2)\) 模2
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+001100 & e6 & 0 & 3/2 \\
+010100 & e6 & 0 & 3/2 \\
+011011 & e4 & 0 & 3/2 \\
+011101 & e5 & 0 & 3/2 \\
+011110 & e6 & 0 & 3/2 \\
+100001 & e6 & 0 & 3/2 \\
+100010 & e5 & 0 & 3/2 \\
+100111 & e6 & 0 & 3/2 \\
+101000 & e3 & 0 & 3/2 \\
+110000 & e2 & 0 & 3/2 \\
+111100 & 无障碍；16个二阶值全部整数 & --- & 0 或 1 \\
+\end{longtable}
+}
+
+前十行违反 \(\mathcal P(T)\)，不可能是实际 T。实际补全必然存在，故唯一剩余 \(v=(1,1,1,1,0,0)\) 就是其类。这证明了上文所述实际饱和半循环的标记。
+
+计算还显示，被排除的每个候选都有8个非整数二阶值；证明只需表中一个见证。所有十一候选的行列式均为48，说明单用行列式确实看不出这个区别。
+
+\section{标记整格和标准基}\label{sec:lattice:4}
+
+以 \(\mathcal B\) 为整基，实际 Gram 为
+
+\begin{equation}
+G=
+\begin{pmatrix}
+0&-1&-1&3&-1&-1\\
+-1&-2&0&2&0&-4\\
+-1&0&-2&2&0&-4\\
+3&2&2&-2&0&8\\
+-1&0&0&0&-2&-4\\
+-1&-4&-4&8&-4&-2
+\end{pmatrix}.                                                   \label{eq:lattice:6}
+\end{equation}
+
+取
+
+\begin{equation}
+R=\begin{pmatrix}
+1&1&4&4&6&4\\
+0&-1&1&-1&-1&-1\\
+0&0&-2&-1&-2&-2\\
+0&0&-1&-1&-2&-1\\
+0&0&0&0&-1&1\\
+0&0&-2&-1&-2&-1
+\end{pmatrix}.
+\end{equation}
+
+精确计算给
+
+\begin{equation}
+\det R=1,\qquad
+ R^{\mathsf t}GR=
+ \begin{pmatrix}0&1\\1&0\end{pmatrix}
+ \oplus\begin{pmatrix}0&2\\2&0\end{pmatrix}
+ \oplus\begin{pmatrix}-4&2\\2&-4\end{pmatrix}.                       \label{eq:lattice:7}
+\end{equation}
+
+R 原来只是旧候选稿中的代数同构矩阵。现在已独立确定其实际输入整基，再加式 \eqref{eq:lattice:7} 的精确核验，故 \(\mathcal B R\) 真正是规定几何循环标记下的标准整基。
+
+这一步证明的是整同调类的归属和基，不另外画出 w 的嵌入曲面代表，也不需要这样的代表来验证整格等式。
+
+
+\chapter{指定有理纤维的纯群与混合群}\label{ch:fixed}
+本章固定 $X=X_{(1,2,4,8),-64}/\Q$，并以先前认证的 $\rho=16$、绝对比较和 regulator 非零为输入。群均明确区分固定纤维与参数族；所有结论保留基域 $\Q$。
+\section{已有证书中本稿需要的信息}\label{sec:fixed:1}
+
+第\ref{ch:fixed}章 已证明 \(p=11\) 良约化且几何 Picard 数仍为16。其残余六维 Frobenius 多项式为
+
+\begin{equation}
+P(Z)=Z^6+10Z^5+55Z^4-484Z^3+6655Z^2+146410Z+1771561.             \label{eq:fixed:3}
+\end{equation}
+
+已有有限域点数为 \(288,16568,1794960\)，残余幂迹 \((-10,-10,2102)\)。由这些点数及 Newton 恒等式得到下列纯因子的多项式。
+
+P 模5满足完整六次 Rabin 不可约性判据，故在 \(\mathbb Q\) 上不可约。归一化 \(11^{-6}P(11Z)\) 的系数不全为整数，故 P 没有11倍单位根根。另有
+
+\begin{equation}
+P(Z)\equiv Z^5(Z-1)\pmod {11},\qquad P'(1)\equiv1\pmod {11}.     \label{eq:fixed:4}
+\end{equation}
+
+因此 P 在 \(\overline{\mathbb Q}_{11}\) 中恰有一个单位根，此处``单位根''指 \textbf{11-adic unit root}，不是有限阶的 root of unity。下文称它为 p-adic 单位特征根，以避免混淆。
+
+实际六循环形成有理基。它们的格虽未饱和，但
+
+\begin{equation}
+\det q\equiv\det Q_6=192\equiv3
+ \quad\text{于 }\mathbb Q^\times/\mathbb Q^{\times2}.             \label{eq:fixed:5}
+\end{equation}
+
+指数二只改变判别式的平方因子，不影响式 \eqref{eq:fixed:5}。
+
+\section{排除实乘}\label{sec:fixed:2}
+
+令 \(F=\operatorname{End}_{\rm Hdg}T\)。K3 型的标准定理给出：F 是全实域或 CM 域，其对极化的伴随分别为恒等或复共轭，且 \([F:\mathbb Q]\mid6\)。采用 \href{https://www.imo.universite-paris-saclay.fr/~francois.charles/Picard.pdf}{Charles §2.2 所列 Zarhin 定理}，其原页第6页已核对。
+
+先说明 F 全实时 \(\dim_FT\ge3\)，以免遗漏三次域。
+
+\begin{itemize}
+\tightlist
+\item
+  若 \(\dim_FT=1\)，区别嵌入对应的复特征空间只有一维，却必须同时容纳 \(H^{2,0}\) 与 \(H^{0,2}\)，矛盾。
+\item
+  若 \(\dim_FT=2\)，写极化为一个 F 上二元对称型的迹，F 上对角化为 \(\langle a,b\rangle\)。每个实嵌入处该二元型均定号：区别嵌入为正定，其余为负定。矩阵
+\end{itemize}
+
+\begin{equation}
+J=\begin{pmatrix}0&-b\\a&0\end{pmatrix},\qquad J^2=-ab
+\end{equation}
+
+在区别嵌入处保持两条复各向同性线，即 \(H^{2,0}\)、\(H^{0,2}\)；其余嵌入全部为 (1,1)。故 J 是有理 Hodge 自同态。又因 \(-ab\) 全负，J 不在全实标量域 F 中，矛盾。
+
+所以非平凡全实 F 唯一可能为二次域，\(\dim_FT=3\) 为奇数。Charles Theorem 1(2) 在 \(p=11\) 给出
+
+\begin{equation}
+\rho(X_{\overline{\mathbb F}_{11}})\ge16+2=18,
+\end{equation}
+
+与已认证的16矛盾。原定理的特征至少5条件满足。此处采用的是固定良约化，而非很一般参数的特化。
+
+亦可用其 Lemma 16 的群表述理解这个矛盾：某个归一化 Frobenius 幂属于三个 F 维度的特殊正交群，必须有特征值1；这会给 P 的11倍单位根特征值，与第一节矛盾。
+
+因此 F 全实时只能为 \(\mathbb Q\)。
+
+\section{\texorpdfstring{CM 候选必含 \(\mathbb Q(\sqrt{-3})\)}{CM 候选必含 \textbackslash mathbb Q(\textbackslash sqrt\{-3\})}}\label{sec:fixed:3}
+
+F 若为 CM 域，其次数只能是2或6。必须谨慎处理次数6的非 Galois 可能性，不能未经证明假定所有 CM 域都含虚二次子域。
+
+\href{https://wwwuser.gwdguser.de/~jjahnel/Arbeiten/Komponentengruppe_v4f.pdf}{Elsenhans--Jahnel Theorem 7.5} 证明：若 \(X\times X\) 的 Hodge 猜想成立，基域 K 与端同态域的合成 KF 在 K 上正规。同文 Theorem 7.7 的证明明确援引 CM 情形下该 Hodge 猜想已知成立；这里 CM 按其 §5.1 指端同态域为 CM 域，不要求 \(\dim_FT=1\)。原文第21、22页均已查看。
+
+仅在当前反证的 CM 情形应用此已知结论。因为 \(X/\mathbb Q\)，F 在 \(\mathbb Q\) 上 Galois。次数6的 Galois CM 域具有中央复共轭，故其六阶 Galois 群不能是中心平凡的 \(S_3\)，只能为 \(C_6\)。其三阶子群固定一个虚二次域 \(K_0\)。次数2时直接取 \(K_0=F\)。
+
+写 \(K_0=\mathbb Q(\sqrt{-d})\)，d 为正无平方因子整数。T 是三维 \(K_0\) 向量空间，伴随在 \(K_0\) 上为复共轭，故极化是一个 Hermitian 型的迹。Hermitian 型可在 \(K_0\) 上对角化，三个对角系数 \(h_j\) 均在 \(\mathbb Q^\times\) 中。相对于每个 \(K_0\) 基向量及其 \(\sqrt{-d}\) 倍，迹型的二阶块为
+
+\begin{equation}
+\begin{pmatrix}2h_j&0\\0&2dh_j\end{pmatrix}.
+\end{equation}
+
+于是
+
+\begin{equation}
+\det q=2^6d^3(h_1h_2h_3)^2\equiv d
+          \pmod{\mathbb Q^{\times2}}.
+\end{equation}
+
+结合式 \eqref{eq:fixed:5}，\(d=3\)。故每个尚存 CM 候选都包含
+
+\begin{equation}
+K_0=\mathbb Q(\sqrt{-3}).              \label{eq:fixed:6}
+\end{equation}
+
+这里用的二次域来自极化判别式，不是根据某个数值周期猜测。
+
+\section{一个辅助29-adic特征线排除全部 CM 候选}\label{sec:fixed:4}
+
+\subsection{引理：P 的任意正整数幂谱都无重复}\label{ux5f15ux7406p-ux7684ux4efbux610fux6b63ux6574ux6570ux5e42ux8c31ux90fdux65e0ux91cdux590d}
+
+设 \(\alpha\ne\beta\) 是 P 的根。若 \(\alpha/\beta\) 为有限阶单位根，因为 P 不可约，可以在其分裂域中取一个 \(\mathbb Q\) 自同构，将 \(\alpha\) 送到第一节唯一的11-adic单位特征根。它将 \(\beta\) 送到另一个与它同11-adic赋值的根，也必须为单位根，因唯一性两根相等，矛盾。
+
+所以任意不同根的比均不是有限阶单位根。特别地，对每个 \(n\ge1\)，所有 \(\alpha^n\) 互不相同。这个论证实际处理了``需要先取 Frobenius 的某个有限幂''的问题；只检查 P 本身无重根并不够。
+
+\subsection{-adic 一维不变空间}\label{sec:fixed:29}
+
+直接模29计算
+
+\begin{equation}
+P(Z)\equiv(Z-1)(Z-5)(Z^4-13Z^3+Z^2-7Z-4)\pmod {29},            \label{eq:fixed:7}
+\end{equation}
+
+且 \(P'(1)\equiv1\)。Hensel 引理给出一个根 \(\lambda\in\mathbb Q_{29}\)。式 \eqref{eq:fixed:3} 是未扭转 \(T_{29}\) 上 \(p=11\) 几何 Frobenius \(\Phi\) 的特征多项式。因此 \(\Phi\) 有一个一维 \(\mathbb Q_{29}\) 特征空间。前述引理保证，这个空间对每个 \(\Phi^n\) 仍然恰为一维。
+
+K3 的 Hodge 自同态具有相容的29-adic实现，并与 Galois 群的某个有限指数子群交换；采用 Charles §2.2 第6页的绝对 Hodge 实现说明。因此存在 n 使 \(\Phi^n\) 与 \(F\otimes\mathbb Q_{29}\) 交换。若式 \eqref{eq:fixed:6} 成立，则其一维特征线成为
+
+\begin{equation}
+K_0\otimes\mathbb Q_{29}=\mathbb Q_{29}(\sqrt{-3})
+\end{equation}
+
+的含幺模。但
+
+\begin{equation}
+(-3)^{14}\equiv-1\pmod {29},
+\end{equation}
+
+故这是一个二次域扩张，不能在一维 \(\mathbb Q_{29}\) 空间上作含幺作用。矛盾。
+
+29只作为系数素数 \(\ell\)；此步骤不要求 X 在29处良约化，也没有新算29处点数。良约化 Frobenius 始终是已认证的 \(p=11\)。
+
+由第二至四节得到
+
+\begin{equation}
+\operatorname{End}_{\rm Hdg}T=\mathbb Q.
+                                                                    \label{eq:fixed:8}
+\end{equation}
+
+\section{固定 Hodge 群}\label{sec:fixed:5}
+
+Zarhin 的 K3 群描述在权重零形式上给出
+
+\begin{equation}
+G_H(S)=SO(q).                           \label{eq:fixed:9}
+\end{equation}
+
+可采用 Charles 的 K3 Mumford--Tate 定理及 Lemma 16 的连通群表述：\(E=\)\(\mathbb Q\) 时中心化群的恒等分支是 SO。Mumford--Tate 群连通，不能把未标恒等分支的 GO/O 符号机械照抄成不连通的 Hodge 群。其第8页的 \(T(1)\) 约定已经核对。
+
+\(A=S\otimes B^{2}\)。S 的群 SO 是连通半单群，B 的群是 \(\mathbb G_m\)。两者没有非平凡共同代数群商，故
+
+\begin{equation}
+G_H(S\oplus B)=SO(q)\times\mathbb G_m.
+\end{equation}
+
+变回 $A,B$ 的框架即得到 $R_H\simeq SO(q)\times\Gm$。这里证明的是固定点，不使用射线的几何群。
+
+\section{比较行列式检测 Nori 群的另一分支}\label{sec:fixed:6}
+
+Hodge 实现以及实际纯核的杯积先给出夹逼
+
+\begin{equation}
+SO(q)\times\mathbb G_m
+   \subseteq R_N
+   \subseteq O(q)\times\mathbb G_m.                               \label{eq:fixed:10}
+\end{equation}
+
+两端仅差一个行列式符号，故只须判断一个实际一维对象
+
+\begin{equation}
+D=\det S
+\end{equation}
+
+是否为单位对象。杯积在 Nori 范畴中给出 \(D^{\otimes2}\simeq\mathbb Q(0)\)。
+
+用已有六循环有理 Betti 基和裸留数 B de Rham 框架记纯周期矩阵为 P。令 \(z=2\pi i\)，则 S 的比较矩阵为 \(C_S=z^{-1}P^{\mathsf t}\)，故 D 的比较系数为
+
+\begin{equation}
+c_D=\det(P)/z^6.
+\end{equation}
+
+第\ref{ch:comparison}章 的实际定标给出
+
+\begin{equation}
+P^{\mathsf t}K_BP=8\pi^2Q_6.
+\end{equation}
+
+独立精确代数在 \(s=- 64\) 求得
+
+\begin{equation}
+\det K_B=\frac{353067798239177216000}{3},
+\end{equation}
+
+从而
+
+\begin{equation}
+\boxed{c_D^2=\frac{64\det Q_6}{\det K_B}
+        =\frac9{86198192929486625}
+        =\frac9{85^2\cdot11930545734185}.}                        \label{eq:fixed:11}
+\end{equation}
+
+其中
+
+\begin{equation}
+11930545734185=5\cdot13\cdot29\cdot37\cdot73\cdot89\cdot113\cdot233
+\end{equation}
+
+为无平方因子整数。因此 \(c_D\notin\mathbb Q\)。
+
+若 D 在基域 \(\mathbb Q\) 的 Nori 范畴中为单位对象，任何有理 Betti/dR 基之间的比较系数都在 \(\mathbb Q^\times\)，与式 \eqref{eq:fixed:11} 矛盾。这只用``实际单位对象必有有理比较''这一方向，没有使用周期映射的单射猜想，也没有从一般数值关系反推出动机同构。
+
+故行列式角色在 \(R_N\) 上非平凡。因其值域为 \(\mu_2\)，式 \eqref{eq:fixed:10} 的右端被全部取到，即
+
+\begin{equation}
+R_N=O(q)\times\mathbb G_m.              \label{eq:fixed:12}
+\end{equation}
+
+同样得到 \(G_{\rm N,\mathbb Q}(S)=O(q)\)。
+
+基域不能省略：这是 \(\mathbb Q\) 上的 Nori 群；本稿没有声称任意扩大基域后仍保留同一个非平凡分支。式 \eqref{eq:fixed:11} 给出一个非平凡二次比较角色，但本稿也未仅凭周期数值就宣称 D 与某个指定 Artin 对象同构。
+
+\section{完整固定活动群与 coaction 关系}\label{sec:fixed:7}
+
+第\ref{ch:core}章 已证明固定活动 E 的幺幂核为
+
+\begin{equation}
+U=\left\{\begin{pmatrix}I_6&u&w\\0&1&v\\0&0&1\end{pmatrix}\right\},
+ \qquad \dim U=13.
+\end{equation}
+
+它同时证明实际群是其分级群在权重抛物群中的完整逆像。代入已经识别的分级群，在选定有理权重分裂后：
+
+\begin{equation}
+\boxed{
+ G_{\rm N,\mathbb Q}(E)=
+ \left\{\begin{pmatrix}t^2g&u&w\\0&t&v\\0&0&1\end{pmatrix}:
+     g\in O(q),\ t\ne0,\ u,w\in\mathbb Q^6,\ v\in\mathbb Q\right\}.
+ }                                                               \label{eq:fixed:13}
+\end{equation}
+
+式 \eqref{eq:fixed:13} 按任意 \(\mathbb Q\) 代数解释为群概形；Hodge 群由再加 \(\det g=1\) 得到。这些群在适当分裂下分别为 U 与 \(O(q)\times\mathbb G_m\)、\(SO(q)\times\mathbb G_m\) 的半直积。两者维数 \(13+15+1=29\)，Nori 群两个分支，Hodge 群一个。
+
+\textbf{基的提醒。} 原六循环的 q 为 Q6；若使用它们的对偶上同调 Betti 基，则 q 为 \(Q_6^{-1}\)，两者由有理杯积同构联系。de Rham 群须用实际 de Rham 杯积，而不能直接用 Q6 替代。旧 B 框架下为
+
+\begin{equation}
+q_{\rm dR}=-2K_B^{-1}.
+\end{equation}
+
+物理 \(A=T(3)\) 上的 Tate 值域为 B\textsuperscript{4}，因此 coaction 纯块 H、Tate 块 t 的全部关系可写为
+
+\begin{equation}
+H^{\mathsf t}q_{\rm dR}H=t^4q_{\rm dR},
+                  \qquad t\ne0.                                \label{eq:fixed:14}
+\end{equation}
+
+原来尚未识别的固定纯关系在此明确为正交相似关系；不额外强加 \(\det H=t^{12}\)，那会错误地删去 Nori 的另一分支。Hodge 群才增加该行列式等式。
+
+式 \eqref{eq:fixed:14} 连同自由的 u、v、w 和既有矩阵乘法余乘法，给出实际活动对象的完整 Hopf 描述。物理对偶对象仍取 \(C_M=C_E^{-\mathsf t}\)，既有
+
+\begin{equation}
+I^{\mathfrak m}=2(C_M^{\mathfrak m})_{8,6},\qquad
+ \Delta I^{\mathfrak m}
+ =2\sum_{j=1}^8(C_M^{\mathfrak m})_{8,j}
+       \otimes(g_{E,\rm dR}^{-\mathsf t})_{j,6}
+\end{equation}
+
+不变，且其作用群现在已在指定纤维和基域下识别。这不意味着复周期值已经证明代数独立，也不把数值包围改称闭合特殊函数表达式。
+
+
+\chapter{多参数连接与活动秩的变化}\label{ch:connection}
+\section{纯连接的框架与配对}
+单条质量射线上的微分系统不能代替完整参数空间上的 Gauss--Manin 连接。取四个独立参数 $x_i=\mu_i/s$，纯层的六元有理框架记为 $\mathbf e$，有
+\begin{equation}
+ \nabla\mathbf e=\sum_{i=1}^4 A_i(x)\mathbf e\,dx_i.
+\end{equation}
+连接矩阵必须同时满足曲率恒等式与极化相容式
+\begin{equation}
+ \partial_iA_j-\partial_jA_i+[A_i,A_j]=0,\qquad
+ \partial_iK=A_i^{\mathsf t}K+KA_i,
+\end{equation}
+此处采用列水平解的配对约定；若使用框架列而非解列，须同时转换转置和负号。现有全四参数纯系统从原有理数据恢复，清分母后独立检查了全部曲率与配对条目，并与射线限制一致。全方向平坦性及一个已定标基点把几何杯积为公开配对的 $-2$ 倍延伸到连通光滑族。
+
+这些恒等式的作用是证明同一几何框架的相容性。它们不自动决定其他纤维的绝对周期初值，也不把几何单值群等同固定纤维动机群。由指定射线群包含与全族极化上界，可以得到全参数纯几何闭包的正交群结论；其逻辑仍属于族。
+
+\section{三个质量方向与实际秩十对象}
+令 $\beta_i$ 为三个质量边界方向的实际 Hodge 提升。通过三坐标质量一动机的拉回，得到未扭转分级秩 $6,3,1$ 的秩十对象。其 Hodge 过滤维数为 $1,5,9,10$。顶层连接以符号 $\nu=e_F-e_B$ 写为
+\begin{equation}
+ \nabla e=-\Omega\,d\log x_4+
+ \sum_{i=1}^3\beta_i\,d\log(x_i/x_4).
+\end{equation}
+质量提升之间的耦合由实际 Cartan 公式、留数、环面分部积分及纯层配对约束确定。完全对称三张量中的唯一性线性系统行列式非零，消除仅由平坦性猜测耦合的不确定性。所得四个 $10\times10$ 矩阵的 $600$ 个曲率条目清分母后恒为零；这里该有限核对是理论推导的输入检查，不替代实际一动机拉回。
+
+在函数域中，三个质量比单位独立。固定到 $m=(1,2,4,8)$ 的质量射线后，它们全部由 $2$ 生成，活动方向为
+\begin{equation}
+ \beta_c=3\beta_1+2\beta_2+\beta_3.
+\end{equation}
+因此族中的秩十环境与该点的秩八最小活动对象并不矛盾。不能把固定点的一个 $\log2$ 方向直接铺成全族秩八连接。
+
+\section{纯系统、混合系统与标量方程的不同秩}
+一个标量函数的最小微分阶数依赖所选参数方向、生成截面及常数域。纯微分模绝对不可约时，任意非零截面通过协变导数生成整个模，因而纯周期的最小齐次 Picard--Fuchs 阶数等于纯秩。但整个相对对象还包含源项和边界比较，不能从纯六阶方程直接推出完整物理对象只有六维。
+
+同样，一条特殊参数曲线上微分阶数下降，可能来自额外代数类、扩张退化、所选读出不可见或参数方向本身不足以生成全模。必须逐项判别。多参数平坦连接、固定纤维最小形式周期以及单参数标量方程，是三个相关而不同的不变量。
+
+秩十对象的完整绝对比较尚未作为本稿结果。若进一步构造，需要三个真实边界 Betti 列、环境像校正、实填充及第六球的混合单值增量；给 $P_8$ 添零不提供任何这样的几何证据。当前更优先的问题是把已知连接用于结构与操作的理论分类。
+
+
+\chapter{切割、留数过滤与最大割可见性}\label{ch:cut}
+本章先构造正常交叉模型中的实际留数态射，再比较割周期与原周期的标架。相关经典留数与变分背景见\cite{muhlbauer}；其一圈 Cutkosky 定理的维数及交数条件不直接用作本文多圈模型的无条件证明。
+\section{一个光滑除子的实际留数}\label{sec:cut:2}
+
+设X/k光滑，\(D\subset X\)为光滑除子，\(B\subset X\)为光滑闭边界或简单正常交叉边界；D与B的所有交叉层横截，且D不是B的分量。置
+
+\begin{equation}
+V=X\setminus D,\quad B_V=B\cap V,\quad B_D=B\cap D.
+\end{equation}
+
+边界为空亦允许。记相对复形为 \(R\Gamma(X,B)=\operatorname{Fib}(R\Gamma X\to R\Gamma B)\)。
+
+\begin{proposition}
+
+\label{thm:cut:2.1} 有实际Nori态射及正合段
+
+\begin{equation}
+H^n(X,B)\longrightarrow H^n(V,B_V)
+ \xrightarrow{\ r_D\ }H^{n-1}(D,B_D)(-1)
+ \longrightarrow H^{n+1}(X,B).                         \label{eq:cut:2.1}
+\end{equation}
+
+特别地，留数像是原相对对象的商，也是目标割对象的子对象，但留数不必满射或单射。
+
+\end{proposition}
+
+\begin{proof}
+
+对\(D\subset X\)使用局部化三角和余维一纯性
+
+\begin{equation}
+R\Gamma(D)(-1)[-2]\to R\Gamma(X)\to R\Gamma(V)\to.
+\end{equation}
+
+对\(B_D\subset B\)写相同三角，利用横截基变换连接二者。取相对纤维得到
+
+\begin{equation}
+R\Gamma(D,B_D)(-1)[-2]\to R\Gamma(X,B)
+ \to R\Gamma(V,B_V)\to R\Gamma(D,B_D)(-1)[-1].         \label{eq:cut:2.2}
+\end{equation}
+
+若B有多个正常交叉分量，在其有限交叉的Čech复形上逐项进行，再取总复形。横截性保证每一项纯性相容。取第n上同调得到\eqref{eq:cut:2.1}。所有箭头先在六运算范畴构造，再取Nori上同调，并非由Betti矩阵猜测。
+
+\end{proof}
+
+在局部坐标\(z=0\)定义D时，闭对数形式可写为
+
+\begin{equation}
+\omega=\frac{dz}{z}\wedge\alpha+\beta,
+ \qquad\operatorname{res}_D\omega=\alpha|_D.           \label{eq:cut:2.3}
+\end{equation}
+
+相对形式及其边界分量使用同一映射锥约定。式\eqref{eq:cut:2.3}是未除以\(2\pi i\)的裸代数留数；\eqref{eq:cut:2.1}中的Tate扭转承担比较归一化。取正向小圆为法向取向，拓扑管映射满足
+
+\begin{equation}
+\int_{\operatorname{Tub}_D\gamma}\omega
+       =2\pi i\int_\gamma\operatorname{res}_D\omega.   \label{eq:cut:2.4}
+\end{equation}
+
+相对情形要求管的边界落在\(B_V\)中；横截管邻域可实现这一点。式\eqref{eq:cut:2.4}也由每个小圆上的Cauchy积分和相对Stokes公式直接给出。裸留数公式与含扭转的实际态射必须一同使用，不能省略Tate线后仍称比较矩阵不变。
+
+\section{多重留数与真正的过滤}\label{sec:cut:3}
+
+设\(D=\bigcup _{i=1}^m D_i\)为带标号的简单正常交叉除子，B与其所有交叉层横截。对有序集合\(C=(i_{1},\)\ldots{}\(,i_r)\)定义
+
+\begin{equation}
+Z_C=(D_{i_1}\cap\cdots\cap D_{i_r})
+                         \setminus\bigcup_{j\notin C}D_j,
+ \quad B_C=B\cap Z_C,
+ \quad M=H^n(X\setminus D,B\setminus D).
+\end{equation}
+
+逐次应用\eqref{eq:cut:2.2}，得到
+
+\begin{equation}
+r_C:M\longrightarrow N_C:=H^{n-r}(Z_C,B_C)(-r).       \label{eq:cut:3.1}
+\end{equation}
+
+每一步只暂时填回下一条待取留数的除子，未割分量仍从环境中删去。这个规则避免把交叉点误当作留数形式必须在其上正则的点。
+
+局部按\(dz_{i_{1}}/z_{i_{1}}\wedge \)\ldots{}\(\wedge dz_{i_r}/z_{i_r}\)的顺序取系数。交换两条除子使留数及有序法向管取向同时变号；固定一次顺序后
+
+\begin{equation}
+\int_{\operatorname{Tub}_C\gamma}\omega
+       =(2\pi i)^r\int_\gamma\operatorname{res}_C\omega.\label{eq:cut:3.2}
+\end{equation}
+
+这是经典迭代留数公式的相对版本，基本绝对公式见\cite{muhlbauer}的Theorems17--18。本稿不宣称留数定理的原创性。
+
+令所有大小为r的割同时组成映射\(r^{(r)}=\oplus r_C\)，并约定\(r^{(0)}=id_M\)。定义
+
+\begin{equation}
+K_r=\ker r^{(r)},\qquad E=M^\vee,\qquad
+ T_r=\operatorname{im}\bigl((r^{(r)})^\vee\bigr).
+                                                               \label{eq:cut:3.3}
+\end{equation}
+
+空交叉或负上同调次数的目标记零。对\(r>min(n,dimX,m)\)，取\(K_r=M\)、\(T_r=0\)。
+
+\begin{theorem}[固定模型的留数过滤]
+
+\label{thm:cut:3.1}
+
+\begin{equation}
+0=K_0\subseteq K_1\subseteq K_2\subseteq\cdots\subseteq M,
+ \qquad E=T_0\supseteq T_1\supseteq T_2\supseteq\cdots\supseteq0,
+ \qquad T_r=K_r^\perp\simeq(M/K_r)^\vee.              \label{eq:cut:3.4}
+\end{equation}
+
+这些都是实际子对象。
+
+\end{theorem}
+
+\begin{proof}
+
+任意(r+1)重留数都分解为某个r重留数后再取一次留数。因此所有r重留数为零就迫使所有(r+1)重留数为零，得到\(K_r\subset K_{r+1}\)。中性Tannakian对偶正合，映射对偶的像为原核的湮灭子，给其余结论。顺序变号不改变核或像。
+
+\end{proof}
+
+这给出一个确实具有包含关系的过滤，但其输入是固定的带标号正常交叉模型，而非笼统的``组合、几何、物理层''。目前没有证明它等于权重过滤、coradical过滤，或在加入任意解消例外分量后保持不变。它对保持标号及横截条件的拉回具有留数相容性；一般吹起的比较须另给几何图。
+
+单除子时，\eqref{eq:cut:2.1}还明确
+
+\begin{equation}
+K_1=\operatorname{im}\{H^n(X,B)\to M\}.              \label{eq:cut:3.5}
+\end{equation}
+
+所以所有管周期都看不见这部分延伸过D的类。仅凭割数据不能无条件恢复原周期。
+
+\section{割周期的最小对象：等号需要哪些标记}\label{sec:cut:4}
+
+固定C，令\(F_C=N_C\vee \)，\(\tau _C=r_C\vee :F_C\to E\)。取有理Betti链\(\gamma \in (F_C)_B\)和原读出\(\omega \in E_{\mathrm{dR}}\vee \)。记\(\omega _C=\tau _C^\ast \omega \)，其中Tate线已经包含在\(F_C\)内。则形式周期具有实际态射关系
+
+\begin{equation}
+[F_C,\gamma,\omega_C]^{\mathfrak m}
+       =[E,\tau_C\gamma,\omega]^{\mathfrak m}.         \label{eq:cut:4.1}
+\end{equation}
+
+使用裸积分书写时，\eqref{eq:cut:4.1}就是\eqref{eq:cut:3.2}，不能把右侧\(2\pi i\)因子漏掉。
+
+\begin{theorem}
+
+\label{thm:cut:4.1} 采用第\ref{ch:frames}章的规范最小对象，有
+
+\begin{equation}
+\operatorname{Vis}(F_C;\gamma,\omega_C)
+     \simeq\operatorname{Vis}(E;\tau_C\gamma,\omega).  \label{eq:cut:4.2}
+\end{equation}
+
+若原物理链\(\sigma \)满足\(R_{\tau _C\gamma }\subset R_\sigma \)，则割的最小同调对象自然单射到原物理最小对象。尤其\(\sigma \)生成E时成立。
+
+\end{theorem}
+
+\begin{proof}
+
+\(\tau _C\)把\(\gamma \)生成的最小子对象满射到\(\tau _C\gamma \)生成的最小子对象。其核被拉回读出消去；任何另一个被消去的子对象，像仍被\(\omega \)消去。反向拉回目标最大不可见子对象，得到两者的最小商同构。若\(R_{\tau _C\gamma }\subset R_\sigma \)，两者使用同一个E内的最大不可见子对象\(I_\omega \)，故
+
+\begin{equation}
+R_{\tau _C\gamma }/(R_{\tau _C\gamma }\cap I_\omega)
+       \hookrightarrow R_\sigma/(R_\sigma\cap I_\omega).
+\end{equation}
+
+\end{proof}
+
+若同时允许所有r重割的全部有理链，生成对象恰\(T_r\)：有限维Betti基张成各\(F_C\)，像之和正是\eqref{eq:cut:3.3}。因此在固定读出下
+
+\begin{equation}
+\mathcal V_r=T_r/(T_r\cap I_\omega),\qquad
+ \mathcal V_{r+1}\hookrightarrow\mathcal V_r.          \label{eq:cut:4.3}
+\end{equation}
+
+这是经过物理读出的实际割过滤。如果\(\sigma \)不是循环生成元，不得直接把V\textsubscript{0}或全部\(V_r\)当作\(\sigma \)的最小对象；此时只有落在\(R_\sigma \)内的部分受其控制。
+
+式\eqref{eq:cut:4.1}与规范coaction相容，因为矩阵系数关系本来就按实际态射取商。它不推出``所有图割恰好构成coaction第二因子的一个基''：后者还需完备性、线性独立性、对偶配对及收敛/重整化边界的额外证明。
+
+\section{单值变分与留数态射必须分开}\label{sec:cut:5}
+
+在一个已构造的解析族中，固定基点处\(T_\ell \)是有理Betti单值。若局部拓扑已经给出
+
+\begin{equation}
+(T_\ell-1)\sigma=\sum_C a_C\operatorname{Tub}_C\gamma_C,
+ \qquad a_C\in\mathbb Q,                              \label{eq:cut:5.1}
+\end{equation}
+
+则积分线性性和\eqref{eq:cut:3.2}直接给
+
+\begin{equation}
+\operatorname{Disc}_\ell I
+     =\sum_C a_C(2\pi i)^{|C|}
+                      \int_{\gamma_C}\operatorname{res}_C\omega.
+                                                               \label{eq:cut:5.2}
+\end{equation}
+
+这里\(a_C\)包含实际交数与路径、方向信息，不默认为1。普通简单夹点时，这种表示由局部消失同调提供；但正能量\(\delta _+\)表示还要求识别实际实支、正能量选择以及原链的夹挤。几何复杂性或Landau方程本身不提供这些标记。无穷远贡献、重整化边界及非孤立夹点也不能被\eqref{eq:cut:5.2}自动排除。
+
+引用范围尤其需要准确：\cite{muhlbauer} Theorem41在该文的紧化约定下明确假定奇数D，并保留交数N；不能把该定理直接当作本文二维多圈情形的无条件Cutkosky证明。
+
+\begin{proposition}
+
+\label{thm:cut:5.1} 固定纤维的单值矩阵不一般是该纤维的Hodge或Nori自同态。
+
+\end{proposition}
+
+\begin{proof}
+
+指定banana纤维的纯T满足\(\operatorname{End}_{\mathrm{Hdg}}(T)=Q\)，已由第\ref{ch:fixed}章证明。一个非平凡Picard--Lefschetz节点反射有一维\(- 1\)空间和五维+1空间，因此不是标量，不可能属于\(\operatorname{End}_{\mathrm{Hdg}}(T)\)。若它来自Nori自同态，其Hodge实现也应是自同态，矛盾。
+
+\end{proof}
+
+所以\eqref{eq:cut:5.1}是Betti向量等式；其两侧都可作为形式周期的链标记，但不能将\(T_\ell - 1\)未经证明升级为固定动机中的一个态射或幂等投影。近邻/消失循环的变分态射处在族或退化的范畴中，与固定纤维的断言有不同的源和靶。
+
+\section{二维banana的最大割是一个明确代数簇}\label{sec:cut:6}
+
+取h条内线的banana图，圈数\(h- 1\)，二维Minkowski形式为\(q^{2}=(q^{0})^{2}- (q^{1})^{2}\)。在复数域取光锥坐标
+
+\begin{equation}
+x_i=q_i^0+q_i^1,\quad y_i=q_i^0-q_i^1,
+ \quad x_iy_i=\mu_i\ne0,
+ \quad\sum_i x_i=p^+,\quad\sum_i y_i=p^-.
+\end{equation}
+
+假设\(s=p^+p^-\ne 0\)。全部传播子在壳的复割簇为
+
+\begin{equation}
+Z_h=\{(x_i)\in\mathbb G_m^h:
+             \sum_i x_i=p^+,\ \sum_i\mu_i/x_i=p^-\}.   \label{eq:cut:6.1}
+\end{equation}
+
+其光滑点的复维数是\(h- 2\)。
+
+\begin{proposition}
+
+\label{thm:cut:6.1} \(Z_h\)与下列射影环面超曲面同构：
+
+\begin{equation}
+\Big(\sum_i x_i\Big)\Big(\sum_i\mu_i/x_i\Big)=s,
+ \quad[x_1:\cdots:x_h]\in\mathbb P^{h-1},\quad\prod x_i\ne0.
+                                                               \label{eq:cut:6.2}
+\end{equation}
+
+经\(x_i=\mu _i\alpha _i\)，这正是二维banana的第一、第二Symanzik组合
+
+\begin{equation}
+F_h=\Big(\sum_i\mu_i\alpha_i\Big)
+               \Big(\sum_i\prod_{j\ne i}\alpha_j\Big)
+                      -s\prod_i\alpha_i=0.             \label{eq:cut:6.3}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+
+\eqref{eq:cut:6.1}显然给\eqref{eq:cut:6.2}。反向，对\eqref{eq:cut:6.2}的任一射影点，\(s\ne 0\)保证\(\sum x_i\ne 0\)；唯一缩放\(p^+/(\sum x_i)\)把其和归一为\(p^+\)，第二个和随即为\(s/p^+=p^-\)。这给互逆的代数映射。代入\(x_i=\mu _i\alpha _i\)并乘\(\Pi x_i\)，公共因子\(\Pi \mu _i\)消去即得\eqref{eq:cut:6.3}。
+
+\end{proof}
+
+因此，\(h=2\)给一般两个点；\(h=3\)给一般光滑平面三次曲线，亏格由伴随公式为一；\(h=4\)给本项目的四次K3曲面模型，解消后为\(X_s\)。\(h=3\)的光滑性可直接检查：边界顶点的一个偏导为非零\(\mu _i\)，边界非顶点处亦至少一个偏导非零；环面内排除临界值。\(s=0\)时三次方程退化为直线乘二次曲线，各不可约正规化分量亏格零。这已经说明，同一边表在不同运动学下并无单一``割曲线亏格''。\(h=4\)甚至根本不是曲线。
+
+在正实物理支，\(x_i>0\)等价于未来向在壳\(q_i\)，且
+
+\begin{equation}
+s=\Big(\sum_i x_i\Big)\Big(\sum_i\mu_i/x_i\Big)
+          \geq\Big(\sum_i\sqrt{\mu_i}\Big)^2.          \label{eq:cut:6.4}
+\end{equation}
+
+这是Cauchy--Schwarz，等号当且仅当\(x_i\propto \)√\(\mu _i\)。因而s小于阈值时没有正能量实最大割，但复割簇仍存在。特别是\(s=- 64\)的复K3周期不能被称为该欧氏点的正相空间积分；两者间还需选择解析延拓路径。
+
+\section{四传播子的最大割形式：裸归一化的精确等式}\label{sec:cut:7}
+
+现在\(h=4\)，用前三条内线作独立动量。置\(u_i=q_i^+\)、\(v_i=q_i^-\)（\(i=1,2,3\)），并定义
+
+\begin{equation}
+d_i=u_iv_i-\mu_i\quad(i\leq3),\qquad
+ d_4=(p^+-u_1-u_2-u_3)(p^--v_1-v_2-v_3)-\mu_4.
+\end{equation}
+
+取有序裸六形式
+
+\begin{equation}
+\Theta=\frac{du_1\wedge dv_1\wedge du_2\wedge dv_2
+                          \wedge du_3\wedge dv_3}
+                         {d_1d_2d_3d_4}.              \label{eq:cut:7.1}
+\end{equation}
+
+本节始终按d\textsubscript{1},d\textsubscript{2},d\textsubscript{3},d\textsubscript{4}顺序取留数。
+
+\begin{theorem}
+
+\label{thm:cut:7.1} 在光滑最大割上，经命题\ref{thm:cut:6.1}的同构，
+
+\begin{equation}
+\boxed{\operatorname{res}_{d_4}\operatorname{res}_{d_3}
+ \operatorname{res}_{d_2}\operatorname{res}_{d_1}\Theta
+       =\operatorname{Res}_{F_4=0}
+                     \frac{\Omega_{\mathbb P^3,\alpha}}{F_4}
+       =-\omega_s^{\rm abs}.}
+                                                               \label{eq:cut:7.2}
+\end{equation}
+
+这里\(\omega _s^{\mathrm{abs}}\)严格采用第\ref{ch:comparison}章的\(d\log (\alpha _{1}/\alpha _{4})\wedge d\log (\alpha _{2}/\alpha _{4})\wedge d\log (\alpha _{3}/\alpha _{4})\)约定。下面定义的标准\(\Omega \)在\(\alpha _{4}=1\)图上等于\(- d\alpha _{1}\wedge d\alpha _{2}\wedge d\alpha _{3}\)，所以本条有明确负号；不能把两种裸形式的取向差默默吸收进旧周期证书。
+
+\end{theorem}
+
+\begin{proof}
+
+\(du_i\wedge dv_i=du_i\wedge dd_i/u_i\)。把(dd\textsubscript{1},dd\textsubscript{2},dd\textsubscript{3})移至所有du之前需要\(1+2+3=6\)次交换，故前三次留数为
+
+\begin{equation}
+\frac{du_1\wedge du_2\wedge du_3}{u_1u_2u_3H},\quad
+ H=x_4\Big(p^- -\sum_{i=1}^3\mu_i/u_i\Big)-\mu_4,
+ \quad x_4=p^+-u_1-u_2-u_3.                           \label{eq:cut:7.3}
+\end{equation}
+
+在\(\sum x_i=p^+\)图上，令\(f=(\sum x_i)(\sum \mu _i/x_i)\)。直接代数恒等式给
+
+\begin{equation}
+H=-\frac{x_4}{p^+}(f-s),\qquad
+ \Omega_x=\sum_{i=1}^4(-1)^{i-1}x_i
+             dx_1\wedge\cdots\widehat{dx_i}\cdots\wedge dx_4
+            =-p^+du_1\wedge du_2\wedge du_3.           \label{eq:cut:7.4}
+\end{equation}
+
+故\eqref{eq:cut:7.3}就是\(\Omega _x/[\Pi x_i(f- s)]\)。最后一次留数可用H或\(f- s\)作局部方程，乘可逆函数不改变所得Poincaré留数。线性替换\(x_i=\mu _i\alpha _i\)使分子\(\Omega _x\)和分母\(\Pi x_i(f- s)\)同时乘\(\Pi \mu _i\)。最后在\(\alpha _{4}=1\)图上，\(\Omega _\alpha /\Pi \alpha _i=- d\log \alpha _{1}\wedge d\log \alpha _{2}\wedge d\log \alpha _{3}\)，得到\eqref{eq:cut:7.2}及其相对于旧绝对框架的负号。
+
+\end{proof}
+
+实际Lorentz测度还有
+
+\begin{equation}
+\bigwedge_{i=1}^3(dq_i^0\wedge dq_i^1)
+       =-\tfrac18\bigwedge_{i=1}^3(du_i\wedge dv_i).  \label{eq:cut:7.5}
+\end{equation}
+
+结合\eqref{eq:cut:7.2}，有序Lorentz测度的四重裸留数为\(+\omega _s^{\mathrm{abs}}/8\)。因此本稿没有擅自吸收传播子的i、每圈\(2\pi \)因子或交数。若采用\eqref{eq:cut:7.1}的光锥裸测度，四重管公式的因子就是\((2\pi i)^{4}\)；其他振幅约定必须另外代入\eqref{eq:cut:7.5}及其测度定义。旧Morse球取向、P6/P7/P8以及物理I的符号全部保持不变。
+
+在上同调的Tate账目上，未归一化六维动量对象的留数靶为\(H^{2}(U_s)(- 4)\)。若每圈以一个Tate周期作归一化，整体扭转(3)后靶为\(H^{2}(U_s)(- 1)\)。其纯超越部分\(T(X_s)(- 1)\)由杯积识别为
+
+\begin{equation}
+T(X_s)(3)^\vee=A_T^\vee.            \label{eq:cut:7.6}
+\end{equation}
+
+这解释纯核的权重为何相容。但本节只构造最大割簇与形式的同构，没有据此宣称已经构造完整动量相对对象与参数相对对象之间的全局同构；后者包括无穷远、相对链及推前的额外工作。
+
+\section{最大割能证明什么，不能恢复什么}\label{sec:cut:8}
+
+全纯K3二形式来自\(H^{2}(X_s)\)，又被全部代数除子配对消去。因此\eqref{eq:cut:7.2}的上同调读出通过实际纯超越因子\(T(X_s)\)因子化，不需把整个混合\(H^{2}(U_s)\)当作纯对象。
+
+若所取割循环在T的对偶中非零，T的简单性使该形式周期的最小纯对象就是T，连同\eqref{eq:cut:7.6}所需的Tate扭转。在指定\(\rho 16\)纤维，其秩为六；等质量很一般\(\rho 19\)纤维，其秩为三。二者的幺幂深度均为零。已有实际消失球的非零性可以在指定例中提供所需链输入，无需重做运输。
+
+这和原物理周期的秩八/深度二、等质量很一般秩四/深度一并不矛盾：最大割只看到纯核，不会自动恢复质量Kummer扩张、顶层相对扩张和它们的比较常数。相同纯K3模型可承载不同扩张；留数像的精确几何识别不等于完整混合coaction已由最大割唯一重建。
+
+还有一个不需新微分计算的结果。设单参数纯Gauss--Manin微分模P的秩为r，几何单值绝对不可约，\(\omega \ne 0\)是代数截面。则\(\omega \)的所有协变导数生成P，否则其生成的真微分子模会给单值不变真子系统。相应纯周期满足r阶标量Picard--Fuchs方程；任何非零周期芽在k(s)上的最小齐次方程也恰为r阶：若存在更低阶方程，其所有单值分支仍为该方程的解，但不可约性使这些分支张成r维，与低阶解空间维数矛盾。
+
+应用于已认证几何闭包O(Q\textsubscript{6})的指定质量射线，得到非零纯最大割周期的最小齐次Picard--Fuchs阶数为六。这使用既有单值不可约性，不需要再生成六阶算子；也不把完整混合物理积分的一参数微分阶数与其动机秩直接等同。
+
+
+\chapter{子图收缩、法向首项与森林边界}\label{ch:contraction}
+收缩的几何入口是图多项式的法向首项，而非把子图简单从积分中删除。经典图超曲面与边界理论见\cite{bek,browncosmic,bbr}。本章明确区分进入相对对象的面连接与从补空间出去的极点留数。
+\section{数据和经典结果的位置}\label{sec:contraction:1}
+
+设\(k\subset C\)为特征零域，G为连通图，内边数N、圈数h。每个顶点有外动量\(p_v\)，满足\(\sum p_v=0\)；每条边有质量平方\(\mu _e\)。先在欧氏正质量区域推导，再把有理恒等式延伸到其定义域。固定正整数传播子幂次\(a_e\)，记\(a_H=\sum _{e\in H}a_e\)。自环和平行边允许。外动量在收缩顶点处相加，保留边的质量不变。
+
+使用补树约定
+
+\begin{equation}
+U_G=\sum_{T\text{生成树}}\prod_{e\notin T}\alpha_e,\qquad
+ F_G=\Phi_G+U_G\sum_e\mu_e\alpha_e,\qquad
+ \Phi_G=\sum_{T_1\sqcup T_2}(\sum_{v\in T_1}p_v)^2
+                                  \prod_{e\notin T_1\sqcup T_2}\alpha_e.       \label{eq:contraction:1}
+\end{equation}
+
+二森林不计两个分支的交换重数。本文F是完整第二Symanzik多项式，对应Brown的Xi；不是该文仅含动量的Phi。
+
+经典来源须明确：U的吹起边界分解见Bloch--Esnault--Kreimer\cite[Proposition 3.5]{bek}；含质量的UV/IR分解及实际边界面关系见Brown\cite[Proposition 2.2, Theorems 2.7, 6.5, 7.8]{browncosmic}。下面给出适合本项目幂次、最小标架和RG接口的直接论证，不宣称这些经典分解的原创性。Bergbauer--Brunetti--Kreimer\cite{bbr}提供位置空间嵌套集与重整化的先行框架；不把其位置空间模型直接等同本参数空间模型。
+
+取真连通边子图\(\gamma \)，\(r=|E_\gamma |\ge 2\)，\(h_\gamma \ge 1\)，且\(G/\gamma \)至少有一条边。最初假定
+
+\begin{equation}
+F_{G/\gamma}\not\equiv0.                  \label{eq:contraction:2}
+\end{equation}
+
+所有保留边质量正时自动满足\eqref{eq:contraction:2}。无质量或退化运动学中必须独立检查。下文的``UV子图对象''会主动忘掉\(\gamma \)的质量及外动量，只保留\(U_\gamma \)；不能把它误认为\(\gamma \)在原物理数据下的完整动机。
+
+\section{生成树给出的法向首项}\label{sec:contraction:2}
+
+在\(\gamma \)的边上置\(\alpha _e=t x_e\)，其余边置\(\alpha _e=y_e\)。记\(I_\gamma =(\alpha _e:e\in \gamma )\)。有
+
+\begin{equation}
+U_G(tx,y)=t^{h_\gamma}\big(U_\gamma(x)U_{G/\gamma}(y)+tR_U(t,x,y)\big),
+\end{equation}
+
+\begin{equation}
+F_G(tx,y)=t^{h_\gamma}\big(U_\gamma(x)F_{G/\gamma}(y)+tR_F(t,x,y)\big).       \label{eq:contraction:3}
+\end{equation}
+
+\(R_U\)、\(R_F\)是多项式；第二式并不包含\(F_\gamma \)作为UV主因子。
+
+\begin{proof}
+
+对任一生成树T，\(T\cap \gamma \)是覆盖\(\gamma \)顶点的森林。设其分支数为c，则\(\gamma \)边变量在补树单项式中的次数为\(h_\gamma +c- 1\)。因此最低次数为\(h_\gamma \)，且恰在\(T\cap \gamma \)为\(\gamma \)的生成树时达到。这样的T与一对生成树\((T_\gamma ,T_{G/\gamma })\)一一对应：取逆像并并入\(T_\gamma \)即可，连通性及边数保证无圈。这证明第一式及余项界。
+
+二森林中相同计数成立。达到\(h_\gamma \)时，\(\gamma \)完整位于同一分支；收缩不改变该分支总外动量，因此对应\(G/\gamma \)的二森林及其同一权重。故Phi的最低项为\(U_\gamma  Phi_{G/\gamma }\)。质量和分成\(\sum _{e\notin \gamma }\mu _e y_e+t\sum _{e\in \gamma }\mu _e x_e\)，后一项额外含t，得到第二式。\(U_\gamma  U_{G/\gamma }\)非零；\eqref{eq:contraction:2}保证F的指定首项也非零。
+
+\end{proof}
+
+这也是\(I_\gamma -adic\)分级环中的等式。令\(L_\gamma ={\alpha _e=0:e\in \gamma }\subset P^{N- 1}\)，吹起\(\pi :X=Bl_{L_\gamma }P^{N- 1}\to P^{N- 1}\)。因\(N_{L/P}=O(1)^{\oplus r}\)，例外除子
+
+\begin{equation}
+E_\gamma\simeq P^{r-1}\times P^{N-r-1}.          \label{eq:contraction:4}
+\end{equation}
+
+设Y是\(V(U_G F_G)\)的严格变换之并。由\eqref{eq:contraction:3}在E上去掉总变换的t幂后，得到
+
+\begin{equation}
+E_\gamma\setminus Y
+  \simeq\big(P^{r-1}\setminus V(U_\gamma)\big)
+       \times\big(P^{N-r-1}\setminus V(U_{G/\gamma}F_{G/\gamma})\big).
+                                                                    \label{eq:contraction:5}
+\end{equation}
+
+这里用的是约化补空间，乘积中\(U_\gamma \)在总方程中出现几次不改变\eqref{eq:contraction:5}。几何上，严格变换与E的交是相应超曲面沿L的射影法向锥；不是把\(t=0\)直接代入原U、F，后者会同时得到零。
+
+若\eqref{eq:contraction:2}失败，只能从\eqref{eq:contraction:3}得\(\operatorname{ord}_{I\gamma }F_G\ge h_\gamma +1\)，不能仍用\eqref{eq:contraction:5}或下节的F阶数。一个明确例子是无质量一圈二点bubble，\(U=\alpha _1+\alpha _2\)、\(F=q^{2}\alpha _1\alpha _2\)，缩放\(\gamma ={1}\)。虽然\(h_\gamma =0\)，但\(G/\gamma \)为无尺度自环，\(F_{G/\gamma }=0\)；F实际一阶消失。这个例子说明退化分支必须由物理数据识别。它只用于首项失效，不满足本稿例外除子\(r\ge 2\)的假设。
+
+\section{收缩面连接与UV留数是两个不同箭头}\label{sec:contraction:3}
+
+令\(\mathcal U=X\setminus Y\)，B为坐标超平面严格变换在\(\mathcal U\)中的并，不把E重复算入B。X光滑，E与坐标边界正常交叉；删去Y后仍成立。置\(E^\circ=E\cap \)\(\mathcal U\)，\(B_E=B\cap E^\circ\)，\(n=N- 1\)。单次吹起时，\eqref{eq:contraction:5}与边界一起是乘积对：
+
+\begin{equation}
+(E^\circ,B_E)=(V_\gamma\times V_c,
+                    B_\gamma\times V_c\ \cup\ V_\gamma\times B_c),            \label{eq:contraction:6}
+\end{equation}
+
+其中\(V_\gamma =P^{r- 1}\setminus V(U_\gamma )\)，\(V_c=P^{N- r- 1}\setminus V(U_c F_c)\)，\(B_\gamma \)、\(B_c\)为各自坐标边界。定义
+
+\begin{equation}
+M_\gamma^{UV}=H^{r-1}(V_\gamma,B_\gamma),\quad
+ M_c=H^{N-r-1}(V_c,B_c),\quad
+ M_G^{\mathrm{face}}=H^n(\mathcal U,B\cup E^\circ).                \label{eq:contraction:7}
+\end{equation}
+
+若需要进一步解消，只能使用已经构造、且在E上与两个因子的解消相容的模型；不能假定任意新增吹起不改变所有标架。Brown的motic模型提供这样的系统性选择\cite{browncosmic}。本节单次吹起的实际对已足够构造下列箭头。
+
+\begin{theorem}[相对面连接]
+
+\label{thm:contraction:3.1} 外积与三重对的连接给实际Nori态射
+
+\begin{equation}
+M_\gamma^{UV}\otimes M_c
+ \xrightarrow{\ \times\ }H^{n-1}(E^\circ,B_E)
+ \xrightarrow{\ \partial_E\ }M_G^{\mathrm{face}}.                \label{eq:contraction:8}
+\end{equation}
+
+其中没有Tate扭转；不保证复合单射。本稿把连接号固定为Betti对偶提取E面的正乘积链：在正法向\(t\ge 0\)的领口中，通常向外边界取向与此相反，须同时调整连接的整体负号。这个选择不改变正合性。对提升后避开Y的正单纯形链\(\sigma _G\)，有
+
+\begin{equation}
+\langle\partial_E(\alpha\times\beta),\sigma_G\rangle
+    =\langle\alpha,\sigma_\gamma\rangle
+       \langle\beta,\sigma_c\rangle.                             \label{eq:contraction:9}
+\end{equation}
+
+如进一步边界仍碰到Y，\eqref{eq:contraction:9}只在完成所需解消并得到实际相对链后使用。
+
+\end{theorem}
+
+\begin{proof}
+
+三重对\(B\subset B\cup E^\circ\subset \)\(\mathcal U\)的纤维三角给
+
+\begin{equation}
+H^{n-1}(\mathcal U,B)\longrightarrow H^{n-1}(E^\circ,B_E)
+ \xrightarrow{\partial_E}H^n(\mathcal U,B\cup E^\circ).            \label{eq:contraction:10}
+\end{equation}
+
+中间项由闭并的相对Mayer--Vietoris/切除得到。复合相对外积即\eqref{eq:contraction:8}，不需要把全部\(H^{n- 1}\)强行等同单个Kunneth分量。连接的Betti对偶按上述号约定取\(\sigma _G\)的正E面；正实吹起在该面记录\(\gamma \)参数之比及剩余参数，正好是\(\sigma _\gamma \times \sigma _c\)。相对Stokes给\eqref{eq:contraction:9}。这些步骤先在实际几何对与六运算中完成，再取Nori上同调；\cite{tubach}保证与Hodge实现相容。
+
+\end{proof}
+
+式\eqref{eq:contraction:10}也给出精确可见性限制：外积类若从\(H^{n- 1}(\)\(\mathcal U\),B)限制而来，则面连接消去它。另一方面，\eqref{eq:contraction:9}右边非零时，连接类必非零。即使非零，它仍可能对应与原物理形式不同的de Rham类；``整个图对象含这个周期''不等于``给定振幅读出必须含它''。
+
+\begin{theorem}[法向极点留数]
+
+\label{thm:contraction:3.2} 另有正合段
+
+\begin{equation}
+H^n(\mathcal U,B)\longrightarrow
+ H^n(\mathcal U\setminus E^\circ,B\setminus E^\circ)
+ \xrightarrow{\operatorname{Res}_E}
+ H^{n-1}(E^\circ,B_E)(-1)
+ \xrightarrow{\operatorname{Gys}_E}H^{n+1}(\mathcal U,B).          \label{eq:contraction:11}
+\end{equation}
+
+它来自余维一纯性及相对局部化，证明已在第\ref{ch:cut}章展开。因此留数像精确为Gysin核。未扭转的裸形式留数满足
+
+\begin{equation}
+\int_{\operatorname{Tub}_E\tau}\omega
+                     =2\pi i\int_\tau\operatorname{res}_E\omega.              \label{eq:contraction:12}
+\end{equation}
+
+\eqref{eq:contraction:8}从面对象进入相对对象；\eqref{eq:contraction:11}从删去面的补空间出去并带(-1)。两者来源、方向、次数、Tate因子及物理链均不同。divergent正单纯形不能仅凭\eqref{eq:contraction:8}当作删面补空间中的普通有限相对周期；需先给正规化和减除。
+
+\end{theorem}
+
+\section{幂次计数与对数边界形式}\label{sec:contraction:4}
+
+取偶整数\(D_0\)。去掉整体Gamma与测度常数后的标量射影形式为
+
+\begin{equation}
+\omega_G(D)=\Big(\prod_e\alpha_e^{a_e-1}\Big)
+       \frac{U_G^{A_G(D)}}{F_G^{B_G(D)}}\Omega_G,
+ \quad A_G=a_G-(h_G+1)D/2,\quad B_G=a_G-h_GD/2.                  \label{eq:contraction:13}
+\end{equation}
+
+取标准\(\Omega _H=\sum _i(- 1)^{i- 1}\alpha _i d\alpha _1\wedge \)\ldots{}\(\wedge \)省略\(d\alpha _i\wedge \)\ldots，子图和收缩图继承边顺序；留数按法向在前。\(D=D_0\)时是有理形式；D的非整数变化仅作解析正规化，并不称其为普通Nori对象。
+
+置
+
+\begin{equation}
+d_\gamma=a_\gamma-D_0h_\gamma/2.        \label{eq:contraction:14}
+\end{equation}
+
+在收缩图某一非零坐标设为1的图中，再用\(\gamma \)的一条非零方向坐标定义t，Jacobian是\(t^{r- 1}\)；幂次分子额外给\(t^{a\gamma - r}\)，\eqref{eq:contraction:3}的分母净贡献为\(t^{- D_0h\gamma /2}\)。故
+
+\begin{equation}
+\operatorname{ord}_{E_\gamma}\pi^*\omega_G(D_0)
+                                  =d_\gamma-1.                 \label{eq:contraction:15}
+\end{equation}
+
+等号指E的泛点，且\eqref{eq:contraction:2}成立。\(a_e\)正整数保证单项式分子在方向泛点不消失；它不排除交叉层上的额外阶数。
+
+\begin{theorem}[对数收缩留数]
+
+\label{thm:contraction:4.1} 若\(d_\gamma =0\)，则
+
+\begin{equation}
+\operatorname{res}_{E_\gamma}\pi^*\omega_G(D_0)
+       =s_\gamma\eta_\gamma^{UV}\boxtimes\omega_{G/\gamma}(D_0),\qquad
+ \eta_\gamma^{UV}=\frac{\prod_{e\in\gamma}x_e^{a_e-1}\Omega_\gamma}
+                                      {U_\gamma^{D_0/2}}.        \label{eq:contraction:16}
+\end{equation}
+
+其中\(s_\gamma \)为体积形式的显式取向号。将\(\gamma \)的r条边移到最前、保持两块内部顺序，设该置换符号为\(sgn(\pi _\gamma )\)，则\(s_\gamma =(- 1)^r sgn(\pi _\gamma )\)。采用相容正密度约定时可把这个号同时吸收入链取向，不能只改形式。
+
+\end{theorem}
+
+\begin{proof}
+
+法向幂由\eqref{eq:contraction:15}为dt/t。\(U_\gamma \)净指数为\(A_G- B_G=- D_0/2\)；且\(a_\gamma =D_0h_\gamma /2\)、\(h_G=h_\gamma +h_{G/\gamma }\)，给\(A_G=A_{G/\gamma }\)、\(B_G=B_{G/\gamma }\)。在\(\gamma \)已排最前、\(\alpha _r=t\)、\(x_r=1\)、\(\alpha _N=1\)的图上，直接楔积得到\(\pi \)*\(\Omega _G=(- 1)^r t^{r- 1}dt\wedge \Omega _\gamma \wedge \Omega _c\)；恢复原边序再乘\(sgn(\pi _\gamma )\)。这给\eqref{eq:contraction:16}。\(\eta _\gamma \)的总齐次次数为零，确实是\(\gamma \)方向射影形式。
+
+\end{proof}
+
+若\(\gamma \)的UV方向积分收敛，定义其形式周期\(p_\gamma \)。它的几何对、形式与正链都不依赖原\(\gamma \)质量及外运动学。因此\eqref{eq:contraction:16}给一个常值的算术对象乘上收缩图对象。这具体实现了局部性的一种来源：外运动学被忘掉，而\(p_\gamma \)的算术不必是Tate。在Tannakian层面，常值变分不等于Tate对象；不能把外动量导数为零当作混合Tate判据。
+
+分子会改变判据。对齐次有理形式\(\Omega _G P/(U_G^u F_G^v)\)，若P的\(\gamma \)法向次数为\(\nu _\gamma (P)\)，則泛点阶数是
+
+\begin{equation}
+r-1+\nu_\gamma(P)-h_\gamma(u+v).                 \label{eq:contraction:17}
+\end{equation}
+
+其首项\(P_0\)一般是方向变量与收缩变量的和式，并不分解为一个乘积。因而它只给张量通道之和，且可使\eqref{eq:contraction:16}的候选留数消失；单位标量的乘积结论不原样覆盖任意分子或Ward投影。
+
+\section{极点由哪一阶法向数据决定}\label{sec:contraction:5}
+
+令\(D=D_0- 2\epsilon \)，先固定避开其余奇异面的紧致方向区域，或已经对其余面作出有效减除。则某个法向积分可写成
+
+\begin{equation}
+J(\epsilon)=\int_0^1 t^{d_\gamma-1+h_\gamma\epsilon}
+                                A(t,\epsilon)\,dt,             \label{eq:contraction:18}
+\end{equation}
+
+A在\(t=0\)充分光滑，在\(\epsilon =0\)解析，所需余项一致可积。这里\(\Gamma (B_G)\)、额外正规化因子和其他尺度的极点尚未乘入。
+
+若\(d_\gamma =0\)，减加\(A(0,\epsilon )\)立即得到
+
+\begin{equation}
+J(\epsilon)=\frac{A(0,\epsilon)}{h_\gamma\epsilon}
+      +\int_0^1 t^{-1+h_\gamma\epsilon}(A(t,\epsilon)-A(0,\epsilon))dt,
+ \qquad\operatorname{Res}_{\epsilon=0}J=A(0,0)/h_\gamma.          \label{eq:contraction:19}
+\end{equation}
+
+对数情况下，法向锥主项正好够用。但\textbf{这只是指定法向端点的裸积分极点}；反项采用\(C=- K\)时另有负号，整图的Gamma极点、森林和物理求和需按实际方案另行组合。
+
+若\(d_\gamma =- k<0\)，展开\(A=\sum _{j=0}^k A_j(\epsilon )t^j+t^{k+1}\widetilde A\)，逐项积分给
+
+\begin{equation}
+J(\epsilon)=\sum_{j=0}^k\frac{A_j(\epsilon)}{h_\gamma\epsilon+j-k}
+                  +H(\epsilon),\qquad
+ \operatorname{Res}_{\epsilon=0}J=A_k(0)/h_\gamma.                \label{eq:contraction:20}
+\end{equation}
+
+H在\(\epsilon =0\)解析。首项\(A_0\)控制截断意义下最严重的幂次发散，但\(\epsilon =0\)的留数由第k阶法向喷射给出。比如\(A=1+c t\)、\(d_\gamma =- 1\)时，\(J=(h_\gamma \epsilon - 1)^{-1}+c/(h_\gamma \epsilon )\)：同一首项可有不同的MS极点。这是直接反例，说明``只看法向锥即可给所有反项''不成立。
+
+\eqref{eq:contraction:20}是Schwinger尺度坐标中的公式，不直接等于外动量Taylor算符。两者在指定场论中的比较还需分子、局部算符插入和IR控制；不能把这里的k机械读成外动量微分阶数。一般正规化\(a_e(\epsilon )=a_e+\epsilon r_e\)时，分母\(h_\gamma \)改为\(h_\gamma +\sum _{e\in \gamma }r_e\)；若它为零，这个\(\epsilon \)方向根本不调节该端点。
+
+\section{相容森林的多尺度因子化}\label{sec:contraction:6}
+
+采用明确而足够的相容条件：有限集合\(\mathscr F\)由真连通子图组成，任意两个或边集包含，或顶点集不交。对每个\(H\in \)\(\mathscr F\)\(\cup {G}\)，令child(H)为其最大真子成员，定义
+
+\begin{equation}
+H^\circ=H/\bigcup_{K\in child(H)}K.      \label{eq:contraction:21}
+\end{equation}
+
+要求每个H°至少一条边，根G°满足\(F_{G^\circ}\ne 0\)。顶点不交条件保证子成员的圈数可加；可以放宽，但必须另证相应秩可加性。仅说``边不交''并不足以支持下面的证明。
+
+在每个H°选一条标记边\(e_H\)。置
+
+\begin{equation}
+\alpha_e=u_e\prod_{\substack{\gamma\in\mathscr F\\e\in\gamma}}t_\gamma,
+                  \qquad u_{e_H}=1.                             \label{eq:contraction:22}
+\end{equation}
+
+根标记固定射影尺度。每层标记先定义该层相对父层的尺度，故\eqref{eq:contraction:22}在非零标记图上可逆；\(t_\gamma =0\)是相应迭代吹起图的边界。体积形式的Jacobian因子为\(\prod _\gamma  t_\gamma ^{|E_\gamma |- 1}\)，可按最外层到最内层逐次计算；嵌套子成员的所有边都计入外层指数。
+
+\begin{theorem}
+
+\label{thm:contraction:6.1} 去掉法向单项式后在\(t_\gamma =0\)对所有\(\gamma \)取值，有
+
+\begin{equation}
+U_G=\Big(\prod_\gamma t_\gamma^{h_\gamma}\Big)
+       \left(\prod_{H\in\mathscr F\cup\{G\}}U_{H^\circ}+R\right),
+\end{equation}
+
+\begin{equation}
+F_G=\Big(\prod_\gamma t_\gamma^{h_\gamma}\Big)
+       \left(F_{G^\circ}\prod_{\gamma\in\mathscr F}U_{\gamma^\circ}
+                                                       +R'\right),          \label{eq:contraction:23}
+\end{equation}
+
+R、R'属于由全部\(t_\gamma \)生成的理想。若所有\(d_\gamma =0\)，则
+
+\begin{equation}
+\operatorname{res}_{\mathscr F}\pi^*\omega_G(D_0)
+        =s_{\mathscr F}\mathop{\boxtimes}_{\gamma\in\mathscr F}\eta_{\gamma^\circ}^{UV}
+                                                \boxtimes\omega_{G^\circ}.
+                                                                    \label{eq:contraction:24}
+\end{equation}
+
+这里\(s_F\)由选定消去次序中\eqref{eq:contraction:16}的各取向号及把法向移到统一顺序的Koszul号相乘得到。法向顺序及因子顺序同时固定；交换法向次序的反号不被省略。
+
+\end{theorem}
+
+\begin{proof}
+
+最内层生成树可先在顶点不交的子成员中独立选取。其并是森林，收缩后选父商图生成树，再提升，逐层得到同时适应全部成员的树。反过来，每棵适应树唯一恢复这些商图树。对每个\(\gamma \)，非适应树的补树单项式中\(\gamma \)次数至少\(h_\gamma +1\)；所有树的该次数至少\(h_\gamma \)。故可同时提出\(\prod t_\gamma ^{h_\gamma }\)，常数项精确为各商图U之积。根用二森林并保留外运动量及剩余质量，给F公式；子成员内部质量每次进入余项。这个论证也证明首项不依赖选取哪一个包含关系的线性延伸次序。
+
+圈数和a在收缩下可加；全部\(d_\gamma =0\)蕴含每个非根商图\(\gamma ^\circ\)仍对数。将\eqref{eq:contraction:23}及Jacobian代入\eqref{eq:contraction:13}，每个法向给\(dt_\gamma /t_\gamma \)，各非根U指数为\(- D_0/2\)，根指数与其自身\eqref{eq:contraction:13}相同，证明\eqref{eq:contraction:24}。
+
+\end{proof}
+
+在多尺度\(A(t,\epsilon )\)解析且余下积分一致可积的单一乘积图上，\eqref{eq:contraction:24}还给
+
+\begin{equation}
+[\epsilon^{-|\mathscr F|}]\int\prod_{\gamma\in\mathscr F}
+                t_\gamma^{h_\gamma\epsilon-1}A(t,\epsilon)\,dt
+                       =\frac{A(0,0)}{\prod_{\gamma\in\mathscr F}h_\gamma}.
+                                                                    \label{eq:contraction:25}
+\end{equation}
+
+若还有方向变量，应对右侧继续积分。证明是对各变量反复使用\eqref{eq:contraction:19}；含至少一个\(t_\gamma \)的余项最多有少一个法向极点。式\eqref{eq:contraction:25}不含整体Gamma、其他图、其他扇区及其重叠计数，因此不是未经拼接的整图最高极点公式。
+
+\textbf{最高留数不足以重建RG简单极点。} 两个相容尺度就有反例：
+
+\begin{equation}
+\int_0^1\!\int_0^1
+ t_1^{h_1\epsilon-1}t_2^{h_2\epsilon-1}(1+c t_1)\,dt_1dt_2
+ =\frac1{h_1h_2\epsilon^2}
+                  +\frac{c}{h_2\epsilon(1+h_1\epsilon)}.         \label{eq:contraction:25a}
+\end{equation}
+
+所有c的最深角点首项都等于1，但简单极点相差\(c/h_2\)。即使所有端点均对数，也必须保留较浅面上的数据及其余变量积分；一般还须保留其\(\epsilon \)展开。这个有理积分反例与第\ref{ch:rg}章中``有限项先插入后可进入极点''的代数反例相容。它不声称任意c对应实际Feynman图；它严格排除了仅凭最深森林乘积首项推出全部局部RG系数的形式论证。
+
+\section{重叠子图为什么不能同时作为独立残数}\label{sec:contraction:7}
+
+令A、C为两个不可比边集，\(L_A\)、\(L_C\)为坐标中心。若\(A\cup C\ne E_G\)，则交为\(L_{A\cup C}\)。先吹起该交后，\(L_A\)、\(L_C\)的严格变换不交：它们在交中心法向空间中的方向子空间交为零，射影化后没有公共点。后续吹起二者产生的例外除子也无共同层。若\(A\cup C=E_G\)，则原射影中心已经不交。
+
+这说明在包含该交中心的模型里，不能给这两个原标签捏造共同的二重留数面。对于相交边集，这是处理重叠的一条具体规则；对边不交的横截中心，也可以选择再吹起其交，此时模型把同时面细分为旗标面。因此\textbf{边界层由选定building set决定，不能无条件说``所有Zimmermann森林就是某一个模型的全部层''}。不同细分必须通过实际拉回、链分解和取向比较。
+
+例：四维三线sunset的三个二边bubble均对数发散，但对应P\textsuperscript{2}中的三个不同坐标点。吹起后所得三个例外曲线两两不交。因此一个局部图最多含其中一个proper-bubble留数；三项须在不同面/区域求和，不能把三bubble相乘当作共同三重极点。整体图另有幂次发散及整体尺度，故这里也没有断言整图只有简单\(\epsilon \)极点。
+
+在已经得到的正常交叉对数图上，局部Taylor零阶算符\(T_i A=A|_{t_i=0}\)彼此交换，
+
+\begin{equation}
+\prod_i(1-T_i)A=\sum_{S}(-1)^{|S|}\prod_{i\in S}T_i A          \label{eq:contraction:26}
+\end{equation}
+
+消去所有对应端点的对数不可积性。更高幂次用第\ref{sec:contraction:5}节所需有限阶Taylor算符。这个局部几何包含--排除式解释森林项的来源；要等同某个全局物理BPHZ/MS方案，仍需给全局拼接、重叠计数、外动量Taylor/局部插入比较及IR处理。\cite{bbr}在其位置空间、至多对数的主范围内完成了相应方案理论，不能未经比较就移植为本项目所有参数积分的定理。
+
+\section{本项目banana的检验性推论}\label{sec:contraction:8}
+
+二维h线banana，单位传播子、正质量，任取k条边组成的真连通子图\(\gamma \)，有\(h_\gamma =k- 1\)、\(a_\gamma =k\)，因此
+
+\begin{equation}
+d_\gamma=k-(k-1)=1.                \label{eq:contraction:27}
+\end{equation}
+
+每个这样的UV面上参数形式泛点阶数为零，\textbf{没有对数UV留数}。整体也有\(a_G- D_0h_G/2=1\)，无整体UV Gamma极点。四线情形\eqref{eq:contraction:13}恰为\(\Omega _G/F_G\)；其K3及已证混合周期来自完整几何与边界扩张，而不是UV极点。
+
+所以``UV筛选为空''绝不推出原物理最小对象是Tate或零。本项目指定四线对象的纯K3核与秩八最小性是既有独立证据；\eqref{eq:contraction:27}只用圈数和法向计数，未重算这些证据。
+
+另一方面，若一个对数子图的\(p_\gamma \)已经在实际形式周期中证明含某算术方向，\eqref{eq:contraction:16}只证明该方向可沿对应收缩通道出现。完整森林与物理求和仍可能消去它。只有它在规定MS型的完整局部RG数据中非零后，第\ref{ch:rg}章的反演才保证它不会在所有临界系数中同时消失。这样连接三层时，每一次``可见''都有自己的实际映射与非零条件。
+
+
+\chapter{本原对数减除的实际相对周期}\label{ch:primitive}
+以下先处理没有子发散的范围，并完整固定物理减除顺序。含子发散的扩展在随后两章讨论。参数减除的背景见\cite{bk2008}，Kummer 周期关系见\cite{brownperiods}。
+\section{精确输入与物理归一化}\label{sec:primitive:1}
+
+沿用第\ref{ch:contraction}章的U、完整含质量F以及标准射影体积形式\(\Omega \)。G连通，内边数N、圈数\(h\ge 1\)，\(n=N- 1\)，\(D_0\)为正偶整数，传播子幂次\(a_e\)为正整数。给定
+
+\begin{equation}
+a_G=D_0h/2,\qquad
+ d_S:=a_S-D_0h_S/2>0\quad(\varnothing\ne S\subsetneq E_G).       \label{eq:primitive:1}
+\end{equation}
+
+\(h_S\)按边子图的所有连通分支计算；不只检查连通子图。\eqref{eq:primitive:1}是本稿采用的严格UV原始性条件。\(N>1\)时它排除桥和自环：删桥后的d为负；一个自环与其余边的d相加为零，不能同时正。
+
+两组数据\(\kappa \)、\(\kappa _0\)均有每边质量平方\(\mu _e>0\)和欧氏外动量，动量守恒；其系数属于固定\(k\subset R\)。在数域/代数参数纤维上得到k上的Nori对象；在参数族上先限制到上同调局部常值的光滑开集。\(\kappa _0\)可以与\(\kappa \)相同。
+
+取\(D=D_0- 2\epsilon \)，欧氏动量测度每圈\(\pi ^{- D/2}\)归一化，暂不含耦合、图对称因子及Minkowski的i因子。设
+
+\begin{equation}
+c_a=\frac1{\prod_e\Gamma(a_e)}\in\mathbb Q_{>0},\qquad
+ \eta=\frac{\prod_e\alpha_e^{a_e-1}\Omega_G}{U_G^{D_0/2}},\qquad
+ p_G=c_a\int_\sigma\eta.                                        \label{eq:primitive:2}
+\end{equation}
+
+\(\sigma \)取使Schwinger密度为正的取向；若用\(\sum \alpha =1\)且\(\alpha _1,\)\ldots{}\(,\alpha _{N- 1}\)递增的坐标，标准\(\Omega \)拉回有\((- 1)^{N- 1}\)号，须同时计入链取向。本稿不改动旧banana框架。
+
+定义裸积分及减除
+
+\begin{equation}
+I_\epsilon(\kappa)=c_a\,\mu_R^{2h\epsilon}\Gamma(h\epsilon)
+ \int_\sigma\eta\,U_G^{(h+1)\epsilon}F_\kappa^{-h\epsilon},\qquad
+ R_G(\kappa,\kappa_0)=\lim_{\epsilon\to0}
+                   (I_\epsilon(\kappa)-I_\epsilon(\kappa_0)).      \label{eq:primitive:3}
+\end{equation}
+
+减除顺序明确为当前点减参考点。某些文献振幅含相反整体符号；不能把其log比值直接替换\eqref{eq:primitive:3}。
+
+\section{收敛与取消极限有统一证明}\label{sec:primitive:2}
+
+取任意Hepp扇区，边序\(e_1,\)\ldots{}\(,e_N\)满足\(\alpha _{e_1}\le \)\ldots{}\(\le \alpha _{e_N}\)，设\(\alpha _{e_N}=1\)及
+
+\begin{equation}
+\alpha_{e_i}=t_i\cdots t_{N-1},\quad 0\le t_i\le1,\quad
+ S_j=\{e_1,\ldots,e_j\}.                                        \label{eq:primitive:4}
+\end{equation}
+
+Kruskal逐边扩展森林给一棵同时在每个\(S_j\)上取最大森林的生成树。故每个补树单项式的\(t_j\)次数至少\(h_{S_j}\)，且有一个单项式对所有j同时达到该下界。因此
+
+\begin{equation}
+U_G=\prod_{j=1}^{N-1}t_j^{h_{S_j}}\widehat U,
+             1\le\widehat U\le\tau(G)\quad\hbox{在实单位立方体上}.           \label{eq:primitive:5}
+\end{equation}
+
+Jacobian及幂次分子给
+
+\begin{equation}
+\eta=\pm\prod_jt_j^{d_{S_j}-1}\widehat U^{-D_0/2}\,dt_1\cdots dt_{N-1}.
+                                                                    \label{eq:primitive:6}
+\end{equation}
+
+由\eqref{eq:primitive:1}，每个指数非负。于是\(p_G\)有限且正。
+
+把任意二森林延伸为生成树，其补单项式是该树的补单项式乘一条边参数。故在\(\alpha \)最大值为1的图上，Phi/U有有限上界。质量项则给\(F_\kappa \ge \mu _{e_N}U\)，因而
+
+\begin{equation}
+F_\kappa=\prod_jt_j^{h_{S_j}}\widehat F_\kappa,\qquad
+       0<c\le\widehat F_\kappa,\widehat F_{\kappa_0}\le C<\infty.             \label{eq:primitive:7}
+\end{equation}
+
+常数可在任意给定的紧致正质量欧氏参数区域统一选取。
+
+这里还有一个不依赖扇区的比较：正质量保证F的单项式支撑等于U·\(\sum \alpha \)的支撑；动量二森林项不增加新的单项式类型。因此\(F_\kappa \)和\(F_{\kappa 0}\)系数逐项可比较，\(F_{\kappa 0}/F_\kappa \)在整个正单纯形上有正的上下界。
+
+\begin{theorem}
+
+\label{thm:primitive:2.1} \eqref{eq:primitive:3}存在，且
+
+\begin{equation}
+R_G(\kappa,\kappa_0)=c_a\int_\sigma\eta
+                            \log\frac{F_{\kappa_0}}{F_\kappa},
+ \qquad \operatorname{Res}_{\epsilon=0}I_\epsilon=p_G/h.          \label{eq:primitive:8}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+
+\eqref{eq:primitive:5}--\eqref{eq:primitive:7}把正规化后各端点幂改为\(d_{S_j}- 1+h_{S_j}\epsilon \)。对足够小的\(|Re \epsilon |\)，所有积分及有限次\(\epsilon \)导数由可积幂乘有限对数次幂支配。记\(F_0=F_{\kappa 0}\)，则
+
+\begin{equation}
+\frac{F_\kappa^{-h\epsilon}-F_0^{-h\epsilon}}{h\epsilon}
+                    \longrightarrow\log(F_0/F_\kappa).
+\end{equation}
+
+比值的对数有界，剩余公共因子也满足上述支配。又\(h\epsilon \Gamma (h\epsilon )\to 1\)，得到第一式。未作减除时\(\Gamma (h\epsilon )\)的简单极点给第二式。
+
+\end{proof}
+
+这比在积分号内形式取消\(1/\epsilon \)更强：给出了极限交换所需的端点控制。任意公共解析正规化因子\(A(\epsilon )\)、\(A(0)=1\)，都不改变\(R_G\)；它可以改变单个有限部分。
+
+\section{一个全局正链避让的模型}\label{sec:primitive:3}
+
+令X为\(P^{N- 1}\)沿所有非空坐标中心作的标准扇区细分模型，坐标边界\(D_X\)正常交叉。等价地使用完整坐标旗标的光滑toric模型，\eqref{eq:primitive:4}给其正扇区图。\(N=1\)时X为点。记\(Y_U\)、\(Y_F\)、\(Y_{F0}\)为相应非边界严格变换，置
+
+\begin{equation}
+V=X\setminus(Y_U\cup Y_F\cup Y_{F0}),\quad D=D_X\cap V,
+                         r=F_0/F_\kappa.                         \label{eq:primitive:9}
+\end{equation}
+
+\eqref{eq:primitive:5}--\eqref{eq:primitive:7}证明提升后的正单纯形\(\widetilde\sigma\)是V内的紧致流形带角，其边界在D。F和\(F_0\)在每个坐标除子上具有相同阶数，故其法向单项式取消；r在V上是代数单位。\(\eta \)由\eqref{eq:primitive:6}延伸为V上的正则n形式，且在D每个分量上的拉回为零。这些是全局构造所需的正链与形式，不只是扇区上的渐近记号。
+
+V还删去F和\(F_0\)，可能承载超出UV周期的几何。因此不能仅根据\(p_G\)的最小对象判断\(H^n(V,D)\)的全部结构。UV周期本身来自不依赖\(\kappa \)、\(\kappa _0\)的较大开空间\(X\setminus Y_U\)；限制到V是实际拉回，不改变给定\(\eta \)、\(\sigma \)的形式周期关系。
+
+\section{分开端点的实际相对对象}\label{sec:primitive:4}
+
+若直接使用(Gm,\{1,r\})，\(r=1\)时两个端点合并，普通相对H\textsuperscript{1}由秩二降为秩一。这不是保持标记的Kummer家庭，不能用于无条件的对角特殊化。
+
+引入额外坐标w，只用来保留端点标记：
+
+\begin{equation}
+Y=V\times\mathbb G_{m,z}\times\mathbb A^1_w,\qquad
+ s_0(x)=(x,1,0),\quad s_1(x)=(x,r(x),1),
+\end{equation}
+
+\begin{equation}
+B_R=(D\times\mathbb G_m\times\mathbb A^1)
+                          \cup s_0(V)\cup s_1(V),\qquad
+                M_R=H^{n+1}(Y,B_R).                              \label{eq:primitive:10}
+\end{equation}
+
+两个截面总不相交，包括\(r=1\)。\(B_R\)不必纯余维一；一般相对Nori上同调容许这种闭边界，不能为套用除子留数而假装它是光滑除子。
+
+定义
+
+\begin{equation}
+\Omega_R=c_a\,\operatorname{pr}_V^*\eta\wedge\frac{dz}{z},
+\quad\Gamma_R(x,t)=(x,1+t(r(x)-1),t),\quad
+ (x,t)\in\widetilde\sigma\times[0,1].                            \label{eq:primitive:11}
+\end{equation}
+
+链取``基底在前，t在后''的取向。\(r>0\)保证\(z>0\)，所以\(\Gamma _R\)紧致且避开\(z=0\)；其端点落在\(s_0\)、\(s_1\)，其侧边落在D的逆像。
+
+\begin{theorem}[实际减除周期]
+
+\label{thm:primitive:4.1} \(\Omega _R\)定义\(M_R\)的de Rham类，\(\Gamma _R\)定义其有理Betti对偶标架，且
+
+\begin{equation}
+R_G^{\mathfrak m}(\kappa,\kappa_0)
+           =[M_R,[\Gamma_R],[\Omega_R]]^{\mathfrak m},\qquad
+          \operatorname{per}R_G^{\mathfrak m}=R_G(\kappa,\kappa_0).           \label{eq:primitive:12}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+
+\(\Omega _R\)闭；在\(s_0\)上拉回为零，在\(s_1\)上为\(\eta \wedge d\log  r=0\)，因为V维数n；在D逆像上\(\eta \)已为零。在边界闭并的相对de Rham复形中取其余分量为零，得到实际相对类。链条件已由\eqref{eq:primitive:11}验证。拉回dz/z时，基底微分项与\(\eta \)楔积为零，剩下
+
+\begin{equation}
+\Gamma_R^*\Omega_R=c_a\eta\wedge
+                  \frac{r-1}{1+t(r-1)}dt.
+\end{equation}
+
+对t积分恰为log r，按\eqref{eq:primitive:8}得到\eqref{eq:primitive:12}。整个构造都在代数几何对上完成；Nori/Hodge比较使用实际六运算\cite{tubach}，没有由数值周期相等倒推动机态射。
+
+\end{proof}
+
+式\eqref{eq:primitive:11}也把减除振幅写成收敛的有理形式积分。额外w坐标没有新增物理自由度，其作用是使端点为分离的代数截面。
+
+\section{Kummer系数及推前的精确核商}\label{sec:primitive:5}
+
+沿\(f:Y\to V\)取相对端点上同调。纤维\((\mathbb G_m\times A^{1},{(1,0),(r,1)})\)的相对上同调只在一次非零。得到秩二Kummer系数对象\(\mathcal K_r\)，有
+
+\begin{equation}
+0\longrightarrow\mathbb Q(0)\longrightarrow\mathcal K_r
+                      \longrightarrow\mathbb Q(-1)\longrightarrow0.       \label{eq:primitive:13}
+\end{equation}
+
+这是实际相对家庭的序列；并非凭扩张类猜测一个矩阵。设\(e_0=[dw]\)、\(e_1=[dz/z]\)为纤维相对de Rham基，Betti链取\(\gamma _0\)为\eqref{eq:primitive:11}的纤维段，\(\gamma _1\)为正向z圆，则在正实支
+
+\begin{equation}
+\left(\int_{\gamma_j}e_i\right)_{i,j=0,1}
+       =\begin{pmatrix}1&0\\\log r&2\pi i\end{pmatrix},\qquad
+ \nabla e_0=0,\quad \nabla e_1=d\log r\,e_0.                    \label{eq:primitive:14}
+\end{equation}
+
+\(e_0\)虽然在绝对复形中是恰当形式，在端点相对复形中不是，因为w在两端取值0、1。Hodge层F\textsuperscript{1}由\(e_1\)生成，\(W_0\)由\(e_0\)生成。r为常数时\(d\log  r=0\)仍可能有非平凡算术Kummer扩张；连接式不能取代比较条目log r。
+
+记\(H^j=H^j(V,D)\)。相对推前与边界映射锥相容，给
+
+\begin{equation}
+M_R\simeq H^n(V,D;\mathcal K_r).               \label{eq:primitive:15}
+\end{equation}
+
+可直接用Y的乘积投影及两个截面的Čech复形验证：相对纤维复形是\(K_r[- 1]\)，限制到D给同一构造，再取相对纤维。此处不依赖未验证的一般非proper基变换。
+
+令\(\delta _j:H^j(-1)\to H^{j+1}\)为\eqref{eq:primitive:13}产生的连接，则
+
+\begin{equation}
+0\longrightarrow\operatorname{coker}\delta_{n-1}
+       \longrightarrow M_R\longrightarrow\ker\delta_n\longrightarrow0.
+                                                                    \label{eq:primitive:16}
+\end{equation}
+
+式\eqref{eq:primitive:16}也可完全绕开系数对象的记号而从实际几何对导出。令\(A=D\times \mathbb G_m\times A^{1}\)、\(C=s_0(V)\)\ensuremath{\coprod}\(s_1(V)\)。三重对和闭并的Mayer--Vietoris给
+
+\begin{equation}
+\cdots\to H^j(Y,A)\to H^j(C,C\cap A)
+             \to H^{j+1}(Y,A\cup C)\to\cdots .
+\end{equation}
+
+以\(z=1\)分裂Gm的常值因子，Kunneth给\(H^j(Y,A)=H^j\oplus H^{j-1}(-1)\)，而\(H^j(C,C\cap A)=H^j\oplus H^j\)。两个截面的拉回把(a,b)送至\((a,a+\delta _{j-1}b)\)，其中\(\delta \)由\(r:V\to \mathbb G_m\)的类与b杯积得到，按``基底形式在前''固定符号。在\(j=n\)、n+1处分别取余核和核，便得到\eqref{eq:primitive:16}。所用外积、截面拉回及正合列均为实际Nori态射。
+
+这是需要保留的真实扩张结构，而不是无条件的\(M_R=H^n\otimes \)某个固定秩二对象。其Betti连接由r的Kummer拓扑类杯积给出，de Rham中对应\(d\log  r\)；连接之外还保留算术扩张数据。
+
+\begin{corollary}
+
+\label{thm:primitive:5.1} 设\(b_n=\operatorname{dim} H^n_B\)，则
+
+\begin{equation}
+\dim(M_R)_B=2b_n-\operatorname{rank}\delta_{n-1}
+                         -\operatorname{rank}\delta_n\le2b_n.               \label{eq:primitive:17}
+\end{equation}
+
+\(M_R\)的简单组成来自\(H^n\)及\(H^n(-1)\)的子商。因此\(H^n\)若已证明mixed Tate，则\(M_R\)及减除周期的最小对象也mixed Tate；反向不成立。这里只给载体的精确核商和充分判据，没有声称由边表即可求得\(b_n\)或\(\delta _j\)。
+
+在\(r=1\)时，\(K_1\)实际分裂为\(Q(0)\oplus Q(-1)\)：投影到(Gm,\{1\})分裂Q(-1)因子，投影到(A\textsuperscript{1},\{0,1\})给Q(0)因子；两截面仍不同。更严格地，\(\Gamma _R\)由代数子对
+
+\begin{equation}
+(V\times\{1\}\times\mathbb A^1,
+ D\times\{1\}\times\mathbb A^1\ \cup\ V\times\{1\}\times\{0,1\})
+                       \longrightarrow(Y,B_R)
+\end{equation}
+
+中的相对链推前而来，\(\Omega _R\)沿此态射的de Rham拉回恒为零。因此形式周期关系本身给\(R_G^m(\kappa _0,\kappa _0)=0\)，而非仅由数值积分为零倒推形式周期为零。对象没有因端点合并而降秩。
+
+\end{corollary}
+
+\section{减除点变换是形式周期恒等式}\label{sec:primitive:6}
+
+对第三组正质量欧氏数据\(\kappa _1\)，有
+
+\begin{equation}
+R_G^{\mathfrak m}(\kappa_2,\kappa_0)
+ =R_G^{\mathfrak m}(\kappa_2,\kappa_1)
+                         +R_G^{\mathfrak m}(\kappa_1,\kappa_0).              \label{eq:primitive:18}
+\end{equation}
+
+\begin{proof}
+
+在同时删去三个F零集的共同基底上，\(r_{20}=r_{10}r_{21}\)。用标记为\(w=0\)、1、2的三个截面，分别取\(z=1\)、\(r_{10}\)、\(r_{20}\)。第一段是\(1\to r_{10}\)；第二段由\(1\to r_{21}\)经代数映射\(z\mapsto r_{10}(x)z\)、\(w\mapsto w+1\)得到。该映射将\(\eta \wedge d\log  z\)拉回为自身，因为\(\eta \wedge d\log  r_{10}=0\)。两段的和与\(1\to r_{20}\)的正路径在\(z>0\)的纤维条带中相对同调，侧边在D。三个标记点的几何对及实际变换给\eqref{eq:primitive:18}的形式周期关系，不需要假设period映射单射。
+
+\end{proof}
+
+文献\cite{brownperiods}给普通Kummer对数的同类乘法关系；本稿把端点标记、随基底变化的r以及\(\eta \)的高次形式一同保留。对固定参考点\(\kappa _0\)、\(\kappa _1\)，\eqref{eq:primitive:18}的差与可变外数据\(\kappa _2\)无关，正是本原对数图的有限常数减除变化。
+
+\section{运动学导数及微分系统上界}\label{sec:primitive:7}
+
+在共同光滑参数开集上，固定\(\kappa _0\)，\(\eta \)来自不变的U几何。\eqref{eq:primitive:14}的相对de Rham模型给
+
+\begin{equation}
+\nabla_v[\Omega_R]=\iota\!\left[c_a\eta\,v\log r\right],\qquad
+ vR_G=-c_a\int_\sigma\eta\,\frac{vF_\kappa}{F_\kappa},          \label{eq:primitive:19}
+\end{equation}
+
+其中\(\iota:H^n(V,D)\to M_R\)来自\eqref{eq:primitive:13}的Q(0)项。第一式是类的等式：对\(\eta e_1\)应用系数连接，\(\eta \)在参数方向水平；同一相对复形中得到\(\eta (vlog r)e_0\)。第二式再取实际链周期；第\ref{sec:primitive:2}节的正下界给微分与积分交换。
+
+注意\eqref{eq:primitive:19}的右端一般依赖运动学，不能当成常值UV局部投影。它消去一层对数，但留下F几何。
+
+\begin{theorem}[单参数阶数界]
+
+\label{thm:primitive:7.1} 限制到一个光滑代数曲线参数s，设\(b_n\)为该族\(H^n(V,D)\)的秩。减除周期满足一个k(s)系数齐次微分方程，阶数至多\(b_n+1\)。
+
+\end{theorem}
+
+\begin{proof}
+
+\(\operatorname{im}\iota\)为水平子对象，所有\(\nabla _s^j[\Omega _R]\)、\(j\ge 1\)均在其中。设这些导数生成的微分子模秩为\(d\le b_n\)，则连同\([\Omega _R]\)的循环子模秩至多d+1；d+2个连续导数必线性相关。对水平Betti链取周期即可。也可先找阶数\(\le d\)的P使\(P\partial _{\mathrm{sR}}=0\)，再写\(P\partial _s\)。无须先算R的完整积分。
+
+\end{proof}
+
+这是有明确定义的上界，不是声称最小阶数等于\(b_n+1\)，也没有给任意图的\(b_n\)求取算法。它与\eqref{eq:primitive:17}的完整相对对象秩上界不同；一个标架生成的微分子模可以远小于整个动机载体。
+
+\section{共同尺度方向、MS比较与coaction}\label{sec:primitive:8}
+
+令\(\kappa =\lambda \kappa _0\)表示把所有质量平方及所有外动量平方不变量同时乘\(\lambda >0\)，保持其比例不变。此时\(F_\kappa =\lambda F_0\)，\(r=\lambda ^{-1}\)在\(\alpha \)基底上为常数，故实际乘积对和Kunneth给
+
+\begin{equation}
+R_G^{\mathfrak m}(\lambda\kappa_0,\kappa_0)
+                       =-p_G^{\mathfrak m}\log^{\mathfrak m}\lambda,
+ \qquad \frac{dR_G}{d\log\lambda}=-p_G
+                         =-h\operatorname{Res}_{\epsilon=0}I_\epsilon.      \label{eq:primitive:20}
+\end{equation}
+
+\(\eta \)、\(\sigma \)在共同基底上的UV周期与其较大常值模型由实际限制关系相同。式\eqref{eq:primitive:20}不是保持所有质量固定而只改外动量的等式；后一种变化通常同时改变角变量。物理\(\beta \)函数还需耦合幂次、图权重、算符和RG时间约定，不直接等于\(p_G\)。
+
+采用Brown\cite{brownperiods}的右de Rham coaction约定，\(L^{\mathrm{dr}}\)是Q(-1)的角色，
+
+\begin{equation}
+\Delta\log^{\mathfrak m}\lambda
+   =\log^{\mathfrak m}\lambda\otimes L^{dr}
+                         +1\otimes\log^{dr}\lambda,
+\end{equation}
+
+\begin{equation}
+\Delta R_G^{\mathfrak m}
+  =-\Delta p_G^{\mathfrak m}
+       \big(\log^{\mathfrak m}\lambda\otimes L^{dr}
+                              +1\otimes\log^{dr}\lambda\big).              \label{eq:primitive:21}
+\end{equation}
+
+这里\(p_G\)的完整coaction必须保留。若其算术对象不是Tate，不能因为\(\lambda \)依赖只有一个对数，就删去这些方向。对一般\(\kappa \)，\eqref{eq:primitive:12}仍有实际规范coaction，但不由\eqref{eq:primitive:21}提供完整显式条目。
+
+作为函数，非零\(p_G\)使尺度振幅满足\((\lambda\partial_\lambda)^2R_G=0\)，且在\(k(\lambda )\)上最小齐次阶数恰二：围绕\(\lambda =0\)的解析延拓把\(log \lambda \)移为\(log \lambda +2\pi i\)，两个分支张成常数与\(log \lambda \)两个独立解。该参数微分阶数与\(p_G\)所需的固定算术对象秩不同。这里使用的是函数单值；没有把它升级成固定纤维Nori自同态。
+
+最后，在同一正规化约定中写\(I_\epsilon (\kappa )=p_G/(h\epsilon )+f(\kappa )+O(\epsilon )\)。则
+
+\begin{equation}
+R_G(\kappa,\kappa_0)=f(\kappa)-f(\kappa_0),\qquad
+                 C_{MS}(G)=-p_G/(h\epsilon).                    \label{eq:primitive:22}
+\end{equation}
+
+这是本原图的MS极点与点减除有限振幅的精确比较。未经额外归一化，f可带Euler常数或测度常数，不能从\eqref{eq:primitive:12}推断每个未修正MS有限部分都是普通Nori周期。共同正规化常数在差中取消。多图耦合的有限方案变换也不能仅由\eqref{eq:primitive:22}替代。
+
+\section{一个实际物理反例和结论边界}\label{sec:primitive:9}
+
+四维单位幂次一圈massive bubble满足\eqref{eq:primitive:1}，\(U=\alpha _1+\alpha _2\)，\(p_G=1\)。在\(\sum \alpha =1\)的正密度表示中
+
+\begin{equation}
+R_G(Q^2,Q_0^2)=\int_0^1
+ \log\frac{m_1^2x+m_2^2(1-x)+Q_0^2x(1-x)}
+          {m_1^2x+m_2^2(1-x)+Q^2x(1-x)}\,dx,\qquad
+ \partial_{Q^2}R_G=-\int_0^1\frac{x(1-x)}{F_Q(x)}dx<0.            \label{eq:primitive:23}
+\end{equation}
+
+正质量欧氏域内分母正。所有这些数据具有同一UV周期和MS简单极点，但有限减除振幅随Q\textsuperscript{2}严格变化。这是实际图的解析反例，说明UV数据不能重建完整有限振幅；没有为证明它求完整积分。
+
+综上，在所述假设下已构造或证明：\eqref{eq:primitive:1}范围内全局实际相对周期、分离端点Kummer模型、推前核商、形式减除点恒等式、单参数微分上界，以及尺度射线的显式coaction和MS极点比较。它既不把有限振幅几何压缩成UV周期，也不把primitive模型冒充所有含重叠子发散图的方案。
+
+含子发散时，需要在同一几何对中抵消森林各项的边界极点，并证明相对标架与指定全局减除方案相容。第\ref{ch:forest}章处理共同提升判据与两圈实例，第\ref{ch:zero}章处理正质量零点对数森林。尚不收敛的逐项对数不能直接分别套用\eqref{eq:primitive:12}后相加。
+
+
+\chapter{共同森林提升与有限方案关系}\label{ch:forest}
+本章的充要条件针对指定的共同有理提升，不是任意表示的普适可积性判据。两圈 Dunce\textquotesingle s cap 图及其参数森林公式属于既有理论\cite{bk2012}；本章展开实际标架、边界相消及形式方案关系。
+\section{同一个辅助参数的留数判据}\label{sec:forest:1}
+
+设X为k上的光滑n维代数簇，\(k\subset R\)；\(D=\cup D_i\)正常交叉。\(K\subset X(R)\)为紧致有理半代数n链，边界在D。设\(\eta _j\)为有限个有理n形式，沿D至多有对数极点，其余极点均避开K；\(r_j\)为K邻域中的代数单位，在K上严格正。可从X删去这些非边界极点及\(r_j\)的零极点而不改变K。
+
+采用共同变量u，置
+
+\begin{equation}
+\ell_u(r)=\frac{r-1}{1+u(r-1)},\qquad
+ \Xi=\sum_j\eta_j\,\ell_u(r_j)\wedge du.                         \label{eq:forest:1}
+\end{equation}
+
+从\(X\times A^{1}_u\)删去\(1+u(r_j- 1)=0\)的超曲面，得到Y。它们避开\(K\times [0,1]\)，因为分母为\(1- u+ur_j>0\)。设B为\((D\times A^{1})\)及\(u=0,1\)两端与Y的交。
+
+对每个不可约\(D_i\)，在函数域\(k(D_i)\)中记
+
+\begin{equation}
+\theta_{ij}=\operatorname{res}_{D_i}\eta_j,\qquad
+ \bar r_{ij}=r_j|_{D_i}.
+\end{equation}
+
+将j按相同的\(\bar r_{ij}\)分组；相等指函数域中的精确代数相等，不是某个数值点相等。
+
+\begin{theorem}[共同线性提升的充要条件]
+
+\label{thm:forest:1.1} 下列条件等价：
+
+\(1. \Xi \)沿\(D\times A^{1}\)的所有分量没有极点。 2. 对每个\(D_i\)和每个出现的\(q\ne 1\)，有
+
+\begin{equation}
+\sum_{j:\bar r_{ij}=q}\theta_{ij}=0.          \label{eq:forest:2}
+\end{equation}
+
+\(q=1\)这一组不受条件\eqref{eq:forest:2}约束。满足条件时，
+
+\begin{equation}
+M_{\rm ren}=H^{n+1}(Y,B),\qquad
+ [M_{\rm ren},[K\times[0,1]],[\Xi]]^{\mathfrak m}                \label{eq:forest:3}
+\end{equation}
+
+为实际相对周期，其数值为合并后的绝对收敛积分
+
+\begin{equation}
+\int_K\sum_j\eta_j\log r_j.                                    \label{eq:forest:4}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+
+\(\Xi \)的\(D_i\)留数是
+
+\begin{equation}
+\left(\sum_j\theta_{ij}
+       \frac{\bar r_{ij}-1}{1+u(\bar r_{ij}-1)}\right)\wedge du.   \label{eq:forest:5}
+\end{equation}
+
+\(q=1\)项为零。其余项是\(1/(u+1/(q- 1))\)，不同q给不同简单极点；比较\(k(D_i)(u)\)中的部分分式留数，\eqref{eq:forest:5}恒零当且仅当\eqref{eq:forest:2}成立。这是有理恒等式判据，不能用近似数值替代。
+
+\(\Xi \)至多有对数边界极点。局部将它写成f·\(dt_1\)\ldots{}\(dt_n du/(t_1\)\ldots{}\(t_s)\)，其余分母为单位。每个边界留数恒零使f分别被\(t_i\)整除；正常交叉坐标于是给\(\Pi t_i\)整除f。故\(\Xi \)在交叉角点也正则，不只在各面的泛点正则。
+
+\(\Xi \)是Y上的最高次正则形式，因而闭，且拉回B的每个分量为零；B为正常交叉闭并，可在相对复形中取其余分量为零。\(K\times [0,1]\)为实际相对链。紧致性、正分母和正则性给绝对收敛；先对u积分等于\(log r_j\)，得到\eqref{eq:forest:4}。相对上同调及比较由实际几何对定义。
+
+\end{proof}
+
+这个充要条件针对给定的共同线性提升\eqref{eq:forest:1}，不是所有可能周期表示的普适判据。例如
+
+\begin{equation}
+\frac{dt}{t}(2\log2-\log4)=0,
+\end{equation}
+
+但直接提升得到
+
+\begin{equation}
+\frac{dt}{t}
+ \left(\frac2{1+u}-\frac3{1+3u}\right)du,                        \label{eq:forest:6}
+\end{equation}
+
+\(t=0\)的留数不为零，双积分不绝对收敛。先对u积分为零不足以证明原有理提升正则。应先用实际对数函数方程改变表示，或采用能保持边界关系的其他辅助链。
+
+\section{两圈图及独立减除条件}\label{sec:forest:2}
+
+取三个顶点u,v,w；a,b是u---v的两条平行边，c是u---w边，d是v---w边。每边幂次为一，\(D=4- 2\epsilon \)，每圈欧氏测度为\(\pi ^{- D/2}\)。四个质量平方\(\mu _a,\)\ldots{}\(,\mu _d\)严格正且固定。外动量\(p_u+p_v+p_w=0\)，记
+
+\begin{equation}
+A=p_u^2,\qquad B=p_v^2,\qquad S=p_w^2,
+ \qquad \kappa=(A,B,S).
+\end{equation}
+
+\(\kappa \)及整体参考\(\kappa _0\)取实际欧氏动量给出的数据。子图\(\gamma ={a,b}\)的bubble参考外平方不变量为\(\nu \ge 0\)。\(\nu \)可以独立于\(\kappa _0\)选取，选定后在整体减除中保持固定。
+
+G有\(h=2\)、\(N=4\)，唯一真UV发散边子图为\(\gamma \)；它及商图\(c=G/\gamma \)都是对数bubble。为避免边c与商图混淆，以下商图记C，边仍记c,d。生成树和二森林给
+
+\begin{equation}
+U_\gamma=a+b,\quad U_C=c+d,\quad V=U_\gamma U_C,
+ \quad U_G=V+ab,                                                \label{eq:forest:7}
+\end{equation}
+
+\begin{equation}
+F_G(\kappa)=S(a+b)cd+ab(Ac+Bd)
+                +U_G(\mu_a a+\mu_b b+\mu_c c+\mu_d d),           \label{eq:forest:8}
+\end{equation}
+
+\begin{equation}
+F_\gamma^\nu=\nu ab+(a+b)(\mu_a a+\mu_b b),\quad
+ F_C^S=S cd+(c+d)(\mu_c c+\mu_d d),
+\end{equation}
+
+\begin{equation}
+K_\nu(\kappa)=U_\gamma F_C^S+U_C F_\gamma^\nu.                  \label{eq:forest:9}
+\end{equation}
+
+这个图是文献\cite{bk2012} §5的Dunce's cap，边重标为\(a=A_3\)、\(b=A_4\)、\(c=A_1\)、\(d=A_2\)。其二森林式与\eqref{eq:forest:8}相同，质量按\(U\sum \mu \alpha \)加入。经典图多项式与森林式的来源明确归于原文。
+
+用同一\(\epsilon \)及\(\mu _R\)定义\(I_G\)、\(I_\gamma \)、\(I_C\)。明确本稿方案为
+
+\begin{equation}
+R_\nu(\kappa,\kappa_0)=\lim_{\epsilon\to0}
+ \left[I_G(\kappa)-I_G(\kappa_0)
+ -I_\gamma(\nu)\{I_C(S)-I_C(S_0)\}\right].                       \label{eq:forest:10}
+\end{equation}
+
+即先以\(- I_\gamma (\nu )\)作子图的常数反项，再对整个准备后振幅作\(\kappa _0\)点减除。这是指定的动量减除方案，不是MS；未乘\(\phi ^{4}\)耦合或图对称因子。
+
+\section{森林式由Schwinger参数得到}\label{sec:forest:3}
+
+在\(Re \epsilon >0\)充分小时，上述裸积分收敛。G的式子为
+
+\begin{equation}
+I_G(\kappa)=\mu_R^{4\epsilon}\Gamma(2\epsilon)
+             \int_\sigma \Omega_G
+                  U_G^{-2+3\epsilon}F_G(\kappa)^{-2\epsilon}.    \label{eq:forest:11}
+\end{equation}
+
+子图与商图的两个独立Schwinger总尺度也可合并为一个总尺度。其指数是\(F_\gamma ^\nu/U_\gamma +F_C^S/U_C=K_\nu /V\)，行列式因子是\(V^{-D/2}\)。故
+
+\begin{equation}
+I_\gamma(\nu)I_C(S)=\mu_R^{4\epsilon}\Gamma(2\epsilon)
+             \int_\sigma\Omega_G V^{-2+3\epsilon}
+                                      K_\nu(\kappa)^{-2\epsilon}.          \label{eq:forest:12}
+\end{equation}
+
+\eqref{eq:forest:12}是乘积积分的变量变换，包含完整Gamma与尺度因子，不是只匹配极点。所有链均取正Schwinger取向。
+
+代入\eqref{eq:forest:10}，并在下一节证明换极限所需的统一边界控制，得
+
+\begin{equation}
+R_\nu=\int_\sigma\Omega_G
+ \left\{\frac{\log(F_0/F)}{U_G^2}
+      -\frac{\log(K_0/K)}{V^2}\right\}.                         \label{eq:forest:13}
+\end{equation}
+
+\(F=F_G(\kappa )\)、\(F_0=F_G(\kappa _0)\)、\(K=K_\nu (\kappa )\)、\(K_0=K_\nu (\kappa _0)\)。符号由\eqref{eq:forest:10}固定，和文献某些振幅约定相反，不能只依据文献中的log顺序推断。
+
+取同一个u，将\eqref{eq:forest:13}提升为
+
+\begin{equation}
+\Xi_\nu=\Omega_G\wedge du\left[
+ \frac{F_0-F}{U_G^2\{(1-u)F+uF_0\}}
+ -
+ \frac{K_0-K}{V^2\{(1-u)K+uK_0\}}\right].                       \label{eq:forest:14}
+\end{equation}
+
+它是在一个空间上的合并有理形式。两项分别可能发散，不能先给每项指定普通收敛周期。
+
+\section{所有边界而非单个发散面的审计}\label{sec:forest:4}
+
+令X为P\textsuperscript{3}的完整坐标旗标光滑toric模型。其每个边界除子由一个非空真边集T标记；局部Hepp旗标的T彼此嵌套。对\(\omega _U=\Omega _G/U_G^{2}\)和\(\omega _V=\Omega _G/V^{2}\)，边界幂次分别为\(|T|- 2h_G(T)- 1\)及\(|T|- 2h_V(T)- 1\)，其中
+
+\begin{equation}
+h_V(T)=\mathbf1_{\{a,b\}\subset T}+\mathbf1_{\{c,d\}\subset T}.
+\end{equation}
+
+不用枚举即可穷尽：
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lrrl@{}}
+\toprule\noalign{}
+\(| T | h_G(T) | h_V(T) |\) 可能的对数极点 & & & \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+单边 & 0 & 0 & 无 \\
+\{a,b\} & 1 & 1 & 两项都有 \\
+\{c,d\} & 0 & 1 & 只有反项形式 \\
+其他两边 & 0 & 0 & 无 \\
+任意三边 & 1 & 1 & 无 \\
+\end{longtable}
+}
+
+表中的两类对数面不在同一旗标中，其他角点的幂次非负。正质量使F、\(F_0\)相对于\(U_G\)，以及K、\(K_0\)相对于V的扇区余因子均有正下界。因此两个比值为正链邻域的代数单位。
+
+在\(\gamma \)面，令\(a=t\alpha \)、\(b=t\beta \)，c,d不缩放，则
+
+\begin{equation}
+U_G=t(\alpha+\beta)(c+d)+O(t^2),\quad
+ V=t(\alpha+\beta)(c+d),
+\end{equation}
+
+\begin{equation}
+F=t(\alpha+\beta)F_C^S+O(t^2),\qquad
+ K=t(\alpha+\beta)F_C^S+O(t^2).                                 \label{eq:forest:15}
+\end{equation}
+
+\(F_0\)、\(K_0\)的首项也一致。于是\(\omega _U\)与\(\omega _V\)的留数相同，两个比值的限制都是\(F_C^{S0}/F_C^S\)。将反项的负号计入\(\eta _2=- \omega _V\)，定理\ref{thm:forest:1.1}的同组留数相消。
+
+在\{c,d\}面，反过来令\(c=t\chi \)、\(d=t\delta \)。此时
+
+\begin{equation}
+K=t(\chi+\delta)F_\gamma^\nu+O(t^2),\qquad
+ K_0-K=t^2(a+b)(S_0-S)\chi\delta.                              \label{eq:forest:16}
+\end{equation}
+
+故\(K_0/K\)限制为1，属于定理\ref{thm:forest:1.1}不需额外留数条件的那一组。这个面是反项引入的潜在极点，原图没有；整体点减除恰好消掉它。只检查原图\(\gamma \)面会漏掉这一步。
+
+由表及\eqref{eq:forest:15}--\eqref{eq:forest:16}，\eqref{eq:forest:14}在所有坐标边界及角点上正则。对于\eqref{eq:forest:11}--\eqref{eq:forest:12}的小\(\epsilon \)版本，\(\gamma \)面的正规化首项对每个\(\epsilon \)仍完全相同；相减后多出一个t因子。另一个潜在对数面上，\(K_0- K\)的额外t使差商多出同一因子。其余幂次与正下界在小\(\epsilon \)下稳定，有限次\(\epsilon \)导数至多增加可积对数。这给\eqref{eq:forest:13}所需的支配收敛，不是从\(\epsilon =0\)的形式消极点直接猜测极限。
+
+\section{实际重整化对象与明确的物理读出}\label{sec:forest:5}
+
+从X删去\(U_G\)、V、F、\(F_0\)、K、\(K_0\)的非边界严格变换，取正链仍完整落在其中的开空间X°；D°为剩余坐标边界。在\(X^\circ\times A^{1}_u\)中再删去\eqref{eq:forest:14}两个插值分母的非边界零集，记结果\(Y_\nu \)。分母的坐标单项式先按第\ref{sec:forest:4}节约去；其余部分在提升的\(\sigma \times [0,1]\)上不为零。令
+
+\begin{equation}
+B_\nu=(D^\circ\times\mathbb A^1
+            \ \cup\ X^\circ\times\{0,1\})\cap Y_\nu,\qquad
+ M_\nu=H^4(Y_\nu,B_\nu).                                       \label{eq:forest:17}
+\end{equation}
+
+\begin{theorem}
+
+\label{thm:forest:5.1} 对代数的正质量、欧氏参考数据及\(\nu \)，\eqref{eq:forest:10}是实际Nori形式周期
+
+\begin{equation}
+R_\nu^{\mathfrak m}
+       =[M_\nu,[\widetilde\sigma\times[0,1]],[\Xi_\nu]]^{\mathfrak m}.       \label{eq:forest:18}
+\end{equation}
+
+这里的所有有限减除数据都进入几何对和标架；\(\kappa =\kappa _0\)时\(\Xi _\nu \)恒零。
+
+\end{theorem}
+
+\begin{proof}
+
+第\ref{sec:forest:4}节和定理\ref{thm:forest:1.1}证明\(\Xi _\nu \)延伸为\(Y_\nu \)上的正则最高次形式。链紧致，边界属于\(B_\nu \)；比较给实际周期\eqref{eq:forest:13}。第\ref{sec:forest:3}--\ref{sec:forest:4}节又把它与规定的正规化森林极限\eqref{eq:forest:10}识别。没有把数值相等当成任意动机同构，也未分别对发散森林项定义形式周期。
+
+\end{proof}
+
+规范coaction存在于\eqref{eq:forest:18}的实际对象上。求全部比较条目和最小对象仍须额外工作；单凭两个森林项不能宣称对象秩二或coaction只有两项。\(Y_\nu \)的插值分母保留有限运动学几何，不能只用UV子图和商图替代它。
+
+\section{子图减除点变化的实际乘积律}\label{sec:forest:6}
+
+固定\(\kappa \)、\(\kappa _0\)及质量，把\(\nu \)改为\(\nu '\ge 0\)。定义收敛的一圈有限差
+
+\begin{equation}
+R_\gamma(\nu',\nu)=\int_0^1
+              \log\frac{f_\nu(x)}{f_{\nu'}(x)}dx,\qquad
+ R_C(S,S_0)=\int_0^1\log\frac{g_{S0}(y)}{g_S(y)}dy,             \label{eq:forest:19}
+\end{equation}
+
+其中
+
+\begin{equation}
+f_\nu(x)=\mu_a x+\mu_b(1-x)+\nu x(1-x),\quad
+ g_S(y)=\mu_c y+\mu_d(1-y)+S y(1-y).
+\end{equation}
+
+它们使用第\ref{ch:primitive}章中实际本原周期的同一约定。
+
+\begin{theorem}[有限方案的形式周期关系]
+
+\label{thm:forest:6.1} 在包含两组参考数据的同一基域上，
+
+\begin{equation}
+R_{\nu'}^{\mathfrak m}(\kappa,\kappa_0)
+     -R_\nu^{\mathfrak m}(\kappa,\kappa_0)
+       =-R_\gamma^{\mathfrak m}(\nu',\nu)\,
+                         R_C^{\mathfrak m}(S,S_0).              \label{eq:forest:20}
+\end{equation}
+
+由\eqref{eq:forest:10}先在收敛\(\epsilon \)域相减再取极限，已经得到数值关系；形式周期关系还需实际几何证明。以下提供一个只含正分母的代数Stokes证明。
+
+先把\(Y_\nu \)与\(Y_\nu '\)限制到同时删去两套分母的共同开集；正链仍避开被删集合。实际拉回与链推前关系容许在同一个相对周期环中相减，因此原图项的消除是形式周期关系。对差中的共同反项形式，置
+
+\begin{equation}
+a=\rho x,\ b=\rho(1-x),\quad
+ c=(1-\rho)y,\ d=(1-\rho)(1-y),\quad 0\le\rho,x,y\le1.
+\end{equation}
+
+在正链取向下\(\Omega _G/V^{2}=d\rho \,dx\,dy/[\rho (1- \rho )]\)。先吹起\({a=b=0}\)和\({c=d=0}\)两条不交坐标线，\(\rho =0,1\)便保留x,y的边界方向；再与X取共同坐标细分，使代数变量变换和正链均提升。设
+
+\begin{equation}
+f=f_\nu,\quad f'=f_{\nu'},\quad g=g_S,\quad g_0=g_{S0},
+ \quad g_u=(1-u)g+ug_0.
+\end{equation}
+
+\eqref{eq:forest:14}中原图项相消。剩余两项在约去\(\rho (1- \rho )\)后，差的有理形式是
+
+\begin{equation}
+\frac{(f'-f)(g_0-g)}
+  {\{\rho f'+(1-\rho)g_u\}\{\rho f+(1-\rho)g_u\}}\,
+                                 d\rho\,dx\,dy\,du.             \label{eq:forest:21}
+\end{equation}
+
+它在整个实立方体上正则；差中不再留有待取有限部分的\(\rho \)端点。
+
+引入\(v\in [0,1]\)及\(f_v=(1- v)f+vf'\)。对于正的H,H'，恒有
+
+\begin{equation}
+\frac1{HH'}=\int_0^1\frac{dv}{\{(1-v)H+vH'\}^2},              \label{eq:forest:22}
+\end{equation}
+
+其有理原函数是\(v/[H\{H+v(H'- H)\}]\)。再用
+
+\begin{equation}
+\int_0^1\frac{d\rho}{\{\rho f_v+(1-\rho)g_u\}^2}
+       =\frac1{f_vg_u},                                       \label{eq:forest:23}
+\end{equation}
+
+有理原函数为\(\rho /[g_u\{g_u+\rho (f_v- g_u)\}]\)。所有分母都在正链及端点非零，包括\(f_v=g_u\)时；没有除以\(f_v- g_u\)。
+
+\eqref{eq:forest:22}--\eqref{eq:forest:23}是代数相对Stokes关系，不仅是数值求积。对实际紧致链加入v并取有理原函数的边界，\eqref{eq:forest:21}的形式周期就化为
+
+\begin{equation}
+\left(\int_0^1\!\!\int_0^1\frac{f'-f}{f_v}\,dv\,dx\right)
+ \left(\int_0^1\!\!\int_0^1\frac{g_0-g}{g_u}\,du\,dy\right)
+       =-R_\gamma^{\mathfrak m}(\nu',\nu)\,
+                         R_C^{\mathfrak m}(S,S_0).
+\end{equation}
+
+最后一步为实际外积和本原Kummer链的变量变换。故\eqref{eq:forest:20}在形式周期环中成立，不调用周期映射单射性。证毕。
+
+特别地，
+
+\begin{equation}
+\Delta(R_{\nu'}^{\mathfrak m}-R_\nu^{\mathfrak m})
+       =-\Delta R_\gamma^{\mathfrak m}\,\Delta R_C^{\mathfrak m}.            \label{eq:forest:24}
+\end{equation}
+
+这里必须保留两个一圈因子的全部coaction，不能把有限子反项只看成一个被丢弃的数。
+
+若\(A_{\mathrm{sub}}\)是包含这两个本原形式周期的子代数，则
+
+\begin{equation}
+A_{\rm sub}[R_\nu^{\mathfrak m}]
+        =A_{\rm sub}[R_{\nu'}^{\mathfrak m}].                   \label{eq:forest:25}
+\end{equation}
+
+利用既有最小形式周期对象定理，在加入这两个下层对象后，两种方案生成相同满张量子范畴。这个结论不要求孤立的\(M(R_\nu )\)与\(M(R_\nu ')\)同构，也不排除某个指定读出的偶然抵消。
+
+\end{theorem}
+
+\section{局部反项如何产生非局部有限响应}\label{sec:forest:7}
+
+\(\nu '\ne \nu \)时，\(f_{\nu '}- f_\nu =(\nu '- \nu )x(1- x)\)，所以\(R_\gamma (\nu ',\nu )\)严格非零，符号与\(\nu '- \nu \)相反。同时
+
+\begin{equation}
+\partial_S R_C(S,S_0)
+       =-\int_0^1\frac{y(1-y)}{g_S(y)}dy<0.                    \label{eq:forest:26}
+\end{equation}
+
+因此\eqref{eq:forest:20}右端通常是当前外运动学的非常数函数。改变的是子图的局部常数减除，但插入收缩图后，整图的有限变化有非局部依赖。这是实际物理图的例子，对应第\ref{ch:rg}章中``有限项不能在插入前丢弃''的理论接口。
+
+这里只改变子图参考\(\nu \)，整体参考\(\kappa _0\)固定。若同时改变整体参考，其额外变化还需按准备后振幅在两个参考点的差处理，不能将两种变化混为一个普适常数。完整可观测量的方案比较还应同时换参耦合并求和所有相关图；\eqref{eq:forest:20}只追踪其中一次子反项变化。图权、模型耦合和多图求和仍需在物理出口单独加入。
+
+
+\chapter{零外动量方案的任意对数森林}\label{ch:zero}
+准备映射的代数机制采用 Brown--Kreimer\cite{bk2011}。本章在正质量、欧氏数据和所有子图至多对数的范围内，说明共同质量核、实际相对周期和未正规化零点 BPHZ 之间的比较。
+\section{输入、方案和结论}\label{sec:zero:1}
+
+固定连通标量图G，边集E带全序，单位传播子幂次，\(D=4\)，\(N=|E|=2h_G>0\)。允许重边；对每个边子集J，定义
+
+\begin{equation}
+h_G(J)=b_1(G|J),\qquad d_G(J)=|J|-2h_G(J).
+\end{equation}
+
+假设
+
+\begin{equation}
+d_G(J)\geq0\quad(J\subseteq E),\qquad d_G(E)=0.       \label{eq:zero:1}
+\end{equation}
+
+所以没有幂次UV子发散，所有需减除的子图都是对数型。孤立顶点不计作有边图，空边图为单位。
+
+每边质量平方\(\mu _e\)严格正。外动量欧氏、守恒；以二森林动量平方为系数的无质量第二Symanzik多项式记\(\Phi _G\)，所以系数非负。写
+
+\begin{equation}
+M_E=\sum_{e\in E}\mu_e\alpha_e,\qquad F_G=U_GM_E+\Phi_G.
+\end{equation}
+
+为给固定纤维的数域动机，先取\(\mu \)及外Gram数据在一个带指定实嵌入的数域k中；变化参数可另取相应代数族。对任意实数据，下面收敛积分的解析结论仍成立，但不据此称其为Q上的数值周期。
+
+采用以下完整减除约定：
+
+\begin{itemize}
+\tightlist
+\item
+  所有子图反项的Taylor算子均为在其全部外动量等于零处取值，质量保持原边质量；
+\item
+  整图也在零外动量减除；
+\item
+  每圈采用\(\pi ^{-D/2}\)的欧氏测度，耦合与图对称因子另计；
+\item
+  收缩携带原外动量之和，质量只随保留下来的原边继承。
+\end{itemize}
+
+\begin{theorem}
+
+\label{thm:zero:1} 对满足\eqref{eq:zero:1}的图，以上零外动量BPHZ振幅有一个显式、绝对收敛的有理相对周期表示
+
+\begin{equation}
+R_G(\kappa,0)=\int_{\widetilde\sigma_G\times[0,1]}\Xi_G,
+ \qquad M_G^R=H^N(Y_G,B_G),                                  \label{eq:zero:2}
+\end{equation}
+
+其中\(Y_G\)、\(B_G\)及\(\Xi _G\)由有限森林准备映射和图多项式构造。\(\Xi _G\)在完整坐标边界及全部角点正则，正链避开其余极点。结论允许图含嵌套或重叠的对数子图；不要求先求出完整积分。
+
+这里证明的是指定方案的实际标架存在及物理比较。它不决定\(M_G^R\)的全部纯因子、扩张或最小秩，也不完成任意非零参考点、幂次发散、IR或规范理论。
+
+\end{theorem}
+
+\section{对数子图与收缩的封闭性}\label{sec:zero:2}
+
+若\(\gamma \)为紧子集，即\(d_G(\gamma )=0\)，则对\(T\subset E\\gamma \)，
+
+\begin{equation}
+h_{G/\gamma}(T)=h_G(T\cup\gamma)-h_G(\gamma),\qquad
+ d_{G/\gamma}(T)=d_G(T\cup\gamma)-d_G(\gamma)\geq0.     \label{eq:zero:3}
+\end{equation}
+
+第一式是图循环空间在收缩下的秩公式；把边数减去两倍圈数即得第二式。原图的紧子图及其紧收缩商仍满足\eqref{eq:zero:1}。对子图自身取更小边集，圈数由该边集决定，故同样满足非负条件。
+
+因此可使用有边标记的、以对数UV子图为抽取对象的图Hopf代数H：
+
+\begin{equation}
+\Delta_H G=\sum_{\gamma\subseteq E,\ d_G(\gamma)=0}
+                         \gamma\otimes G/\gamma.             \label{eq:zero:4}
+\end{equation}
+
+空和全子图均包括；不连通\(\gamma \)解释为其有边连通分支的乘积，每个分支都是对数型，因为各分支的d非负且总和为零。不同嵌入保留各自原边标签，不省掉多重系数。
+
+\eqref{eq:zero:3}给抽取与收缩的双射，从而给\eqref{eq:zero:4}的余结合性。乘法为不交并，分次为边数，零次仅单位，故H连通且有反极\(S_H\)。把H限制到G反复抽取/收缩所需的有限类型即可；全体图的形式框架不等于一个宣称高效的枚举算法。
+
+公式只在图和边标记层面使用Hopf结构。物理外动量保留在最后的根商图；左侧反项块全部置零外动量。这样不需要为子图原来的内部半边猜测额外运动学。
+
+\section{准备映射及其恒等式}\label{sec:zero:3}
+
+令\(\pi _+=id- u\epsilon _H\)，取
+
+\begin{equation}
+\mathcal R=(S_H\otimes\pi_+)\Delta_H,\qquad\mathcal R(1)=0.     \label{eq:zero:5}
+\end{equation}
+
+对正次图展开反极，得到有限的交替旗标和。写成
+
+\begin{equation}
+\mathcal R(G)=\sum_{A,B}c_{A,B}\,A\otimes B,\qquad B\ne1.      \label{eq:zero:6}
+\end{equation}
+
+A是被抽取/收缩后的反项块的乘积，B是非空根商。每项的边标签仍分割原E，没有复制积分变量。首项是\(1\otimes G\)。
+
+准备映射的基本恒等式为
+
+\begin{equation}
+\mu_{13}\bigl(\Delta_H\otimes((id\otimes\pi_+)\Delta_H)\bigr)
+           \mathcal R
+       =1\otimes\mathcal R,                                  \label{eq:zero:7}
+\end{equation}
+
+其中\(\mu_{13}(a\otimes b\otimes c\otimes d)=ac\otimes b\otimes d\)。
+
+为避免单位约定含糊，给出直接验证。将四重余积写成\(\sum x_1\otimes x_2\otimes x_3\otimes x_4\)，利用\(\Delta S=(S\otimes S)\Delta ^{\mathrm{op}}\)，左侧为
+
+\begin{equation}
+\sum S_H(x_2)x_3\otimes S_H(x_1)\otimes\pi_+(x_4)
+   =1\otimes\sum S_H(x_1)\otimes\pi_+(x_2).
+\end{equation}
+
+等号只用反极公理和余结合性。\(\pi _+\)杀掉右单位，故该证明也涵盖\(x=1\)。正次图上的\eqref{eq:zero:7}对应Brown--Kreimer Theorem66；\eqref{eq:zero:5}明确了本文的单位约定。
+
+重叠子图不需要同时成为一个森林的成员。\eqref{eq:zero:6}取所有允许抽取旗标的总和，\eqref{eq:zero:7}控制其全部项；这是后面处理重叠的方式。
+
+\section{一个所有森林共用的质量核}\label{sec:zero:4}
+
+对\eqref{eq:zero:6}中的项定义\(U_A\)为A各块U的乘积，\(U_1=1\)；B的\(\Phi _B\)按继承外动量计算。由于每个左块在零外动量，
+
+\begin{equation}
+\sum_{\text{左块 }a}F_a^0/U_a+F_B^0/U_B=M_E.                 \label{eq:zero:8}
+\end{equation}
+
+这是真正的同一个线性多项式，与森林项无关。
+
+将外运动学平方不变量乘\(\tau \)，\(0\le \tau \le 1\)，质量不变。于是
+
+\begin{equation}
+q_B=\Phi_B/U_B,\qquad
+ D_{A|B}(\tau)=U_BM_E+\tau\Phi_B,
+\end{equation}
+
+\begin{equation}
+\Psi_\tau(A\otimes B)
+  =\frac{\Omega_E}{U_A^2U_B^2}\,
+              \frac{\Phi_B}{U_BM_E+\tau\Phi_B}
+  =\frac{\Omega_E}{U_A^2U_B^2}\,
+              \frac{q_B}{M_E+\tau q_B},                       \label{eq:zero:9}
+\end{equation}
+
+并规定\(\Psi \tau (A\otimes 1)=0\)。各项的总齐次次数为零，故\eqref{eq:zero:9}为射影\((N- 1)\)形式。最终取
+
+\begin{equation}
+\Xi_G=-\Psi_\tau(\mathcal R(G))\wedge d\tau.                  \label{eq:zero:10}
+\end{equation}
+
+在内部形式上积分\(\tau \)给
+
+\begin{equation}
+\sum_{A,B}c_{A,B}\frac{\Omega_E}{U_A^2U_B^2}
+              \log\frac{M_E}{M_E+\Phi_B/U_B}.                 \label{eq:zero:11}
+\end{equation}
+
+\eqref{eq:zero:10}是先合并森林再积分的定义；不能把\eqref{eq:zero:11}每个尚不收敛的项单独当成周期。
+
+注意\(\Psi \tau (1\otimes G)\)一般不是\(\Omega _E/U_G^{2}\)。原文抽象设置的这一附加等式在此不适用；后面的相消只使用右单位消失、UV单位为零及实际留数协变性，不假装满足原文的全部输入条件。
+
+\section{全部坐标面上的极点和留数}\label{sec:zero:5}
+
+令\(X_G\)为\(P^{N- 1}\)沿全部真坐标面的完整旗标toric模型；坐标边界D为SNC。每个真非空\(I\subset E\)给一个面，局部将\(\alpha _e(e\in I)\)同乘t。
+
+对每项写\(I_A=I\cap E(A)\)、\(I_B=I\cap E(B)\)，并逐块计算圈数。令
+
+\begin{equation}
+d_{A,B}(I)=d_A(I_A)+d_B(I_B)\geq0.
+\end{equation}
+
+适应生成树给
+
+\begin{equation}
+\frac{\Omega_E}{U_A^2U_B^2}
+       =t^{d_{A,B}(I)-1}\,dt\wedge(\text{正则形式}).            \label{eq:zero:12}
+\end{equation}
+
+\(\Phi _B\)沿\(I_B\)的阶至少为\(h_B(I_B)\)。若\(I_B=B\)，阶为\(h_B+1\)。I为真子集时\(M_E\)在面上保留至少一条边的质量项；因此在相应正开集，\eqref{eq:zero:9}附加因子没有负阶。各项最多有简单的对数边界极点。
+
+\subsection{非对数面和右块全收缩}\label{sec:zero:5.1}
+
+\(d_{A,B}(I)>0\)时留数为零。
+
+若\(d_{A,B}(I)=0\)而\(I_B=B\)，则\(q_B\)多出一阶t；I真且B非空意味着A仍有未缩边，其质量使分母的面值非零。因此留数同样为零。这正是\(\Psi (A'\otimes 1)=0\)的几何原因，必须纳入审计，不能只检查原G的发散子图。
+
+\subsection{剩余对数面}\label{sec:zero:5.2}
+
+设\(d_{A,B}(I)=0\)且\(I_B\ne B\)。由各d非负，\(I_A\)、\(I_B\)在各自块中都是紧子集。树/二森林因子化给
+
+\begin{equation}
+U_B=t^{h_{I_B}}\bigl(U_{I_B}U_{B/I_B}+O(t)\bigr),\qquad
+ \Phi_B=t^{h_{I_B}}\bigl(U_{I_B}\Phi_{B/I_B}+O(t)\bigr),         \label{eq:zero:13}
+\end{equation}
+
+\begin{equation}
+M_E=M_{E\setminus I}+O(t).
+\end{equation}
+
+\(\Phi _{B/I_B}=0\)时首项自动为零，不需假设非退化外运动学。
+
+固定原边全序，按法向dt/t在前的约定取裸留数。令\(s_I\)为由这一边序决定的置换号；它对同一I的所有森林项相同。去掉共同\(s_I\)后，\eqref{eq:zero:12}--\eqref{eq:zero:13}给
+
+\begin{equation}
+\operatorname{res}_I\Psi_\tau(A\otimes B)
+ =\omega_{\rm UV}(I_A I_B)\wedge
+             \Psi_\tau(A/I_A\otimes B/I_B),\qquad
+ \omega_{\rm UV}(H)=\Omega_{E(H)}/U_H^2,\quad\omega_{\rm UV}(1)=0.       \label{eq:zero:14}
+\end{equation}
+
+在面的两个射影因子上理解右式，后续旗标吹起取其拉回。即使H不连通，\(\omega UV(H)\)仍是其全部边变量上的一个射影形式；此处没有把它当成已经收敛的UV数值周期或简单周期乘积。
+
+每个留数以实际子集I为标签。将\eqref{eq:zero:14}汇总，是
+
+\begin{equation}
+\operatorname{Res}\Psi_\tau
+   =(\omega_{\rm UV}\otimes\Psi_\tau)
+                         \mu_{13}(\Delta_H\otimes\Delta_H).   \label{eq:zero:15}
+\end{equation}
+
+当用\eqref{eq:zero:15}计算真面的留数时，空左因子由\(\omega UV(1)=0\)消去，全右收缩由\(\Psi (...\otimes 1)=0\)消去。共同取向号不影响零结论；这里没有引入或遗漏管积分的\(2\pi i\)因子。
+
+\section{森林同时消去全部面及角点}\label{sec:zero:6}
+
+把\eqref{eq:zero:15}作用于\eqref{eq:zero:5}，右单位项先消失，再用\eqref{eq:zero:7}，得到
+
+\begin{equation}
+\operatorname{Res}\Psi_\tau\mathcal R
+ =(\omega_{\rm UV}\otimes\Psi_\tau)(1\otimes\mathcal R)=0.       \label{eq:zero:16}
+\end{equation}
+
+每个边标签对应的留数分别为零，不只是所有面的数值求和为零。
+
+还需检查真正的角点。选旗标坐标\(t_1,...,t_{N- 1}\)。在删掉非边界极点的开集内，各项至多对数，因此总形式可写成
+
+\begin{equation}
+\frac{f(t,\tau)}{t_1\cdots t_{N-1}}\,
+                 dt_1\cdots dt_{N-1}.
+\end{equation}
+
+\eqref{eq:zero:16}意味着f在每个\(t_j=0\)上为零；在光滑正常交叉坐标环中，它被每个\(t_j\)整除，因而被其乘积整除。总形式在所有角点正则。\(\tau \)是代数参数，恒等式包括\(\tau =0\)、1，并非只对内部某个数值成立。
+
+这证明了相容和重叠情形的共同结论。它不声称两个重叠的原坐标中心在同一局部旗标内相交；完整模型的坐标与准备映射处理的是两个不同层面的问题。
+
+\section{正链避让和实际相对对象}\label{sec:zero:7}
+
+对每个Hepp扇区，以最大Schwinger参数为1，取其余参数为旗标单项式，\(t_j\in [0,1]\)。适应树给每个U块提取一个共同最小单项式，剩下的多项式\(\widehat U\)在闭立方体上至少为1；这是树多项式的正系数及适应树单项式给出的下界。
+
+\(\Phi _B\)可提取同样的\(U_B\)边界单项式，剩下\(\widehat \Phi _B\)非负。于是
+
+\begin{equation}
+\widehat D_{A|B}
+    =\widehat U_B M_E+\tau\widehat\Phi_B
+       \geq\mu_{e_{\max}}\widehat U_B>0
+           \quad (t,\tau\in[0,1]^{N}).                        \label{eq:zero:17}
+\end{equation}
+
+所有质量严格正使\(\tau =0\)仍有统一下界。有限森林和有限旗标取共同最小常数即可；不用先求任何周期数值。
+
+从\(X_G\times A^{1}_\tau \)删去全部森林项的U块和\(D_{A|B}\)非边界严格变换的零集，得到\(Y_G\)；取
+
+\begin{equation}
+B_G=Y_G\cap\bigl((D\times\mathbb A^1)
+                  \cup(X_G\times\{0,1\})\bigr).              \label{eq:zero:18}
+\end{equation}
+
+边界单项式不作为被删掉的极点；它们已由\eqref{eq:zero:16}消去。由于\eqref{eq:zero:17}，提升正链\(K_G=\widetilde\sigma _G\times [0,1]\)紧致且避开删除集。\(\Xi _G\)是\(Y_G\)上的正则N形式，在\(B_G\)的拉回为零，故给相对de Rham类；\(K_G\)给相对Betti类。因此
+
+\begin{equation}
+R_G^{\mathfrak m}
+  =[H^N(Y_G,B_G),[\Xi_G]_{dR},[K_G]_B]^{\mathfrak m}           \label{eq:zero:19}
+\end{equation}
+
+是实际Nori对象的标架周期，规范coaction随之存在。其最小对象仍须按标架另取子商，不能将整个\(H^N\)的环境类型等同物理可见类型。
+
+\(\kappa =0\)时所有根\(\Phi _B\)恒零，\(\Xi _G\)恒零；故形式周期本身为零，不借助周期映射单射性。没有据此要求环境\(H^N\)在该点消失。
+
+\section{与物理零外动量BPHZ的比较}\label{sec:zero:8}
+
+有实际收敛几何并不自动识别物理振幅。本节单独补齐这个箭头。
+
+\subsection{反项递归与共同Schwinger变量}\label{sec:zero:8.1}
+
+对数BPHZ的子反项是外动量无关常数。把裸Feynman规则记为\(\phi \kappa \)，零外动量取值为\(\phi 0\)；可先在一个可乘的UV正规化中写代数递归。零点反项C0满足
+
+\begin{equation}
+C_0(G)=-\phi_0(G)-\sum_{\emptyset\ne\gamma\subsetneq G}
+                                C_0(\gamma)\phi_0(G/\gamma),
+\end{equation}
+
+所以\(C0=\phi 0\)\ensuremath{\circ}\(S_H\)。由于C0*\(\phi 0=\epsilon _H\)，对正次图
+
+\begin{equation}
+(C_0*\phi_\kappa)(G)
+   =\sum_{A,B}c_{A,B}\,
+                  \phi_0(A)\bigl(\phi_\kappa(B)-\phi_0(B)\bigr).       \label{eq:zero:20}
+\end{equation}
+
+这正是先减所有子发散再作整图零次Taylor减除的森林规则；反极的嵌入重数和符号不是另行拟合。
+
+把各块的高斯动量积分转为Schwinger密度。由于各项边标签分割E，全部项可写到同一个正正交体上。\(D=4\)的合并被积密度为
+
+\begin{equation}
+\sum_{A,B}c_{A,B}\,
+ \frac{e^{-M_E-q_B}-e^{-M_E}}{U_A^2U_B^2}\,d^N\alpha.          \label{eq:zero:21}
+\end{equation}
+
+单项不作不合法的无正规化积分。下面直接证明\eqref{eq:zero:21}的总和绝对可积，从而它定义未正规化的BPHZ森林积分；无需把某个数值正规化有限部分假定为普通周期。
+
+\subsection{同时控制UV角点和整体尺度}\label{sec:zero:8.2}
+
+在每个Hepp扇区写\(\alpha =r\beta \)，最大的\(\beta \)等于1。所有块总圈数为\(h_G\)，\(N=2h_G\)，故径向密度是dr/r。恒等式
+
+\begin{equation}
+e^{-r(M+q_B)}-e^{-rM}
+      =-r\int_0^1q_Be^{-r(M+\tau q_B)}\,d\tau                 \label{eq:zero:22}
+\end{equation}
+
+先在内部逐点成立。
+
+对固定\(r\ge 0\)和\(\tau \in [0,1]\)，考虑扇区形式
+
+\begin{equation}
+\Theta_{r,\tau}(A\otimes B)
+   =\frac{\Omega_E}{U_A^2U_B^2}\,
+                         q_Be^{-r(M_E+\tau q_B)}.             \label{eq:zero:23}
+\end{equation}
+
+这里最大\(\beta \)等于1的截面已固定，\eqref{eq:zero:23}不冒充单独齐次的射影形式。其UV首项有与\eqref{eq:zero:14}相同的因子化：\(q_B\)限制为\(q_{B/I_B}\)，质量限制为\(M_{E\setminus I}\)；\(I_B=B\)时\(q_B\)多一阶。右单位仍为零。因此同一\eqref{eq:zero:7}给总和\(\Theta _{r,\tau }(R(G))\)的每个坐标留数为零。
+
+正立方体上，提取边界单项式后的\(q_B=\widehat\Phi _B/\widehat U_B\)为光滑非负函数，其各有限阶导数有界；\(M_E\ge \mu _{e_{\mathrm{max}}}\)。把全部项写成
+
+\begin{equation}
+\frac{F(t,r,\tau)}{t_1\cdots t_{N-1}}\,
+                      dt_1\cdots dt_{N-1}.
+\end{equation}
+
+F及其t混合导数的绝对值至多为\(C(1+r)^L e^{-cr}\)，\(c>0\)，L有限。理由是U余因子有正下界，所有其余代数因子在闭立方体光滑；对指数求有限次t导数只增加r的多项式因子。
+
+全部面留数为零即\(F|_{t_j=0}=0\)。重复使用一维积分余项，
+
+\begin{equation}
+\frac{F(t,r,\tau)}{\prod_jt_j}
+ =\int_{[0,1]^{N-1}}
+   (\partial_1\cdots\partial_{N-1}F)
+              (v_1t_1,\ldots,v_{N-1}t_{N-1},r,\tau)\,dv.     \label{eq:zero:24}
+\end{equation}
+
+故消极点后的总密度也被同一个可积型函数\(C(1+r)^L e^{-cr}\)控制，且在\(r=0\)有界。该估计同时控制所有角点、\(r\to 0\)、\(r\to \infty \)及\(\tau \)端点，没有逐项绝对可积的假设。
+
+所以\eqref{eq:zero:21}的合并密度绝对可积，可用Fubini交换r、\(\tau \)和角变量。此处给的是未正规化森林总和的收敛证明；没有声称已对所有复\(\epsilon \)及所有MS约定完成统一极限比较。
+
+\subsection{\texorpdfstring{径向积分给\eqref{eq:zero:10}}{径向积分给}}\label{sec:zero:8.3}
+
+利用
+
+\begin{equation}
+\int_0^\infty q_Be^{-r(M_E+\tau q_B)}\,dr
+                           =\frac{q_B}{M_E+\tau q_B},         \label{eq:zero:25}
+\end{equation}
+
+\eqref{eq:zero:22}带来的整体负号恰给\eqref{eq:zero:10}。因此\eqref{eq:zero:2}既是实际Nori周期，又是\eqref{eq:zero:20}规定的物理零外动量BPHZ值。没有通过计算样例或高精度相等代替这一比较。
+
+若要把另一个正规化程序的极限与\eqref{eq:zero:21}比较，仍需该程序自己的森林定理或相应一致估计；本定理不把这一责任抹去。
+
+\section{对统一分类目标的贡献及边界}\label{sec:zero:9}
+
+本定理填上``合并森林\(\to \)实际相对对象''的一个全局接口：在\eqref{eq:zero:1}和正质量零点方案内，不论森林多深、是否存在重叠，实际几何输入\((Y_G,B_G,\Xi _G,K_G)\)均有限、明确且收敛。这个接口不要求先算完整振幅。
+
+它也给出一个有用的否定：UV子图的常值\(\omega UV\)参与面相消，并不意味着有限对象只含这些常值的算术。\(Y_G\)仍包含全部根商\(\Phi _B\)及共同分母\(D_{A|B}\)的几何。因而仅凭UV极点不能替代物理可见类型的分类；这与第\ref{ch:rg}章的局部 RG 筛选边界相容。
+
+重整化Hopf准备映射负责组合相消；实际动机coaction则作用于\eqref{eq:zero:19}。本稿没有证明两个Hopf代数相同，也没有从森林旗标长度推出物理最小对象的精确coradical深度。
+
+尚保留的任务：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  非零子参考点的一致运动学与共同提升，或实际对数函数方程；不能沿用\eqref{eq:zero:8}而不证明。
+\item
+  幂次发散的法向喷射与Taylor局部插入、IR及阈值解析延拓。
+\item
+  物理分子、规范恒等式和完整图和的局部RG投影。 \(4. M_G^R\)的具体几何因子、混合扩张和最小标架；以及与一般图结构编译器的有效接口。
+\item
+  其他方案间的实际形式周期关系；两圈已有乘积律不自动证明全图类的最小对象同构。
+\end{enumerate}
+
+这是一类图和一个完整方案的定理，不是任意费曼图的动机分类结案。
+
+
+\chapter{局部 RG、临界展开与算术方向}\label{ch:rg}
+本章区分图系数到局部 RG 的信息损失，以及归一化单耦合 RG 到完整临界三元组的形式反演。后一个反演不是一般多耦合分类，也不恢复全部有限运动学振幅。
+\section{三个阶段及其不同类型}\label{sec:rg:1}
+
+固定作用量、耦合和算符基、维数正规化、IR处理、减除方案、圈数L。A是交换有理代数；需要反演的归一化因子已在A中成为单位。用连接分级图Hopf代数H表示允许的带局部插入图。正规化规则为乘法character
+
+\begin{equation}
+\Phi:H\longrightarrow A((\epsilon)).
+\end{equation}
+
+有限圈数只需有限图及有限Laurent系数，但必须包括所有子图反项与商图局部插入的数据。
+
+令\(F_L\)表示从这些输入经森林、图求和、算符投影和RG提取得到的有限局部系数向量。令\(T_L\)表示局部系数到临界系数的变换：
+
+\begin{equation}
+\text{有关系的正规化输入}\ \xrightarrow{F_L}\
+ r_L\ \xrightarrow{T_L}\ c_L.                    \label{eq:rg:1}
+\end{equation}
+
+\(F_L\)通常是多项式映射，\(T_L\)也是多项式映射；两者不是一般的单个动机之间的线性态射。切映射、对系数的导子以及承载乘积的张量对象是线性接口的正确位置。
+
+Laurent系数若确已构造为实际范畴中的形式周期，才使用``动机''版本。一个公布的数值MZV表达式可以选用标准动机MZV提升；这与证明该提升等于原图相对动机的指定矩阵系数是两个任务。
+
+\section{森林自然性及其切映射}\label{sec:rg:2}
+
+以K表示负次Laurent投影。对正次数图x，
+
+\begin{equation}
+\bar\Phi(x)=\Phi(x)+\sum_{(x)}C_\Phi(x')\Phi(x''),\qquad
+ C_\Phi(x)=-K\bar\Phi(x),\qquad
+ R_\Phi(x)=(1-K)\bar\Phi(x).                        \label{eq:rg:2}
+\end{equation}
+
+约化余积中的x'包括许可的不交子图乘积，其反项递归处理嵌套。具体理论的重叠规则由H及局部插入定义承担，不能从抽象记号补出缺失数据。
+
+\begin{proposition}
+
+\label{thm:rg:2.1} 若h为代数同态，固定\(\epsilon\)、与K及局部插入相容，则
+
+\begin{equation}
+h(C_\Phi)=C_{h\Phi},\qquad h(R_\Phi)=R_{h\Phi}.
+\end{equation}
+
+证明是对次数归纳：应用h于\eqref{eq:rg:2}，乘法性处理森林乘积，与K相容性处理极点投影，下阶反项由归纳替换。与原递归具有相同初值，故相同。这个结论是代数Birkhoff分解自然性的具体形式，参见\cite[Theorem3.2]{guozhang}。
+
+给定A到A模J的导子\(\delta\)，使用平方零扩张\(A\oplus J\)，把a映到\(a+\delta (a)\)。对\eqref{eq:rg:2}取J分量得到
+
+\begin{equation}
+\delta C(x)=-K\left[\delta\Phi(x)+
+ \sum_{(x)}\{\delta C(x')\Phi(x'')+
+                 C(x')\delta\Phi(x'')\}\right].    \label{eq:rg:3}
+\end{equation}
+
+这里\(\delta  Phi\)不是一般的character，不能把\eqref{eq:rg:3}写成\(C_{\delta  Phi}\)。多个子图分量按Leibniz逐一标记。实际coaction若已是上述兼容代数同态，则同样自然；图余积与动机coaction不因此成为同一个映射。
+
+有限Laurent预算也由乘法直接确定。若每个因子最低次数为\(v_i\)，为取得乘积的\(\epsilon ^k\)系数，第i因子计算至
+
+\begin{equation}
+q_i=k-\sum_{j\ne i}v_j                            \label{eq:rg:4}
+\end{equation}
+
+即足够。系数缺失不是零系数。
+
+\textbf{不能在插入前删除有限项。} 取形式Hopf例：x、y为原始元，z的约化余积为\(x\otimes y\)；赋\(Phi(x)=a/\epsilon\)、\(Phi(y)=theta\)、\(Phi(z)=0\)。则\(C(x)=-a/\epsilon\)、\(C(y)=0\)，却有\(C(z)=a theta/\epsilon\)。该例是明确的代数character反例，不伪装成已给出某张物理图的积分。它说明有限局部提取的核不是允许带极点相乘的理想。物理图中能否出现某项须由实际输入决定，但逐项扔掉所有有限系数的算法已不成立。
+
+\end{proposition}
+
+\section{局部性筛选的是准备后的微分模}\label{sec:rg:3}
+
+令k包含所需常数，取运动学变量s，在k(s)上的有限秩微分模范畴中工作。假设有限Laurent输入及森林乘积已组织成一个实际微分模M，并已证明准备后的极点映射
+
+\begin{equation}
+U:M\longrightarrow\mathbf1^{\oplus q}             \label{eq:rg:5}
+\end{equation}
+
+是水平态射。局部多项式作为k(s)中的有理函数属于平凡模；有质量比时须注明哪些参数固定、哪些仍是基底变量。
+
+\begin{proposition}[局部筛选]
+
+\label{thm:rg:3.1} 若V是M的非平凡简单子对象，则\(U|V=0\)；一般U的像只含平凡简单组成。
+
+\end{proposition}
+
+\begin{proof}
+
+非零简单对象的非零像与它同构，而平凡模的子商都是平凡模，故非平凡V不能有这样的像。此处用的是实际水平态射，不是数值相等。系数抽取与\(\partial _s\)交换为水平性提供必要接口；仍须验证它在所用微分关系商上良定义，并排除未减除IR极点。
+
+``平凡''只表示随s的连接平凡；常数系数自身可有非Tate算术。对一个运动学点取值也不是一般的水平态射，例如\(f(s)=s-s_0\)的取值为零而导数取值为一。因此不能把一般点值或奇异质量极限直接代入\eqref{eq:rg:5}。
+
+\end{proof}
+
+\subsection{森林的张量通道不能逐因子筛除}\label{sec:rg:3.2}
+
+若森林F中的系数由对象\(V_{F,j}\)实现，乘积由
+
+\begin{equation}
+W_F=\bigotimes_j V_{F,j}
+\end{equation}
+
+实现。设有限和由有限直和\(W=\oplus _F W_F\)承载，且乘法实现给出水平满射\(W\to M\)，局部读出也已提升为水平态射\(M\to 1^q\)。复合映射在某个\(W_F\)上非零的必要条件是
+
+\begin{equation}
+\operatorname{Hom}_{\nabla}(W_F,\mathbf1)\ne0.     \label{eq:rg:6}
+\end{equation}
+
+在一个中性微分Tannakian实现中，此空间等于\((W_F^{\mathrm{vee}})\)的微分Galois不变量。若仅知M是W的任意子商，而没有上述实际映射，则不能使用这一必要条件：子对象上的水平泛函未必延伸到W。
+
+即使\(\operatorname{Hom}(V,1)=\operatorname{Hom}(V^{\mathrm{vee}},1)=0\)，评价态射
+
+\begin{equation}
+V\otimes V^\vee\longrightarrow\mathbf1
+\end{equation}
+
+仍非零；对自对偶纯K3局部系统，极化给相应的常数Tate线值配对。因此``每个非平凡因子都在局部RG中消失''不能作为森林乘积的筛选规则。式\eqref{eq:rg:6}只是允许性条件，是否被具体图、分子和求和系数选中，仍须证明实际读出非零。
+
+一个简单V的非零水平见证保证V在该线性箭头中存活；它不保证别的图贡献不会抵消，也不保证有限振幅、UV系数和临界指数有相同不可见核。一般图的\eqref{eq:rg:5}目前是条件接口，本章没有从每张图的拓扑自动构造它。
+
+\section{归一化单耦合的形式反演}\label{sec:rg:4}
+
+取
+
+\begin{equation}
+\beta(g,e)=-eg+gB(g),\quad
+ B(g)=b_1g+b_2g^2+\cdots,\quad b_1\in A^\times,
+\end{equation}
+
+\begin{equation}
+\gamma_m(g)=\sum_{\ell\ge1}c_\ell g^\ell,\qquad
+ \gamma_\phi(g)=\sum_{\ell\ge2}d_\ell g^\ell.         \label{eq:rg:7}
+\end{equation}
+
+这里\(e=4-D\)，RG时间为log mu；\(gamma_m\)是质量平方的约定，热方向不混合。量子系数不显含e，一圈场异常维数为零。本文不假定级数收敛。
+
+唯一原点非Gaussian形式分支G满足\(B(G(e))=e\)、\(G=e/b_1+O(e^{2})\)。定义
+
+\begin{equation}
+\omega=GB'(G),\quad
+ \nu=(2+\gamma_m(G))^{-1},\quad
+ \eta=2\gamma_\phi(G).                             \label{eq:rg:8}
+\end{equation}
+
+\begin{theorem}[完整临界三元组反演]
+
+\label{thm:rg:4.1} 固定\(b_1\)，\eqref{eq:rg:7}与 \(\omega =e+O(e^{2})\)、\(\nu =1/2+O(e)\)、\(\eta =O(e^{2})\)一一对应，逆式为
+
+\begin{equation}
+G(e)=\frac e{b_1}
+ \exp\int_0^e\left(\frac1{\omega(t)}-\frac1t\right)dt,\qquad
+ B=G^{\langle-1\rangle},                            \label{eq:rg:9}
+\end{equation}
+
+\begin{equation}
+\gamma_m(g)=\nu(B(g))^{-1}-2,\qquad
+ \gamma_\phi(g)=\tfrac12\eta(B(g)).                 \label{eq:rg:10}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+
+\(B'(G)G'=1\)与\eqref{eq:rg:8}给\(G'/G=1/\omega\)。因\(\omega =t+O(t^{2})\)，\eqref{eq:rg:9}的被积式是普通幂级数。形式积分、指数及给定首项唯一确定G。其复合逆存在，\eqref{eq:rg:10}再唯一确定两个异常维数。反向代回即得\eqref{eq:rg:8}。积分只除以正整数，因此对任意有理代数成立，包括含幂零元的系数环。单\(\beta\)的自洽关系已有直接文献\cite[eq.(3)]{antipin}；这里使用原点形式分支，不将其外推成全局流重建。
+
+设\(K=Q[b_1,b_1^{-1}]\)，阶数\(L>=2\)，并记
+
+\begin{equation}
+r_L=(b_2,\ldots,b_L,c_1,\ldots,c_L,d_2,\ldots,d_L),\qquad
+ c_L=(\omega_2,\ldots,\omega_L,\nu_1,\ldots,\nu_L,
+                    \eta_2,\ldots,\eta_L).
+\end{equation}
+
+这两组长度都为3L-2。\(\omega\)至\(e^L\)给G至\(e^L\)，再给B至\(g^L\)；\eqref{eq:rg:10}所需阶数也不超过L。因此\(T_L\)及逆均是K系数多项式，且
+
+\begin{equation}
+K[r_L]=K[c_L].                                    \label{eq:rg:11}
+\end{equation}
+
+这是同一环中的相等，也是通用归一化系数空间之间的多项式同构。施加已有关系后仍成立，不要求周期数值代数独立。未固定\(b_1\)时，\(\omega =e\)对应任何\(B=b_1g\)，已说明为何必须给定归一化。
+
+\end{proof}
+
+\section{信息损失在森林接口处定位}\label{sec:rg:5}
+
+\begin{theorem}[无额外核]
+
+\label{thm:rg:5.1} 设\(F_L\)是第\ref{sec:rg:1}节正确形成的局部系数映射，输出满足\eqref{eq:rg:7}。对固定\(b_1\)的任意一阶允许变形v，
+
+\begin{equation}
+\ker D(T_L\circ F_L)=\ker DF_L.                   \label{eq:rg:12}
+\end{equation}
+
+更强地，对任何A值的两组允许输入x、y，
+
+\begin{equation}
+(T_LF_L)(x)=(T_LF_L)(y)
+       \quad\Longleftrightarrow\quad F_L(x)=F_L(y). \label{eq:rg:13}
+\end{equation}
+
+\end{theorem}
+
+\begin{proof}
+
+式\eqref{eq:rg:13}直接应用\(T_L\)的多项式逆。式\eqref{eq:rg:12}把相同逆用于\(A\oplus J\)中的平方零点，或对逆映射恒等式求导。该证明不要求\(F_L\)单射、满射或其输入空间光滑。
+
+等价地，对任意固定\(b_1\)的系数导子\(\delta\)，
+
+\begin{equation}
+\delta r_L=0\quad\Longleftrightarrow\quad\delta c_L=0. \label{eq:rg:14}
+\end{equation}
+
+由\eqref{eq:rg:3}从图输入传播\(\delta\)，再用\eqref{eq:rg:14}，得到实际森林变化到临界响应的充要判据。图间相消、局部投影、算符关系等损失都可能在\(F_L\)发生；指定完整三元组的\(T_L\)不增加新的核。单独\(\omega\)、单一固定维数的三个数或不完整展开不享有此结论。
+
+\end{proof}
+
+\subsection{已有实际形式周期时的结构保持}\label{sec:rg:5.2}
+
+若\(r_L\)、\(c_L\)是同一个Tannakian形式周期环中的元素，且\(b_1\)为非零有理数，则
+
+\begin{equation}
+\langle M(r_L)\rangle_\otimes
+       =\langle M(c_L)\rangle_\otimes.              \label{eq:rg:15}
+\end{equation}
+
+右侧每个周期由左侧周期的有理多项式实现，最小对象属于其有限直和、张量及子商闭包；逆式给反向包含。这里采用本项目第\ref{ch:frames}章的最小标架对象定义。
+
+所以两组对象生成的Tannaka群，在同一纤维函子下规范相同。若\(C_0\)是给定的、对子商和张量运算封闭的满Tannakian子范畴，则
+
+\begin{equation}
+\text{所有 }M(r_{L,j})\in C_0
+ \quad\Longleftrightarrow\quad
+ \text{所有 }M(c_{L,j})\in C_0.                    \label{eq:rg:16}
+\end{equation}
+
+特别地，在固定基域的mixed Tate子范畴中，全部局部系数为mixed Tate当且仅当全部临界系数为mixed Tate。一个已证明的非Tate局部系数不可能让所有临界系数同时成为Tate对象。
+
+式\eqref{eq:rg:15}不宣称逐个系数最小对象相同，也不宣称某个纯因子必原样出现在某一个临界系数中；张量组合可以生成新的简单因子。普通系数子代数也未必对coaction封闭；若需要``Galois稳定代数''，应分别取coaction闭包，再由\eqref{eq:rg:11}得到闭包相同。未建立图周期的形式提升时，\eqref{eq:rg:15}不补出这个缺失比较。
+
+\section{为什么方案不变性不与反演矛盾}\label{sec:rg:6}
+
+令\(h=f(g,e)\)，\(f(0,e)=0\)、\(\partial _g f(0,0)\)为单位，无显式RG时间。正确变换是
+
+\begin{equation}
+\widetilde\beta(f(g,e),e)=f_g(g,e)\beta(g,e).       \label{eq:rg:17}
+\end{equation}
+
+在对应固定点，导数中的\(f_{gg} \beta\)消失，故稳定指数\(\omega\)不变。有限场或质量归一化对异常维数增加\(\beta\)乘以某个对数导数，也在固定点消失。这里全程保留e，不能先删掉换参产生的e依赖。
+
+\begin{proposition}[MS型截面刚性]
+
+\label{thm:rg:6.1} 若f与e无关，且变换前后都严格具有-e乘耦合加不显含e的量子项，则\(f(g)=a g\)。固定一圈归一化\(b_1\)后\(a=1\)。
+
+\end{proposition}
+
+\begin{proof}
+
+比较\eqref{eq:rg:17}中e的系数，得到\(g f'(g)=f(g)\)。特征零下逐次比较给所有二次及以上系数为零。缩放使新\(b_1=b_1/a\)，所以固定\(b_1\)即\(a=1\)。
+
+更一般，若允许e依赖的正则方案变换，而两个端点仍满足\eqref{eq:rg:7}、有相同\(b_1\)及同一临界三元组，则定理\ref{thm:rg:4.1}迫使两个端点的B、\(gamma_m\)、\(gamma_{\mathrm{phi}}\)相同。这是端点数据的唯一性，不声称中间换参本身必须是恒等；沿同一向量场的流可以给非平凡自共轭。
+
+\textbf{显式反例。} 在A{[}xi{]}/(xi\textsuperscript{2})中，令\(\beta _0=-eg+b g^{2}\)、\(h=g+xi g^{3}\)。则
+
+\begin{equation}
+\widetilde\beta(h,e)=-eh+b h^{2}+
+                 \xi(-2e h^{3}+b h^{4}).               \label{eq:rg:18}
+\end{equation}
+
+新的系数出现xi，但\(\omega\)仍等于e。它离开了\eqref{eq:rg:7}的截面，所以不反驳\eqref{eq:rg:11}。也说明一般方案的全部原始系数代数不能不取条件地称为``普适物理周期代数''。对所有临界指标，需同时变换完整异常维数而不是截去显式e项。
+
+对多耦合\(\beta\)和一组真正构成局部坐标的物理读出O，原稿给出的正确一阶公式可直接验证。写\(b=\delta  \beta\)、\(q=\delta  O\)、\(J=D_g O\)，J可逆，则
+
+\begin{equation}
+{\cal B}_{\rm phys}=Jb+Dq\,\beta-D(J\beta)J^{-1}q. \label{eq:rg:19}
+\end{equation}
+
+固定物理坐标\(y=O\)时，\(\delta  g=-J^{-1}q\)，链式法则给\eqref{eq:rg:19}。换参方向v产生
+
+\begin{equation}
+b_v=Dv\,\beta-D\beta\,v,\qquad q_v=-Jv.
+\end{equation}
+
+令\(v=-J^{-1}q\)并用\(D(Jv) \beta =(DJ[\beta ])v+J Dv \beta\)及Hessian对称性，即得
+
+\begin{equation}
+{\cal B}_{\rm phys}=J(b-b_v).
+\end{equation}
+
+因此其核精确是此方案方向的像。缺少有限匹配q或J不可逆时，不能作逆向断言；这也没有证明多耦合临界谱具备单耦合\(T_L\)的可逆性。
+
+\end{proof}
+
+\section{首次算术方向与六圈目标的直接推导}\label{sec:rg:7}
+
+若\(\delta\)消去所有低于L圈的b、c、d，固定\(b_1\)，令 \(u=\delta  b_L\)、\(v=\delta  c_L\)、\(w=\delta  d_L\)。对\(B(G)=e\)求\(\delta\)得
+
+\begin{equation}
+\delta G=-\frac{u}{b_1^{L+1}}e^L+O(e^{L+1}).
+\end{equation}
+
+在\(\delta  \omega\)中，直接项为\(L u e^L/b_1^L\)，固定点位移给\(-u e^L/b_1^L\)；对\(\nu\)使用常数项1/2，对\(\eta\)利用\(d_1=0\)，得到
+
+\begin{equation}
+\begin{pmatrix}[e^L]\delta\omega\\{}[e^L]\delta\nu\\{}[e^L]\delta\eta\end{pmatrix}
+ =
+ \begin{pmatrix}
+ (L-1)/b_1^L&0&0\\
+ c_1/(4b_1^{L+1})&-1/(4b_1^L)&0\\
+ 0&0&2/b_1^L
+ \end{pmatrix}
+ \begin{pmatrix}u\\v\\w\end{pmatrix}.               \label{eq:rg:20}
+\end{equation}
+
+行列式为\(-(L-1)/(2b_1^{3L})\)，对\(L>=2\)可逆。这是任意圈数的形式证明；非零的是完整局部方向，不能用单图非零替代。
+
+\subsection{算术导子的精确定义}\label{sec:rg:7.1}
+
+源文献\cite[eq.(17)]{kp}及Brown\cite[eq.(2.6)]{brownmzv}使用递增求和：
+
+\begin{equation}
+Z_{35}=\sum_{0<n<m}\frac1{n^3m^5}.
+\end{equation}
+
+它对应常用递减记法的\(\zeta (5,3)\)。在\cite[§6.1]{brownmzv}选择的f字母实现中，左字母删除导子满足
+
+\begin{equation}
+\partial_3 Z_{35}^{\mathfrak m}=0,\qquad
+ \partial_5 Z_{35}^{\mathfrak m}=-5\zeta^{\mathfrak m}(3).
+\end{equation}
+
+故以右端先作用的复合约定，
+
+\begin{equation}
+\delta_{35}=\partial_5\partial_3-\partial_3\partial_5,
+ \qquad \delta_{35} Z_{35}^{\mathfrak m}=5.         \label{eq:rg:21}
+\end{equation}
+
+这是导子的交换子，因此仍为导子，消去所有单\(\zeta\)生成的乘法子代数。与Brown的张量值\(D_{2n+1}\)区别，本章用\(\partial\)表示已投影到标准奇权生成元的标量导子；原稿记号\(D_3\)、\(D_5\)应按这种含义读取。式\eqref{eq:rg:21}由一手迭代积分公式给出，不依赖旧切词程序的声称。
+
+\subsection{只用已发表的三个稀疏条目}\label{sec:rg:7.2}
+
+Kompaniets--Panzer\cite[eqs.(16),(18),(19)]{kp}的维数是\(D=4-2 \epsilon _{\mathrm{src}}\)，故本章\(e=2 \epsilon _{\mathrm{src}}\)。它给
+
+\begin{equation}
+b_1=(N+8)/3,\quad c_1=-(N+2)/3,
+\end{equation}
+
+\begin{equation}
+[Z_{35}]b_6=-\frac{16}{675}Q(N),\qquad
+ [Z_{35}]c_6=-\frac4{225}(N+2)R(N),\qquad
+ [Z_{35}]d_6=0,
+\end{equation}
+
+\begin{equation}
+Q=42N^3+2623N^2+25074N+59984,\quad
+ R=14N^2+189N+526.                                 \label{eq:rg:22}
+\end{equation}
+
+所有较低圈条目及其余六圈条目在\eqref{eq:rg:21}下为零。具体分母可从原页直接检查：\(\beta\)项为\(-995328 Q/41990400=-16Q/675\)；质量项为-1152·\(144(N+2)R/9331200=-4(N+2)R/225\)。
+
+于是\(u=-16Q/135\)、\(v=-4(N+2)R/45\)、\(w=0\)，将\(L=6\)代入\eqref{eq:rg:20}即得
+
+\begin{equation}
+[e^6]\delta_{35}\omega=-\frac{432Q(N)}{(N+8)^6},
+\end{equation}
+
+\begin{equation}
+[e^6]\delta_{35}\nu=
+ \frac{27(N+2)(42N^3+2279N^2+21282N+50512)}{(N+8)^7},
+ \qquad [e^6]\delta_{35}\eta=0.                    \label{eq:rg:23}
+\end{equation}
+
+适用N+8可逆的形式范围；\(N=-8\)不在本反演分支内。
+
+在\(N=1\)，\(Q=87723\)、\(R=729\)，\(u=-51984/5\)、\(v=-972/5\)、\(b_1=3\)、\(c_1=-1\)。故
+
+\begin{equation}
+[e^6]\delta_{35}\omega=\frac5{3^6}\frac{-51984}5
+      =-\frac{5776}{81},
+\end{equation}
+
+\begin{equation}
+[e^6]\delta_{35}\nu
+   =\frac{51984+2916}{20\cdot2187}
+   =\frac{305}{243},\qquad [e^6]\delta_{35}\eta=0.   \label{eq:rg:24}
+\end{equation}
+
+这是规定MZV提升下的精确形式响应。它不要求\(Z_{35}\)作为实数已证明独立，不是新六圈积分或重新执行六圈森林，也不是实验上连续改变\(\zeta\)值。
+
+由\eqref{eq:rg:21}、\eqref{eq:rg:24}，\(\omega _6\)及\(\nu _6\)的这些形式提升不属于由单\(\zeta\)生成的乘法子代数；这是明确的算术结构见证。它仍在mixed Tate范畴内，不产生非Tate结论。\(\eta _6\)的零响应仅排除此特定导子，不证明所有算术方向不可见。实际数值不能用单\(\zeta\)表示的结论还需要额外周期单射性输入。
+
+\section{与统一分类主线的连接}\label{sec:rg:8}
+
+本章把可见性分成三种经过定义的关系：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  运动学微分模的局部投影满足\eqref{eq:rg:5}，只能按完整森林张量通道\eqref{eq:rg:6}筛选。
+\item
+  正规化系数经完整物理求和进入\(F_L\)，其核可含图间相消、分子约束和有限信息损失。
+\item
+  在\eqref{eq:rg:7}的截面上\(T_L\)具有逆，有限系数代数、允许一阶方向及已有形式周期的张量范畴均完整保持。
+\end{enumerate}
+
+这给出从结构分类到RG出口的一条精确接口：若几何已经提供合法系数关系，则森林自然性使其下降；若某非零完整局部方向已产生，则完整临界三元组必探测到；若已证明某局部系数超出指定张量子范畴，所有临界系数不能同时留在该子范畴。反过来，临界系数不重建图的全部有限运动学对象。
+
+仍需独立推进：任意图局部投影的实际几何实现、收缩与法向锥/吹起的比较、原head与角色分解接口、一般多耦合完整读出，以及散射基准未完成的误差与同阶光学责任。二维收敛banana的K3最小性不自动给四维phi4的非\(Tate \beta\)系数。
+
+
+\chapter{独立物理基准：四维标量理论}\label{ch:physics}
+\section{理论、方案与有限验收范围}
+取一个实标量场，未破缺对称性为 $\phi\mapsto-\phi$，拉格朗日量为
+\begin{equation}
+ \mathcal L=\frac12(\partial\phi)^2-\frac12m^2\phi^2
+ -\frac{g}{4!}\phi^4+\mathcal L_{\mathrm{ct}}.
+\end{equation}
+采用度规 $(+---)$、$S=1+iT$ 及树振幅 $\mathcal M_{\mathrm{tree}}=-g$。二点函数在 $p^2=m^2$ 减去值与一阶导数，使质量为极点质量、留数为一。四点耦合在解析对称点 $s=t=u=4m^2/3$ 定义；四个外腿在壳，故 $s+t+u=4m^2$。
+
+外部态归一化为 $2E(2\pi)^3\delta^3$，本章 $d\Phi_n$ 已包含 $(2\pi)^4\delta^4$。同种末态的阶乘另计。与标准运动学公式\cite{pdg}比较时必须避免重复乘入四维动量守恒因子。这里不存在规范 Ward 恒等式；分子只有标量常数及规定的二点反项。
+
+\section{全图、反项与 LSZ}
+对四条带标签外腿，$V$ 个四价顶点满足 $I=2V-2$、$L=V-1$。现有穷尽及独立 Wick 配对给树级一张、一圈七张、两圈四十二张连通图。两圈非局部四点 1PI 部分为三张双泡（每张权重 $1/4$）与六张 wineglass（每张权重 $1/2$）。三张 tadpole 插入与质量反项相消，三十张外腿可约图由单位留数的 LSZ 处理。
+
+外腿图不能再次作为四点 1PI 贡献加入。泡子发散的有限减除、一圈耦合反项插入及两圈总体局部反项，都由同一耦合定义固定。这个步骤使有限表达对应一个明确物理方案，而非裸图有限部分的任意相加。
+
+\section{有限振幅的解析表示}
+置 $x_0=4/3$，定义
+\begin{equation}
+ B(x)=-\int_0^1\log[1-xu(1-u)-i0],du,\qquad b(x)=B(x)-B(x_0).
+\end{equation}
+在 $x>4$ 令 $\beta=\sqrt{1-4/x}$，则
+\begin{equation}
+ B(x)=2-\beta\log\frac{1+\beta}{1-\beta}+i\pi\beta,\qquad
+ B_0=2-2\sqrt2\arctan(1/\sqrt2).
+\end{equation}
+交叉通道角平均和 wineglass 减除函数为
+\begin{equation}
+ A(x)=\frac1{x-4}\int_0^{x-4}B(-v),dv,
+\end{equation}
+\begin{equation}
+ J(x)=(x-x_0)\int_4^\infty
+ \frac{\beta(r)[A(r)-B_0]}{(r-x_0)(r-x-i0)},dr.
+\end{equation}
+于是
+\begin{equation}
+\begin{aligned}
+ \mathcal M&=-g+g^2\mathcal A_1+g^3\mathcal A_2+O(g^4),\\
+ \mathcal A_1&=\frac1{32\pi^2}\sum_{\xi=s,t,u}b(\xi/m^2),\\
+ \mathcal A_2&=\frac1{1024\pi^4}\sum_{\xi=s,t,u}
+ \bigl[-b(\xi/m^2)^2-4J(\xi/m^2)\bigr].
+\end{aligned}
+\end{equation}
+三个通道同时在 $x_0$ 减除，所以交叉对称与耦合条件直接成立。
+
+色散式以外，$J$ 具有实际森林减除得到的 Schwinger 表示。记 $Y=y(1-y)$、$D_x=1-xu(1-u)$、$C_0=1-x_0Y$、$Q_x=D_x+t+t^2Y$，则
+\begin{equation}
+ J(x)=\int_0^1du\int_0^1dy\int_0^\infty\frac{dt}{t}
+ \left[\log\frac{D_x+tC_0}{D_{x_0}+tC_0}
+ -\frac1{(1+tY)^2}\log\frac{Q_x}{Q_{x_0}}\right].
+\end{equation}
+$t=0$ 两项常数相消；$t\to\infty$ 分区控制 $tY$ 后可积。低于阈值时正分母允许交换积分。切口上切开外层两条线，剩余泡处于非正动量转移，得到 $\Im J=\pi\beta(A-B_0)$。一次减除的 Cauchy 公式及已固定的局部常数给出前述色散表示。两种表示的相容不只依赖数值吻合。
+
+\section{匹配阶数的光学检验与方案变化}
+两粒子中间态带因子 $1/2!$。由树与一圈的完整干涉得
+\begin{equation}
+ \Im\mathcal A_1=\frac{\beta}{32\pi},\qquad
+ \Im\mathcal A_2=-\frac{\beta}{512\pi^3}
+ [\Re B(s/m^2)+2A(s/m^2)-3B_0].
+\end{equation}
+双泡与 wineglass 的吸收部分别给前一方括号中的对应项，有限反项 $B_0$ 也必须保留。这是两圈振幅 $g^3$ 阶的检验；四体态从 $g^4$ 阶光学右端出现，所以不能把它称为三圈前向 $g^4$ 全检验。
+
+全角域、同种末态已除二的弹性密度为
+\begin{equation}
+ \frac{d\sigma_{\mathrm{el}}}{d\Omega}
+ =\frac{g^2-2g^3\Re\mathcal A_1+
+ g^4(|\mathcal A_1|^2-2\Re\mathcal A_2)}{128\pi^2s}+O(g^5).
+\end{equation}
+阈值耦合 $g_{\mathrm{th}}=-\mathcal M(4m^2,0,0)$ 与对称点耦合满足 $g_{\mathrm{th}}=g-ag^2-bg^3+O(g^4)$。反演并代回给
+\begin{equation}
+ \mathcal A_1^{\mathrm{th}}=\mathcal A_1-a,\qquad
+ \mathcal A_2^{\mathrm{th}}=\mathcal A_2+2a\mathcal A_1-2a^2-b.
+\end{equation}
+截面逐阶相同。这里比较的是同时换参后的可观测量，不是要求各方案的单图有限部分相同。
+
+\section{四体产生、正相空间与阈值律}
+当 $s>16m^2$，四体通道开通。令六个外部动量全取向外，$\ell=(-p_1,-p_2,k_1,k_2,k_3,k_4)$。两四价顶点的树图由十个无序 $3|3$ 分割给出：
+\begin{equation}
+ \mathcal M_{24}^{(0)}=-g^2\sum_{\substack{|A|=3\\0\in A}}
+ \frac1{Q_A^2-m^2+i0},\qquad Q_A=\sum_{i\in A}\ell_i.
+\end{equation}
+每张树的 Wick 权重为一；相补三元组不可重复计数。四项类时分母至少为 $8m^2$，余六项可写 $q=K-p_1=p_2-R$，其中 $K,R$ 为两未来向末态之和。若 $q$ 因果，质量不等式将迫使某入射粒子的质量至少为 $2m$，矛盾。因此这六项严格类空，整个物理积分域内没有内传播子极点。
+
+记分母和为 $S_6$。首阶四体截面是
+\begin{equation}
+ \sigma_{24}=\frac{g^4}{2s\beta,4!}\int d\Phi_4,|S_6|^2+O(g^5).
+\end{equation}
+必须先相加再平方，保留全部干涉。将相空间拆成两对，或拆成逐次 $3+1$，均给独立的有限积分表示。例如 $a=(k_1+k_2)^2,b=(k_3+k_4)^2$ 时
+\begin{equation}
+ d\Phi_4=\frac{da,db}{(2\pi)^2}
+ d\Phi_2(P;Q,R)d\Phi_2(Q;k_1,k_2)d\Phi_2(R;k_3,k_4).
+\end{equation}
+它同时固定了相空间归一化和积分区域 $\sqrt a+\sqrt b\le\sqrt s$。
+
+\begin{proposition}[阈值首项]
+设 $\epsilon=\sqrt s/m-4\to0^+$，则
+\begin{equation}
+ \sigma_{24}\sim\frac{g^4}{m^2}
+ \frac{\sqrt{2/3}}{5160960\pi^4}\epsilon^{7/2}.
+\end{equation}
+\end{proposition}
+\begin{proof}
+阈值时四个类时分母为 $8m^2$，六个类空分母为 $-4m^2$，故 $S_6\to-1/m^2$。两对质量变量写成 $\sqrt a=2m+m\epsilon u$、$\sqrt b=2m+m\epsilon(1-u)v$；精确 Jacobian 提出 $\epsilon^{7/2}$。余下正权积分为 $\int_0^1(1-u)^2\sqrt u\,du=16/105$ 和 $\int_0^1\sqrt{v(1-v)}\,dv=\pi/8$，其光滑因子一致趋于阈值常数。代入通量及 $4!$ 即得。正紧参数域和无极点性保证取极限合法。
+\end{proof}
+
+\section{结果的精度与未完成项}
+现有高精度积分在 $s/m^2=8$ 给
+\begin{equation}
+ \sigma=\frac{g^2+0.00356759925535171g^3
+ -0.0000461288386699841g^4}{256\pi m^2}+O(g^5).
+\end{equation}
+在 $s/m^2=20$ 合并弹性与四体后，得到近似包容结果
+\begin{equation}
+ \sigma_{\mathrm{incl}}\approx
+ \frac{g^2+0.0180991989932455g^3+0.00014250842g^4}{640\pi m^2}.
+\end{equation}
+四体系数约为 $m^2\sigma_{24}/g^4\approx5.75125\cdot10^{-11}$。这些显示小数来自普通求积与独立相空间参数化，不是全部位数的严格认证。另有真正严格、但明显较粗的区间
+\begin{equation}
+ 8.8\cdot10^{-13}<m^2\sigma_{24}/g^4<6.2\cdot10^{-10}
+ \qquad(s/m^2=20)
+\end{equation}
+用于证明正性与有限范围。它不能冒充上述近似小数的窄误差界。
+
+本基准的后续责任是选定点的窄积分误差认证，以及若要求同阶总截面光学闭合时独立计算三圈前向全切割。给出光学右端的正确组合不等于验证左端。banana 的指定积分、两圈弹性基准和四体产生承担不同任务，三者不可互相替代。
+
+
+\chapter{统一结构分类的研究总方案}\label{ch:roadmap}
+\section{总目标及其可检验形式}
+研究的终极方向，是建立费曼周期的结构表与操作规律：从带物理数据的图预测几何和算术组成，解释这些组成在切割、收缩、重整化及投影中的保持、混合与消失，并确定它们进入哪些物理可观测量。当前阶段的目标是把已处理范围的实际对象与接口闭合，逐步扩大范围；不能把所有尚未解决的普遍问题改称已经完成的分类。
+
+理想输出应包含一个有限的结构说明
+\begin{equation}
+ \mathscr S(\mathfrak P)=
+ (\text{纯因子},W,F,\text{扩张类},\text{标架},
+ \text{操作箭头},\text{适用条件}).
+\end{equation}
+输出若为条件命题，条件本身就是结果的一部分。若当前规则不适用，应说明缺失的几何或理论输入；不能输出一个猜测的几何类型。必要条件、充分条件、精确判据及反例分别登记。
+
+\section{工作包一：结构表与特殊化理论}
+首先统一四层分类语言，明确哪些结构属于函数表示、哪些属于纯上同调、哪些属于算术扩张及物理标架。建立一个包含一般点、等质量、无质量、阈值和 Picard 跳跃的分层参数空间。各层上分别描述秩、Hodge 数、单位关系及扩张非零的条件。
+
+预期定理应采用如下形式：在一个已定义的参数层 $S$ 上，给出实际纯因子及边界对象；对满足明确标架条件的周期，证明该因子可见或不可见；在进入较低维层时，给出相邻循环、限制或商所产生的比较。特殊化后的数值简化不是足够的证明，必须追踪对象和标架。
+
+\begin{problem}
+对已构造的几何族，寻找可在图或判别式层识别的有限条件，保证某一纯因子在物理最小对象中出现。需要同时处理几何因子的存在和物理链、形式的非零性。
+\end{problem}
+
+banana 已提供纯秩六、很一般等质量秩三及活动秩变化的原型。圈星覆盖提供另一类可从传播子支撑推出几何的族。后续应比较这两种成功机制，而非预设每个图都具有相同覆盖表示。
+
+\section{工作包二：组合角色与实际几何的比较}
+精确能量支撑定理解决的是一个有理函数分量是否恒零。下一步要构造可能承载翻号作用的实际参数覆盖或更大对象，明确角色投影的源、靶和下降。若不存在所设想的固定对象作用，应给出障碍定理，而非继续以角色名称替代几何证明。
+
+可优先研究多重二次割覆盖，因为其有限群作用确为代数自同构。将覆盖上的角色对象、物理分子选择及基域下降放到同一图中，有望把``角色支撑''升级为一类图的实际最小纯因子判据。一般能量翻号可能改变参数或解析支，不能假设它固定同一个纤维。
+
+验收应是一个有明确假设的比较定理，或者一个说明该接口不能如此构造的反例。再增加小图枚举并不关闭这个理论缺口。
+
+\section{工作包三：保护与最小标架的实际接口}
+原 head 保护判据和有限 Hankel 秩方法需要与实际 Nori 子商相接。主要问题不是重新证明有限维线性代数，而是证明所用操作、关系及允许物理投影在实际范畴中成立。
+
+应首先选一类有明确分子空间和在壳理想的物理输入，说明对称恒等式是否定义实际读出核；随后检查操作闭包中的所有上下文，最后证明得到的最小操作表示与实际标架子商同构。若只能证明一个包含或商关系，就保留该方向，不升级为等号。
+
+非半单扩张尤其重要：标量自同态不等于简单，不能以无直和分解替代最小性。自同态除环上的 regulator 秩与有理关系空间还需在更多几何例中分别识别。
+
+\section{工作包四：一般方案、重叠与法向喷射}
+零动量正质量对数类已具有共同核和实际森林周期。接下来首先处理非零子参考点的相容运动学。不同森林项的边界比值可能不同，直接共同提升可能不能消极点；需要实际对数函数方程、相容辅助链或新的几何模型。
+
+幂次发散要求有限法向喷射。应把喷射系数与具体场论的外动量 Taylor 局部插入比较，说明反项的算符结构、质量依赖及 IR 条件。法向锥首项控制不了全部简单极点，已给出的反例必须作为规则设计的约束。
+
+重叠子图应通过共同正常交叉模型和实际拉回比较，而非形式地把不相容面相乘。完成标准不是写出 Zimmermann 森林求和式，而是证明形式、链、角点收敛及指定物理减除相容。
+
+\section{工作包五：局部 RG 与物理出口}
+已有单耦合反演说明完整归一化临界三元组不会额外丢失局部 RG 系数信息。真正困难在更前端：从图和森林的周期对象构造准备后的局部投影，追踪分子、算符混合及多图相消。
+
+应证明局部投影作为微分模或实际几何箭头的存在范围，准确区分非常值运动学因子和常值非 Tate 周期。张量通道可能产生不变量，故必须先完成森林组合，再判断局部性消去哪些方向。
+
+多耦合情形不能只用临界谱重建全部流。应指定足够的物理坐标及有限匹配，给出实际可逆性或其失败。规范理论中的恒等式必须从相应模型推出；标量基准只负责其真实存在的对称与幺正条件。
+
+\section{工作包六：有界几何编译器的理论规范}
+编译器首先是一系列定理组成的过程，而不是一个未经证明的普遍分类程序。每一步记录输入、输出、终止范围及验证条件：
+\begin{enumerate}
+\item 图与物理数据生成 $U_G,F_G$、分子及明确割方程；
+\item 在声明范围内正规化曲线或解消高维模型，识别维数、分歧及纯因子；
+\item 构造边界与相对对象，确定非齐次源、质量单位和 regulator；
+\item 生成连接及必要的关系，证明其对应实际几何；
+\item 用链与读出取最小子商，得到物理结构；
+\item 对合法物理操作构造相容箭头，输出可组合规则。
+\end{enumerate}
+目前组合支撑模块有明确有限资源契约；带权割、一般割几何及 PF 不可约性模块仍需逐类给出有界算法。曲线亏格算法不能应用于高维割；``未检测到椭圆''也不是``必为 MPL''的证明。
+
+原第二、第三版编译器应按这一语义重新审阅：MZV 表示是否为形式提升、椭圆或 K3 核是否已经与积分对象比较、非齐次源是否完整、输出是否依赖泛参数假设。标题和演示结果不足以证明这些性质。
+
+\section{工作包七：全文、来源与可复核性}
+本文已经把核心理论组织为连贯的综述与证明稿，但这不是全部数学结果自动通过外部审阅。下一阶段应逐条核对定理条件、范畴、基域、取向和参数范围，并把需要有限输入的命题直接链接到相应证书。
+
+特别需要检查三类容易过强的表述：把很一般结论套到固定代数点；把几何单值群套到固定纯群；把形式周期关系套到普通数值的算术独立性。另需清理历史稿中已经被后续工作解决的待证语句，同时保留仍真实存在的缺口。
+
+参考文献承担其实际证明范围。图超曲面、形式周期、Kummer 关系、经典森林代数与六圈 RG 系数应归于原作者。项目新论证的优先权必须经过独立检索，不能因重新推导就宣称首次。
+
+\section{阶段验收与不纳入本阶段的问题}
+阶段验收以证据而非主观百分比进行。核心 banana 链条须能从实际几何对追踪到物理矩阵系数；一般操作须有合法箭头或精确适用条件；RG 与散射出口须固定方案和阶数；有界模块须说明终止与输出强度；全文和证书的范围须一致。
+
+理论工作优先交付完整命题、证明、反例和比较图。只有一个明确证明障碍确实需要有限计算时，才安排必要认证。重复既有运输、扩大矩阵或增加采样，不应替代理论接口的推进。
+
+全阶重求和与四维非微扰连续极限不纳入本阶段验收。一般图的最终无条件分类仍是长期方向。本文的意义在于把这一方向分解为有实际对象、有操作规则、有已解决实例及可辨认缺口的数学研究计划。
+
+\appendix
+\chapter{结论状态及证据索引}\label{app:evidence}
+\section{核心实例的证据链}
+指定质量和基点的 Picard 数、完整超越格、六循环交叉矩阵、饱和类、绝对比较、regulator 非零及固定纯群分别有独立证明入口。正文没有重新运行这些计算；本次文稿整合不被计作新的数值认证。
+
+\begin{longtable}{p{0.22\textwidth}p{0.32\textwidth}p{0.38\textwidth}}
+\toprule
+结论 & 证据类型 & 必须保留的范围\\\midrule\endhead
+实际相对对象与权重 & 几何对、对偶、边界复形 & 正质量欧氏模型及所声明范畴\\
+质量 Kummer 商 & 实际一动机及局部化比较 & 同调基与留数基的符号\\
+下层 regulator & 支持态射、高阶循环 & 先投影去掉边界代数类\\
+指定最小秩八 & 扩张理论与严格非零障碍 & $m=(1,2,4,8),s=-64,k=\Q$\\
+很一般最小秩十 & Torelli 与可数例外集论证 & 不自动覆盖任何指定代数点\\
+六循环 $Q_6$ & 实际路径、整性、二十一迹区间 & 循环顺序和第六球标记\\
+饱和半循环 & 指数二、完整判别式型 & 不是仅凭单值保持性\\
+$P_6,P_7,P_8$ & 几何初值、绝对尺度、严格包围 & 混合矩阵仍是明确有理基\\
+固定纯群 $SO/O$ & 固定纤维算术与比较行列式 & 基域 $\Q$，不是参数单值替代\\
+一般图支撑 & 有理核定理、有限算法 & 不输出动机类别\\
+零点对数森林 & 准备映射、SNC 相消、物理比较 & 正质量、欧氏、至多对数、零点方案\\
+临界反演 & 有理系数环上的形式代数 & 单耦合、固定归一化、完整三元组\\
+四维物理基准 & 解析关系、图权及普通求积 & 数值窄包围与三圈全切割另待完成\\
+\bottomrule
+\end{longtable}
+
+\section{尚未完成或不作断言的项目}
+任意图的无条件 MPL、椭圆、K3 或更高维分类尚未完成。一般能量字符与固定 Nori 对象之间没有普遍比较函子。一般参考方案、幂次发散、IR、规范投影及多耦合完整反演仍需各自证明。秩十绝对比较、混合整基、旧标量框架与部分旧质量矩阵不在当前认证范围。
+
+普通数值周期的代数独立性、动机非 Tate 到具体数值非 MZV 的无条件推论、离散整等距群的完整识别，以及所有图割构成完整 coaction 对偶基，均未由本文证明。列出这些边界是为了准确定位已完成工作的数学强度，而非缩小总研究方向。
+
+\section{原始文稿与整合稿的关系}
+原始材料保留不变；本稿以最新理论证明为正文骨架，将历史批次记录移出学术叙述。能量字符、圈星覆盖、保护网络和标架分类来自相应原稿；banana 及一般操作的详细论证来自后续专题证明。内部来源选择表与本稿源文件一同保存，便于继续逐章审阅。
+
+同行评议时建议先检查实际对象、扩张比较和物理标架三条链，再检查有限证书输入的数学前提。重放证书只能检验其有限结论，不能自动补出缺失的几何比较。最终论文可按相对动机与最小性、操作与重整化、有效分类及物理基准三个相互引用的部分组织；是否拆分投稿属于后续编辑决定，不影响当前总目标。
+
+
+\begin{thebibliography}{99}
+\addcontentsline{toc}{chapter}{参考文献}
+\bibitem{bek} S. Bloch, H. Esnault and D. Kreimer, \emph{On Motives Associated to Graph Polynomials}, \href{https://arxiv.org/abs/math/0510011}{arXiv:math/0510011}.
+\bibitem{bkv} S. Bloch, M. Kerr and P. Vanhove, \emph{A Feynman integral via higher normal functions}, Compositio Mathematica \textbf{151} (2015), 2329--2375, \href{https://arxiv.org/abs/1406.2664}{arXiv:1406.2664}.
+\bibitem{bv} S. Bloch and P. Vanhove, \emph{The elliptic dilogarithm for the sunset graph}, \href{https://arxiv.org/abs/1309.5865}{arXiv:1309.5865}.
+\bibitem{brownperiods} F. Brown, \emph{Notes on Motivic Periods}, \href{https://arxiv.org/abs/1512.06410}{arXiv:1512.06410}.
+\bibitem{browncosmic} F. Brown, \emph{Feynman amplitudes, coaction principle, and cosmic Galois group}, \href{https://arxiv.org/abs/1512.06409}{arXiv:1512.06409}.
+\bibitem{abv} J. Ayoub and L. Barbieri-Viale, \emph{Nori 1-motives}, \href{https://arxiv.org/abs/1206.5923}{arXiv:1206.5923}, Theorem 8.12.
+\bibitem{tubach} S. Tubach, \emph{On the Nori and Hodge realisations of Voevodsky motives}, \href{https://arxiv.org/abs/2309.11999}{arXiv:2309.11999}, Theorem 4.5 and Corollary 4.8.
+\bibitem{eskandari} P. Eskandari, \emph{Tannakian fundamental groups of blended extensions}, \href{https://arxiv.org/abs/2407.01379}{arXiv:2407.01379}.
+\bibitem{charles} F. Charles, \emph{On the Picard number of K3 surfaces over number fields}, \href{https://www.imo.universite-paris-saclay.fr/~francois.charles/Picard.pdf}{author's manuscript}, especially Section 2.2.
+\bibitem{zarhin} Yu. G. Zarhin, \emph{Hodge groups of K3 surfaces}, Journal für die reine und angewandte Mathematik \textbf{341} (1983), 193--220. \href{https://doi.org/10.1515/crll.1983.341.193}{doi:10.1515/crll.1983.341.193}.
+\bibitem{ej} A.-S. Elsenhans and J. Jahnel, \emph{On the component group of the algebraic monodromy group of a K3 surface}, \href{https://wwwuser.gwdguser.de/~jjahnel/Arbeiten/Komponentengruppe_v4f.pdf}{author's manuscript, 10 January 2024}, Theorems 7.5 and 7.7. 本文仅在所述 CM 条件下使用其正规性结论。
+\bibitem{dvgeemen} E. Dardanelli and B. van Geemen, \emph{Hessians and the moduli space of cubic surfaces}, \href{https://arxiv.org/abs/math/0409322}{arXiv:math/0409322}, Section 1.6. 完整 Hessian 整格公式及其在本族的适用性见项目的格本原性证明。
+\bibitem{dualcritical} Z. Király and S. Kisfaludi-Bak, \emph{Notes on dual-critical graphs}, \href{https://arxiv.org/abs/1410.1653}{arXiv:1410.1653} (2014).
+\bibitem{kiefer} S. Kiefer, \emph{Notes on equivalence and minimization of weighted automata}, \href{https://arxiv.org/abs/2009.01217}{arXiv:2009.01217}.
+\bibitem{muhlbauer} M. Mühlbauer, \emph{Cutkosky's Theorem for Massive One-Loop Feynman Integrals---Part 1}, \href{https://arxiv.org/abs/2206.08402}{arXiv:2206.08402}. 本文使用留数及变分背景，不跨越其一圈物理定理的假设。
+\bibitem{bbr} C. Bergbauer, R. Brunetti and D. Kreimer, \emph{Renormalization and resolution of singularities}, \href{https://arxiv.org/abs/0908.0633}{arXiv:0908.0633}.
+\bibitem{bk2008} S. Bloch and D. Kreimer, \emph{Mixed Hodge Structures and Renormalization in Physics}, \href{https://arxiv.org/abs/0804.4399}{arXiv:0804.4399}.
+\bibitem{bk2011} F. Brown and D. Kreimer, \emph{Angles, scales and parametric renormalization}, \href{https://arxiv.org/abs/1112.1180}{arXiv:1112.1180}, especially Proposition 34 and Theorems 40, 66.
+\bibitem{bk2012} F. Brown and D. Kreimer, \emph{Decomposing Feynman rules}, \href{https://arxiv.org/abs/1212.3923}{arXiv:1212.3923}.
+\bibitem{guozhang} L. Guo and B. Zhang, \emph{Differential Birkhoff decomposition and the renormalization of multiple zeta values}, \href{https://arxiv.org/abs/0710.0432}{arXiv:0710.0432}, Theorem 3.2.
+\bibitem{antipin} O. Antipin, A. Pinoy, F. Sannino and S. Vatani, \emph{Consistency Relation for Fixed Point Dynamics}, \href{https://arxiv.org/abs/2504.05988}{arXiv:2504.05988}.
+\bibitem{kp} M. V. Kompaniets and E. Panzer, \emph{Minimally subtracted six loop renormalization of O(n)-symmetric phi4 theory and critical exponents}, \href{https://arxiv.org/abs/1705.06483}{arXiv:1705.06483}, equations (16)--(19).
+\bibitem{brownmzv} F. Brown, \emph{On the decomposition of motivic multiple zeta values}, \href{https://arxiv.org/abs/1102.1310}{arXiv:1102.1310}.
+\bibitem{pdg} Particle Data Group, \emph{Kinematics}, Review of Particle Physics, \href{https://pdg.lbl.gov/2025/reviews/rpp2025-rev-kinematics.pdf}{2025 review}. 本文单独固定同种末态阶乘和 $d\Phi_n$ 约定。
+\end{thebibliography}
+
+% CONTENT_END
+\end{document}

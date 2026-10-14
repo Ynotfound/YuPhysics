@@ -1,0 +1,530 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage[margin=26mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,array}
+\usepackage{enumitem,fancyhdr,xcolor}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheoremstyle{cnplain}{7pt}{7pt}{\normalfont}{}{\bfseries}{。}{0.5em}{}
+\theoremstyle{cnplain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{定义}
+\newtheorem{example}[theorem]{例}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{注}
+\renewcommand{\proofname}{证明}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\C}{\mathbb C}
+\newcommand{\dR}{\mathrm{dR}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\Vis}{\operatorname{Vis}}
+\newcommand{\soc}{\operatorname{soc}}
+\newcommand{\head}{\operatorname{head}}
+\newcommand{\rank}{\operatorname{rank}}
+\setlength{\emergencystretch}{2em}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small 费曼周期：操作、最小化与实际动机}
+\fancyhead[R]{\small 理论补篇}
+\fancyfoot[C]{\thepage}
+\title{从操作保护到实际动机可见性\\[5pt]
+\large 有限图表的相容最小化与秩八 banana 的完整双标架分类}
+\author{费曼周期研究项目\quad 理论证明稿}
+\date{2026年10月13日}
+\begin{document}
+\maketitle
+\begin{abstract}
+操作表示中的保护判据只有在明确的范畴比较下，才能用于实际费曼动机。
+本文将这个接口拆成三个可证明的问题：已给定实际态射的有限图表如何同时最小化；
+一个新的 Betti 操作何时能下降为最小商上的动机态射；
+固定链而改变分子读出时，哪些纯核和扩张必须共同保留。
+我们给出实际图表的有限长度闭包、商上的余模相容判据，以及 head 与 socle 的互补作用。
+对于本项目已建立的指定秩八 banana 对象，进一步完整列出全部子对象，
+从而对任意有理 Betti 链和有理 de Rham 读出给出最小对象表。
+原物理链的顶层分量非零时，最小秩恰分为 $8,2,1,0$，相应非零周期的幺幂深度为 $2,1,0$。
+纯秩六最大割来自链的改变，不能由保留原链的读出选择单独实现。
+证明仅使用已有实际对象与群结构，不新增数值积分或验证计算；
+也不把形式周期结论解释为未经证明的复数周期独立性。
+\end{abstract}
+\tableofcontents
+
+\section{问题与输入：先确定操作所在的范畴}
+\subsection{三个不同的对象}
+设一个费曼问题已给出相对几何、积分链、形式和减除方案。
+同一研究中经常同时出现三个结构：由函数解析延拓生成的单值表示；
+由有限矩阵及允许操作构成的线性系统；承载 Betti、de Rham 和 Hodge 实现的实际动机。
+它们都可以使用核、像、循环生成和矩阵系数语言，但其子对象与态射一般不同。
+
+原稿 \nolinkurl{protected_period_network} 的 head 判据作用于已正确构造的单值模。
+原稿 \nolinkurl{framed_exact_classification} 的 Hankel 最小化作用于已提交的有限操作表示。
+这两个范围均应保留。本文的任务不是将原矩阵重新命名为动机，
+而是给出实际对象与操作之间所需的闭包、下降及标架条件。
+
+最小矩阵系数对象的存在与唯一性是既有理论，见 Brown\cite[\S2.4]{brown}；
+中性 Tannaka 等价及其满忠实性见 Deligne--Milne\cite[Theorem 2.11]{dm}。
+本文在这些基础上直接证明项目所需的接口和指定对象分类，不宣称上述基础理论的优先权。
+
+\subsection{约定}
+固定特征零域 $k$ 上的中性 Tannakian 范畴 $\mathcal C$，
+以及忠实正合的 Betti 纤维函子 $\omega_B$。
+另有相容的 de Rham 纤维函子 $\omega_{\dR}$；为简洁，两者暂取值于同一域 $k$。
+对于本文指定的 $\Q$ 纤维，两种实现均为 $\Q$ 向量空间。
+对更一般数域动机，若 de Rham 系数扩张，下文的子对象仍须在原范畴中取，
+不能省略下降条件，也不能直接将扩域后的不变子空间视为原有理子对象。
+
+以同调方向记对象 $E$、链 $\sigma\in E_B$ 和读出
+$\lambda\in E_{\dR}^{\vee}$。标架周期的上同调对象则是 $E^\vee$，
+二者的秩相同。对一个实际子对象 $J\subset E$，
+``$\lambda$ 消去 $J$''是 $\lambda|J_{\dR}=0$，
+不是仅有某个积分 $\lambda(c(\sigma))=0$。
+
+有限长度由忠实正合的有限维实现保证。定义
+\begin{equation}\label{eq:basic}
+ R_\Sigma=\bigcap_{\Sigma\subset J_B}J,
+ \qquad I_\Omega=\sum_{\Omega|J_{\dR}=0}J,
+ \qquad \Vis(E;\Sigma,\Omega)=R_\Sigma/(R_\Sigma\cap I_\Omega).
+\end{equation}
+交和求和均在实际子对象中进行。它们分别是链的范畴闭包和读出的最大不可见子对象。
+当 $\Sigma,\Omega$ 各为一维时，\eqref{eq:basic} 是最小周期对象的同调描述。
+
+\section{实际操作图表的相容最小化}
+\subsection{图表、输入与所有后续观察}
+设 $D$ 为有限有向图表，允许有环。每个顶点 $v$ 带对象 $E_v\in\mathcal C$，
+每条箭头 $a:v\to w$ 带\emph{已经证明实际存在}的态射 $f_a:E_v\to E_w$。
+设输入链空间为 $\Sigma_v\subset(E_v)_B$，
+局部读出空间为 $\Omega_v\subset(E_v)_{\dR}^{\vee}$。
+空路径表示恒等态射；路径 $p:v\to w$ 的复合记为 $f_p$。
+
+一个输入在 $v$ 处现在不可见，并不保证它经 $v\to w$ 后仍不可见。
+因此应同时保留全部路径读出，而不是先逐顶点最小化再任意加入操作。
+令 $R_v^0=R_{\Sigma_v}$，$I_v^0=I_{\Omega_v}$，定义
+\begin{align}
+ R_v^{r+1}&=R_v^r+\sum_{a:u\to v}f_a(R_u^r),\label{eq:Riter}\\
+ I_v^{r+1}&=I_v^0\cap\bigcap_{a:v\to w}f_a^{-1}(I_w^r).
+ \label{eq:Iiter}
+\end{align}
+无输入时 $R_v^0=0$；无局部读出时 $I_v^0=E_v$。
+逆像、交与像在 $\mathcal C$ 中均有定义。
+
+\begin{theorem}[有限实际闭包]\label{thm:network}
+令 $d=\sum_v\dim(E_v)_B$。两列 \eqref{eq:Riter}--\eqref{eq:Iiter}
+分别递增、递降，至多各经历 $d$ 次严格变化后稳定。
+稳定值满足
+\begin{align}
+ R_v&=\sum_{p:u\to v}f_p(R_u^0),\label{eq:Rpaths}\\
+ I_v&=\bigcap_{p:v\to w}f_p^{-1}(I_w^0).\label{eq:Ipaths}
+\end{align}
+因此 $K_v=R_v\cap I_v$ 构成子图表，且
+\begin{equation}\label{eq:networkQ}
+ Q_v=R_v/K_v
+\end{equation}
+及所有诱导箭头均为实际对象、实际态射。
+原输入沿任意路径的所有标架形式周期均保留。
+该约化图表由输入在范畴中生成，且不存在被全部局部读出消去的非零子图表。
+\end{theorem}
+\begin{proof}
+对路径长度归纳，$R_v^r$ 是长度不超过 $r$ 的路径像之和；
+$I_v^r$ 是长度不超过 $r$ 的路径逆像之交。
+于是两列分别单调。一次严格变化使实现的总维数至少增加或减少一，
+而维数介于 $0$ 与 $d$ 之间。
+某一步若所有顶点均不变，递推下一步仍相同，故不会在稳定之后重新增长。
+这同时证明有限停止和 \eqref{eq:Rpaths}--\eqref{eq:Ipaths}。
+
+路径复合给 $f_a(R_v)\subset R_w$ 及 $f_a(I_v)\subset I_w$，
+所以 $f_a(K_v)\subset K_w$，能够形成实际商箭头。
+输入属于 $R_v$，而每一后续读出均消去 $K_v$。
+形式周期的函子性遂给所有路径标架的相等，不需周期求值映射单射。
+
+若 $Q$ 的一个子图表包含所有约化输入，其在 $R$ 中的逆像仍包含原输入。
+由 $R$ 的最小性，该逆像就是 $R$，故该子图表为 $Q$。
+若 $L\subset Q$ 是全部局部读出不可见的子图表，其在 $R$ 中的逆像
+沿任一路径仍不可见，因此属于 $I$；它已经被 $K=R\cap I$ 商去，故 $L=0$。
+\end{proof}
+
+该定理给的是有限长度构造，\emph{不是}从边表求 Nori 子对象的现成有效算法。
+初始的 $R_v^0,I_v^0$ 已要求知道实际范畴闭包。
+即使停止界是 $d$，若这些子对象或实际箭头未知，
+也不能将未知步骤写成已完成的线性代数。
+
+\subsection{为什么增加操作后不能沿用旧商}
+设已得到 $Q_v=R_v/K_v$，现在拟加入 $f:E_v\to E_w$。
+即使 $f$ 是实际态射，原商也只有在
+\begin{equation}\label{eq:descent}
+ f(R_v)\subset R_w,\qquad f(K_v)\subset K_w
+\end{equation}
+时才承载这条新箭头。第一条件防止产生旧可达对象之外的新状态；
+第二条件防止把已经删掉的状态变成可观察状态。
+
+最小的线性反例是在 $k^2$ 上只给恒等操作、输入和读出均选第一坐标。
+旧最小空间为一维。加入交换两个坐标的矩阵后，
+第二坐标先被访问、再返回第一坐标，旧商不再支持全部响应。
+这只是操作表示反例；它并不把该交换矩阵宣称为某个未知动机的实际态射。
+
+\begin{corollary}[物理关系的允许用法]
+若分子关系、边界关系或对称恒等式已被实现为上述实际图表中的态射关系，
+则它们在 \eqref{eq:networkQ} 中保持。
+若只有一个数值响应为零，或者只有一条路径上的函数恒等式，
+尚不足以在整个图表上商去相应方向。
+\end{corollary}
+\begin{proof}
+实际态射关系经过子对象限制和商对象仍成立。
+后一个断言由定义即可看出：$I_v$ 量化所有后续路径，
+一个指定响应的消失没有提供这些条件。
+\end{proof}
+
+\section{从 Betti 操作到动机态射：商上的精确判据}
+\subsection{必须检验的群是实际群}
+在包含相关对象的中性 Tannakian 子范畴内，令
+$G=\operatorname{Aut}^{\otimes}(\omega_B)$。
+给定实际子商 $Q_i=R_i/K_i$ 及 $Q_j=R_j/K_j$，
+设一个 $k$-线性 Betti 操作 $L:(E_i)_B\to(E_j)_B$ 已满足
+\eqref{eq:descent}。它诱导向量空间映射 $\bar L:(Q_i)_B\to(Q_j)_B$。
+这里暂不假设 $L$ 是环境对象上的动机态射。
+
+\begin{theorem}[余模下降判据]\label{thm:intertwine}
+上述 $\bar L$ 来自唯一的实际态射 $Q_i\to Q_j$，当且仅当
+\begin{equation}\label{eq:commutator}
+ \bigl(\rho_j(g)L-L\rho_i(g)\bigr)(R_i\otimes A)
+       \subset K_j\otimes A
+\end{equation}
+对每个 $k$-代数 $A$ 及每个 $g\in G(A)$ 成立。
+等价地，设 $q_j:(R_j)_B\to(Q_j)_B$，以
+$\delta_i:(R_i)_B\to(R_i)_B\otimes\mathcal O(G)$ 表示余作用，则
+\begin{equation}\label{eq:comodule}
+ (q_j\otimes\id)\delta_j L|_{R_i}
+       =(q_jL|_{R_i}\otimes\id)\delta_i.
+\end{equation}
+给定一个预期的 de Rham 映射时，还必须核对它与这个唯一实际态射的
+de Rham 实现一致。
+\end{theorem}
+\begin{proof}
+由于 $R_i,K_i,R_j,K_j$ 为实际子对象，它们的 Betti 实现对 $G$ 稳定。
+因此 \eqref{eq:commutator} 恰好说 $\bar L$ 是 $G$-等变映射，
+\eqref{eq:comodule} 是同一条件的坐标环表述。
+中性 Tannaka 等价的满性给实际态射，忠实性给唯一性。
+反向则由实际态射对纤维函子所有张量自同构的自然性成立。
+\end{proof}
+
+这个判据有两点作用。其一，$L$ 可以在环境上不等变，而在商去不可见核后等变；
+所以要求环境交换子严格为零可能过强。其二，不能把 $G$ 偷换为容易计算的
+单值子群或某一组形式操作。对较小群等变一般只给必要条件。
+若实际群尚未知，定理保留为待检验的条件，不声称提供任意图的自动提升。
+
+在有限维表示上，\eqref{eq:comodule} 的两边只使用有限个坐标函数，
+因此\emph{在实际余作用已经给出时}可变成有限线性条件。
+这不要求仅用 $G(k)$，也不默认有理点 Zariski 稠密。
+
+\subsection{自同态的直接障碍}
+\begin{corollary}\label{cor:scalar}
+若 $R=E,K=0$ 且 $\End_{\mathcal C}(E)=k$，
+则能成为该固定最小对象自同态的 Betti 操作恰为标量矩阵。
+特别地，一个非标量单值反射不能由``它保持配对''推出为该对象的动机自同态。
+\end{corollary}
+\begin{proof}
+定理\ref{thm:intertwine}将允许映射识别为
+$\End_G(E_B)=\End_{\mathcal C}(E)$，即标量。
+保持一个配对只表明矩阵属于一个等距群，不表明它与实际 Galois 作用交换。
+\end{proof}
+
+真正的割操作并不因此被排除。留数的对偶管态射通常是
+$f:C\to E$，其\emph{源为另一个带 Tate 扭转的实际对象}；
+它不是任意给定的 $E\to E$ 矩阵。
+应检验 $f$ 的实际来源、链标记以及 $f^*\lambda$，而不是把局部单值本身当成 $f$。
+
+\section{head 与 socle：保护和最小性的不同问题}
+\subsection{单源保护只约束非零商}
+在有限长度范畴中，$\head R$ 表示最大半单商，
+$\soc R$ 表示所有简单子对象之和。对固定有限对象可转到其有限维表示代数，
+二者均存在。
+
+\begin{proposition}[范畴版单源 head 判据]\label{prop:head}
+设 $R=R_\sigma$，$S$ 为简单对象。
+每个保留 $\sigma$ 的非零商都含有 $S$ 作为组成因子，
+当且仅当 $\head R$ 的全部简单因子都同构于 $S$。
+\end{proposition}
+\begin{proof}
+一个非零商中的 $\sigma$ 不可能为零，否则商映射的核承载 $\sigma$，
+与 $R=R_\sigma$ 矛盾。非零有限长度商有简单商；
+它也是 $R$ 的简单商，所以正向保护由 head 的单类型条件得到。
+若 head 含 $S'\not\simeq S$，投到 $S'$ 即给出不含 $S$ 的非零商。
+\end{proof}
+
+这里量化所有实际商，尚未证明每个商都可由允许物理分子实现。
+因此这是充分保护判据及所述\emph{逻辑量化}下的必要条件，
+不是任意指定物理读出族的无条件充要分类。
+
+\subsection{读出是否完整，由简单子对象检测}
+\begin{proposition}[socle 检测]\label{prop:socle}
+设 $R=R_\Sigma$。最小化不再损失子对象，即
+$\Vis(R;\Sigma,\Omega)=R$，当且仅当不存在非零简单子对象
+$S\subset R$ 被全部读出消去。
+特别地，若 $\soc R=A$ 是简单对象，则
+\begin{equation}\label{eq:socle}
+ \Vis(R;\Sigma,\Omega)=R
+ \quad\Longleftrightarrow\quad \Omega|A_{\dR}\ne0.
+\end{equation}
+\end{proposition}
+\begin{proof}
+任一非零不可见子对象在有限长度范畴中包含简单子对象。
+反之，一个被消去的简单子对象已经属于最大不可见核。
+若 socle 简单，则每个非零子对象都含 $A$，所以 \eqref{eq:socle} 立即成立。
+\end{proof}
+
+非半单对象中，简单纯核可以处于 socle，而顶层 Tate 商处于 head。
+``一个输出非零''与``输出在纯核上的限制非零''此时强度完全不同。
+这个区别正是下面 banana 应用的关键。
+
+\section{指定 banana 对象的全部子对象}
+\subsection{已建立的几何输入与适用范围}
+本节采用已有证明稿给出的实际同调对象 $E$，基域为 $\Q$，
+固定 $m=(1,2,4,8)$、$s=-64$。它具有实际过滤
+\begin{equation}\label{eq:banana}
+ 0\subset A\subset N\subset E,
+ \qquad \dim A=6,\quad N/A=B=\Q(1),\quad E/N=\mathbf1.
+\end{equation}
+$A$ 是相应扭转的简单 K3 超越对象。
+已有相邻扩张非零证明和实际群论证给出完整幺幂根基
+\begin{equation}\label{eq:U}
+ U=\left\{
+ \begin{pmatrix}I_A&x&z\\0&1&y\\0&0&1\end{pmatrix}
+ :x\in\Hom(B,A),\ y\in B,\ z\in A\right\}.
+\end{equation}
+这是在一个 Levi 分裂中显示的式子；$A,N,E$ 本身不依赖该分裂。
+纯分级作用在 $A$ 上不可约。下述证明只需要这些输入，
+不再使用新的 Frobenius、周期或路径计算，也不需要重新判别固定纯群的分支。
+
+指定点的输入分别见内部证明稿
+\nolinkurl{LOWER_REGULATOR}、\nolinkurl{MIXED_UNIPOTENT_GROUP}、
+\nolinkurl{FIXED_PURE_GROUP} 及主稿第6--7、10节。
+一般三步对象若缺少 \eqref{eq:U} 或纯核简单性，不能套用以下分类。
+
+\begin{theorem}[全部实际子对象]\label{thm:uniserial}
+对象 $E$ 的实际子对象恰好为
+\begin{equation}\label{eq:chain}
+                        0,\ A,\ N,\ E.
+\end{equation}
+因此 $\soc E=A$，$\head E=\mathbf1$。
+\end{theorem}
+\begin{proof}
+令 $J\subset E$ 非零，在 \eqref{eq:U} 的分裂中检查其 Betti 实现。
+若 $J$ 在顶层非零，取 $v=(a,b,c)\in J_B$ 且 $c\ne0$。
+仅改变 $z$ 的群元素给出 $(u_z-1)v=(cz,0,0)$，故 $A_B\subset J_B$。
+仅改变 $y$ 给 $(u_y-1)v=(0,cy,0)$，故整个中间 $B$ 方向也在 $J_B$ 中。
+于是 $N_B\subset J_B$，加上原顶层向量即得 $J=E$。
+
+若顶层为零但 $J$ 在 $N/A$ 中非零，取 $v=(a,b,0)$ 且 $b\ne0$。
+由全部 $x$ 得 $(u_x-1)v=(xb,0,0)$，所以 $A_B\subset J_B$，
+再加该中间向量得 $J=N$。
+最后，若 $J\subset A$，则纯核的简单性给 $J=A$。
+上述包含通过忠实正合实现反映回实际范畴，四个候选均已实际存在。
+\end{proof}
+
+这个证明没有把不可分解等同于简单。
+$E$ 有非平凡子对象 $A,N$，但没有额外直和投影。
+由 \eqref{eq:chain} 和扩张的非分裂，非零动机自同态必须同时尊重各层；
+已有群作用进一步给 $\End(E)=\Q$。
+
+\section{完整双标架分类与分子选择规则}
+\subsection{链的闭包与读出的核}
+对任意 $\sigma\in E_B$，定理\ref{thm:uniserial}立即给
+\begin{equation}\label{eq:Rlevels}
+ R_\sigma=
+ \begin{cases}
+ 0,&\sigma=0,\\
+ A,&0\ne\sigma\in A_B,\\
+ N,&\sigma\in N_B\setminus A_B,\\
+ E,&\sigma\notin N_B.
+ \end{cases}
+\end{equation}
+对任意 $\lambda\in E_{\dR}^{\vee}$，有
+\begin{equation}\label{eq:Ilevels}
+ I_\lambda=
+ \begin{cases}
+ 0,&\lambda|A_{\dR}\ne0,\\
+ A,&\lambda|A_{\dR}=0,\ \lambda|N_{\dR}\ne0,\\
+ N,&\lambda|N_{\dR}=0,\ \lambda\ne0,\\
+ E,&\lambda=0.
+ \end{cases}
+\end{equation}
+这里均指向量或限制映射的精确非零，不是十进制求值不为零。
+
+\begin{theorem}[所有双标架的最小对象]\label{thm:allframes}
+记 $K=E/A$，它是非分裂的秩二质量 Kummer 对象。
+非零输入的完整分类为下表；括号中为秩。
+\begin{center}
+\small
+\begin{tabular}{c|cccc}
+\toprule
+链的范畴闭包&$\lambda|A\ne0$
+ &$\lambda|A=0,\lambda|N\ne0$
+ &$\lambda|N=0,\lambda\ne0$&$\lambda=0$\\
+\midrule
+$A$&$A\ (6)$&$0$&$0$&$0$\\
+$N$&$N\ (7)$&$B\ (1)$&$0$&$0$\\
+$E$&$E\ (8)$&$K\ (2)$&$\mathbf1\ (1)$&$0$\\
+\bottomrule
+\end{tabular}
+\end{center}
+各项都是实际最小对象；在通常形式周期记法中取它的对偶。
+\end{theorem}
+\begin{proof}
+将 \eqref{eq:Rlevels}、\eqref{eq:Ilevels} 代入
+$R_\sigma/(R_\sigma\cap I_\lambda)$。
+对象识别分别使用 $N/A=B$、$E/A=K$ 和 $E/N=\mathbf1$。
+没有剩余未知子对象，故该表既给上界也给最小性。
+\end{proof}
+
+\subsection{固定物理链的精确秩分层}
+原正物理链 $\sigma_{\mathrm{phys}}$ 在 $E/N$ 的坐标已标定为 $1$，
+所以其范畴闭包为 $E$。
+现在固定它，仅允许改变实际 de Rham 读出。
+\begin{corollary}[固定链的四个层]\label{cor:numerators}
+设 $V$ 为一个有限维 $\Q$-空间，代表已经映入同一对象的允许分子类；
+设线性映射 $L:V\to E_{\dR}^{\vee}$ 给其读出。
+定义
+\begin{equation}\label{eq:exceptional}
+ Z_A=\ker(\operatorname{res}_A L),\qquad
+ Z_N=\ker(\operatorname{res}_N L),\qquad Z_E=\ker L.
+\end{equation}
+则 $Z_E\subset Z_N\subset Z_A\subset V$，且
+\begin{equation}\label{eq:rankstrata}
+ \rank\Vis(E;\sigma_{\mathrm{phys}},L(v))=
+ \begin{cases}
+ 8,&v\notin Z_A,\\
+ 2,&v\in Z_A\setminus Z_N,\\
+ 1,&v\in Z_N\setminus Z_E,\\
+ 0,&v\in Z_E.
+ \end{cases}
+\end{equation}
+某些层可以为空。该分类不要求先求出任一个完整积分。
+\end{corollary}
+\begin{proof}
+直接应用定理\ref{thm:allframes}的最后一行。
+每个例外集合都是限制映射的核，故是有理线性子空间。
+若允许读出为空间 $E_{\dR}^{\vee}$ 本身，则
+$\dim Z_A=2,\dim Z_N=1,\dim Z_E=0$；
+对于物理给定子空间，只取这些空间的逆像，不能默认其全满。
+\end{proof}
+
+本推论的前提是分子已给出\emph{同一相对对象}上的类。
+若分子增加极点除子、要求新增 sector，或改变边界及链，须先扩大或重构对象。
+尤其不能仅按多项式次数将任意分子自动放入这里的八维空间。
+多分子线性组合的相消已经由 $L$ 的核精确记录；
+积分后一个值恰为零，并不意味着 $v\in Z_E$。
+
+\subsection{K3 可见为何迫使混合扩张一起保留}
+在保留原链时，$\lambda|A\ne0$ 不仅保护 K3 简单因子，
+还使整个 $E$ 最小。这是因为任一非零子对象都包含 $A$。
+不能先商去中间层而保留一个同样带原链的纯 K3 商；
+\eqref{eq:chain}中没有这种商。
+
+相反，最大割把链变成 $A_B$ 中的非零向量，并使用相应非零纯读出。
+定理\ref{thm:allframes}第一行给纯秩六对象。
+下层周期取 $N_B\setminus A_B$ 的链，则可能得到秩七。
+因此 $6$、$7$、$8$ 的区别来自完整双标架，不能归结为环境中是否存在一个 K3 曲面。
+
+同时，$\head E=\mathbf1$ 表明：仅凭一个未知读出的非零性，
+在实际动机范畴中只可强制顶层简单类型，不能单独强制 K3。
+顶层商读出 $E\to\mathbf1$ 已给非零但不含 K3 的反例。
+原切割单值模的 head 为 K3 型时仍可使用保护定理；
+那是另一个对象、另一组链和一个不同的作用范畴，不存在矛盾。
+
+\section{幺幂深度与实际割见证}
+\subsection{三个非零层的深度}
+\begin{proposition}\label{prop:depth}
+对固定顶层非零链，\eqref{eq:rankstrata}的三个非零层分别具有
+形式周期的幺幂深度 $2,1,0$。
+\end{proposition}
+\begin{proof}
+在 $E$ 上，$u-1$ 严格上三角，所以任意三个这样的因子的乘积为零。
+当 $\lambda|A\ne0$ 时，选 $x,y$ 使 $\lambda(xy\sigma_{\mathrm{top}})\ne0$；
+这是可能的，因为 $\sigma_{\mathrm{top}}\ne0$ 且
+$\Hom(B,A)\otimes B\to A$ 的评价满射。
+于是一个二重幺幂变化非零，深度恰为二。
+此计算在比较扭子的任意平凡化上进行，故是形式余作用的断言。
+
+在商 $K=E/A$ 上，幺幂作用只剩 $y$，其二重变化全为零。
+读出在 $B$ 上非零且链顶层非零，故一重变化非零，深度一。
+再商为 $\mathbf1$ 后幺幂作用平凡，深度零。
+\end{proof}
+
+深度不是数值超越性标签。秩六的纯 K3 对象同样深度零，
+而秩一的 Tate 周期也深度零。深度计量扩张中的幺幂方向，
+纯核类型必须单独保存。本文也不由深度二推断函数是某种长度二的 MPL。
+
+\subsection{用真实割证明读出在纯核上非零}
+\begin{proposition}[实际割的充分见证]\label{prop:cutwitness}
+设一个实际态射 $f:C\to E$ 的像恰为 $A$，
+并有实际割链 $\gamma\in C_B$。
+若 $\langle f^*\lambda,\gamma\rangle\ne0$，
+则 $\lambda|A\ne0$。
+若原链在 $E/N$ 非零，则原标架的最小对象为完整 $E$。
+\end{proposition}
+\begin{proof}
+若 $\lambda|A=0$，则 $f^*\lambda=0$，所有该类割周期都为零，矛盾。
+再用定理\ref{thm:allframes}即可。
+从一个实际数值\emph{非零}推出形式或向量非零不需要周期猜想；
+危险的是反方向，把数值零当成形式零。
+\end{proof}
+
+必须证明 $f$ 的像为纯核，而不能仅因某个正的相空间积分非零就假定这一点。
+若割对象还含可见边界项，非零也可能完全来自该边界。
+此外，函数在一个参数域内不恒零，不保证在任一指定代数点仍非零。
+对指定点使用命题\ref{prop:cutwitness}时，应提交该点的见证，
+或直接以代数 de Rham 限制证明 $\lambda|A\ne0$。
+
+对于本项目已给定的原物理读出，该限制非零来自既有全纯形式与纯核比较，
+不需要为本命题再做一次数值周期计算。新分子仍须提交其实际类及限制。
+
+\section{可复用规则及未完成范围}
+本补篇给统一分类方案增加三个可直接调用的理论规则。
+
+第一，操作闭包必须以实际图表为输入，并同时考虑所有后继读出。
+定理\ref{thm:network}给规范约化图表；
+将一个算子加入既有商时，先检验可达子对象和不可见核是否保持。
+
+第二，已下降的线性操作仍须通过实际余作用的等变检验。
+定理\ref{thm:intertwine}将这个责任精确地写在商上，
+既不误要求环境等变，也不把单值、配对保持或 Hodge 相容直接视为动机性。
+
+第三，在已识别简单 socle 的实际对象中，
+纯核上的非零读出可比单纯的 head 保护强得多。
+指定 banana 的完整表给出全部双标架最小对象及固定链分子分层，
+其中混合扩张的共同保留来自实际子对象结构。
+
+这些规则没有构造尚缺失的一般图 Nori 群、所有规范投影、
+任意分子的统一相对模型或每个物理商的可实现性。
+正质量零动量森林的实际对象可以作为图表顶点，
+但减除或局部 RG 提取若要成为箭头，仍需各自的几何比较。
+当前工作也不将零点森林的已有收敛证明视为本批重新审计完成。
+
+后续理论工作可先选一个具有明确相对分子类的有限族，
+在同一对象中写出 $L$ 及限制映射，得到具体线性消零条件；
+或者为一个实际减除/局部投影补出图表态射。
+这两条路线都以几何定义及证明为主体，不以扩大数值矩阵作为替代。
+
+\begin{thebibliography}{9}
+\bibitem{brown}F. Brown,
+\emph{Notes on motivic periods}, arXiv:1512.06410v3 (2017),
+\S\S2.4--2.5.
+\url{https://arxiv.org/html/1512.06410}.
+最小对象和 coradical 为原文基础；本文的图表及标架应用另证。
+
+\bibitem{dm}P. Deligne and J. S. Milne,
+\emph{Tannakian Categories}, in \emph{Hodge Cycles, Motives, and Shimura Varieties},
+Lecture Notes in Mathematics 900, Springer (1982), pp. 101--228.
+使用作者维护版本 Theorem 2.11：
+\url{https://www.jmilne.org/math/xnotes/tc.pdf}.
+
+\bibitem{internal}费曼周期研究项目，
+\emph{protected\_period\_network}、\emph{framed\_exact\_classification}（2026年10月10日），
+以及 \emph{VISIBILITY\_AND\_CORADICAL}、\emph{THEORY\_MANUSCRIPT} 第6--7、10节。
+内部工作稿；定理输入范围及有限证据由相应证明稿记录，不表示外部同行评议已完成。
+\end{thebibliography}
+\end{document}

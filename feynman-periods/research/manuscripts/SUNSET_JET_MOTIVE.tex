@@ -1,0 +1,562 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage[margin=26mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,fancyhdr,xcolor}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheoremstyle{cnplain}{7pt}{7pt}{\normalfont}{}{\bfseries}{。}{0.5em}{}
+\theoremstyle{cnplain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{注}
+\renewcommand{\proofname}{证明}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\A}{\mathbb A}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\per}{\operatorname{per}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\dR}{\mathrm{dR}}
+\newcommand{\SR}{S_{\mathrm R}}
+\setlength{\emergencystretch}{2em}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 费曼周期：二点喷射减除与场归一化}
+\fancyhead[R]{\small 理论补篇}\fancyfoot[C]{\thepage}
+\title{四维 sunset 的二次减除、实际相对周期\\[4pt]
+\large 端点下降与两圈耦合、场及质量的有限归一化}
+\author{费曼周期研究项目\quad 理论证明稿}
+\date{2026年10月13日}
+\begin{document}
+\maketitle
+\begin{abstract}
+对数发散图的相对周期构造尚不足以处理场归一化：四维二点 sunset 的表面发散度为二。
+本文直接在正质量欧氏区域证明其完整森林减除等于外动量平方变量中的一次 Taylor 余项。
+三个重叠 bubble 子图的反项收缩后均为动量无关的 tadpole，故被整体值与斜率减除严格消去。
+通过尺度积分的二阶余项，得到具有一个辅助区间的收敛有理形式及实际相对 Nori 对象；全部坐标角点的正则性用六个扇区的同一公式证明。
+两个显式代数原函数进一步证明二阶参数导数来自二维端点对象，给出微分阶数上界及实际形式周期的参考变换律。
+最后以明确的欧氏顶点和耦合约定推导两圈场、质量与耦合的有限匹配，保留场归一化对三阶耦合的必要贡献。
+固定裸理论并让二点减除尺度变化后，端点周期给出场反常维数的正质量阈值函数；
+其紫外极限由两个有理原函数精确得到，恢复经典两圈系数 $u^2/12$。
+本篇不需要数值积分，也不把椭圆环境对象的存在等同于任意特殊周期的最小非 Tate 性。
+\end{abstract}
+
+\section{图、减除条件与归一化}
+考虑两顶点、三条内边的 sunset 二点图。每边传播子为
+$(k_e^2+\mu_e)^{-1}$，其中 $\mu_e>0$ 是质量平方。
+外欧氏动量记为 $p$，$z=p^2\geq0$。
+本篇单个圈采用测度 $d^4k/\pi^2$；耦合和图对称因子到第\ref{sec:field}节才加入。
+令
+\begin{equation}\label{eq:poly}
+ U=ab+ac+bc,\quad M=\mu_1a+\mu_2b+\mu_3c,\quad
+ r=\frac{abc}{U},\quad F_z=UM+zabc,\quad H_z=\frac{F_z}{U}=M+zr.
+\end{equation}
+这里 $a,b,c$ 为 Schwinger 参数或其齐次坐标，不用它们表示减除点。
+在正射影单形 $\Delta\subset\PP^2(\mathbb R)$ 上，取正向形式
+\[
+ \Omega=a\,db\wedge dc-b\,da\wedge dc+c\,da\wedge db.
+\]
+所有本篇几何对象在包含 $\mu_i,z,z_0$ 的实代数数域 $K$ 上定义；
+参数变化时则先取相应的代数族。解析收敛结论允许任意正实质量。
+
+固定 $z_0\geq0$，整体减除算子为
+\begin{equation}\label{eq:taylor}
+ t_{z_0}^1 f(z)=f(z_0)+(z-z_0)f'(z_0).
+\end{equation}
+这是旋转不变二点函数的 MOM 值与斜率条件。
+当 $z_0=0$，它等于 $p$ 变量中至二次的 Taylor 减除；
+当 $z_0>0$，不把它称为在任意选定非零向量 $p_0$ 处的完整笛卡尔 Taylor 算子。
+适用条件明确是 \eqref{eq:taylor}。
+
+\begin{proposition}[三个重叠子反项的消去]\label{prop:forest}
+先给所有内边施加同一类截断 $a,b,c\geq\varepsilon>0$。
+对三个两边 bubble 以任意固定标量参考条件作局部常数减除，
+再对整图施加 $1-t_{z_0}^1$。
+在每个固定截断处，所得完整森林规则精确等于
+\begin{equation}\label{eq:regulated}
+ S_\varepsilon(z)-S_\varepsilon(z_0)
+          -(z-z_0)S'_\varepsilon(z_0).
+\end{equation}
+该结论不依赖三个子图的有限常数选择。
+\end{proposition}
+\begin{proof}
+图有 $N=3$、$h=2$，表面发散度 $4h-2N=2$。
+每个两边子图有一个圈，表面发散度零，故其局部反项与子图外动量无关。
+三个子图两两重叠，任何许可森林至多包含其中一个。
+收缩任意一个子图后，两条外腿位于同一顶点，剩余边是 tadpole，
+因而商图积分不依赖 $z$。
+所以准备式中每项 $C_{\gamma,\varepsilon}S_{G/\gamma,\varepsilon}$
+均被 $1-t_{z_0}^1$ 消去。
+逐边 Schwinger 截断使这些积分、参数导数和乘积在固定 $\varepsilon$ 时均有限。
+等式先在此处成立，再取共同截断极限；没有将三个发散裸值分别赋予有限部分。
+\end{proof}
+
+\section{从二阶余项直接得到有理周期}
+\begin{theorem}[实际二次减除表示]\label{thm:period}
+设 $z,z_0\geq0$，$\mu_i>0$。命题\ref{prop:forest}的极限存在且绝对收敛。
+记 $d=z-z_0$、$z_t=z_0+td$，则
+\begin{align}
+ \SR(z;z_0)
+ &=\int_\Delta\frac{\Omega}{U^2}
+       \left[H_z\log\frac{H_z}{H_{z_0}}-d r\right],\label{eq:log}\\
+ &=d^2\int_{\Delta\times[0,1]}
+       \frac{(1-t)(abc)^2\Omega\wedge dt}{U^3F_{z_t}}.\label{eq:rational}
+\end{align}
+它满足 $\SR(z_0;z_0)=\partial_z\SR(z_0;z_0)=0$。
+在代数参数处，\eqref{eq:rational} 是实际代数几何对的相对周期。
+\end{theorem}
+\begin{proof}
+先作两个圈的 Gaussian 积分。采用本篇测度后，裸 Schwinger 被积式是
+\[
+ \frac{e^{-M-zr}}{U^2}\,da\,db\,dc.
+\]
+令 $(a,b,c)=\lambda(\alpha,\beta,\gamma)$，
+$\alpha+\beta+\gamma=1$。
+径向因子为 $\lambda^{-2}d\lambda$。
+式\eqref{eq:regulated}合并后的径向核是
+\begin{equation}\label{eq:radial}
+ \lambda^{-2}e^{-\lambda H_{z_0}}
+       \left(e^{-\lambda d r}-1+\lambda d r\right)
+ =d^2r^2\int_0^1(1-t)e^{-\lambda H_{z_t}}\,dt.
+\end{equation}
+这是指数函数的带积分余项 Taylor 公式，对 $d$ 正负均成立。
+由于 $z_t\geq0$，在闭单形上 $H_{z_t}\geq\min_i\mu_i>0$。
+积分 $\lambda\in(0,\infty)$ 立即给出 \eqref{eq:rational}。
+再对 $t$ 作初等积分得到 \eqref{eq:log}；
+实际周期的定义使用有理式，不以求出对数表达式为前提。
+
+下面证明包括全部角点的可积性，而不只检验各个开边。
+将正射影单形分成六个坐标排序扇区。
+在其中一个扇区令 $c=1,b=y,a=xy$，$0\leq x,y\leq1$。
+置
+\[
+ A=1+x+xy,\quad U=yA,\quad
+ M=\mu_3+\mu_2y+\mu_1xy,\quad r=\frac{xy}{A}.
+\]
+相应正向密度精确化为
+\begin{equation}\label{eq:sector}
+ \frac{\Omega}{U^2}\frac{r^2}{H_{z_t}}
+   =\frac{x^2y}{A^4H_{z_t}}\,dx\,dy.
+\end{equation}
+分母在整个闭立方上有正下界，因而该式在 $x=0$、$y=0$ 及其交点同时正则。
+其余五扇区只需置换质量与坐标。
+这也证明相应吹起后坐标边界上的代数正则性。
+
+逐边截断在尺度变量中仅加入指示函数
+$\mathbf1_{\lambda\alpha_e\geq\varepsilon\ (e=1,2,3)}$。
+式\eqref{eq:radial}非负，并由刚刚证明可积的完整余项控制。
+因此共同截断趋零时可取极限，所得正是 \eqref{eq:rational}。
+端点两个条件由因子 $d^2$ 和统一可微性得到。
+实际相对对象的构造将在下一节明确给出。
+\end{proof}
+
+\begin{corollary}[凸性和所有高阶参数导数]\label{cor:derivatives}
+在正质量欧氏区域，
+\begin{align}
+ \partial_z\SR(z;z_0)
+ &=d\int_{\Delta\times[0,1]}
+             \frac{(abc)^2\Omega\wedge dt}{U^3F_{z_t}}
+   =\int_\Delta\frac{\Omega}{U^2}r\log\frac{H_z}{H_{z_0}},\label{eq:first}\\
+ K(z):=\partial_z^2\SR(z;z_0)
+ &=\int_\Delta\frac{(abc)^2\Omega}{U^3F_z}>0,\label{eq:second}\\
+ \partial_z^k\SR(z;z_0)
+ &=(-1)^{k-2}(k-2)!
+       \int_\Delta\frac{\Omega}{U^2}\frac{r^k}{H_z^{k-1}}\qquad(k\geq2).
+                                                        \label{eq:higher}
+\end{align}
+特别地 $K$ 与参考点无关；$\SR(z;z_0)>0$ 当且仅当 $z\ne z_0$。
+\end{corollary}
+\begin{proof}
+在任意紧的正质量欧氏参数集，\eqref{eq:sector}中的正下界统一成立。
+有限阶求导仅提高 $H$ 的分母次数并加入有界的 $r$，
+所以可在积分号内求导。
+对 \eqref{eq:log}求导得第一式，再求导得其余各式。
+严格正性来自正单形内部的严格正核。
+\end{proof}
+
+\section{实际相对对象与二阶端点下降}\label{sec:motive}
+取 $X\to\PP^2$ 为坐标顶点的吹起，并按需要作共同 toric 细化。
+令 $D$ 为坐标边界的全变换。
+六扇区式\eqref{eq:sector}说明下面使用的形式在正链边界附近均代数正则。
+删去 $U$ 及 $F$ 的严格变换零集，而不因齐次表达式中的公共单项式因子删去整个例外面。
+具体设
+\[
+ V_z=X\setminus\bigl(\widetilde{\{U=0\}}\cup
+        \widetilde{\{F_{z_0}=0\}}\cup\widetilde{\{F_z=0\}}\bigr),
+ \qquad D_z=D\cap V_z.
+\]
+取 $Y_z\subset V_z\times\A^1_t$，再删去 $F_{z_t}$ 的严格变换零集；
+记 $D_Y=Y_z\cap(D_z\times\A^1)$，
+$B_z=D_Y\cup(V_z\times\{0,1\})$。
+这给出实际对象
+\begin{equation}\label{eq:objects}
+ \mathcal E_z=H^3(Y_z,B_z),\qquad
+ \mathcal V_z=H^2(V_z,D_z).
+\end{equation}
+如需进一步解消，仅在不穿过正链的代数极点处作共同细化。
+正链 $\widetilde\Delta\times[0,1]$ 的全部边界都在 $B_z$；
+正性保证它不遇被删去的严格变换。
+因此定理\ref{thm:period}确实给出实际相对 Nori 对象的矩阵系数，
+其 Hodge 和 de Rham 实现由同一对产生。
+这不声称 \eqref{eq:objects} 已经最小。
+
+以下在固定 $z_0,\mu_i$ 的代数参数直线上工作，
+限制到上述对给出常秩局部系统的光滑开集。
+记 $w=\Omega/U^2$；$w$ 单独不是齐次次数零形式，
+但下列每个完整组合均是射影形式。
+定义
+\begin{align}
+ \Xi_z&=d^2(1-t)w\frac{r^2}{H_{z_t}}\wedge dt,&
+ \Psi_z&=d\,w\frac{r^2}{H_{z_t}}\wedge dt,\label{eq:forms}\\
+ A_1&=d\,t(1-t)w\frac{r^2}{H_{z_t}},&
+ A_2&=t\,w\frac{r^2}{H_{z_t}},&
+ \theta_z&=w\frac{r^2}{H_z}.\label{eq:primitives}
+\end{align}
+
+\begin{theorem}[二阶实际端点下降]\label{thm:descent}
+在上述族中存在由三重对给出的实际水平态射
+$\iota:\mathcal V\to\mathcal E$，使
+\begin{equation}\label{eq:descent}
+ \nabla_z[\Xi_z]=[\Psi_z],\qquad
+ \nabla_z^2[\Xi_z]=\iota[\theta_z].
+\end{equation}
+所有二阶及更高阶导数的最小形式周期对象都来自端点对象的子商。
+若 $b=\operatorname{rank}(\im\iota)$，则原周期在该参数直线上的齐次微分方程阶数至多为 $b+2$；
+一阶导数至多 $b+1$，二阶导数至多 $b$。
+\end{theorem}
+\begin{proof}
+在 $Y_z$ 上直接微分得到
+\begin{equation}\label{eq:exact}
+ \partial_z\Xi_z=\Psi_z+d_YA_1,\qquad
+ \partial_z\Psi_z=d_YA_2.
+\end{equation}
+例如第一式的纯 $t$ 系数之差为
+\[
+ d\left(\frac{1-2t}{H_{z_t}}
+          -\frac{d\,t(1-t)r}{H_{z_t}^2}\right)
+   =\partial_t\left(\frac{d\,t(1-t)}{H_{z_t}}\right),
+\]
+第二式使用
+$\partial_t(t/H_{z_t})=H_{z_0}/H_{z_t}^2$。
+底空间形式次数为二，故这里 $d_Y(A)=\partial_t A\wedge dt$ 没有额外负号。
+两个原函数都含 \eqref{eq:sector} 的正则核，
+在坐标边界的拉回为零；$A_1$ 还在 $t=0,1$ 同时为零。
+所以第一式在相对 de Rham 复形中给出第一条等式。
+
+明确取 cone 微分
+$D(\omega,\eta)=(d\omega,i^*\omega-d\eta)$，
+相对配对为 $\int_\sigma\omega-\int_{\partial\sigma}\eta$。
+于是 $[d_YA_2,0]=[0,-i^*A_2]$；
+其初端点为零，终端点为 $\theta_z$。
+定义 $\iota[\theta]=[0,-(0,\theta)]$。
+终端面在 $\widetilde\Delta\times[0,1]$ 上取正向，
+该类的周期正是 $\int_{\widetilde\Delta}\theta$，
+从而得到第二式及 \eqref{eq:second}，不产生 Tate 或 $2\pi i$ 因子。
+三重对的长正合序列给出该实际态射；它与 Gauss--Manin 连接相容。
+
+其像是水平子对象，故所有继续导数仍在该像中。
+将 $[\Xi]$ 生成的微分子模模去该像后，
+至多由 $[\Xi]$ 与 $\nabla[\Xi]$ 两个类张成；
+因此秩至多 $b+2$，其余两项同理。
+这只是微分模阶数界，不是固定算术纤维的秩等号，
+也没有假定该端点态射单射。
+\end{proof}
+
+\section{参考喷射的变换与椭圆几何}
+\begin{proposition}[参考点变换的实际形式周期律]\label{prop:reference}
+在同一正质量欧氏区域，任意参考 $\rho,\sigma\geq0$ 满足
+\begin{equation}\label{eq:change}
+ \SR(z;\sigma)=\SR(z;\rho)-\SR(\sigma;\rho)
+                -(z-\sigma)\partial_z\SR(\sigma;\rho).
+\end{equation}
+对于代数参数，该等式可提升为实际形式周期等式；
+两方案差是至一次的局部多项式，系数由同一图的值与斜率周期给出。
+\end{proposition}
+\begin{proof}
+在共同截断处直接使用两个 Taylor 投影便得到数值恒等式，
+前述绝对收敛允许取极限。
+形式提升另有直接几何依据：\eqref{eq:rational}与\eqref{eq:first}
+经代数变量变换 $s=\rho+t(z-\rho)$ 分别成为
+\begin{equation}\label{eq:weighted}
+ \SR(z;\rho)=\int_\rho^z(z-s)K(s)\,ds,\qquad
+ \partial_z\SR(z;\rho)=\int_\rho^zK(s)\,ds.
+\end{equation}
+这里的 $K(s)$ 代表实际有理二维被积式与正链，未先作数值求值。
+沿有向区间 $[\rho,z]=[\rho,\sigma]+[\sigma,z]$ 分解，
+再使用 $z-s=(\sigma-s)+(z-\sigma)$，就得到 \eqref{eq:change}。
+若三点次序不同，用反向链抵消；所有区间都位于无物理极点的非负轴。
+端点重合时，带标签端点的相对链恒等式取零链，结论仍成立。
+这些操作是实际链加法、代数拉回与相对配对双线性，
+所以不是依靠周期映射的单射性推断形式等式。
+\end{proof}
+
+\begin{remark}
+局部多项式并不意味着低圈周期：\eqref{eq:change}的系数是两圈 sunset 自身的参考值。
+更换任意两个点之后再复合，\eqref{eq:change}自动给出同一参考变换；
+这种喷射复合律尚不是完整物理 RG 流。
+\end{remark}
+
+\begin{proposition}[端点曲线的几何类型]\label{prop:elliptic}
+固定正质量后，$E_z=\{F_z=0\}\subset\PP^2$ 在一般 $z$ 处是光滑三次曲线，
+因此亏格为一。它与二维 sunset 的图三次曲线相同，
+欧氏变量与文献 Minkowski 变量的关系为 $z=-K^2$。
+\end{proposition}
+\begin{proof}
+三次铅笔由 $UM$ 和 $abc$ 生成，没有公共分量。
+其基点为三个坐标顶点及各坐标边上 $M=0$ 的点。
+在顶点 $[1:0:0]$，$F_z$ 对另两个坐标的线性系数均为 $\mu_1\ne0$；
+另外两顶点相同。
+在 $c=0$、$ab\ne0$、$M=0$ 处，沿此坐标边的限制为
+$ab(\mu_1a+\mu_2b)$，该根单，因此该点也对每个 $z$ 光滑。
+特征零 Bertini 定理保证一般成员在基点之外光滑。
+故一般成员处处光滑；平面三次的亏格公式给出一。
+图多项式的识别直接比较 \eqref{eq:poly} 与文献\cite[式(2.5)--(2.6)]{BV}。
+\end{proof}
+
+对 $E_z$ 的实际定位序列提供其开曲线 $H^1$ 的 Tate 扭转作为几何候选来源；
+坐标边界与 conic $U=0$ 另外贡献边界信息。
+但定位序列仍有映射和核像，不能单靠出现了三次曲线，
+就宣布某一被积形式与指定链一定读出了完整椭圆核。
+尤其 $z=0$ 时 $F_0=UM$ 已退化，
+正欧氏积分的正则性并不意味着每个参数处的三次曲线都光滑。
+本文没有给出固定数值不属于 MZV 的超越性结论。
+文献\cite{BV}主要处理二维等质量闭合表达式；
+这里的四维减除和实际形式提升来自前述独立推导。
+
+\section{两圈场、质量与耦合的有限匹配}\label{sec:field}
+现取单实标量欧氏作用量，相互作用为 $\lambda\phi^4/4!$，
+并定义 $u=\lambda/(16\pi^2)$。
+这与项目先前物理基准的 $\mathcal M_{\rm tree}=-g$ 相容于 $g=\lambda$，
+但本节使用欧氏离壳 MOM 条件，不把它与极点质量、在壳单位留数方案混同。
+固定非负二点参考 $\rho$，令
+\begin{equation}\label{eq:2conditions}
+ \Gamma^{(2)}_\rho(\rho)=\rho+\mu_\rho,
+ \qquad \partial_z\Gamma^{(2)}_\rho(\rho)=1.
+\end{equation}
+一圈 tadpole 独立于外动量，其整体质量减除使一圈二点校正为零。
+
+\begin{lemma}[二点函数的非局部两圈项]\label{lem:weight}
+在这些条件下，
+\begin{equation}\label{eq:gamma2}
+ \Gamma^{(2)}_\rho(z)=z+\mu_\rho
+       -\frac{u_\rho^2}{6}\SR(z;\rho;\mu_\rho,\mu_\rho,\mu_\rho)
+       +O(u_\rho^3).
+\end{equation}
+\end{lemma}
+\begin{proof}
+具有两顶点的四价二点图有三条内部线。
+每顶点各接一条外腿时，唯一动量相关的 1PI 拓扑是三条线全连接两顶点的 sunset。
+若两条外腿接同一顶点，1PI 图的另一顶点带 tadpole，整个图不携带穿行外动量。
+单连接边加两侧 tadpole 的图是一粒子可约，属于传播子迭代而非 $\Gamma^{(2)}$。
+一圈耦合反项及质量反项在这一阶的二点插入也只给动量无关项。
+所以值与斜率条件消去其余局部项。
+
+sunset 的 Wick 计数可手算：展开系数是
+$1/[2!(4!)^2]$；
+两条带标签外腿在两顶点的分配有 $2$ 种，
+每顶点外腿端口有 $4$ 种，三个剩余端口的配对有 $3!$ 种。
+故图系数为 $2\cdot4^2\cdot3!/[2!(4!)^2]=1/6$。
+欧氏 $e^{-S_{\rm int}}$ 的二阶项给连通传播子正的 sunset 修正；
+取逆传播子后，1PI 非局部项带负号。
+每圈从 $d^4k/\pi^2$ 换为 $d^4k/(2\pi)^4$ 带来 $1/(16\pi^2)$，
+两圈与 $\lambda^2$ 合成 $u^2$，得到 \eqref{eq:gamma2}。
+\end{proof}
+
+取另一个非负二点参考 $\sigma$，在旧方案参数下记
+\begin{equation}\label{eq:AB}
+ A=\partial_z\SR(\sigma;\rho;\mu_\rho,\mu_\rho,\mu_\rho),\qquad
+ B=\SR(\sigma;\rho;\mu_\rho,\mu_\rho,\mu_\rho).
+\end{equation}
+这里 $A$ 无量纲，$B$ 的量纲为质量平方。
+定义
+\[
+ \zeta=\partial_z\Gamma^{(2)}_\rho(\sigma),\qquad
+ \phi_\sigma=\zeta^{1/2}\phi_\rho.
+\]
+平方根按常数项为一的形式幂级数理解，不引入额外代数分支选择。
+于是 $\Gamma^{(n)}_\sigma=\zeta^{-n/2}\Gamma^{(n)}_\rho$
+是同一有效作用量在新场坐标下的顶点。
+
+\begin{theorem}[有限二点及四点匹配]\label{thm:matching}
+固定参考坐标 $\rho,\sigma$，则
+\begin{align}
+ \zeta&=1-\frac{u_\rho^2}{6}A+O(u_\rho^3),\label{eq:zeta}\\
+ \mu_\sigma&=\mu_\rho+
+       \frac{u_\rho^2}{6}\bigl[(\sigma+\mu_\rho)A-B\bigr]
+       +O(u_\rho^3).\label{eq:mass}
+\end{align}
+再令旧方案的欧氏四点顶点为
+\begin{equation}\label{eq:vertex}
+ \frac{\Gamma^{(4)}_\rho(\kappa)}{16\pi^2}
+   =u_\rho+u_\rho^2V_{1,\rho}(\kappa)
+            +u_\rho^3V_{2,\rho}(\kappa)+O(u_\rho^4),
+\end{equation}
+其耦合参考为固定代数欧氏四点配置 $\kappa_\rho$，
+$V_{j,\rho}(\kappa_\rho)=0$。
+在新的固定参考 $\kappa_\sigma$ 定义耦合后，
+\begin{equation}\label{eq:coupling}
+ u_\sigma=u_\rho+u_\rho^2V_{1,\rho}(\kappa_\sigma)
+    +u_\rho^3\left[V_{2,\rho}(\kappa_\sigma)+\frac A3\right]
+    +O(u_\rho^4).
+\end{equation}
+$A,B$ 以及在本节统一条件下的 $V_1,V_2$ 都有实际形式周期提升，
+所以这些有限匹配系数由实际周期的有限和与乘积给出。
+\end{theorem}
+\begin{proof}
+第一式是 \eqref{eq:gamma2} 的斜率。
+新逆传播子为 $\zeta^{-1}\Gamma^{(2)}_\rho$，
+因此 $\mu_\sigma=\zeta^{-1}\Gamma^{(2)}_\rho(\sigma)-\sigma$；
+展开到 $u^2$ 得到 \eqref{eq:mass}。
+新四点顶点乘上 $\zeta^{-2}=1+u_\rho^2 A/3+O(u_\rho^3)$，
+与 \eqref{eq:vertex} 相乘就给出 \eqref{eq:coupling}。
+尤其不能遗漏 $A/3$：它来自场的有限归一化，虽始于两圈，却在三阶耦合匹配中出现。
+
+$A,B$ 的实际载体和参考律已在前面构造。
+一圈四点 bubble 与两圈非局部双 bubble、wineglass 都在已有对数森林实际周期定理的图类中。
+两圈四点中的一圈 tadpole 插入与其质量反项相消，
+因为本节的一圈二点减除是全动量无关 tadpole 的完整减除。
+剩余局部四点项由同一耦合参考条件固定，
+因此 $V_1,V_2$ 可由已证明的非零 MOM 递归及实际直和、张量积实现。
+场变换中出现的逆数或平方根，在任意固定微扰阶的系数都是已有系数的有理多项式。
+最后，将内部质量由 $\mu_\rho$ 换写为 $\mu_\sigma$，
+只会从四点一圈项的 $u^2\cdot O(u^2)=O(u^4)$ 起产生新项，
+不会改变本定理到 $u^3$ 的公式。
+\end{proof}
+
+同一理论在第三个参考点的匹配，由有效作用量的场坐标变换和
+\eqref{eq:change}复合，故满足逐阶复合律。
+这避免将彼此不相容的逐图减除常数拼作一个拉格朗日量方案。
+本节特意固定参考坐标；若 $\rho,\sigma,\kappa_\rho,\kappa_\sigma$
+依赖正在求导的质量或尺度，必须加入对应的链式法则项。
+
+\section{实际场反常维数与有理紫外出口}
+上述构造补上了此前纯对数图范围不能提供的实际二点输入。
+固定旧方案参数，改变新二点参考 $\sigma$，有
+\begin{equation}\label{eq:scale-response}
+ \partial_\sigma\log\zeta=-\frac{u_\rho^2}{6}K(\sigma)+O(u_\rho^3).
+\end{equation}
+现在明确 RG 条件，令 $\sigma=Q^2>0$，以 $\log Q$ 为 RG 时间。
+旧参考及其全部重整化参数固定，即固定同一裸理论；
+新质量和耦合由前节的匹配同时定义，不人为冻结它们。
+令 $\phi_{\rm bare}=Z_\rho^{1/2}\phi_\rho=Z_Q^{1/2}\phi_Q$，
+于是 $Z_Q=Z_\rho/\zeta(Q^2)$。定义
+\begin{equation}\label{eq:gamma-def}
+ \gamma_\phi=\frac12\left.Q\frac{d}{dQ}\log Z_Q\right|_{\rm bare}
+ =-\frac12\left.Q\frac{d}{dQ}\log\zeta(Q^2)\right|_{\rho,\mu_\rho,u_\rho}.
+\end{equation}
+这些比值可先在同一正规化下定义，再取已证明存在的有限差；
+不需要把单独的发散 $Z_\rho$ 称为有限周期。
+
+\begin{theorem}[两圈场响应与紫外有理值]\label{thm:gamma}
+按 \eqref{eq:gamma-def} 的约定，
+\begin{equation}\label{eq:gamma}
+ \gamma_\phi(Q)=\frac{u_Q^2}{6}\,\mathcal T(Q^2;\mu_Q)+O(u_Q^3),
+ \qquad
+ \mathcal T(z;\mu)=zK(z;\mu,\mu,\mu).
+\end{equation}
+对任意固定正质量，$\mathcal T(z;\mu)$ 在 $z>0$ 严格递增，且
+\begin{equation}\label{eq:threshold}
+ 0<\mathcal T(z;\mu)<\frac12,\qquad
+ \lim_{z\to0}\mathcal T(z;\mu)=0,\qquad
+ \lim_{z\to\infty}\mathcal T(z;\mu)=\frac12.
+\end{equation}
+因此在两圈系数层面，其紫外值为
+\begin{equation}\label{eq:uvgamma}
+ \gamma_{\phi,\rm UV}(u)=\frac{u^2}{12}+O(u^3).
+\end{equation}
+有限质量的 $\mathcal T$ 是实际端点周期；
+紫外系数所对应的极限有理积分，其形式周期恰等于有理数 $1/2$。
+\end{theorem}
+\begin{proof}
+将 \eqref{eq:scale-response} 代入定义，
+得到 $u_\rho^2Q^2K(Q^2;\mu_\rho)/6$。
+由 $u_Q=u_\rho+O(u_\rho^2)$、$\mu_Q=\mu_\rho+O(u_\rho^2)$，
+在两圈阶可换写为 \eqref{eq:gamma}。
+这是逐阶恒等式，允许高阶余项的系数含尺度对数。
+
+为证明极限，以下甚至允许三个不同的正质量。
+用式 \eqref{eq:second} 可写成
+\begin{equation}\label{eq:monotone}
+ zK(z)=\int_\Delta\frac{\Omega\,abc}{U^3}
+                    \frac{zr}{M+zr}.
+\end{equation}
+内部的最后因子随 $z$ 严格递增，由零趋向一，且严格介于零和一。
+其控制积分可以完全用有理原函数计算。
+在 $c=1$ 图表中，
+\begin{align}
+ C&=\int_0^\infty\int_0^\infty
+          \frac{ab}{(a+b+ab)^3}\,da\,db \notag\\
+  &=\frac12\int_0^\infty\frac{db}{(1+b)^2}
+   =\frac12. \label{eq:C}
+\end{align}
+第一步只需关于 $a$ 的原函数
+\[
+ \frac{b}{(1+b)^2}
+ \left[-\frac{1}{(1+b)a+b}
+       +\frac{b}{2((1+b)a+b)^2}\right],
+\]
+第二步原函数为 $-1/[2(1+b)]$。
+也可先作代数换元 $v=(1+b)a/b$，将二重积分分成
+$\int_0^\infty v(1+v)^{-3}dv$ 与
+$\int_0^\infty(1+b)^{-2}db$ 的乘积；
+其两条紧化区间的端点均代数，角点经同一吹起处理。
+所以不需要椭圆特殊函数或数值求积。
+正控制核可积，支配收敛给出两端极限与严格不等式；
+差分的严格正性给单调性。
+在代数紧化后的两个区间端点应用同一有理 Stokes 公式，
+还得到 $C^{\mathfrak m}=\tfrac12\,1^{\mathfrak m}$；
+不是从其数值恰好有理反推形式周期有理。
+将 $C=1/2$ 代入 \eqref{eq:gamma}，得到 \eqref{eq:uvgamma}。
+\end{proof}
+
+这里的紫外极限针对微扰系数，等价于该阶阈值函数的质量/尺度比趋零；
+并未把固定非零耦合下的大对数微扰级数当成一致收敛函数，
+也未声称实际跑动质量沿任意轨道自动满足这一极限。
+式 \eqref{eq:uvgamma} 是经典结果，和文献
+\cite[式(1)、(2)、(5)、(9)，$n=1$]{KP} 的归一化吻合；
+本文给出的贡献是把它从实际二点周期和明确场坐标中直接导出。
+有限尺度的椭圆环境并不迫使这个紫外系数含椭圆常数。
+不过上述结论只识别此极限的有理周期，
+不建立从每个固定椭圆纤维到单位对象的无条件动机投影。
+
+\section{完成边界与后续理论任务}
+
+现在可以把二点输入与已建立的一圈、两圈四点实际周期合并，
+得到明确有限阶 MOM 方案之间的实际周期系数映射。
+这比逐图有限 character 更接近完整物理方案，
+但仍不是全阶局部 RG 或任意幂次发散图的统一定理。
+三项限制尤其需要保留：
+其一，sunset 的子反项消去利用了收缩后商图不携带外动量，
+一般幂次发散图没有这一性质；
+其二，本篇只在正质量欧氏区域直接建立物理积分比较，
+到 Minkowski 区域的全局边界值及所有切割另需证明；
+其三，环境中的椭圆曲线与微分阶数上界不代替最小带标架对象的可见性证明。
+
+本篇全部新推导为理论证明。
+仅对紫外有理核使用两个手写原函数作精确积分，
+没有新增数值求积、图枚举程序、区间重放或高维比较矩阵。
+实际两圈场响应已明确；后续应继续同一物理规范下的
+$\beta$ 与质量响应、局部出口的几何态射及更一般森林的理论。
+
+\begin{thebibliography}{9}\raggedright
+\bibitem{BV} S. Bloch and P. Vanhove,
+\emph{The elliptic dilogarithm for the sunset graph},
+\href{https://arxiv.org/abs/1309.5865}{arXiv:1309.5865}.
+本篇直接核对该文第2节式(2.2)--(2.7)的图多项式、一般椭圆曲线及维数约定；
+未将其二维等质量闭合表达式当成四维本篇方案的证明。
+\bibitem{BK} F. Brown and D. Kreimer,
+\emph{Angles, Scales and Parametric Renormalization},
+\href{https://arxiv.org/abs/1112.1180}{arXiv:1112.1180}.
+作为森林参数减除的背景；本篇对 sunset 的截断极限另给直接证明。
+\bibitem{KP} M. V. Kompaniets and E. Panzer,
+\emph{Minimally subtracted six loop renormalization of
+$O(n)$-symmetric $\phi^4$ theory and critical exponents},
+\href{https://arxiv.org/abs/1705.06483}{arXiv:1705.06483}.
+本篇只以第II节规范和式(9)作经典两圈系数的来源比较，
+未把其MS高阶结论当成有限质量MOM系数。
+\bibitem{internal} 本项目理论补篇：
+《零外动量森林的实际相对动机》、《森林参数导数的端点下降》、
+《非零动量减除点的实际周期与有限方案变换》。
+本篇用其对数图结论处理两圈四点顶点，
+没有用其尚未包含的幂次发散范围来论证二点 sunset。
+\end{thebibliography}
+\end{document}

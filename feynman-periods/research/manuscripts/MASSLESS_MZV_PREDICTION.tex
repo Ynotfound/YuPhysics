@@ -1,0 +1,336 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage[margin=25mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,longtable,array,fancyhdr,xcolor,pdflscape}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheoremstyle{cnplain}{7pt}{7pt}{\normalfont}{}{\bfseries}{。}{0.5em}{}
+\theoremstyle{cnplain}\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{定义}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{注}
+\renewcommand{\proofname}{证明}
+\newcommand{\Q}{\mathbb Q}\newcommand{\cC}{\mathcal C}
+\newcommand{\cS}{\mathcal S}\newcommand{\dR}{\mathrm{dR}}
+\newcommand{\rk}{\operatorname{rk}}\newcommand{\im}{\operatorname{im}}
+\setlength{\emergencystretch}{3em}\allowdisplaybreaks[2]
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 无质量费曼图：MZV与物理读出}
+\fancyhead[R]{\small 研究主线}\fancyfoot[C]{\thepage}
+\title{从图结构预报MZV：无质量串并联族\\[5pt]
+\large 全阶维数展开、局部减除与banana的正谱}
+\author{费曼周期研究项目\quad 物理分类证明补篇}
+\date{2026年10月14日}
+\begin{document}\maketitle
+\begin{abstract}
+给定无质量双端串并联分解，逐层一圈卷积在不求完整多圈积分的前提下
+保证：规定Euler规范后的全部维数展开系数属于单个zeta值生成的代数。
+无质量banana提供完整物理实例，反项、MS有限部分、MOM函数与正谱均有全边数公式。
+四线谱曲面的有理化说明同一拓扑怎样在全零质量层脱离正质量K3。
+本文包含七项带证明陈述，区分常数MZV、尺度对数、函数表示与原生动机。
+经典积分恒等式不主张新颖性；一般森林结论保留明确闭合与IR条件。
+\end{abstract}
+\tableofcontents\clearpage
+\section{无质量图的MZV肯定规则：串并联、减除与同拓扑退化}
+\label{sec:masslessmzv}
+
+本节补分类表的肯定方向：在完整积分以前，从图的分解证书预报所需常数。
+接受域是无质量、非零欧氏外动量的标量两点图；物理对象是维数正规化的
+Laurent系数、在明确条件下的局部反项，以及无质量banana的完整重整化函数。
+这里不假定每个图都属于同一个可重整化拉格朗日量；图权、耦合和外腿归一化另行乘回。
+一圈卷积和单尺度子图替换是经典规则\cite[式(1.2.1)、\S5.2.1]{PanzerMZV}。
+以下自给推导它们对分类、物理减除及特殊质量层的具体结论，不主张经典公式的新颖性。
+
+\subsection{物理输入与一圈卷积}
+令$D=4-2\varepsilon$，$q^2=x>0$，每圈测度为$d^Dk/\pi^{D/2}$。
+边的传播子为$(k_e^2)^{-a_e}$，初始$a_e\in\mathbb Z_{>0}$。
+所有外动量只在两个指定端点注入；其余顶点总外动量为零。
+若图有$h$圈，使用明确的Euler归一化
+\[
+ \widehat F_G(x,\varepsilon)
+ =e^{h\gamma_E\varepsilon}\mu^{2h\varepsilon}F_G(x,\varepsilon),
+ \qquad L=\log(x/\mu^2),\qquad
+ \mathcal Z_1=\mathbb Q[\zeta(2),\zeta(3),\ldots]\subseteq\mathcal Z.
+\]
+此处$\mu>0$是同一减除尺度。更换测度会改变显式$\pi$与$4\pi$因子；
+没有先去掉这些规范就不能声称系数属于普通MZV代数。
+维数不为整数的整个积分不是一个已构造的有限维Nori对象；本节的算术结论逐个展开系数陈述。
+
+\begin{lemma}[实际卷积核]\label{lem:masslesskernel}
+在$0<\operatorname{Re} A,\operatorname{Re} B<D/2$及
+$\operatorname{Re}(A+B)>D/2$的实正整数维数收敛域，
+\begin{align}
+ \int\frac{d^Dk}{\pi^{D/2}(k^2)^A((q-k)^2)^B}
+ &=x^{D/2-A-B}\,g_D(A,B),\\
+ g_D(A,B)&=
+ \frac{\Gamma(D/2-A)\Gamma(D/2-B)\Gamma(A+B-D/2)}
+ {\Gamma(A)\Gamma(B)\Gamma(D-A-B)}.\label{eq:masslesskernel}
+\end{align}
+两边以Schwinger参数形式亚纯延拓到维数和指数的一般复值。
+\end{lemma}
+\begin{proof}
+对两条边引入正参数$t,u$，完成平方后动量高斯积分给
+$(t+u)^{-D/2}\exp[-tu x/(t+u)]$。
+置$t=\lambda v,u=\lambda(1-v)$，$0<v<1$。
+先积$\lambda$得到$\Gamma(A+B-D/2)x^{D/2-A-B}$，
+再积$v$得到$B(D/2-B,D/2-A)$，连同原来的
+$1/(\Gamma(A)\Gamma(B))$即为所示公式。
+收敛域中Tonelli或绝对Fubini合法；复维数版本由该参数公式定义并唯一亚纯延拓，
+不是在非整数维度上假想一个通常的Lebesgue空间。
+\end{proof}
+
+\subsection{边表证书与全阶常数类}
+双端串并联证书是一棵二叉树。叶是有标号边；每个结点的两个子图除所声明端点外不相交。
+串联$S$仅把前者末端与后者首端粘合；并联$P$把两对端点分别粘合。
+最终叶集须恰为输入边集，端点粘合须恢复原边表，并逐顶点核对无内部动量注入。
+这里的并联包含任意边数banana，串联中允许二价顶点。
+这是一项充分的接受条件，不是所有MZV图的必要条件。
+
+\begin{theorem}[串并联证书预报全阶单$\zeta$代数]\label{thm:masslesssp}
+给定上述证书，设$E$为边数，$h$为圈数，$A_0=\sum_e a_e-2h$。
+不需要展开任一多圈积分即可断定
+\[
+ \widehat F_G(x,\varepsilon)
+ =x^{-A_0}e^{-h\varepsilon L}\widehat C_G(\varepsilon),
+ \qquad \widehat C_G\in\mathcal Z_1((\varepsilon)).
+ \label{eq:masslessspclass}
+\]
+更精确地，证书给有限有理函数$R_G\in\mathbb Q(\varepsilon)$和有理数$c_k$使
+\[
+ \widehat C_G(\varepsilon)=R_G(\varepsilon)
+ \exp\left(\sum_{k\ge2}\frac{\zeta(k)}k c_k\varepsilon^k\right).
+ \label{eq:masslessgammaexp}
+\]
+若$R_G$在零点的极点阶为$p$，则第$\varepsilon^j$系数可表达为
+权重至多$j+p$的单$\zeta$乘积；计$L$的权重为1，同一界适用于去掉$x^{-A_0}$后的系数。
+这里是表示的权重上界，不假定$\zeta$值间的代数独立性。
+\end{theorem}
+\begin{proof}
+每个子图记$F=Cx^{-A}$，从叶$(h,A,C)=(0,a_e,1)$开始。
+串联时动量相同、环变量互相独立，因此
+\[
+ h=h_1+h_2,\quad A=A_1+A_2,\quad C=C_1C_2.
+\]
+并联时分流动量为$k,q-k$，额外增加一次真实卷积，因此
+\[
+ h=h_1+h_2+1,\quad A=A_1+A_2-D/2,\quad
+ C=C_1C_2g_D(A_1,A_2).
+\]
+从而每个子图均有$A=a+h\varepsilon$、$a\in\mathbb Z$。
+恒等式先在各叶指数独立的收敛域证明：指定任一子树的有效指数
+$0<A<D/2$，串联可把它分成两个正数；并联可选择两个小于$D/2$的正数，
+其和为$A+D/2$。反向归纳给所有叶的非空同时收敛域。
+再亚纯延拓至原正整数指数和$D=4-2\varepsilon$，无需非法交换发散积分。
+
+用$\Gamma(z+1)=z\Gamma(z)$把所有Gamma因子移至$\Gamma(1+c\varepsilon)$。
+整数位移只产生有理函数。非正整数的分子Gamma具有非零斜率：
+并联结点的三条分子斜率为$-(h_1+1),-(h_2+1),h_1+h_2+1$；
+所以不会遇到沿整条$\varepsilon$直线恒为极点的分子。
+斜率为零的分母Gamma仅来自无圈正指数子树，也不形成此问题。
+各并联结点的分子斜率和减去分母斜率和恰为1。
+应用经典展开\cite[5.7.3]{DLMFGamma}
+\[
+ \log\Gamma(1+z)=-\gamma_E z+
+ \sum_{k\ge2}\frac{(-1)^k\zeta(k)}k z^k,
+\]
+恰有$h$个并联结点，故Euler常数项为$-h\gamma_E\varepsilon$，被规定的规范消去。
+剩下$c_k=\sum_\nu\sigma_\nu(-1)^kc_\nu^k$，其中
+$\sigma_\nu=\pm1$记录分子或分母，$c_\nu\in\mathbb Q$为斜率。
+指数展开的$\varepsilon^r$项由总权重$r$的$\zeta$乘积组成；
+乘$R_G$及$e^{-h\varepsilon L}$给所述界。
+\end{proof}
+
+这个证明也解释为什么需要规范：若保留$e^{-h\gamma_E\varepsilon}$，
+展开就含Euler常数；这不能被省略后写成MZV定理。
+去掉$x^{-A_0}$后，当$x=\mu^2$时系数属于$\mathcal Z_1$；一般$x$时是
+$\mathcal Z_1[L]$，不能把任意质量单位或运动学对数自动叫作MZV常数。
+有质量、非整数中心指数或内部动量注入都可能破坏这个接受域。
+
+\begin{proposition}[有限证书的核查成本]\label{prop:masslesscertificate}
+给定边表与上述二叉证书，可用不超过$O(E^2)$次集合/端点核对以及
+$O(E)$个指数加减操作核实接受条件并生成至多$6h$个Gamma因子的表达树。
+无需生成生成树多项式、求积或数值整数关系。
+\end{proposition}
+\begin{proof}
+满二叉树有$2E-1$个结点。逐结点比较子图的带标号边集与粘合端点，
+用朴素至多$E$长度列表即可在$O(E^2)$内验证；同时检查外动量标记。
+三条递归量$(h,A,C)$每个结点只需常数次操作，每个$P$结点追加六个Gamma记录。
+这些是组合操作及符号表达树的界；若把任意大整数位移完全展开成线性因子，
+或列举所有$\varepsilon$阶系数，其位复杂度另计，不被这个界隐瞒。
+\end{proof}
+
+\subsection{重整化与局部RG的接受条件}
+\begin{proposition}[森林数据闭合时的MZV保持]\label{prop:masslessforestclosure}
+固定一个有限阶的实际MS森林计算。假设无未分离的IR极点，局部反项规则已成立，
+且每个需要的子图和带局部插入的余图在去量纲后，都有上一定理的证书，
+或是这类表达的有限有理组合和明确为零的无尺度积分。
+则该计算的所有MS反项、有限部分、以及由它们作有限有理代数操作与尺度导数所得的
+RG图贡献，系数属于$\mathcal Z_1$；保留尺度时属于$\mathcal Z_1[L]$。
+这不声称任一串并联图自动满足所有森林接受条件。
+\end{proposition}
+\begin{proof}
+有限圈阶按子图数递归，用
+\[
+ C_-(G)=-K\!\left(F_G+
+ \sum_{\emptyset\ne\gamma\subsetneq G}C_-(\gamma)F_{G/\gamma}\right),
+ \qquad R(G)=(1-K)\overline R(G),
+\]
+其中求和和局部插入按给定实际森林规则，$K$取负次幂。
+归纳假设与接受证书使括号中的各项都属于相应Laurent环。
+有限加法、乘法和$K$保持该环。若需要除以常数项为非零有理数的形式级数，
+其逆也逐阶留在同一环。$\partial_L$同样保持此环；
+局部性另外保证反项的局部系数不含$L$。
+没有将包含IR污染的裸极点解释为UV反项，也没有由单图贡献推出完整理论的$\beta$函数。
+若有限方案另添任意常数，该结论只在所添常数仍属所声明代数时保持。
+\end{proof}
+
+\subsection{实际无质量banana：全阶规则与完整物理读出}
+令$B_n$为两点之间的$n\ge2$条单位无质量边，$h=n-1$。
+它可以来自$n$种互异自由标量的正规序乘积源两点函数；
+剥去Wick归一化和测度常数后，正是这里的有标号标量图。
+不加入相同粒子的$n!$，也不把任意$n$的复合源说成同一个可重整化基本场相互作用。
+
+\begin{theorem}[无质量banana的闭式分类与MS有限部分]\label{thm:masslessbanana}
+在前述规范下，
+\begin{align}
+ F_{B_n}(x,\varepsilon)
+ &=x^{n-2-(n-1)\varepsilon}
+ \frac{\Gamma(1-\varepsilon)^n
+       \Gamma(2-n+(n-1)\varepsilon)}{\Gamma(n-n\varepsilon)},
+ \label{eq:masslessbananaexact}\\
+ \widehat C_{B_n}(\varepsilon)
+ &=R_n(\varepsilon)\exp\left[
+ \sum_{k\ge2}\frac{\zeta(k)}k
+ \bigl(n+(-1)^k(n-1)^k-n^k\bigr)\varepsilon^k\right],\\
+ R_n(\varepsilon)&=
+ \left[\prod_{j=0}^{n-2}((n-1)\varepsilon-j)
+       \prod_{j=1}^{n-1}(j-n\varepsilon)\right]^{-1}.
+\end{align}
+该实际图在$x>0$无IR发散，所有非空真UV森林的反项插入积分在无质量DR中为零。
+因此其MS反项和有限部分分别为
+\begin{align}
+ C_-(B_n)&=-\frac{r_n}{\varepsilon}x^{n-2},
+ &r_n&=\frac{(-1)^{n-2}}{((n-1)!)^2},\\
+ F^{\mathrm{MS}}_{B_n}(x)&=r_nx^{n-2}\bigl(b_n-(n-1)L\bigr),
+ &b_n&=(n-1)H_{n-2}+nH_{n-1},\label{eq:masslessbananaMS}
+\end{align}
+其中$H_0=0$、$H_m=\sum_{j=1}^m1/j$。
+特别地，去量纲后的减除点值是有理数；所有更高$\varepsilon$系数均在单$\zeta$代数中。
+\end{theorem}
+\begin{proof}
+更一般维数的$n$线公式为
+\[
+ x^{(n-1)D/2-n}
+ \frac{\Gamma(D/2-1)^n\Gamma(n-(n-1)D/2)}
+ {\Gamma(n(D/2-1))}.
+\]
+$n=2$是一圈引理。把$n-1$线子图和一条边并联，
+将有效指数$n-1-(n-2)D/2$与1代入卷积核，Gamma因子望远镜消去，得到归纳步。
+整数维收敛域的解析指数延拓同前，故所得是实际图的亚纯表达。
+把$D=4-2\varepsilon$代入，再把Gamma平移至1，给$R_n$及指数中的系数。
+
+IR方面，非零$q$使全部$n$条线不能同时软化。
+任一真子集的$r<n$个软线动量可作为独立的$r$个四维局部坐标；
+其奇性至多为$\prod_{j=1}^r(k_j^2)^{-1}$，局部可积。
+这同时覆盖移位后某条线变软的层；四维附近仍成立。
+因此这里的零点极点是UV问题，不能套用有IR的无尺度原图。
+
+每个真圈子图包含两端顶点和$r<n$条平行边。
+把其局部反项缩成一点后，至少一条余边成为无质量蝌蚪；
+局部反项只提供有限阶动量多项式。
+展开这些多项式后，余图是独立无尺度张量蝌蚪积分的有限和，DR中均为零。
+嵌套森林按最外层真子图同样判断；互相重叠的子图不能当作可同时收缩的森林。
+所以$\overline R(B_n)=\widehat F_{B_n}$，无需把裸图一般地等同于已减除图。
+
+$R_n$的唯一零点极点来自$j=0$，其留数为$r_n$。
+Gamma指数从$\varepsilon^2$开始，而
+\[
+ R_n(\varepsilon)=\frac{r_n}{\varepsilon}
+                 (1+b_n\varepsilon+O(\varepsilon^2)),\qquad
+ e^{-h\varepsilon L}=1-h\varepsilon L+O(\varepsilon^2).
+\]
+二者相乘即给反项及有限部分，$b_n$由有限线性因子的对数导数求出。
+这是确切全$n$公式，不依赖数值拟合。
+\end{proof}
+
+\begin{corollary}[MOM、正谱与四线显式物理函数]\label{cor:masslessphysical}
+令$T_{\mu^2}^{n-2}$取$x=\mu^2$处至$n-2$阶Taylor多项式。
+同一源函数满足这些局部MOM条件的代表为
+\[
+ F^{\mathrm{MOM}}_{B_n}(x)
+ =-(n-1)r_n(1-T_{\mu^2}^{n-2})
+       \bigl[x^{n-2}\log(x/\mu^2)\bigr].
+\]
+取$\mathcal A(s\pm i0)=F_{B_n}^{\mathrm{MS}}(-s\mp i0)$，则$s>0$时
+\[
+ \frac{\operatorname{Disc}\mathcal A(s)}{2\pi i}
+ =\frac{s^{n-2}}{(n-1)!(n-2)!}>0.
+ \label{eq:masslessspectral}
+\]
+同一不连续性也适用于上述MOM代表。具体四线有
+\begin{align}
+ F^{\mathrm{MS}}_{B_4}(x)&=\frac{x^2}{36}
+                   \left(\frac{71}{6}-3\log(x/\mu^2)\right),\\
+ F^{\mathrm{MOM}}_{B_4}(x)&=-\frac1{12}\left[
+ x^2\log(x/\mu^2)-\mu^2(x-\mu^2)-\frac32(x-\mu^2)^2\right],\\
+ \frac{\operatorname{Disc}\mathcal A_4(s)}{2\pi i}&=\frac{s^2}{12}.
+\end{align}
+这些是前述剥去常数的源两点函数，不是未经LSZ和通量处理的散射截面。
+\end{corollary}
+\begin{proof}
+两种局部延拓之差是次数至多$n-2$的多项式；指定Taylor喷射唯一确定它。
+MS有限部分中的$b_nx^{n-2}$全部被Taylor减除，得到首式。
+对于$s>0$，$\log(-s\mp i0)=\log s\mp i\pi$，
+而$(-s\mp i0)^{n-2}=(-1)^{n-2}s^{n-2}$。
+代入MS式与$r_n$，符号相消，得到正谱公式。
+局部多项式没有割，故MOM同样成立。
+最后用$r_4=1/36$、$b_4=71/6$及
+$T_{\mu^2}^{2}[x^2\log(x/\mu^2)]=\mu^2(x-\mu^2)+3(x-\mu^2)^2/2$。
+\end{proof}
+
+\subsection{同一拓扑为何从K3退化到对数}
+\begin{proposition}[四线全零质量层的显式有理化]\label{prop:masslessdegeneration}
+固定$s\ne0$，四线谱载体在$m_1=m_2=m_3=m_4=0$时为
+\[
+ y^2=a^2b^2\lambda(s,a,b),\qquad
+ \lambda(s,a,b)=(s-a-b)^2-4ab.
+\]
+约去重复因子后，在$ab\ne0$的稠密开集上有理坐标
+\[
+ z=y/(ab),\quad t=\frac{s-a-b-z}{2a},\qquad
+ b=\frac{st}{1+t}-at,\quad z=\frac{s}{1+t}-a(1+t).
+\]
+因此一般有质量的K3载体在此奇异质量层的正规化是有理的；
+实际无质量四维函数的对数分类由上面的完整物理公式确定。
+\end{proposition}
+\begin{proof}
+把$t$的定义写成$z=s-a-b-2at$，代入$z^2=(s-a-b)^2-4ab$，
+约去非零$4a$即得$(1+t)b=st-at(1+t)$。
+这给互逆有理参数化，$t=-1$及$a b=0$只需作为边界保留。
+有理化本身不分类全部相对扩张；上一定理和推论另行给完整读出的对数形式。
+所以这里没有从环境有理性直接跳到完整周期结论。
+\end{proof}
+
+这一结果与分类表K3行保持同一$D=4$、同一四线拓扑，改变的是质量层和已声明的减除输入。
+全零质量必须作为M4独立一行，不能从光滑正质量族把K3标签机械外推。
+反过来，也不能在正质量积分中直接丢掉质量后保留原答案。
+本节独立定义并解析延拓无质量图，不假定质量极限、维数展开及减除三者无条件可交换。
+在$D=2$直接全零质量会遇到新的IR问题，因而不在此物理MOM结论内。
+
+表的M3行由\ref{thm:masslesssp}和\ref{prop:masslesscertificate}给全阶肯定证据；
+森林物理出口须提交\ref{prop:masslessforestclosure}的附加输入。
+M4行由\ref{thm:masslessbanana}--\ref{prop:masslessdegeneration}实际闭合MS、MOM和正谱。
+这回答了为什么某些周期能用MZV，以及怎样在积分前给充分判断；
+它不提供所有图的必要判据，也不识别每个正规化系数原生的完整最小动机。
+
+\begin{thebibliography}{9}
+\bibitem{PanzerMZV} E. Panzer, \emph{Feynman integrals and hyperlogarithms},
+arXiv:1506.07243; author thesis, equation (1.2.1), \S5.2.1.
+\url{https://people.maths.ox.ac.uk/panzer/paper/phd.pdf}.
+One-loop convolution and one-scale insertion rules are classical input; the present
+classification certificate and the displayed normalization are derived explicitly.
+\bibitem{DLMFGamma} NIST Digital Library of Mathematical Functions, \S5.7, equation 5.7.3,
+\url{https://dlmf.nist.gov/5.7.E3}.
+\end{thebibliography}
+\end{document}

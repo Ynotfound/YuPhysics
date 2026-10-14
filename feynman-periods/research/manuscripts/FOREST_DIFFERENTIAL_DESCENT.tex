@@ -1,0 +1,460 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage[margin=26mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage{enumitem,fancyhdr,xcolor}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheoremstyle{cnplain}{7pt}{7pt}{\normalfont}{}{\bfseries}{。}{0.5em}{}
+\theoremstyle{cnplain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{注}
+\renewcommand{\proofname}{证明}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\dR}{\mathrm{dR}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\rk}{\operatorname{rk}}
+\newcommand{\cR}{\mathcal R}
+\newcommand{\cH}{\mathcal H}
+\setlength{\emergencystretch}{2em}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 费曼周期：森林减除与参数导数}
+\fancyhead[R]{\small 理论补篇}
+\fancyfoot[C]{\thepage}
+\title{森林减除的参数导数与端点动机\\[5pt]
+\large 正质量零动量方案的降维定理、质量插入及微分阶数界}
+\author{费曼周期研究项目\quad 理论证明稿}
+\date{2026年10月13日}
+\begin{document}
+\maketitle
+\begin{abstract}
+对四维、单位传播子、全部子图至多对数发散的正质量标量图，采用所有子图及整图的零外动量减除。
+在既有合并森林相对周期构造上，本文证明任意正阶质量或运动学导数均来自一个少一维的实际端点相对对象。
+证明的关键不是逐项微分对数，而是构造在所有森林项上共用的有理原函数：它在初始端点及右单位上同时为零，因而继承森林留数相消，并在正常交叉角点正则。
+实际相对对的连接态射由此给出形式周期恒等式；在光滑参数曲线上，正阶导数生成的微分模秩至多为端点对象的 Betti 秩 $b$，原振幅的齐次微分方程阶数至多为 $b+1$。
+另外证明质量求导与继承的零点森林算子交换，明确它与重新按改善后的发散度减除之间的有限差别。
+所有结论由理论推导获得，不需求解完整积分或新增数值验证；不把微分阶数界解释为固定动机秩或完整 RG 系数。
+\end{abstract}
+
+\section{输入、方案和已建立的共同核}
+\subsection{图与物理数据}
+设 $G$ 连通，边集 $E$ 有序，$N=|E|=2h_G>0$，并置 $n=N-1$。
+对任意边子集 $J$ 要求
+\begin{equation}\label{eq:power}
+ d_G(J)=|J|-2b_1(G|J)\geq0.
+\end{equation}
+这排除了幂次 UV 子发散，允许嵌套和重叠的对数子图。
+所有边质量平方 $\mu_e>0$；外数据为守恒的欧氏动量。
+每圈采用 $\pi^{-D/2}$ 的欧氏测度，$D=4$，图权和耦合另计。
+所有子图以及整图均在其全部外动量为零处减除，保留原边质量。
+固定代数参数属于带指定实嵌入的数域 $k$。
+
+设 $U$ 为第一 Symanzik 多项式，$\Phi$ 为不含质量项的第二多项式，
+\begin{equation}\label{eq:mass}
+ M=\sum_{e\in E}\mu_e\alpha_e,\qquad F_G=U_GM+\Phi_G.
+\end{equation}
+在所选欧氏域 $\Phi$ 非负。
+允许先把其动量不变量系数作为仿射参数，再限制到实际运动学子空间；这不声称任意系数都可由四维外动量实现。
+
+\subsection{森林准备映射}
+在保留边标签的对数图 Hopf 代数中，记反极为 $S_H$，
+$\pi_+=\mathrm{id}-u\varepsilon$。定义
+\begin{equation}\label{eq:prep}
+ \cR=(S_H\otimes\pi_+)\Delta_H,
+ \qquad \cR(G)=\sum_{A,B}c_{A,B}A\otimes B,
+ \qquad B\ne1.
+\end{equation}
+$A$ 是反项块的乘积，$B$ 是带外运动学的根商图。
+各项的边集仍分割原 $E$。
+准备恒等式为
+\begin{equation}\label{eq:prepidentity}
+ \mu_{13}\bigl(\Delta_H\otimes((\mathrm{id}\otimes\pi_+)\Delta_H)\bigr)\cR
+ =1\otimes\cR.
+\end{equation}
+这是经典森林相消机制\cite{bk}；其在本方案中的具体核和收敛证明已在项目零点森林稿给出。
+
+写
+\begin{equation}\label{eq:wq}
+ w_{A,B}=\frac{\Omega_E}{U_A^2U_B^2},\qquad
+ q_B=\frac{\Phi_B}{U_B},\qquad H_B(\tau)=M+\tau q_B.
+\end{equation}
+因所有左块在零外动量，森林各项共享同一个 $M$。
+既有实际相对形式为
+\begin{equation}\label{eq:Xi}
+ \Xi_G=-\sum_{A,B}c_{A,B}w_{A,B}
+                     \frac{q_B}{H_B(\tau)}\wedge d\tau,
+ \qquad 0\leq\tau\leq1,
+\end{equation}
+其正链周期为零点 BPHZ 振幅 $R_G$。
+在正内部积分 $\tau$ 可写成
+\begin{equation}\label{eq:log}
+ R_G=\int_{\widetilde\sigma_G}
+       \sum_{A,B}c_{A,B}w_{A,B}\log\frac{M}{M+q_B}.
+\end{equation}
+式\eqref{eq:log}始终指\emph{先合并森林再积分}；单项可以发散。
+本文不另行对每个发散对数赋予形式周期。
+
+\subsection{既有边界结论和本次新增责任}
+令 $X_G$ 为射影空间沿全部坐标旗标的光滑 toric 模型，$D_X$ 为坐标边界。
+森林各项沿 $D_X$ 至多有对数极点。
+在真边子集 $I$ 的法向面上，其留数分解为 $\omega_{\rm UV}(I)$ 与相应收缩核的外积；右块全部收缩时，$q_B$ 多出一阶法向参数。
+式\eqref{eq:prepidentity}使合并后的每个留数分别为零，正常交叉整除使全部角点正则。
+正质量及生成树正性保证正链避开非边界极点。
+
+这些既有结论证明\eqref{eq:Xi}的存在，却尚未说明其参数导数来自哪个实际对象。
+下面给出这个端点对象及实际态射；尤其证明所用有理原函数也满足森林相消。
+
+\section{在两端点之间构造有理原函数}
+令 $v$ 为质量和仿射运动学参数的一个常系数方向。
+图多项式 $U$ 与这些参数无关，故 $v(w_{A,B})=0$。
+定义 $n$ 次形式
+\begin{align}\label{eq:Hprimitive}
+ \mathcal A_v(\tau)
+ &=\sum_{A,B}c_{A,B}w_{A,B}
+       \left(\frac{vM}{M}-\frac{vH_B(\tau)}{H_B(\tau)}\right)\nonumber\\
+ &=\sum_{A,B}c_{A,B}w_{A,B}
+       \frac{\tau(q_BvM-Mvq_B)}{M H_B(\tau)}.
+\end{align}
+其中未合并的括号在 $B=1$ 时规定 $q_1=0$。
+由此该括号在右单位上恒零，并且
+\begin{equation}\label{eq:endpointzero}
+ \mathcal A_v(0)=0,\qquad
+ v\Xi_G=(\partial_\tau\mathcal A_v)\wedge d\tau
+             =(-1)^n d_Y\mathcal A_v.
+\end{equation}
+最后一个等号是相对参数纤维上的外微分：$\mathcal A_v$ 已是 $X_G$ 方向最高次形式。
+
+\begin{remark}
+若只取 $-\sum c_{A,B}w_{A,B}vH_B/H_B$ 作为原函数，它在右单位上一般不为零。
+此时不能直接调用森林准备恒等式消除反项新增面的极点。
+式\eqref{eq:Hprimitive}减去初端点值，是几何证明所必需的规范化，不是略去一个可任意丢弃的常数。
+\end{remark}
+
+\begin{lemma}[原函数的全部边界相消]\label{lem:cancel}
+在删去 $M$、各 $U$ 块及各 $H_B(\tau)$ 的非边界零集后，$\mathcal A_v(\tau)$ 沿全部坐标面和正常交叉角点正则。
+结论包括 $\tau=0,1$，并且对任意有限阶参数导数仍成立。
+\end{lemma}
+\begin{proof}
+单项的 $w_{A,B}$ 至多有简单对数极点。
+在一个坐标面提取共同法向单项式后，$M$ 与 $H_B$ 的余因子在正邻域非零，故式\eqref{eq:Hprimitive}的附加因子不产生新的法向负阶。
+
+若 $I_B\ne B$ 且该面有对数留数，则树及二森林因子化给
+\[
+ q_B\big|_I=q_{B/I_B},\qquad M\big|_I=M_{E\setminus I}.
+\]
+参数方向 $v$ 在保留下来的质量及运动学上作相应限制。
+属于 $I$ 的质量项及其参数导数均含法向因子，在该面消失。
+于是\eqref{eq:Hprimitive}的括号限制恰好是收缩后同一个括号。
+$\omega_{\rm UV}$ 不依赖所求导的参数，因此原函数具有与原核相同的留数协变性。
+
+若 $I_B=B$，则 $q_B$ 和 $vq_B$ 均具有额外法向因子；其括号限制为零。
+这也由 $q_1=0$ 的右单位约定表达。
+因此将原函数核代入\eqref{eq:prepidentity}，全部带边标签留数分别为零。
+
+在旗标坐标 $t_1,\ldots,t_n$ 中，总和可写为
+$f(t,\tau)\,dt_1\cdots dt_n/(t_1\cdots t_n)$，其中 $f$ 正则。
+每个留数为零意味着 $t_j\mid f$。
+光滑正常交叉坐标环中各 $t_j$ 是不同素因子，所以 $\prod_jt_j\mid f$。
+因此角点也正则。
+
+上述恒等式在参数代数环上成立，并未先固定某个数值。
+继续对参数求导仍保持初端点零值、右单位零值和留数协变性；至多提高非边界分母的幂。
+同一整除证明逐阶适用。
+\end{proof}
+
+定义端点形式
+\begin{equation}\label{eq:Theta}
+ \Theta_v=\mathcal A_v(1)
+   =\sum_{A,B}c_{A,B}w_{A,B}
+       \left(\frac{vM}{M}-\frac{v(M+q_B)}{M+q_B}\right).
+\end{equation}
+它在正链上的每个角点正则；其定义不含辅助参数 $\tau$。
+
+\section{实际相对对及连接态射}
+\subsection{共同端点几何}
+从 $X_G$ 删去所有森林项的 $U_A,U_B,M,M+q_B$ 的非边界零集，得到 $V_G$；有理函数的零集按清分母后的严格变换理解。
+记 $D_V=D_X\cap V_G$。
+同一正质量下界保证 $\widetilde\sigma_G$ 及其边界仍在这对中。
+置
+\begin{align}\label{eq:pairs}
+ Y&=\{(x,\tau)\in V_G\times\mathbb A^1:
+                         H_B(\tau)\ne0\text{ 对所有森林项}\},\nonumber\\
+ D_Y&=Y\cap(D_V\times\mathbb A^1),\qquad
+ E_i=V_G\times\{i\}\quad(i=0,1),\nonumber\\
+ B&=D_Y\cup E_0\cup E_1,\qquad
+ H_G=H^n(V_G,D_V),\qquad M_G=H^{n+1}(Y,B).
+\end{align}
+边界处使用提取法向单项式后的非边界方程。
+由于已删去两个端点的零集，$E_0,E_1$ 确为整个 $V_G$ 的两份。
+这是原零点森林模型的共同开细化；实际限制态射与同一正链保持其形式周期，不声称较大的载体与原载体同构。
+
+三重对 $D_Y\subset B\subset Y$ 的连接态射及端点分解给
+\begin{equation}\label{eq:connecting}
+ H^n(B,D_Y)\simeq H_G\oplus H_G
+       \longrightarrow M_G.
+\end{equation}
+取来自 $E_1$ 的分量，并按乘积链取向归一化，记为 $\iota:H_G\to M_G$。
+它是实际相对上同调态射，也是在共同平滑参数开集上的水平态射。
+这里没有留数管的 Tate 扭转或额外 $2\pi i$ 因子。
+
+\subsection{符号和相对 Stokes}
+为固定\eqref{eq:connecting}的符号，采用相对复形
+\[
+ C^j(Y,B)=\Omega_Y^j\oplus\Omega_B^{j-1},\qquad
+ d(\alpha,\beta)=(d\alpha,i^*\alpha-d\beta),
+\]
+对链的配对为 $\int_\Gamma\alpha-\int_{\partial\Gamma}\beta$。
+$B$ 的并分量可用相容的相对或 simplicial 模型解释。
+对 $\Gamma=\widetilde\sigma_G\times[0,1]$，终端面在 $\partial\Gamma$ 中的符号为 $(-1)^n$。
+于是 $\iota[\theta]$ 在局部代表中为
+\begin{equation}\label{eq:cone}
+ \bigl[(0,(-1)^{n+1}\theta\text{ 位于 }E_1)\bigr],
+ \qquad
+ \langle\iota[\theta],\Gamma\rangle
+     =\langle[\theta],\widetilde\sigma_G\rangle.
+\end{equation}
+端点形式在 $D_V$ 上的拉回为零；必要的相对 cochain 按同一模型补齐。
+
+取 $\eta_v=(-1)^n\mathcal A_v$。
+式\eqref{eq:endpointzero}给 $d\eta_v=v\Xi_G$。
+其在 $E_0$ 上为零，在 $E_1$ 上为 $(-1)^n\Theta_v$，在 $D_Y$ 上亦为零，因为它没有 $d\tau$ 且是 $X_G$ 方向的 $n$ 次形式。
+减去相对 coboundary $d(\eta_v,0)$，得到
+\begin{equation}\label{eq:GM}
+ \nabla_v[\Xi_G]=\iota[\Theta_v].
+\end{equation}
+这一步是实际相对复形中的等式，不是从数值导数相等倒推动机态射。
+
+\section{任意正阶导数的降维定理}
+在质量严格正、欧氏参数的一个紧邻域中，生成树余因子有统一正下界，$M$ 以及 $H_B(\tau)$ 的余因子也有统一正下界。
+引理\ref{lem:cancel}中的整除在参数族中成立。
+故合并后的形式及其任意给定有限阶参数导数在有限个闭旗标立方体上都有统一有界密度。
+这允许在合并森林积分内逐阶求导。
+它不允许分别积分尚未相消的发散项。
+
+\begin{theorem}[实际端点下降]\label{thm:descent}
+在\eqref{eq:power}的图类及第1节的零点方案中，任意正阶参数导数均为端点对象 $H_G$ 的实际周期。
+在共同光滑且上同调常秩的参数开集上，式\eqref{eq:connecting}给出实际水平态射 $\iota$，满足
+\begin{equation}\label{eq:descent}
+ \nabla_v[\Xi_G]=\iota[\Theta_v],\qquad
+ vR_G=\int_{\widetilde\sigma_G}\Theta_v.
+\end{equation}
+所有更高正阶协变导数均在 $\im\iota$ 中。
+在代数参数点，以该实际微分标架定义的形式周期满足
+\begin{equation}\label{eq:motivic}
+ (vR_G)^{\mathfrak m}
+     =[H_G,[\Theta_v],[\widetilde\sigma_G]]^{\mathfrak m}.
+\end{equation}
+因而其最小形式周期对象是 $H_G$ 的子商。
+\end{theorem}
+\begin{proof}
+原函数的边界正则性由引理\ref{lem:cancel}保证；这使\eqref{eq:GM}成为实际相对类等式。
+上述统一有界性给积分导数，式\eqref{eq:cone}给正链及符号。
+两者的形式周期比较来自同一个实际态射，故不需要一般周期映射的单射性。
+继续求导时，$\iota$ 的水平性保证所得类仍在其像中。
+实际像是子对象，最小矩阵系数对象的构造再给最后结论。
+\end{proof}
+
+这里 ``光滑参数开集'' 包括对代数对的必要分层：若删去的零集碰并导致上同调秩跳跃，不能把邻近纤维的秩界直接搬到该点。
+显式有理形式及其收敛积分在适当欧氏边界点仍可有意义；连接与秩的陈述只用于其已定义的常秩开集。
+
+\subsection{可直接写出的全部导数核}
+若 $v_1,\ldots,v_r$ 是仿射参数空间上的常系数方向，$r\geq1$，则 $M$ 和 $H_B(1)$ 均为仿射函数，故
+\begin{align}\label{eq:allorders}
+ \Theta_{v_1\cdots v_r}
+ ={}&(-1)^{r-1}(r-1)!\sum_{A,B}c_{A,B}w_{A,B}\nonumber\\[-2pt]
+ &\quad\cdot\left[
+ \frac{\prod_{j=1}^r v_jM}{M^r}
+ -\frac{\prod_{j=1}^r v_j(M+q_B)}{(M+q_B)^r}
+ \right].
+\end{align}
+重复方向也适用。对非线性物理参数曲线按链式法则取这些形式的线性组合；不能遗漏向量场系数的导数。
+
+例如质量多重指标 $a=(a_e)$、$|a|=r\geq1$ 给
+\begin{equation}\label{eq:massderivative}
+ \partial_\mu^a R_G
+ =(-1)^{r-1}(r-1)!\int_{\widetilde\sigma_G}
+   \sum_{A,B}c_{A,B}w_{A,B}\alpha^a
+       \left(M^{-r}-(M+q_B)^{-r}\right).
+\end{equation}
+一个纯外运动学方向 $v$ 则给
+\begin{equation}\label{eq:kinematic}
+ vR_G=-\int_{\widetilde\sigma_G}
+             \sum_{A,B}c_{A,B}w_{A,B}\frac{vq_B}{M+q_B}.
+\end{equation}
+所有表达式仍先作有限森林总和。
+
+\section{无需先积分的微分系统上界}
+\begin{corollary}[曲线上的阶数界]\label{cor:ode}
+将参数限制到一条定义在 $k$ 上的光滑代数曲线，局部函数域记 $k(s)$。
+设端点相对局部系统的秩为 $b=\dim(H_G)_B$。
+振幅所有正阶 $s$ 导数所生成的微分模秩 $d$ 满足
+\begin{equation}\label{eq:rankbound}
+ d\leq\rk(\im\iota)\leq b.
+\end{equation}
+原振幅具有一个 $k(s)$ 系数齐次线性微分方程，阶数至多 $d+1\leq b+1$；其一阶导数具有阶数至多 $d$ 的齐次方程。
+\end{corollary}
+\begin{proof}
+令 $\omega=[\Xi_G]$，$\mathcal D_+$ 为 $\nabla_s^j\omega$、$j\geq1$ 生成的 $k(s)$ 向量空间。
+它对连接稳定，由定理\ref{thm:descent}包含于 $\im\iota$，故\eqref{eq:rankbound}成立。
+加入 $\omega$ 最多增加一维，所得循环微分模秩至多 $d+1$。
+其连续导数必在该维数内线性相关；与水平 Betti 链配对便得到方程。
+若 $d=0$，导数恒零，原振幅的常数方程按同一约定处理。
+\end{proof}
+
+这是端点几何控制的上界，不是一个已经给出所有图 $b$ 的算法，更不是最小阶数恰为 $b+1$ 的断言。
+多参数导数空间也包含于同一端点像；其实际秩仍需几何求取。
+
+\begin{proposition}[算术范围]\label{prop:arithmetic}
+设 $\mathcal C$ 是所用实际动机范畴中对子商封闭的满张量子范畴。
+若 $H_G\in\mathcal C$，则每个代数点的正阶参数导数形式周期的最小对象属于 $\mathcal C$。
+特别地，端点对象 mixed Tate 是这些导数具有 mixed Tate 载体的充分条件。
+\end{proposition}
+\begin{proof}
+直接用式\eqref{eq:motivic}及子商封闭性。该证明不依赖导数的具体数值。
+\end{proof}
+
+反向不成立：特定读出或链可能看不见端点对象的大部分结构。
+本命题也没有从导数载体的类型自动推出原振幅的完整动机类型。
+微分模中新增的一个水平商方向可以承载非平凡的\emph{常数算术}；一维微分模并不意味着一维固定算术对象。
+本原尺度振幅 $-p_G\log\lambda$ 的参数方程阶数只有二，而 $p_G$ 的算术 coaction 必须完整保留，正是此前证明的例子。
+
+\section{质量插入怎样穿过森林减除}
+\subsection{交换的是继承的减除算子}
+记 $\mathbf R_G$ 为原图规定的零点森林算子，包含整图零点减除，并按嵌套顺序施加各 $t_\gamma$。
+$t_\gamma$ 将子图的全部外动量取零，保留所有边质量。
+因此在被积函数层面
+\begin{equation}\label{eq:commute}
+ [\partial_{\mu_e},t_\gamma]=0,\qquad
+ \partial_\mu^a\mathbf R_G f_G
+                =\mathbf R_G\partial_\mu^a f_G.
+\end{equation}
+这个代数恒等式在相容的收敛正规化区域同样成立；最终有限值的交换由前述合并森林的统一估计保证。
+
+单位传播子给
+\begin{equation}\label{eq:insert}
+ \partial_\mu^a\prod_e\frac1{k_e^2+\mu_e}
+ =(-1)^{|a|}\left(\prod_e a_e!\right)
+              \prod_e(k_e^2+\mu_e)^{-1-a_e}.
+\end{equation}
+故质量导数确实实现提高传播子幂次的插入，但右端必须带\emph{从原图继承}的森林算子。
+若插入改善发散度后重新仅对仍发散子图作减除，一般会得到另一个有限振幅。
+
+\begin{proposition}[不能自动改用插入图的最少减除]\label{prop:oversub}
+即使原图本原、质量插入图已经 UV 收敛，原重整化振幅的质量导数仍可能含一个非零的零点减除值。
+因此式\eqref{eq:commute}不能无条件写成 ``质量导数等于插入图的最少重整化值''。
+\end{proposition}
+\begin{proof}
+取等质量一圈 bubble，$z=Q^2\geq0$，$\mu=m^2>0$。
+同一归一化下
+\[
+ R(z,\mu)=\int_0^1\log\frac{\mu}{\mu+zx(1-x)}\,dx,
+\]
+所以
+\begin{equation}\label{eq:bubble}
+ \partial_\mu R
+   =\frac1\mu-\int_0^1\frac{dx}{\mu+zx(1-x)}.
+\end{equation}
+未作额外零点减除的共同质量插入之和为
+$-\int_0^1dx/(\mu+zx(1-x))$，已经 UV 收敛。
+原振幅的导数另外减去该插入在 $z=0$ 的值 $-1/\mu$。
+两者相差明确非零的 $1/\mu$，无须求完整积分。
+\end{proof}
+
+对子图反项作质量求导同样不能遗漏。
+在一个具有多块乘积的森林项中，共同质量或一般方向导数按 Leibniz 法则分配到每块；高阶导数带相应多项式系数。
+若质量由原边独立标记，每个 $\partial_{\mu_e}$ 只作用于含该边的块。
+反项块虽对外动量局部，却通常依赖质量。
+
+\subsection{外动量导数不同于质量导数}
+对一变量零点取值 $t_0f=f(0)$，有
+\begin{equation}\label{eq:kincommutator}
+ [\partial_z,t_0]f=-f'(0).
+\end{equation}
+所以外参数导数不能逐项穿过减除而忽略局部项。
+式\eqref{eq:kinematic}已经将所有原反项及总体减除处理在合并核内。
+它仅让根商图的 $q_B$ 发生变化；没有假定对子图内部外动量作任意变化都可与原减除交换。
+
+\section{尺度、有限方案及物理出口}
+\subsection{同时缩放与固定参考点必须分开}
+把所有质量平方和全部外动量平方不变量同时乘 $\lambda>0$。
+则 $M\mapsto\lambda M$、$q_B\mapsto\lambda q_B$，式\eqref{eq:Xi}逐项不变，因而
+\begin{equation}\label{eq:euler}
+ \left(\sum_e\mu_e\partial_{\mu_e}
+              +\sum_a\kappa_a\partial_{\kappa_a}\right)R_G=0.
+\end{equation}
+在共同模型中这是形式本身的恒等式，也给实际 Euler 零类。
+这里各反项中的质量一起缩放；它与保持一个独立非零参考尺度不动时得到的对数尺度响应不是同一个操作。
+不能由\eqref{eq:euler}推出量子场论 $\beta$ 函数为零。
+
+\subsection{子反项变化仍可产生非局部响应}
+此前已用实际有理 Stokes 证明 Dunce's cap 的有限子参考点关系
+\begin{equation}\label{eq:scheme}
+ R_{\nu'}^{\mathfrak m}-R_\nu^{\mathfrak m}
+   =-R_\gamma^{\mathfrak m}(\nu',\nu)\,
+                         R_C^{\mathfrak m}(S,S_0).
+\end{equation}
+当参考点固定而质量变化时，正确导数为
+\begin{equation}\label{eq:schemederivative}
+ \partial_\mu(R_{\nu'}-R_\nu)
+ =-(\partial_\mu R_\gamma)R_C
+                        -R_\gamma\partial_\mu R_C.
+\end{equation}
+它来自真实外积的 Leibniz 连接，因而也成立为微分标架的形式周期关系。
+只保留第二项会丢掉质量依赖的有限反项。
+当只改整图外参数 $S$ 时，$R_\gamma$ 为常值而
+\[
+ \partial_SR_C=-\int_0^1
+       \frac{y(1-y)}{\mu_cy+\mu_d(1-y)+S y(1-y)}\,dy<0.
+\]
+因此局部子反项的有限变化在收缩图插入后仍有非局部响应。
+端点下降没有把这个信息抹去，也没有把全部导数压缩成 UV 常数。
+
+\subsection{已经接通的接口与保留的责任}
+本篇得到一条实际链：
+\[
+ \text{带物理数据的图}
+ \longrightarrow\text{合并森林相对形式}
+ \xrightarrow{\nabla}\text{端点相对对象}
+ \longrightarrow\text{导数的最小形式周期对象}.
+\]
+它适用于第1节整个图类，允许森林任意嵌套和重叠，不以完整积分为输入。
+其实际连接态射保证相应周期关系与规范 motivic coaction 相容；没有把重整化 Hopf 代数等同于动机群的坐标环。
+
+尚未由本篇完成的工作包括：端点几何的通用纯因子分类与有效秩求取；非零子参考点及幂次发散的法向 Taylor 喷射；阈值与 IR 延拓；完整图和中的局部 RG 系数和临界响应。
+本篇也不把 ``少一个积分变量'' 改写成 ``动机权重下降一层''、``幺幂深度下降一层'' 或 ``所有非 Tate 方向消失''。
+这些断言均需要额外的权重、扩张和实际标架证明。
+
+\section*{审阅说明与来源}
+本篇先复核上一补篇的参数导数逻辑：在实际族中求导，随后在指定纤维限制活动对象；正质量的统一支配给物理链比较；Gauss--Manin 求导不等于固定动机自同态。
+本文将这一接口用于新的森林对象，不援引 banana 的 K3 局部 Torelli 或指定纤维秩来断言一般图的端点秩。
+
+经典准备映射、森林相消以及参数重整化的背景分别见\cite{bk,blochkreimer,decomposing}。
+项目已有零点森林稿证明了本篇所用的正质量共同核与零点 BPHZ 识别；本篇新增责任是规范化原函数的边界相消、实际端点连接、任意正阶导数及其阶数界。
+一般形式周期和最小对象使用\cite{brown}的框架。
+不宣称尚未检索确认的文献优先权。
+
+内部依赖为项目的《正质量零外动量方案的森林减除动机》（共同核及全部 UV 角点）、
+本原减除周期稿（本原特例和尺度边界）、森林有限方案稿（实际有限方案乘积律）及
+操作接口补篇（实际最小标架）。各文件的明确对应保留在研究来源台账中。
+既有积分、格、比较矩阵证书保持不变；本文没有新数学验证程序或数值实验。
+
+\begin{thebibliography}{9}\small
+\bibitem{bk} F. Brown and D. Kreimer,
+\emph{Angles, Scales and Parametric Renormalization},
+arXiv:1112.1180v1 (2011), Proposition 34 and Theorem 66.
+\url{https://arxiv.org/abs/1112.1180}.
+\bibitem{blochkreimer} S. Bloch and D. Kreimer,
+\emph{Mixed Hodge Structures and Renormalization in Physics},
+Commun. Number Theory Phys. \textbf{2} (2008), 637--718.
+\url{https://arxiv.org/abs/0804.4399}.
+\bibitem{decomposing} F. Brown and D. Kreimer,
+\emph{Decomposing Feynman rules}, arXiv:1212.3923 (2012).
+\url{https://arxiv.org/abs/1212.3923}.
+\bibitem{brown} F. Brown, \emph{Notes on motivic periods},
+Commun. Number Theory Phys. \textbf{11} (2017), 557--655,
+\S\,2.4--2.5. \url{https://arxiv.org/abs/1512.06410}.
+\end{thebibliography}
+\end{document}

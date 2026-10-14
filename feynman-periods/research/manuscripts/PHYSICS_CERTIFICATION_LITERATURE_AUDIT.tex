@@ -1,0 +1,488 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage[margin=25mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,longtable,array,fancyhdr,xcolor}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheoremstyle{cnplain}{7pt}{7pt}{\normalfont}{}{\bfseries}{。}{0.5em}{}
+\theoremstyle{cnplain}\newtheorem{proposition}{命题}[section]
+\newtheorem{theorem}[proposition]{定理}
+\newtheorem{corollary}[proposition]{推论}
+\renewcommand{\proofname}{证明}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\dd}{\,\mathrm d}
+\setlength{\emergencystretch}{3em}\allowdisplaybreaks[2]
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 费曼周期：物理认证与文献定位}
+\fancyhead[R]{\small U39审阅补篇}\fancyfoot[C]{\thepage}
+\title{物理基准的严格误差与研究新颖性边界\\[5pt]
+\large 四体产生的解析截断证明、独立光学检验与文献对照}
+\author{费曼周期研究项目}
+\date{2026年10月14日}
+\setcounter{tocdepth}{1}
+\begin{document}\maketitle
+\begin{abstract}
+本篇处理两个尚未闭合的验收项：选定物理点的窄数值区间，以及逐项主张的文献比较。
+对四维相同质量$\phi^4$理论，在$s/m^2=20$证明角传播子的统一收敛比不超过$4/9$，
+构造保留全部干涉的有限角矩展开，并将20阶截断对无量纲四体首项系数的误差严格控制在
+$6\times10^{-17}$以下。此结论只控制解析角截断，剩余五变量积分没有因此获得窄认证。
+文献部分明确区分已知结果、具体应用、待比较增量和开放项目，纳入2026年动量空间
+一圈动机、Higgs四体衰变积分族及近期banana计算。本文是首轮有定位的比较，
+不是穷尽查新，也不宣称任何结果已获新颖性认证。
+\end{abstract}
+\tableofcontents
+\clearpage
+
+\section{两项缺口的准确含义}
+当前主线是从带物理数据的图预测MZV、椭圆、K3等实际所需结构，并给可核查的图族表。
+因此文献比较直接决定哪些分类规则是既有输入；数值认证则决定物理基准能支持多少小数。
+两者都不能以文稿页数、普通求积的一致性或矩阵规模代替。
+
+旧物理基准在$s/m^2=20$给出
+\[
+ 8.8\times10^{-13}<C_{24}<6.2\times10^{-10},
+ \qquad C_{24}:=\frac{m^2\sigma_{24}^{[g^4]}}{g^4}.
+\]
+普通两种相空间计算给$C_{24}\simeq5.75125\times10^{-11}$，
+但该显示值的所有小数未被上述粗界认证。旧相空间体积的严格上界是
+$m^{-4}\Phi_4(20m^2)<7.63\times10^{-8}$。
+这里$\sigma_{24}^{[g^4]}$始终只表示截面中的$g^4$首项。
+
+需要分开五件事：解析归一化正确、积分数值误差、微扰截断误差、方案及输入参数误差、
+独立幺正性检验。严格积分区间只解决第二件事；
+未给$g$及高阶余项界时，不能把它称为完整物理预测的总误差。
+普通数值基准仍有价值，问题是其证据等级不能升级。
+
+旧假设11.2的实际比较仍保持优先：
+先把已保存的专项证明回写正文与分类表K1，再按本文计划补物理认证；
+文献比较与此并行服务于论文定位。
+本篇不将假设11.2、F1c或三圈前向全切割标为全部完成。
+
+\section{选定点的解析进展：统一角截断}
+\subsection{真实十图与无量纲化}
+采用原物理基准的测度、通量、相同粒子$1/4!$及树振幅规范。
+以下把所有动量除以$m$，因而$m=1$、$s=20$；最后所得系数就是$C_{24}$。
+固定末态$k_1,\ldots,k_4$的内部形状，令$P=(\sqrt s,\mathbf0)$。
+入射方向$n\in S^2$、入射空间动量长度$p=\sqrt{s-4}/2$。
+原十个$3|3$树分割各权重为1，分母和为
+\[
+ S(n)=T-\sum_{|J|=2}\frac1{\alpha_J-B_J\cdot n},
+ \quad
+ T=\sum_{i=1}^4\frac1{s-2\sqrt s E_i},
+\]
+\[
+ K_J=\sum_{j\in J}k_j,\quad a_J=K_J^2,\quad
+ b_J=(P-K_J)^2,\quad
+ \alpha_J=\frac{s-a_J-b_J}{2},\quad B_J=2p\,\mathbf K_J.
+\]
+无量纲振幅满足$m^2\mathcal M_{24}^{(0)}/g^2=-S$。
+六个二元子集均计入；$J$与$J^c$是不同树图，
+但$\alpha_{J^c}=\alpha_J$、$B_{J^c}=-B_J$。
+本项目此前已证明这些真实分母全物理域无极点。
+这里给适用于窄认证的更具体统一估计。
+
+\begin{proposition}[20点的收敛比]\label{prop:ratio}
+在闭物理相空间上，$\alpha_J\ge4$、$0<T\le1/2$，且
+\[
+ q_J^2:=\frac{|B_J|^2}{\alpha_J^2}\le\frac49.
+\]
+\end{proposition}
+\begin{proof}
+每个二粒子子系统有$a_J,b_J\ge4$且$\sqrt{a_J}+\sqrt{b_J}\le\sqrt{20}$。
+故$\alpha_J\ge\sqrt{a_Jb_J}\ge4$，并有$0<20-a_J-b_J\le12$。
+利用$\lambda(s,a,b)=(s-a-b)^2-4ab$，
+\[
+ q_J^2=\left(1-\frac4{20}\right)
+ \left(1-\frac{4a_Jb_J}{(20-a_J-b_J)^2}\right)
+ \le\frac45\left(1-\frac{64}{144}\right)=\frac49.
+\]
+另一方面$P-k_i$是三个未来向质量1的粒子的和，
+所以$(P-k_i)^2\ge9$，每个类时分母至少为8。
+四项相加给$0<T\le1/2$。
+\end{proof}
+
+取互补子集的三个代表
+$\mathcal J=\{\{1,2\},\{1,3\},\{1,4\}\}$，记
+$z_J=(B_J\cdot n)/\alpha_J$，定义
+\[
+ A=\sum_{J\in\mathcal J}\frac{2}{\alpha_J(1-z_J^2)},\qquad
+ A_N=\sum_{J\in\mathcal J}\frac2{\alpha_J}
+             \sum_{k=0}^N z_J^{2k},\qquad S_N=T-A_N.
+\]
+于是$S=T-A$。这一步先将互补图配对再展开，不是逐图抛弃干涉。
+
+\begin{theorem}[保留干涉的全域误差]\label{thm:tail}
+对任意整数$N\ge0$，处处有
+\[
+ 0\le A-A_N\le\delta_N:=\frac{27}{10}\left(\frac49\right)^{N+1},
+ \qquad |S|,|S_N|\le\frac{27}{10}.
+\]
+令$\cA(f)=(4\pi)^{-1}\int_{S^2}f(n)\dd\Omega$，
+$W=\cA(S^2)$、$W_N=\cA(S_N^2)$，则
+\[
+ |W-W_N|\le\frac{729}{50}\left(\frac49\right)^{N+1}.       \tag{1}
+\]
+\end{theorem}
+\begin{proof}
+几何级数余项正，且每个配对项的余项不超过
+$(2/\alpha_J)(4/9)^{N+1}/(1-4/9)$。
+三项求和及$\alpha_J\ge4$给$\delta_N$。
+同理$0\le A_N\le A\le27/10$。
+结合$0<T\le1/2$，$S,S_N$均落在$[-27/10,1/2]$内。
+于是
+\[
+ |S^2-S_N^2|\le(|S|+|S_N|)|S-S_N|
+ \le\frac{27}{5}\delta_N.
+\]
+归一化正角测度不增大这个上界，得到(1)。
+\end{proof}
+
+角积分$W_N$可以完全消去。若$i_1,\ldots,i_{2r}\in\{1,2,3\}$，
+球面均匀矩为
+\[
+ \cA(n_{i_1}\cdots n_{i_{2r}})
+ =\frac1{(2r+1)!!}
+   \sum_{\text{所有配对}}\ \prod_{\{a,b\}}\delta_{i_ai_b},
+ \qquad \cA(\text{奇数次单项式})=0.                       \tag{2}
+\]
+它来自旋转不变性及逐次收缩$\sum_i n_i^2=1$。
+因而$W_N$是$T,\alpha_J^{-1},B_I\cdot B_J$的有限有理系数表达式，
+无需角采样，也无需在重合分母处数值相减两个对数。
+实际实现宜用矩递推，式(2)不是要求显式列出全部配对。
+式(1)--(2)是标准级数与球矩方法在本通道的应用，不宣称方法首创。
+
+\begin{corollary}[20阶角截断的截面误差]\label{cor:eta}
+令$C_N$以$W_N$代替真实角平均平方而保留其余相空间积分。
+使用旧证书的相空间体积上界，有
+\[
+ |C_{24}-C_N|
+ \le\eta_N:=
+ \frac{763}{10^{10}}\frac{729}{50\cdot768}
+          \left(\frac49\right)^{N+1}.
+\]
+特别地
+\[
+ \eta_{20}=
+ \frac{6400507904}{109932594211669278076171875}
+ <6\times10^{-17}.                                    \tag{3}
+\]
+\end{corollary}
+\begin{proof}
+首项系数为$(2s\beta\,4!)^{-1}\int \dd\Phi_4\,W$，
+$\beta=\sqrt{4/5}>4/5$，故$2s\beta\,4!>768$。
+正相空间积分、(1)及旧$\Phi_4<763/10^{10}$给结论。
+(3)的末端不等式可直接交叉相乘检查，未使用浮点尾数。
+\end{proof}
+
+注意$C_N$在本批并未计算。小的$\eta_{20}$不是窄的$C_{24}$区间；
+它只隔离了一个已控制的误差来源，剩余五变量认证仍是实际缺口。
+
+\subsection{剩余积分的有限证书与验收}
+沿此前五变量推前，用$a,b$表示两对质量平方，$x,y$是两对内极角余弦，
+$\varphi$是相对方位角，则
+\[
+ C_N=\frac1{2s\beta\,4!}
+ \int_{\mathcal R_s}\rho(s,a,b)\dd a\dd b
+ \int_{-1}^1\frac{\dd x}2\int_{-1}^1\frac{\dd y}2
+ \int_0^{2\pi}\frac{\dd\varphi}{2\pi}\,W_N,
+\]
+\[
+ \rho=\frac{\sqrt{\lambda(s,a,b)}}{2048\pi^5s}
+          \sqrt{1-\frac4a}\sqrt{1-\frac4b}.
+\]
+平方在相加全部树项之后才取，故所有45个干涉对均保留。
+设$Q=\sqrt{20}-4$，以$u,v\in[0,1]$置
+\[
+ A=2+Qu,\quad B=2+Q(1-u)v,\quad a=A^2,\quad b=B^2,
+ \quad \left|\frac{\partial(a,b)}{\partial(u,v)}\right|
+       =4Q^2(1-u)AB.                                   \tag{4}
+\]
+此处标量$A,B$仅用于变量替换，不是上文的传播子和或向量$B_J$。
+(4)覆盖$\mathcal R_{20}$，边界退化为零测度。
+再令$x=2t_1-1,y=2t_2-1,\varphi=2\pi t_3$，得到单位五立方体。
+
+\begin{proposition}[可终止的严格包围路线]\label{prop:boxes}
+对任意$\varepsilon>0$，存在有限立方体分割与有限精度的向外区间运算，
+给出$L_N\le C_N\le U_N$且$U_N-L_N<\varepsilon$。
+于是
+\[
+ C_{24}\in[L_N-\eta_N,U_N+\eta_N].
+\]
+这一存在及终止陈述不提供实用时间上界，本批也未执行该分割。
+\end{proposition}
+\begin{proof}
+使用两对静止系及沿固定轴的有限Lorentz推动构造末态，
+内部空间动量用非负平方根表达。所有分母有$A,B\ge2$、
+$\alpha_J\ge4$及类时分母至少8的统一正界；
+推动公式无需除以在阈值退化的空间动量长度。
+故(4)后的被积函数在闭立方体连续，包括阈值边界。
+式(2)是有限运算，不产生新的极点。
+平方根、三角函数和倒数在这些域上有收敛的包含区间扩张；
+平方根参数因区间依赖得到负下端时可与$[0,\infty)$相交。
+逐步缩小网格并增加运算精度，区间振幅一致趋零，
+正体积乘各格上下包含值给Darboux夹逼。
+紧致性与一致连续性保证有限步达到任意给定$\varepsilon$。
+\end{proof}
+
+第一选点维持$s/m^2=20$，首个实用验收要求为
+\[
+ 0<L<U,\qquad C_{24}\in[L,U],\qquad \frac{U-L}{L}\le10^{-3}. \tag{5}
+\]
+这是完整区间宽度的千分之一标准，不是目前已达到的精度。
+初版不追求认证展示的全部六位有效数字。
+证书需保存模型/方案、测度、端点、分割、外舍入方式及误差预算；
+独立核验从有限分割及包含不等式重建结论，而非仅重读一个中心值。
+实际实现若发现五变量界收敛过慢，应优化解析变量或区间模型，
+不以无限增加随机样本代替误差证明。
+
+\section{包容系数与光学闭合分别验收}
+\subsection{弹性误差不能遗漏}
+在20点写成
+\[
+ \sigma_{\rm incl}
+ =\frac{g^2+c_3g^3+c_4g^4}{640\pi m^2}+O(g^5),\quad
+ c_4=c_{4,\rm el}+640\pi C_{24}.                         \tag{6}
+\]
+旧近似$c_3\simeq0.0180991989932455$、
+$c_4\simeq0.00014250842$已经包含四体；
+旧\texttt{elastic\_total}只含弹性，
+合并记录位于\texttt{data/phi4\_four\_body/inclusive.json}。
+若$C_{24}\in[L,U]$、$c_{4,\rm el}\in[E_-,E_+]$，
+則(6)使用同一正$\pi$区间作向外运算；
+$\pi$视作精确常数时结果就是
+$[E_-+640\pi L,E_++640\pi U]$。
+只认证四体而继续使用未包围的$E_\pm$，不能认证完整$c_4$。
+$c_3$也必须单独包围。保留的小数应使整个区间落在同一个舍入单元。
+
+\subsection{独立三圈前向计算的目标}
+沿用树级弹性振幅为$-g$的约定，写
+\[
+ \mathcal M_{22}=-g+g^2\mathcal A_1+g^3\mathcal A_2
+                      +g^4\mathcal A_3+\cdots.
+\]
+阶$g^4$幺正性比较是
+\[
+ 2\operatorname{Im}\mathcal A_3(s,0)
+ =\frac1{2!}\int\dd\Phi_2
+       \bigl(|\mathcal A_1|^2-2\operatorname{Re}\mathcal A_2\bigr)
+  +\frac1{4!}\int\dd\Phi_4|S_6|^2.                       \tag{7}
+\]
+其右端可由既有弹性与四体振幅构造，但这不构成左端的独立计算。
+必须从同一拉格朗日量、同一方案的三圈前向图和反项出发，覆盖允许的二体、四体切割，
+核对组合因子及外腿/LSZ处理，再与右端比较。
+以(7)右端定义$\operatorname{Im}\mathcal A_3$属于循环检验。
+已有振幅阶$g^3$的检验不能替代(7)。
+
+最先应完成的是三圈图及反项的完整分析切割恒等式；
+数值积分只有在这条结构链固定后才有独立检验意义。
+若两端分别有严格区间，区间交叠只表明在该精度未发现矛盾，
+并不单独证明全运动学恒等式。全文应分别报告解析证明范围和点值残差范围。
+
+\section{文献比较：依据与分级}
+本轮于2026年10月14日用题名、作者、banana/sunrise、motivic coaction、
+K3与2026交叉检索，追踪到arXiv原文及作者或出版方页面。
+只用一手论文支持技术结论。
+检索同时检查2025年预印本在2026年发表或修订的版本，不能只搜编号26开头。
+网页索引、摘要或未命中的关键词均不能证明不存在先行工作。
+
+比较等级：
+\textbf{K}是已知结果，应引用；
+\textbf{A}是已有定理在指定输入的应用或重新推导；
+\textbf{D}是值得逐式比较的差异候选，尚无新颖性结论；
+\textbf{O}是本项目仍开放的验收。
+“本文独立推导”仅说明证明来源，不等于优先权。
+
+\subsection{直接影响分类表的对照}
+\small
+\setlength{\tabcolsep}{5pt}
+\begin{longtable}{p{.16\textwidth}p{.30\textwidth}p{.36\textwidth}p{.08\textwidth}}
+\toprule
+项目位置 & 最近先行结果/精确入口 & 本项目可保留的定位与限制 & 级别\\\midrule
+\endfirsthead
+\toprule 项目位置 & 最近先行结果/精确入口 & 本项目可保留的定位与限制 & 级别\\\midrule
+\endhead
+E1--E4两圈几何 &
+DHV定理5.1、7.5，命题7.6\cite{DHV} &
+超椭圆/Hodge上界及适用域内相对上界已有；具体边界、正链与单标量最小性的增量须比较。 & K/D\\
+E1任意质量sunrise &
+ABW的$D=2$椭圆二重对数；BMW的七主积分$\varepsilon$形式\cite{ABW,BMW} &
+椭圆性及表示不是新结果；图族规则须说明分子、注入、边界与特殊点条件。 & K/D\\
+E1与细分规则 &
+Tapušković一般质量sunrise余作用及边细分\cite{Tap} &
+不能声称首次从细分图得到共轭；需比较本项目零注入/不同质量/分子规则的接受域。 & K/D\\
+A1一圈完整对象 &
+Mounoud定理1.1、1.2、7.26、7.27\cite{Mou} &
+动量空间Nori对象、切割/收缩及图式余作用已有。特殊参数与本项目标架的映射仍需逐条对照。 & K/D\\
+K1--K2四质量banana &
+两组2025预印本及2026刊文\cite{DMPS,PTWW} &
+全质量微分系统与计算方法已有；公开纯矩阵明确归原作者。实际固定纤维比较、整格与最小对象是另行比较项。 & K/A/D\\
+K类特殊质量层 &
+Duhr--Maggio的两参数K3与三质量相等计算\cite{DM,DMfull} &
+某些K3周期可约为椭圆乘积；“有K3”不能写成“每个质量层都需要不可约新函数”。 & K\\
+K1指定Picard与纯群 &
+Charles定理1、6及EJ定理7.5、7.7\cite{Charles,EJ} &
+一般工具已有，指定纤维算术应用由自身证据承担；不宣布新Picard算法或通用CM排除。 & A/D\\
+完整混合群 &
+Eskandari三步混合扩张框架\cite{Esk} &
+一般幺幂群机制已有；项目的指定对象非分裂、表示与交换子必须各自证明。 & A/D\\
+物理切割/混合结构 &
+Wang--Wang--Wang的Higgs四体积分族，第3--7节\cite{WWW} &
+真实物理积分族已有MPL/椭圆/K3混合；本$\phi^4$基准不是同模型，不能借其替代(7)。 & K/D/O\\
+O2窄误差 &
+本篇(1)--(5)及旧严格相空间界 &
+仅角截断新增解析控制；五变量与弹性系数尚无窄证书。 & A/O\\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\subsection{DHV：不仅有绝对曲面结论}
+DHV定理5.1给$(a,1,c)$图超曲面的超椭圆型混合Hodge上界；
+定理7.5在$3D/2\le a+c$条件下还给相对对象的同类上界。
+因此将该文笼统描述为“只研究绝对几何”不准确。
+对本项目使用的$(2,1,1),D=2$，该不等式恰取等号。
+命题7.6给相应绝对$H^2$一般为纯Tate。
+本项目若强调其相对边界椭圆组成，需与上述相对上界一起陈述，
+真正待比较的是组成的精确重数、原物理标架与最小性。
+本轮重读保存PDF第4、5、45页；几何定义及原定理接受条件仍随原文引用。
+
+\subsection{ABW/BMW与sunrise余作用}
+ABW\cite{ABW}已给非零任意质量二维sunrise的椭圆二重对数表示。
+BMW\cite{BMW}第7节式(84)及第9节给模空间上的$\varepsilon$形式及逐阶解，
+并区分固定模参数与等质量层。
+因此“任意质量需要椭圆结构”“由微分系统构造解”都是背景。
+Tapušković\cite{Tap}的摘要与主结果已经直接讨论一般质量sunrise动机余作用及边细分；
+本轮只完成这一优先权入口筛查，尚未逐式匹配其所有共轭与本项目规则。
+完整扩张的新主张必须把它列为直接近邻，不能只引用较早的积分公式。
+
+\subsection{Charles与EJ：避免误引成无条件万能算法}
+Charles定理1的应用需区分端同态域$E$全实或CM以及$\dim_E T$奇偶。
+其定理6原文允许算法不终止，并在$X\times X$的余维2 Hodge猜想条件下保证终止；
+备注8另列可无条件终止的情形，包括$E=\Q$。
+故该篇摘要的概括不能改写为任意K3的无条件有效终止保证。
+本项目指定纤维的有限证书是具体应用，不等于解决一般终止问题。
+
+EJ定理7.5的正规性有$X\times X$的Hodge条件；
+定理7.7在CM分支使用已知结果满足此条件，并描述分量群及jump character。
+它不是对任意K3自动判非CM的定理。
+项目以CM为反设时可以调用这个分支，但必须给自己的算术矛盾。
+这些核对澄清工具的适用性，并没有重新认证本项目所有旧数值证书。
+
+\section{2026年必须纳入的近邻与版本纪律}
+\subsection{动量空间一圈：实际范畴与物理操作}
+Mounoud于2026年5月提交的论文\cite{Mou}直接使用Nori动机局部系统。
+定理1.1连接欧氏一般运动学积分与对象；定理1.2把权重分级写成二次Artin动机的Tate扭转；
+第7.10节给图式coaction。
+这是本项目“有效对象+切割/收缩+物理读出”的直接近邻，不能仅在背景末尾泛引。
+Artin--Tate也不能直接改成普通MZV。
+本轮已阅读这些定理和第1.1节；退化层、维数及传播子指数的逐项同构比较仍待完成。
+
+\subsection{banana：区分首次预印与发表年}
+Duhr等\cite{DMPS}的四不等质量系统是项目既有纯矩阵来源；
+Pögel等\cite{PTWW}的独立路线发表于JHEP 2026年1月。
+两者预印本均始于2025年。后者以Baikov过滤与基变换构造$\varepsilon$因子化系统；
+它不要求先识别几何，因而也是“无需先完整积分”的直接方法学对照。
+本项目不得把任意质量K3系统或其可计算性称作首创。
+差异候选应落实到明确固定点的实际相对对象、物理标架、完整扩张和可复核证书，
+而不是把微分系统换用动机语言。
+
+三质量相等层的K3周期分解及完整积分研究\cite{DM,DMfull}
+直接约束分类表的特殊点/特殊子族栏。
+K3标签与椭圆乘积表示可能同时成立；
+可见纯结构、函数表示及整个扩张必须分别比较。
+本轮对这两篇完成摘要与范围确认，尚未逐式审阅全部附录。
+
+\subsection{实际物理混合与余作用}
+2026年7月的Higgs四个有质量bottom夸克积分族\cite{WWW}
+在四条有质量切割下同时包含MPL、椭圆和K3扇区，并处理扇区混合，
+给主积分前两阶$\varepsilon$结果。
+其引言明确将积分族解析求解与完整包容衰变率区分。
+这要求本项目把“混合结构进入真实物理”表述成具体模型与投影的结论，
+而不是泛称此前没有物理实现；也不能把积分族的结构自动等同总可观测量的最小对象。
+
+Kleinschmidt--Porkert--Schlotterer的2026年刊文\cite{KPS}
+提出genus-one Eisenstein迭代积分余作用并检查其结构性质。
+应保留原文“proposal”的证据层次，不能据此撤销或自动证明本项目原积分的实际比较。
+Eskandari的2026年8月修订\cite{Esk}题名为
+\emph{Tannakian fundamental groups of blended extensions}；
+旧记录若沿用较早题名，引用须指明版本。
+
+\subsection{待扩展范围}
+本轮不是截止2026年10月14日所有预印本的穷尽覆盖。
+还需系统向前/向后追踪上述论文引文，并补充图多项式约化与线性可约性、
+$M_{0,n}$字母/端点、非Tate物理标架、重整化周期与临界响应的直接近邻。
+2603.03649的算法会议报告已确认题名、作者组和日期，
+本轮不把其摘要宣传当作任意图分类定理。
+新近2610.02286工具论文只命中摘要，尚未技术审阅，不进入已证明比较栏。
+
+新颖性最终验收的单位是命题：
+同一输入、同一基域、同一对象层次、同一物理标架与同一输出强度逐项比较。
+只要其中有未比对项，就标“增量候选/待查新”，不写“首次”“统一解决”。
+新证书、应用与综合组织也可有价值，但应按实际贡献命名。
+
+\section{续接顺序及明确未完成项}
+\begin{enumerate}
+\item 保持U38-H11实际几何比较为当前核心，回写主全文与K1证据卡。
+\item 把本文的先行结果边界挂到A1、E1--E4、K1--K5、O1--O2。
+本篇是独立审阅补篇，当前315页全文和22行主表尚未重新导出。
+\item F1c以20点为唯一首个窄认证点，先利用本文角截断，再完成剩余积分的严格区间。
+不重跑旧相空间采样、旧42图枚举或K3运输。
+\item 弹性$c_3,c_{4,\rm el}$区间和包容传播单独验收；同阶前向全切割保持独立任务。
+\item 逐条审阅候选新结论与近邻原定理。没有匹配完的条目不升级新颖性。
+\end{enumerate}
+本批新增的是三项角截断证明及一个有限包围路线证明、首轮主张对照与验收标准。
+没有得到新的窄截面值，没有独立执行三圈前向全切割，
+没有完成全部文献优先权调查，也没有完成整个研究目标。
+
+\begin{thebibliography}{99}\small
+\bibitem{DHV} C. F. Doran, A. Harder, P. Vanhove, with appendix by E. Pichon-Pharabod,
+\emph{Motivic geometry of two-loop Feynman integrals}.
+\href{https://arxiv.org/abs/2302.14840}{arXiv:2302.14840}.
+本篇所用保存版本的定理5.1、7.5与命题7.6。
+\bibitem{ABW} L. Adams, C. Bogner, S. Weinzierl,
+\emph{The two-loop sunrise graph in two space-time dimensions with arbitrary masses in terms of elliptic dilogarithms}.
+\href{https://arxiv.org/abs/1405.5640v2}{arXiv:1405.5640v2} (2014).
+\bibitem{BMW} C. Bogner, S. Müller-Stach, S. Weinzierl,
+\emph{The unequal mass sunrise integral expressed through iterated integrals on
+$\overline{\mathcal M}_{1,3}$}.
+\href{https://arxiv.org/abs/1907.01251v2}{arXiv:1907.01251v2} (2020).
+\bibitem{Tap} M. Tapušković,
+\emph{The cosmic Galois group, the sunrise Feynman integral, and the relative completion of $\Gamma_1(6)$}.
+\href{https://arxiv.org/abs/2303.17534}{arXiv:2303.17534} (2023).
+本轮：摘要/主结果入口筛查。
+\bibitem{Mou} U. Mounoud,
+\emph{Motivic Galois theory for one-loop Feynman integrals in momentum space}.
+\href{https://arxiv.org/abs/2605.20106v1}{arXiv:2605.20106v1} (2026).
+\bibitem{DMPS} C. Duhr, S. Maggio, F. Porkert, C. Semper, S. F. Stawinski,
+\emph{Three-loop banana integrals with four unequal masses}.
+\href{https://arxiv.org/abs/2507.23061}{arXiv:2507.23061}, JHEP 12 (2025) 034.
+\bibitem{PTWW} S. Pögel, T. Teschke, X. Wang, S. Weinzierl,
+\emph{The unequal-mass three-loop banana integral}.
+\href{https://arxiv.org/abs/2507.23594v2}{arXiv:2507.23594v2},
+\href{https://doi.org/10.1007/JHEP01(2026)021}{JHEP 01 (2026) 021}.
+\bibitem{DM} C. Duhr, S. Maggio,
+\emph{Feynman integrals, elliptic integrals and two-parameter K3 surfaces}.
+\href{https://arxiv.org/abs/2502.15326}{arXiv:2502.15326}, JHEP 06 (2025) 250.
+\bibitem{DMfull} C. Duhr, S. Maggio,
+\emph{Three-loop banana integrals with three equal masses}.
+\href{https://arxiv.org/abs/2511.19245}{arXiv:2511.19245} (2025).
+\bibitem{Charles} F. Charles,
+\emph{On the Picard number of K3 surfaces over number fields}.
+\href{https://arxiv.org/abs/1111.4117}{arXiv:1111.4117}.
+本篇核对定理1、6和备注8。
+\bibitem{EJ} A.-S. Elsenhans, J. Jahnel,
+\emph{On the component group of the algebraic monodromy group of a K3 surface}.
+\href{https://arxiv.org/abs/2304.07585v2}{arXiv:2304.07585v2} (2024).
+本篇核对定理7.5、7.7及其证明。
+\bibitem{Esk} P. Eskandari,
+\emph{Tannakian fundamental groups of blended extensions}.
+\href{https://arxiv.org/abs/2407.01379v3}{arXiv:2407.01379v3}, 2026年8月5日修订。
+\bibitem{WWW} J. Wang, X. Wang, Y. Wang,
+\emph{Analytic result of a three-loop integral family in the Higgs decay to four massive bottom quarks}.
+\href{https://arxiv.org/abs/2607.03398v1}{arXiv:2607.03398v1} (2026).
+\bibitem{KPS} A. Kleinschmidt, F. Porkert, O. Schlotterer,
+\emph{Towards motivic coactions at genus one from zeta generators}.
+\href{https://arxiv.org/abs/2508.02800}{arXiv:2508.02800},
+\href{https://doi.org/10.1007/JHEP05(2026)105}{JHEP 05 (2026) 105}.
+\end{thebibliography}
+\end{document}
+

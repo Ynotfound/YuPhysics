@@ -1,0 +1,513 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage[margin=26mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,array}
+\usepackage{mathrsfs}
+\usepackage{enumitem,fancyhdr,xcolor}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheoremstyle{cnplain}{7pt}{7pt}{\normalfont}{}{\bfseries}{。}{0.5em}{}
+\theoremstyle{cnplain}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{定义}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{注}
+\renewcommand{\proofname}{证明}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\C}{\mathbb C}
+\newcommand{\dR}{\mathrm{dR}}
+\newcommand{\Ann}{\operatorname{Ann}}
+\newcommand{\Gr}{\operatorname{Gr}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\rk}{\operatorname{rk}}
+\newcommand{\cE}{\mathcal E}
+\newcommand{\cM}{\mathcal M}
+\setlength{\emergencystretch}{2em}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 费曼周期：参数导数与物理可见性}
+\fancyhead[R]{\small 理论补篇}
+\fancyfoot[C]{\thepage}
+\title{参数导数如何保留与消去 K3 周期\\[5pt]
+\large 四传播子 banana 的 Hodge 导数分层与最小物理读出}
+\author{费曼周期研究项目\quad 理论证明稿}
+\date{2026年10月13日}
+\begin{document}
+\maketitle
+\begin{abstract}
+上一补篇给出了指定秩八 banana 对象的全部双标架分类，但允许读出是否能由实际积分操作实现仍须证明。
+本文研究原振幅的质量与动量参数导数。先在已有实际秩十相对族中求导，再限制到指定纤维的秩八活动子对象，避免将特殊质量关系错误地延拓为全族秩八系统。
+由局部 Torelli、极化和相对 Cartan 恒等式，证明归一化物理形式的零至三阶参数导数恰生成完整 Hodge 分层；全族的维数为 $1,5,9,10$，指定活动对象上为 $1,5,7,8$。
+因此原积分与五个一阶导数之间只有齐次 Euler 关系能消去 K3 读出，其余非零组合均需要完整秩八混合对象。
+二阶参数操作已能提取三条质量 Kummer 对数，三阶能提取顶层常数；在指定对象中，非零纯 Tate 输出的最早阶数分别为二和三。
+证明不求完整积分，不新增数值积分、矩阵认证或完整秩十比较。所有最小性均指实际标架对象，不指未经证明的数值周期独立性。
+\end{abstract}
+\tableofcontents
+
+\section{实际对象、参数与要回答的问题}
+\subsection{先在全族求导，再限制到特殊活动对象}
+设 $\mu_i=m_i^2$。研究二维、四传播子、单位幂次 banana 的正质量欧氏区域 $\mu_i>0$、$s<0$。
+在 $T=(\mathbb G_m)^3$ 上取 $\alpha=(a,b,c,1)$，令
+\begin{equation}\label{eq:raw}
+ N=\sum_{i=1}^4\alpha_i^{-1},\quad M_\mu=\sum_{i=1}^4\mu_i\alpha_i,
+ \quad P=M_\mu N-s,\quad
+ \eta=d\log a\wedge d\log b\wedge d\log c.
+\end{equation}
+项目中已固定无额外动量测度因子的积分
+\begin{equation}\label{eq:I}
+ I(s,\mu)=\int_{\sigma_{\rm phys}}\frac{\eta}{P}.
+\end{equation}
+正实链带既定正向；其边界通过已有紧化及相对对偶模型处理。
+质量平方与 $s$ 共同缩放时，$I$ 的齐次次数为 $-1$。
+
+取四个无量纲参数及导数
+\begin{equation}\label{eq:dimensionless}
+ x_i=\mu_i/s,\quad D_i=x_i\partial_{x_i},\quad
+ \Theta=\sum_iD_i,\quad
+ F=\Bigl(\sum_i x_i\alpha_i\Bigr)N-1.
+\end{equation}
+记 $U_x=\{F=0\}$，以及
+\begin{equation}\label{eq:J}
+ J(x)=sI(s,\mu)=\int_{\sigma_{\rm phys}}\eta/F,\qquad
+ \Omega=\Res_{U_x}\eta/F.
+\end{equation}
+此处 $J$ 与原正积分 $I$ 差一个 $s$ 因子；在欧氏区域 $J<0$。
+这个归一化有助于使用四参数几何，不能在符号或物理数值比较中省略。
+
+以下工作在带标记的光滑解消开集上。
+取已有实际相对对象的质量子对象，并暂以\emph{未扭转}记号写成
+\begin{equation}\label{eq:mass}
+ 0\subset K\subset W_4\cE\subset\cE,
+ \quad \Gr^W_2\cE=K,\quad
+ \Gr^W_4\cE=\Q(-2)^3,\quad
+ \Gr^W_6\cE=\Q(-3).
+\end{equation}
+$K$ 为边界正交的秩六 K3 型纯变分，Hodge 数为 $(1,4,1)$。
+物理方向的同调对象是 $\cE(3)$，其对偶读出对象为
+\begin{equation}\label{eq:M}
+ \cM=\cE(3)^\vee.
+\end{equation}
+这两个对象不能混用 Hodge 下标。
+本文将 $\cM_{\dR}$ 的向量视为 $\cE(3)_{\dR}$ 上的线性读出。
+固定 de Rham Tate 生成元后，可将读出的取值写在未扭转的几何框架上。
+
+指定有理点为
+\begin{equation}\label{eq:point}
+ m=(1,2,4,8),\quad s=-64,\quad
+ x_* =(-1/64,-1/16,-1/4,-1).
+\end{equation}
+其实际秩八活动对象 $E_*$ 嵌入 $\cE_{x_*}(3)$，并包含原物理链。
+只有在求导并取纤维之后才限制到 $E_*$；不假定它对任意质量方向的连接稳定。
+
+\subsection{使用的既有输入}
+实际对象及以下连接来自项目的四参数混合连接稿及顶层相对比较稿
+（文末列出文件名）：
+\begin{equation}\label{eq:beta}
+ \beta_i=-x_i\alpha_iN\Omega,\quad
+ \sum_i\beta_i=-\Omega,\quad e=(\eta,0),\quad
+ \nabla_{D_i}e=\beta_i.
+\end{equation}
+相对连接注入符号在此省略。令
+\begin{equation}\label{eq:C}
+ V_i=\nabla_{D_i}\Omega,\qquad
+ C_{ij}=\nabla_{D_j}\beta_i\in F^1K.
+\end{equation}
+由实际 Cartan 公式、留数平坦性和连接平坦性，
+\begin{equation}\label{eq:sum}
+ C_{ij}=C_{ji},\qquad \sum_j C_{ij}=-V_i.
+\end{equation}
+我们只用这些结构等式，不使用巨大有理连接矩阵的逐项重算。
+未扭转 Hodge 过滤为
+\begin{align}\label{eq:filterE}
+ F^3\cE&=\langle e\rangle,&
+ F^2\cE&=\langle\Omega,\beta_1,\beta_2,\beta_3,e\rangle,\nonumber\\
+ F^1\cE&=\langle\Omega,V_1,V_2,V_3,V_4,\beta_1,\beta_2,\beta_3,e\rangle,&
+ F^0\cE&=\cE.
+\end{align}
+因此
+\begin{equation}\label{eq:dualHodge}
+ F^p\cM=\Ann(F^{4-p}\cE),\qquad
+ (\dim F^3,\dim F^2,\dim F^1,\dim F^0)\cM=(1,5,9,10).
+\end{equation}
+物理形式给出 $\lambda\in F^3\cM$，其纯限制在既定相对对偶符号下为
+\begin{equation}\label{eq:lambda}
+ \lambda|K=-q(\Omega,-),
+\end{equation}
+其中 $q$ 是实际几何杯积；已有归一化证明给 $q=-2\langle-,-\rangle_{\rm pub}$。
+本批保持该符号，不重新定标。
+
+\section{导数确实是同一几何环境中的读出}
+\begin{lemma}[参数导数及相对类]\label{lem:actual}
+在一个足够小的正质量欧氏参数邻域内，\eqref{eq:I} 可逐阶对参数求导。
+所得类是既有相对几何族的 Gauss--Manin 导数；在固定点限制到 $E_*$ 后，给出该实际对象的有理 de Rham 读出。
+一阶原始形式为
+\begin{equation}\label{eq:derforms}
+ \partial_s(\eta/P)=\eta/P^2,\qquad
+ \partial_{\mu_i}(\eta/P)=-\alpha_iN\eta/P^2.
+\end{equation}
+\end{lemma}
+\begin{proof}
+在参数的紧邻域中，所有 $\mu_i$ 和 $-s$ 有共同严格正下界 $c$。
+在正实链上 $P=M_\mu N+|s|$，故
+\[
+ 1/P\le 1/c,\qquad \alpha_iN/P\le1/\mu_i\le1/c.
+\]
+任意有限阶参数导数均为 $1/P$ 乘以这些有界比值的有限线性组合。
+邻域内的 $P$ 又与固定参数的 $P_0$ 一致可比。
+已有收敛的原积分因而给出可积支配函数，允许在积分号下求导。
+
+几何上，导数仅提高同一极点超曲面的极点阶数，不引入新的支持。
+在已建立的光滑相对对族中，以局部拓扑平凡化运输链，代数 de Rham 导数正是 Gauss--Manin 导数。
+若某紧化图表需要边界 cochain，使用相对连接完成代表；不能把遗漏边界项的非收敛分部积分当作证明。
+正实链在此欧氏邻域没有穿越极点，且其标记边界同步运输，故它是相应局部系统的平坦截面。
+因此 $D J=\langle\nabla_D\lambda,\sigma_{\rm phys}\rangle$。
+
+最后，代数连接在有理基点沿有理切向量给有理实现向量。
+实际嵌入 $E_*\hookrightarrow\cE_{x_*}(3)$ 的对偶是实现上的满射，故任意这些导数都可限制到同一 $E_*$。
+这个步骤不要求在四参数邻域中存在一个水平的秩八子束。
+\end{proof}
+
+改变传播子幂次的完整积分族常包含其他 sector。
+本引理只处理由明确参数导数得到的这些类及它们的线性组合；它不把所有任意分子或维数平移自动纳入 $E_*$。
+同样，连接求导不是固定纤维上的动机自同态，故与上一补篇 $\operatorname{End}(E_*)=\Q$ 的结论不冲突。
+
+\section{局部 Torelli 与五维一阶空间}
+\subsection{为什么这四个参数是真实的模参数}
+为使后续秩结论有几何依据，重述项目中的参数单射证明。
+Sylvester 坐标满足 $\sum_{i=1}^5y_i=0$，节点四次式写为
+\begin{equation}\label{eq:Sylvester}
+ Q_\ell=\sum_{i=1}^5\ell_i\prod_{j\ne i}y_j,
+ \qquad [\ell]=[\mu_1:\mu_2:\mu_3:\mu_4:s].
+\end{equation}
+在仅有标记十节点的开集，节点恒为 $[e_i-e_j]$。
+若一阶参数变形在抽象 K3 上平凡，则 $H^1(\mathcal O)=0$ 使超平面线丛唯一平凡化，四个截面给出原模型的一阶射影变换。
+每个例外 $(-2)$ 曲线无一阶移动，因为其法丛为 $\mathcal O_{\mathbb P^1}(-2)$。
+所以该射影变换必须固定十节点。
+固定四个 $[e_i-e_5]$ 迫使线性矩阵对角，固定 $[e_1-e_j]$ 又使四个对角元相同；在 $\operatorname{PGL}_4$ 中变换为零。
+五个系数单项式在 $\sum y_i=0$ 上线性独立：在 $y_i=0$ 而其他坐标非零处分别读取即可。
+因此唯一平凡方向是共同缩放。
+
+这给参数族 Kodaira--Spencer 映射单射。
+K3 局部 Torelli 将其与周期线的微分识别\cite[Chapter 6, Proposition 2.8]{huy}。
+于是
+\begin{equation}\label{eq:KS}
+ \Omega,V_1,V_2,V_3,V_4\ \text{构成 }F^1K\text{ 的基}.
+\end{equation}
+这是带标记开集的断言，不以粗模空间没有有限自同构为前提。
+指定点处的光滑性和纯秩六输入已由旧几何证明确立，本批不重复计算。
+
+\subsection{极化及导数空间}
+令
+\begin{equation}\label{eq:Y}
+ Y_{ij}=q(V_i,V_j),\qquad Y=(Y_{ij})_{1\le i,j\le4}.
+\end{equation}
+由 Hodge 型及平坦性，$q(\Omega,\Omega)=q(\Omega,V_i)=0$。
+$F^1K=\Omega^\perp$，其配对的根基恰为 $\Q\Omega$；因此 \eqref{eq:KS} 蕴含 $Y$ 可逆。
+这里不需要计算 $Y$ 的十个有理函数值。
+
+\begin{definition}
+在局部代数函数环上，令 $\mathcal J^r\subset\cM_{\dR}$ 是所有
+$\nabla_{D_{i_1}}\cdots\nabla_{D_{i_j}}\lambda$、$0\le j\le r$ 所生成的子模。
+允许系数为在当前点正则的有理函数。
+这是\emph{参数导数阶数}过滤，不是选定单参数常微分方程的阶数。
+\end{definition}
+
+Griffiths 横截性给
+\begin{equation}\label{eq:upper}
+ \mathcal J^r\subset F^{3-r}\cM\qquad(0\le r\le3).
+\end{equation}
+对偶连接、纯子变分的水平性与 \eqref{eq:lambda} 给
+\begin{equation}\label{eq:first}
+ (\nabla_{D_i}\lambda)|K=-q(V_i,-).
+\end{equation}
+由 \eqref{eq:KS}，$\lambda$ 与四个一阶导数在纯限制上已经线性无关。
+结合 \eqref{eq:dualHodge} 的上界即得
+\begin{equation}\label{eq:jet1}
+ \mathcal J^0=F^3\cM,\qquad\mathcal J^1=F^2\cM.
+\end{equation}
+
+\section{二阶导数恰好补齐三个质量方向}
+\subsection{只需四个独立二次型}
+记 $\lambda_i=\nabla_{D_i}\lambda$、$\lambda_{ij}=\nabla_{D_j}\lambda_i$。
+由于 $D_i$ 相互交换且连接平坦，$\lambda_{ij}=\lambda_{ji}$。
+定义对称矩阵
+\begin{equation}\label{eq:T}
+ (T_r)_{ij}=q(V_i,C_{rj}),\qquad r=1,2,3.
+\end{equation}
+其对称性也可直接由下面的读出等式得到。
+
+\begin{lemma}[二阶读出的四个商坐标]\label{lem:second}
+模去 $F^2\cM$，$F^1\cM$ 可用在 $\Omega,\beta_1,\beta_2,\beta_3$ 上的值作坐标。
+在这些坐标下
+\begin{equation}\label{eq:eval2}
+ \lambda_{ij}(\Omega)=Y_{ij},\qquad
+ \lambda_{ij}(\beta_r)=(T_r)_{ij},\qquad
+ \lambda_{ij}(e)=0.
+\end{equation}
+\end{lemma}
+\begin{proof}
+纯限制为 $\lambda_{ij}|K=-q(\nabla_{D_j}V_i,-)$。
+对 $q(V_i,\Omega)=0$ 求导，第一式随即成立。
+因为 $\lambda_i\in F^2\cM$，它消去所有 $\beta_r$，所以
+\[
+ \lambda_{ij}(\beta_r)=-\lambda_i(C_{rj})=q(V_i,C_{rj}).
+\]
+最后一式由 $\lambda_{ij}\in F^1\cM=\Ann(e)$ 得到。
+商坐标的维数为 $9-5=4$，且 \eqref{eq:filterE} 说明上述四个测试类恰给全部商坐标。
+\end{proof}
+
+\begin{lemma}[无需逐项计算的独立性]\label{lem:independent}
+四个对称二次型 $Y,T_1,T_2,T_3$ 线性无关。
+\end{lemma}
+\begin{proof}
+假定 $aY+\sum_{r=1}^3b_rT_r=0$，并补记 $b_4=0$。
+将第二个指标 $j$ 求和，由 \eqref{eq:sum} 得
+\[
+ \sum_j(T_r)_{ij}
+ =q\Bigl(V_i,\sum_jC_{rj}\Bigr)=-Y_{ir}.
+\]
+因此每个 $i$ 都满足
+\[
+ a\sum_jY_{ij}-\sum_rb_rY_{ir}=0,
+ \quad\text{即}\quad Y(a\mathbf1-b)=0.
+\]
+$Y$ 可逆，故 $b=a\mathbf1$；第四个分量 $b_4=0$ 强迫 $a=0$，再得所有 $b_r=0$。
+整个证明没有代入连接系数、周期初值或数值近似。
+\end{proof}
+
+\begin{proposition}[二阶 Hodge 生成]\label{prop:jet2}
+在上述开集，$\mathcal J^2=F^1\cM$，秩为九。
+\end{proposition}
+\begin{proof}
+引理\ref{lem:independent}说明对称二阶导数的商坐标 \eqref{eq:eval2} 张成四维空间。
+一阶空间已是 $F^2\cM$，所以二阶空间包含整个 $F^1\cM$；再用 \eqref{eq:upper} 的上界。
+\end{proof}
+
+这也说明二阶纯限制张成全部秩六 $K^\vee$。
+但二阶不止恢复纯 K3：另外三个商方向是实际质量 Kummer 方向。
+只知道一个纯 Picard--Fuchs 系统不能自动读出这三个方向。
+
+\section{三阶生成、Kummer 提取及有限构造}
+\subsection{实际质量对数的读出}
+在 $F^1\cM\cap\Ann(K)$ 中，定义唯一的三个截面 $\kappa_r$：
+\begin{equation}\label{eq:kappa}
+ \kappa_r|K=0,\quad \kappa_r(\beta_j)=\delta_{rj}\ (1\le j\le3),
+ \quad \kappa_r(e)=0.
+\end{equation}
+再定义顶层商的读出 $\xi$：
+\begin{equation}\label{eq:xi}
+ \xi|K=0,\quad\xi(\beta_j)=0,\quad\xi(e)=1.
+\end{equation}
+这些定义位于实际对象的 de Rham 实现，不要求 $\kappa_r$ 是动机态射。
+
+\begin{proposition}[对偶 Kummer 连接]\label{prop:kummer}
+令 $r_r=x_r/x_4$。则
+\begin{equation}\label{eq:kummerconnection}
+ \nabla\kappa_r=-d\log r_r\,\xi,\qquad \nabla\xi=0.
+\end{equation}
+因此 $\mathcal J^3=\cM$。
+\end{proposition}
+\begin{proof}
+$K$ 水平且 $\kappa_r|K=0$，所以 $\nabla\kappa_r$ 仍消去 $K$。
+由 $\nabla\beta_j=C_{j\bullet}\in K$，它也消去三个 $\beta_j$。
+对 $e$ 求值，\eqref{eq:beta} 给
+\[
+ (\nabla_{D_i}\kappa_r)(e)=
+ \begin{cases}-\delta_{ri},&i\le3,\\+1,&i=4.\end{cases}
+\]
+这就是第一式；第二式由整个框架的导数均在 $K+\langle\beta_1,\beta_2,\beta_3\rangle$ 中得到。
+命题\ref{prop:jet2}保证 $\kappa_r\in\mathcal J^2$。
+对它的局部二阶表达式再求一次导数仍在 $\mathcal J^3$，且 $-\nabla_{D_r}\kappa_r=\xi$。
+$\xi\notin F^1\cM$，故二阶的九维空间在三阶补齐为十维。
+\end{proof}
+
+\begin{theorem}[实际物理形式的导数分层]\label{thm:jets}
+在指定带标记的四参数光滑开集，归一化物理形式满足
+\begin{equation}\label{eq:jets}
+ \boxed{\mathcal J^r=F^{3-r}\cM\quad(0\le r\le3),
+ \qquad (\rk\mathcal J^0,\rk\mathcal J^1,\rk\mathcal J^2,\rk\mathcal J^3)
+ =(1,5,9,10).}
+\end{equation}
+\end{theorem}
+\begin{proof}
+依次使用 \eqref{eq:jet1}、命题\ref{prop:jet2} 和命题\ref{prop:kummer}。
+\end{proof}
+
+\subsection{怎样得到二阶算子，而不先求积分}
+上述存在性可以化成有限有理线性代数的构造，不需要新的周期计算。
+以十个对称指标 $i\le j$ 为列，构成四行矩阵
+\begin{equation}\label{eq:Bmatrix}
+ \mathcal B_{\bullet,(ij)}=
+ (Y_{ij},(T_1)_{ij},(T_2)_{ij},(T_3)_{ij})^{\mathsf t}.
+\end{equation}
+它的秩为四。在任一非零四阶子式的开集上，解
+\[
+ \mathcal Bc=(0,\delta_{1r},\delta_{2r},\delta_{3r})^{\mathsf t}
+\]
+得到 $h_r=\sum_{i\le j}c_{ij}\lambda_{ij}$。
+此向量与目标 $\kappa_r$ 的差消去 $\Omega,\beta_1,\beta_2,\beta_3,e$，故属于 $F^2\cM$。
+使用已知基 $\lambda,\lambda_1,\ldots,\lambda_4$ 唯一减去这个差，得到
+\begin{equation}\label{eq:operator}
+ \kappa_r=\mathscr P_r\lambda,
+ \quad\mathscr P_r=
+ \sum_{i\le j}c_{ij}D_jD_i+\sum_i a_iD_i+a_0,
+ \quad c_{ij},a_i,a_0\in\Q(x).
+\end{equation}
+这里需要纯限制的有理表达和配对，均由已有实际连接给出。
+本文证明该构造必可完成，不打印其可能冗长的展开系数，也不声称已经输出新算子文件。
+不同子式开集得到的算子可不同，但其实际读出都等于唯一的 $\kappa_r$。
+
+对系数的求导必须保留。因此提取常数的三阶算子是复合
+$-D_r\circ\mathscr P_r$，而不是简单把 $D_r$ 只作用于原积分的最后一因子。
+
+\subsection{物理链上的精确值与符号}
+既有质量一动机为 $[\mathbb Z\to\mathbb G_m^3]$，其单位为 $(r_1,r_2,r_3)$。
+沿用 de Rham 留数基 $P$、一动机余字符基 $-P$ 和
+$\nu=e_F-\sigma_{\rm phys}$；已有质量比较给
+$\nu$ 的三个中间坐标为 $+\log r_r$。
+因此在正实分支，
+\begin{equation}\label{eq:physicalextract}
+ \boxed{\mathscr P_rJ=-\log(x_r/x_4),\qquad
+       -D_r(\mathscr P_rJ)=1.}
+\end{equation}
+这不是对原振幅完整积分后拟合出的对数。
+第一式由实际 Kummer 商及其链标记确定积分常数；第二式也可从 \eqref{eq:kummerconnection} 直接读取。
+如只知道连接而不知道真实链，一般还会有一个积分常数，不能擅自设零。
+本文采用的是此前已标定的物理链，而不是任意顶层 Betti 提升。
+
+在指定点，三个读出分别是 $6\log2,4\log2,2\log2$；它们并不形成三条独立质量方向。
+这正是下面秩十到秩八限制的原因。
+
+\section{指定秩八对象：一阶保护与最早消去阶数}
+\subsection{Hodge 过滤在特殊活动对象上的限制}
+已有指定对象的实际过滤及纯核简单性为
+\begin{equation}\label{eq:active}
+ 0\subset A\subset N_*\subset E_*,\quad
+ A=K_{x_*}(3),\quad N_*/A=\Q(1),\quad E_*/N_*=\mathbf1.
+\end{equation}
+其中中间提升为 $\beta_c=3\beta_1+2\beta_2+\beta_3$。
+完整 $U_{13}$ 作用已证明其全部子对象恰为 $0,A,N_*,E_*$；原物理链生成整个 $E_*$。
+上一补篇据此得到：读出在 $A$ 上非零时最小对象为 $E_*$；
+消去 $A$ 而不消去 $N_*$ 时为秩二 Kummer 商；消去 $N_*$ 的非零读出给单位对象。
+
+\begin{theorem}[指定点的导数维数与最早阶数]\label{thm:fixed}
+把四参数导数在 $x_*$ 求值后限制到 $E_*$，得到的零至三阶空间为
+\begin{equation}\label{eq:fixedjets}
+ \boxed{J_*^r=F^{3-r}(E_*^\vee)_{\dR},\qquad
+ (\dim J_*^0,\dim J_*^1,\dim J_*^2,\dim J_*^3)=(1,5,7,8).}
+\end{equation}
+固定原物理链时，非零一阶及以下读出全都具有最小秩八。
+非零秩二读出的最早参数导数阶数为二；非零秩一读出的最早阶数为三。
+\end{theorem}
+\begin{proof}
+实际嵌入 $E_*\hookrightarrow\cE_{x_*}(3)$ 的对偶是 Hodge 结构的满射，故对 Hodge 过滤严格。
+定理\ref{thm:jets}因而下降为 \eqref{eq:fixedjets}。
+这里用的是一个纤维上的严格性，不是秩八对象的四参数水平性。
+
+$F^2E_*^\vee$ 在 $A$ 上的限制单射：其纯像是五维 $F^2A^\vee$，
+而 $\Ann(A)$ 的 Hodge 型只含顶层 $(0,0)$ 和中间 $(1,1)$。
+故一阶以下非零读出不能消去 $A$，由既有子对象分类知最小秩为八。
+
+在 $F^1E_*^\vee$ 中，$\Ann(A)$ 恰有一维，由
+$\kappa_c(\beta_c)=1$、$\kappa_c(e)=0$ 的 Kummer 读出张成。
+实际限制满足 $\kappa_r|E_*=c_r\kappa_c$，其中 $(c_1,c_2,c_3)=(3,2,1)$。
+二阶已经生成它，且 $\kappa_c(\sigma_{\rm phys})=2\log2$；其最小对象为非分裂秩二商。
+
+最后 $\Ann(N_*)$ 由 $\xi$ 张成，但 $\xi(e)=1$，不属于 $F^1E_*^\vee$。
+所以二阶以下无法给非零单位读出，而三阶由 $\xi$ 实现，周期为一。
+\end{proof}
+
+\begin{center}
+\begin{tabular}{c|c|c|l}
+\toprule
+最高导数阶数&全族空间维数&指定活动空间维数&新出现的物理读出\\
+\midrule
+$0$&$1$&$1$&原 K3 混合振幅\\
+$1$&$5$&$5$&仍全部保留完整秩八对象\\
+$2$&$9$&$7$&质量 Kummer 读出（最小秩二）\\
+$3$&$10$&$8$&常数 Tate 读出（最小秩一）\\
+\bottomrule
+\end{tabular}
+\end{center}
+零读出在每一阶都可能由关系产生，表格只讨论非零对象。
+纯秩六最大割仍须改变链；这里始终保留原物理链。
+
+\subsection{原变量中的唯一一阶消去关系}
+\begin{corollary}[Euler 关系穷尽一阶例外]\label{cor:Euler}
+在指定点，取有理系数 $a,v_s,v_1,\ldots,v_4$，考虑读出
+\begin{equation}\label{eq:firstop}
+ \Bigl(a+v_s\partial_s+\sum_iv_i\partial_{\mu_i}\Bigr)I.
+\end{equation}
+它在 K3 纯核上的限制为零，当且仅当存在 $t\in\Q$ 使
+\begin{equation}\label{eq:Eulervector}
+ a=t,\qquad v_s=ts,\qquad v_i=t\mu_i.
+\end{equation}
+此时整个实际读出就是零。除此之外，\eqref{eq:firstop} 的最小标架对象为完整秩八 $E_*$。
+\end{corollary}
+\begin{proof}
+在五参数表示中，未归一化留数 $\omega=\Omega/s$ 的纯导数模全纯线为参数周期映射的微分。
+前述局部 Torelli 证明说明其核恰为共同缩放方向
+$\mathsf E=s\partial_s+\sum\mu_i\partial_{\mu_i}$。
+所以纯限制为零首先强迫 $v=t\mathsf E$。
+齐次性又给 $\nabla_{\mathsf E}\omega=-\omega$，于是 $(a-t)\omega=0$，即 $a=t$。
+
+反向更强：由 \eqref{eq:derforms}，组合形式的分子是
+\[
+ aP+v_s-\sum_i v_i\alpha_iN.
+\]
+代入 \eqref{eq:Eulervector} 后它恒等于零。
+故唯一例外来自整条形式关系
+\begin{equation}\label{eq:Euler}
+ \boxed{\Bigl(1+s\partial_s+\sum_i\mu_i\partial_{\mu_i}\Bigr)I=0.}
+\end{equation}
+其余组合纯限制非零，套用定理\ref{thm:fixed}及既有子对象分类即可。
+\end{proof}
+
+系数在 \eqref{eq:firstop} 中表示当前点的零、一阶喷射。
+如果另给参数依赖系数，本推论逐点适用；它不把偶然的数值相消当作形式或类的零。
+特别地，每个单独的一阶质量或动量导数在指定点都保留整个混合对象。
+
+\section{结论的精确范围与后续理论接口}
+本批将上一补篇的抽象读出旗标落实为一个实际物理操作族：
+参数导数没有改变原图的极点支持，而其 Hodge 阶数控制 K3 核和 Kummer 边界何时能够分离。
+一阶保护、二阶对数提取和三阶常数提取是同一相对对象中的结论，
+无需把局部单值矩阵误认为动机自同态。
+
+需要保留以下边界。
+\begin{enumerate}[leftmargin=2em]
+\item $1,5,9,10$ 是四个独立参数的导数空间维数，$1,5,7,8$ 是在指定纤维限制后的维数。
+它们不宣称单变量 $s$ 的最小标量 ODE 阶数为十或八；固定质量时质量对数是常数，微分代数问题不同。
+\item 本文没有认证完整秩十绝对比较，也不需要这样的认证。
+秩十环境在指定质量点并非最小对象，不能由参数导数的十维性反推指定物理周期最小秩十。
+\item $\mathscr P_r$ 的存在、有限有理构造及实际读出已证明；当前文稿不提供展开后的系数文件。
+若后续需要操作表达式，可以按 \eqref{eq:Bmatrix}--\eqref{eq:operator} 局部选择子式，无须重算旧周期。
+\item 指定点的秩八最小性使用旧固定纤维的简单纯核、非零扩张及完整幺幂根基。
+不自动推广到额外 Picard 类、质量关系或扩张消失的其他纤维。
+\item 非 Tate 的最小形式周期对象不等于已证明其一个具体数值不属于 MZV。
+相反，\eqref{eq:physicalextract} 是实际 Kummer 商给出的精确对数值，具有独立的链及分支依据。
+\item 本工作没有替代全局物理切割、一般森林/RG 实际态射、独立物理基准余项及全文审阅。
+研究总目标保持原完整范围。
+\end{enumerate}
+
+后续有价值的理论方向，是将同样的“允许操作阶数---Hodge 层---最小标架”接口用于重整化后的积分：
+先证明减除方案下的实际相对族和水平链，再辨别参数导数是否保留局部反项，最后给出可见子商。
+不能只把这里的维数表移植到未建立几何对象的一般图。
+
+\begingroup\small
+\begin{thebibliography}{9}
+\bibitem{huy} D. Huybrechts,
+\emph{Lectures on K3 Surfaces}, author manuscript,
+Chapter 6, \S2, especially the period-map differential and Proposition 2.8.
+\url{https://www.math.uni-bonn.de/people/huybrech/K3Global.pdf}.
+周期映射微分与局部 Torelli 的一般理论归于此文献。
+\bibitem{internal} 费曼周期研究项目，内部证明稿：
+\nolinkurl{DE_RHAM_MINIMALITY.md}（带标记局部 Torelli）；
+\nolinkurl{MIXED_PARAMETER_CONNECTION.md}（实际秩十对象及 Cartan/留数连接）；
+\nolinkurl{RELATIVE_TOP_COMPARISON.md}、\nolinkurl{KUMMER_BOUNDARY.md}（对偶符号、真实物理链及质量单位）；
+\nolinkurl{OPERATIONAL_MOTIVIC_INTERFACE.tex}（指定对象的全部子对象及双标架）。
+本文对导数分层、二次型独立性及最早提取阶数给出直接证明。
+\end{thebibliography}
+\endgroup
+\end{document}

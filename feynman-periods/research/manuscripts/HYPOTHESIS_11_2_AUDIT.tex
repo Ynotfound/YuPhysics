@@ -1,0 +1,510 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage[margin=25mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,longtable,array,fancyhdr,xcolor}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheoremstyle{cnplain}{7pt}{7pt}{\normalfont}{}{\bfseries}{。}{0.5em}{}
+\theoremstyle{cnplain}\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{注}
+\renewcommand{\proofname}{证明}
+\newcommand{\Q}{\mathbb Q}\newcommand{\C}{\mathbb C}\newcommand{\Z}{\mathbb Z}
+\newcommand{\Gm}{\mathbb G_m}\newcommand{\PP}{\mathbb P}
+\newcommand{\dR}{\mathrm{dR}}\newcommand{\B}{\mathrm B}
+\newcommand{\Nori}{\mathrm N}\newcommand{\im}{\operatorname{im}}
+\newcommand{\coker}{\operatorname{coker}}\newcommand{\rk}{\operatorname{rank}}
+\newcommand{\Fib}{\operatorname{Fib}}\newcommand{\Ext}{\operatorname{Ext}}
+\newcommand{\Hom}{\operatorname{Hom}}\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\mot}{\mathfrak m}
+\setlength{\emergencystretch}{3em}\allowdisplaybreaks[2]
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 假设11.2：实际几何与物理标架比较}
+\fancyhead[R]{\small 专项审阅补篇}\fancyfoot[C]{\thepage}
+\title{从原始费曼积分到实际 motivic coaction\\[5pt]
+\large 旧假设11.2的逐项审阅、标架下降与适用范围}
+\author{费曼周期研究项目}
+\date{2026年10月14日}
+\begin{document}\maketitle
+\begin{abstract}
+旧整合稿将几何与比较识别列为假设11.2；只读该稿，不能把随后块矩阵称为已识别的物理动机余作用。
+本补篇核对后续几何证明，给出从原始正参数链到活动相对对象的实际箭头，并证明两者的形式动机周期及余作用相同。
+正质量欧氏纤维上，活动实现的秩为$7+\kappa$；秩八最小性只在指定质量$(1,2,4,8)$、
+$s=-64$处结合既有Picard及下层非分裂证书推出。
+完整固定群另有算术依赖，不能混作几何比较的一部分。
+本轮不新做周期运输、求积或证书重放，也不把内部审阅称为外部独立认证。
+\end{abstract}
+\tableofcontents
+
+\section{问题的位置与本次结论}
+原文件\texttt{feynman\_periods\_expanded.tex}第11节的
+\texttt{hyp:gluing}确实是假设。其后的块群乘法即使正确，也不能单凭微分系统或数值周期
+识别原始积分的动机。本次优先处理这个连接，是因为它决定分类表中的
+“完整扩张”和“物理可见性”是否指向同一个对象。
+
+后续记录已经包含实际几何构造；当前问题兼有数学依赖审阅与正文未同步两部分。
+应分别判断以下四句话：
+\begin{enumerate}
+\item 原积分是一个实际代数对的带标架周期；
+\item 这个周期通过已构造的K3--Kummer活动子对象；
+\item 该活动对象是最小对象；
+\item 候选块群就是该对象的完整固定纤维动机群。
+\end{enumerate}
+前三句并不以第四句为前提。尤其规范余作用的存在不要求预先算出完整群。
+反过来，只知道纯核的群也不能证明第二句。
+
+本篇重写第一至第三句的证明链；第四句只登记独立依赖。
+我们以实际Nori对象工作，不假定Voevodsky动机上存在猜想的$t$-结构，
+也不使用数值周期映射的单射性。
+
+\section{原始积分与有效相对对象}
+\subsection{接受域与明确规范}
+取数域$k\subset\mathbb R$、$\mu_i\in k_{>0}$及$s\in k_{<0}$。
+记$\alpha=(a,b,c,d)$，
+\[
+ U_G=abc+abd+acd+bcd,\quad M=\sum_{i=1}^4\mu_i\alpha_i,\quad
+ F_s=MU_G-sabcd.
+\]
+本篇的原始对象是二维单位标量传播子的参数积分
+\[
+ I(s)=\int_\sigma\Phi_s,\qquad \Phi_s=\frac{\Omega}{F_s},
+ \qquad \sigma=\{[a:b:c:d]:\alpha_i\geq0\}.
+\]
+$\Omega$与$\sigma$取相容定向使积分为正；未加入额外动量测度因子。
+在$d=1$的环面$T=\Gm^3$中，令
+\[
+ \eta=d\log(a/d)\wedge d\log(b/d)\wedge d\log(c/d),\quad
+ f=M\sum_i\alpha_i^{-1}.
+\]
+则$\Phi_s=\eta/(f-s)$，$U_s=\{f=s\}\subset T$。
+此处$U_s$是曲面，勿与图多项式$U_G$混淆。
+
+\begin{proposition}[合法物理链与形式]\label{prop:pair}
+存在定义于$k$的光滑射影三维模型$P$，其上曲面严格变换$X$与坐标总边界$Y$
+无公共分量，$X\cup Y$正常交叉，且
+\[
+ P\setminus Y=T,\quad X\setminus(X\cap Y)=U_s.
+\]
+正单纯形提升为$(P\setminus X,Y\setminus X)$中的相对链；
+$\Phi_s$给出该对的代数de Rham类。因此
+\[
+ E_{\rm env}=H_3^\Nori(P\setminus X,Y\setminus X;\Q)
+\]
+是实际有效Nori同调动机，而$M_{\rm phys}=E_{\rm env}^{\vee}$
+以该链与形式为物理标架。
+\end{proposition}
+\begin{proof}
+在每个Hepp扇区取
+\[
+ \alpha_{p_0}=1,\quad\alpha_{p_1}=t_1,\quad
+ \alpha_{p_2}=t_1t_2,\quad\alpha_{p_3}=t_1t_2t_3,\quad t_i\in[0,1].
+\]
+设$q=t_1t_2t_3$、$V=1+t_3+t_2t_3+q$及
+$M_p=\mu_{p_0}+\mu_{p_1}t_1+\mu_{p_2}t_1t_2+\mu_{p_3}q$。
+代入即得
+\[
+ F_s=t_1^2t_2(M_pV-sq),\qquad
+ \Phi_s=\frac{dt_1dt_2dt_3}{M_pV-sq},\qquad M_pV-sq\geq\mu_{p_0}.
+\]
+扇区接缝成对抵消，外面落在坐标总边界，曲面避开全部闭链。
+顶点与边节点是普通二重点；环面奇点只可能出现在
+$s=(\sum_i\epsilon_i\sqrt{\mu_i})^2$，与$s<0$矛盾。
+先解消这些边界节点，再在边界内作嵌入解消，保持已正常交叉的链邻域不变。
+所用边界几何见内部记录\cite{Geom,Hodge}。
+
+拉回三形式沿余维$c$、曲面重数$m$的中心新出现的阶数为$c-1-m$。
+节点给$3-1-2=0$，坐标线给$2-1-1=0$；后续中心不产生负阶数。
+所以$\Phi_s$在$P\setminus X$正则。在边界各光滑分层上的三形式限制为零，
+给出相对类。亦可由对数de Rham复形得到其$F^3$提升。
+有效性来自实际同调对的构造，未从负权重或形式Tate扭转推断。
+\end{proof}
+
+\subsection{对偶比较为何是动机箭头}
+相对对偶给出
+\[
+ d:E_{\rm env}\xrightarrow{\sim}H^3_\Nori(T,U_s)(3).                 \tag{2.1}
+\]
+它可由六运算的交换态射构造：设$W=P\setminus(X\cup Y)$，
+$j:P\setminus Y\to P$、$k:P\setminus X\to P$，
+$v:W\to P\setminus Y$、$u:W\to P\setminus X$，则有
+$j_!v_*\mathbf1_W\to k_*u_!\mathbf1_W$。
+正常交叉局部坐标将$X$与$Y$分成独立坐标组，Betti实现成为同一个外张量积，
+故该箭头是同构。再作Verdier对偶与射影推前，取三次上同调便得(2.1)。
+这解释了扭转$(3)$与同调对象的关系\cite{Kernel}。
+
+\textbf{范畴依据。}
+Ivorra--Morel的命题2.11识别基域上的perverse Nori范畴与通常Nori范畴
+\cite{IM}。Tubach的定理4.5、推论4.8提供与六运算及Hodge实现相容的实现，
+推论4.20还把其上同调函子与普适Nori函子自然识别\cite{Tubach}。
+我们只使用这些无条件结果；该文定理4.22涉及的猜想等价不参与证明。
+Betti忠实正合性用来检验\emph{已经构造的箭头}是否同构，
+不被用来制造一个尚不存在的动机箭头。
+复拓扑对偶的局部模型亦见BKV引理6.1.1--6.1.4\cite{BKV}。
+
+\section{纯核与边界商：两个不同的比较}
+\subsection{可核查的几何输入}
+最小K3模型$X_s$的边界$D=X_s\setminus U_s$由二十条有理曲线组成：
+$V_i$四条、$E_{ij}$六条、$C_{ij}$六条、$F_i$四条。
+其非零异分量交数为
+\[
+ C_{ij}V_i=C_{ij}V_j=C_{ij}E_{ij}=1,\qquad
+ E_{ij}F_k=E_{ij}F_l=1,\qquad\{i,j,k,l\}=\{1,2,3,4\}.
+\]
+对偶图连通，有三十条边，故循环秩为十一。
+四个单位$a/d,b/d,c/d,M/d$给出独立主除子关系；
+删去$E_{12},F_2,C_{12},F_3$后的十六曲线交叉子式行列式为$-48$。
+因此边界除子跨度为十六，边界正交因子$H_{\rm res}$秩为六。
+这些是\cite{Hodge,Kernel}中的有限几何输入；本轮未重新计算其矩阵。
+
+权谱序列给
+\[
+ 0\longrightarrow H_{\rm res}\longrightarrow H^2(U_s)
+ \xrightarrow{\rho}\ker(\partial:\Q^{30}\to\Q^{20})(-2)
+ \longrightarrow0.                                             \tag{3.1}
+\]
+坐标单位二次杯积的双留数矩阵为$Z$；抽取三个指定旗标的矩阵$R$满足$RZ=I_3$。
+故$H^2(T)\to H^2(U_s)$单射，秩为三。相对序列于是给出
+\[
+ \rk E_{\rm env}=15,\qquad
+ \operatorname{Gr}^W E_{\rm env}
+ =H_{\rm res}(3)\oplus\Q(1)^8\oplus\Q(0).                        \tag{3.2}
+\]
+这不要求$\rho(X_s)=16$；Picard跳跃时$H_{\rm res}$可能另含代数方向。
+
+\begin{proposition}[实际纯核与最大一动机商]\label{prop:kernel}
+有实际短正合列
+\[
+ 0\to A:=H_{\rm res}(3)\xrightarrow{\iota}E_{\rm env}
+ \xrightarrow{q}K\to0,\qquad \rk(A,K)=(6,9),
+\]
+其中$K$是最大有效一动机商。
+\end{proposition}
+\begin{proof}
+对十六曲线基$B_i$和交叉矩阵$G$，取
+\[
+ \pi_D=\sum_{i,j}(G^{-1})_{ij}[B_i\times B_j].
+\]
+对应复合给$\pi_D^2=\pi_D$。扣除零次、四次投影子后，
+$\pi_{\rm res}=\pi_2-\pi_D$定义实际纯因子$H_{\rm res}$。
+所需嵌入是如下复合：
+\[
+ H_{\rm res}(3)\hookrightarrow H^2_\Nori(X_s)(3)
+ \xrightarrow{r}H^2_\Nori(U_s)(3)
+ \xrightarrow{\delta}H^3_\Nori(T,U_s)(3)\xrightarrow{d^{-1}}E_{\rm env}.
+\]
+$r$的核是边界除子跨度；$\delta$的核是$H^2(T)$的像，其权重为四，
+与$r(H_{\rm res})$的权重二部分无交。因此$\iota$单射。
+
+对有效同调对象$E_{\rm env}$应用Ayoub--Barbieri-Viale定理8.12
+\cite{ABV}，得到实际商$K=(E_{\rm env})_{\leq1}$。
+该定理的Hodge相容性及权重严格性表明它恰商去$A$：
+一动机没有权重$-4$部分，而余下$-2,0$两层本身是一动机型。
+所以$q\iota=0$，且$\iota$到$\ker q$在Betti实现上是同构，
+忠实正合性给出所述实际同构。
+\end{proof}
+
+\subsection{为什么留数表还需要一个扩张比较}
+下面给出连接留数与相对扩张的关键步骤，不能省略。
+
+\begin{lemma}[同伦纤维与推出]\label{lem:fibre}
+设$\mathcal V\to\mathcal W$为导出态射，
+$H^0(\mathcal V)=\Q(0)$、$H^0(\mathcal W)=0$，
+且$h:\Q(0)\to\mathcal V$在零次上同调诱导恒等。
+则自然映射
+\[
+ H^0\Fib(\Q(0)\xrightarrow{h}\mathcal V\to\mathcal W)
+ \longrightarrow H^0\Fib(\mathcal V\to\mathcal W)
+\]
+将左边以$H^{-1}(\mathcal W)$为核的扩张，推出为右边以
+$\coker(H^{-1}(\mathcal V)\to H^{-1}(\mathcal W))$为核的扩张。
+\end{lemma}
+\begin{proof}
+两个纤维三角的长正合列均以$\Q(0)$为商。它们之间的自然态射在商上为恒等，
+在核上为上述余核映射。沿核映射推出后，两端均为恒等，
+中间态射由短正合列成为同构。纤维及其自然性可在六运算的增强范畴中取定，
+不需要任意选择一个抽象三角形之间的箭头。
+\end{proof}
+
+应用于
+\[
+ \mathcal V=R\Gamma_\Nori(T)(3)[3],\qquad
+ \mathcal W=R\Gamma_\Nori(U_s)(3)[3],
+\]
+并取$h$为三个坐标单位的有序motivic杯积的实现。
+单位圆乘积固定$H^0(\mathcal V)$的生成元，故没有未定有理倍数。
+$U_s$光滑仿射且为曲面，所以$H^0(\mathcal W)=H^3(U_s)(3)=0$。
+引理把\emph{实际单位符号扩张}推出为\emph{实际相对扩张}。
+
+进一步沿两次局部化连接映到$\Q(1)^{30}[1]$，其与单位杯积的复合为二重tame单位。
+模去$Z$的三个环境方向、用$C=\ker\partial\cap\ker R$的基$P$读取后，
+八个单位类为
+\[
+ ([\mu_1/\mu_4],[\mu_2/\mu_4],[\mu_3/\mu_4],0,0,0,0,0).
+                                                               \tag{3.3}
+\]
+旗标计算可在$F_i$上取
+$u=-\mu_j\alpha_j/(\mu_l\alpha_l)$，使$1-u=-\mu_k\alpha_k/(\mu_l\alpha_l)$。
+Steinberg关系消去$\{u,1-u\}$，零、一、无穷远的单位留数分别为
+带定向符号的$\lambda_l-\lambda_k,\lambda_j-\lambda_l,\lambda_k-\lambda_j$，
+其中$\lambda_i=[\mu_i]$。其它旗标为零或由交换次序确定；
+完整三十旗标及整数基见\cite{Kummer}。
+
+一动机同调余字符采用$-P$而不是$P$；这由路径$1\to v$的$\log v$与
+正圆周的$2\pi i$校准。于是实际边界商为
+\[
+ K\simeq[\Z\longrightarrow\Gm^8]\otimes\Q,\qquad
+ 1\longmapsto(\mu_1/\mu_4,\mu_2/\mu_4,\mu_3/\mu_4,1,1,1,1,1).
+                                                               \tag{3.4}
+\]
+这一步的责任在单位杯积、纤维推出与局部化相容性；
+并非由一个对数数值拟合出未知动机。
+它确定的是边界商，不单独确定K3方向的下层扩张。
+
+\section{物理标架下降：连接原积分的关键等式}
+令$\kappa$为三个质量平方比在$k^\times\otimes\Q$中生成的有理秩。
+设$T_\mu\subset\Gm^8$为(3.4)的点生成的最小连通子环面，
+$K_{\rm act}=[\Z\to T_\mu]\otimes\Q$，定义实际拉回
+\[
+ E_{\rm act}=E_{\rm env}\times_K K_{\rm act}.
+\]
+有交换图
+\[
+\begin{array}{ccccccccc}
+0&\to&A&\to&E_{\rm act}&\to&K_{\rm act}&\to&0\\
+ &&\Vert&&\downarrow i&&\downarrow&&\\
+0&\to&A&\to&E_{\rm env}&\to&K&\to&0 .
+\end{array}                                                     \tag{4.1}
+\]
+特别地
+\[
+ \rk E_{\rm act}=7+\kappa,\qquad
+ E_{\rm env}/E_{\rm act}\simeq\Q(1)^{8-\kappa}.                   \tag{4.2}
+\]
+
+\begin{theorem}[实际双标架比较]\label{thm:frame}
+正物理链$\sigma$有唯一提升$\sigma_{\rm act}\in(E_{\rm act})_\B$。
+令$M_{\rm act}=E_{\rm act}^{\vee}$，
+$r=i^\vee:M_{\rm phys}\twoheadrightarrow M_{\rm act}$及
+$\Phi_{\rm act}=r_\dR[\Phi_s]$。则在同一个Nori形式周期环中，
+\[
+ \boxed{[M_{\rm phys},\sigma,[\Phi_s]]^\mot
+       =[M_{\rm act},\sigma_{\rm act},\Phi_{\rm act}]^\mot.}      \tag{4.3}
+\]
+两边的规范motivic coaction相同。
+\end{theorem}
+\begin{proof}
+原始正链在同调实现上被几何复共轭固定。
+(4.2)是定义于实基域的分裂Tate商，其共轭为$-1$。
+因此$\sigma$在商中的像既等于自身又等于其负值，有理系数下为零。
+Betti实现正合且$i$单射，给出唯一$\sigma_{\rm act}$且
+$i_\B\sigma_{\rm act}=\sigma$。
+
+必须注意箭头方向：链沿$i$提升，形式沿对偶满射$r=i^\vee$下降。
+不需要选择一个未构造的投影$E_{\rm env}\to E_{\rm act}$。
+由形式周期的态射关系，
+\[
+ [M_{\rm phys},r_\B^\vee\sigma_{\rm act},[\Phi_s]]^\mot
+ =[M_{\rm act},\sigma_{\rm act},r_\dR[\Phi_s]]^\mot,
+\]
+这就是(4.3)。比较同构的自然性给出相同的数值积分；
+但(4.3)本身已经是求值之前的等式，不是由数值相等反推而来。
+规范余作用定义于形式周期环，故保持此关系。
+\end{proof}
+
+取$M_{\rm act}$的de Rham基$e_j$，右de Rham作用约定下即有
+\[
+ \Delta I^\mot
+ =\sum_{j=1}^{7+\kappa}
+ [M_{\rm act},\sigma_{\rm act},e_j]^\mot
+ \otimes[M_{\rm act},e_j^\vee,\Phi_{\rm act}]^\dR.                \tag{4.4}
+\]
+这是实际物理周期的公式。一般矩阵系数余作用见\cite[\S2.3]{Brown}；
+其在本图上的身份由命题\ref{prop:pair}至定理\ref{thm:frame}承担。
+此时尚不必给群取一个预设的正交半直积名称。
+
+\begin{remark}[微分系统应处于证明链的哪一端]
+完成(4.1)--(4.3)以后，实际对象的Gauss--Manin连接可用于计算其比较条目。
+若从一个三角微分系统出发，反过来宣称存在上述动机箭头，
+则仍然遗漏了本节的关键步骤。
+相同分级、相同秩或可解的微分方程都不能唯一选择物理混合扩张。
+\end{remark}
+
+\section{指定纤维的最小性：独立的下层非分裂输入}
+现在仅取$k=\Q$、$m=(1,2,4,8)$、$s=-64$。
+平方质量比为$(1/64,1/16,1/4)$，故$\kappa=1$。
+继承的Picard证书给$\rho(X)=16$，于是
+$A=T(X)(3)$的Hodge实现简单，秩为六。
+记$E=E_{\rm act}$、$B=\Q(1)$、$N=W_{-2}E$，
+\[
+ 0\to A\to N\to B\to0,\qquad
+ 0\to B\to K_{\rm act}\to\Q(0)\to0.
+\]
+第二项为非零质量Kummer扩张；
+第一项的类记为$\eta_{\rm low}$，两者不能混淆。
+
+\begin{proposition}[固定秩八的证据链]\label{prop:min}
+若$\eta_{\rm low}\ne0$，則(4.3)的最小Nori带标架对象秩为八。
+本项目指定纤维的既有下层实Hodge障碍证书给出所需非零性。
+\end{proposition}
+\begin{proof}
+先证明链生成$E$。包含$\sigma$的子对象$R$在$K_{\rm act}$中的像满射顶层。
+由于$K_{\rm act}$的Kummer类具有最小Tate支撑，该像只能是全部$K_{\rm act}$。
+$A$简单，所以$R\cap A$为$0$或$A$。后一种给$R=E$。
+前一种给$R\simeq K_{\rm act}$，但物理形式属于$F^3E^\vee_\dR$，
+而$F^3(K_{\rm act}^{\vee})_\dR=0$，会使其与$\sigma$的配对为零，
+违背$I(-64)>0$。
+
+再排除被形式杀死的非零子对象$J\subset E$。
+留数使$\Phi_{\rm act}|_A$为非零全纯K3读出，因此$J\cap A=0$，
+$J$注入$K_{\rm act}$。若像在$B$内，则非零像等于$B$，给
+$\eta_{\rm low}$的截面；若像满射顶层，则像为全部$K_{\rm act}$，
+同样使$\eta_{\rm low}$分裂。两者均矛盾。
+所以不能再商去任何不可见非零子对象，最小对象就是$E^\vee$。
+此为\cite{Minimal}的固定$\kappa=1$论证；一般最小对象的定义见
+\cite[\S2.4]{Brown}。
+\end{proof}
+
+这里的非零输入具有明确的检验量。未扭转下层对象为
+$0\to T(X)\to V_c\to\Q(-2)\to0$。
+取$\omega$为裸全纯留数、$\beta$为Tate方向的$F^2$提升，
+$p_j=\int_{\gamma_j}\omega$、$b_j=\int_{\gamma_j}\beta$。
+若存在实Hodge截面，则$\beta+g\omega$的全部实Betti周期为实数，
+因而任意三个循环满足
+\[
+ \det(\Re p_j,\Im p_j,\Im b_j)_{j=1}^3=0.                       \tag{5.1}
+\]
+\texttt{LOWER\_REGULATOR.md}及其实际消失球证书给出
+\[
+ \frac{877}{100}
+ <\det(\Re p_j,\Im p_j,\Im b_j)_{j=1}^3
+ <\frac{439}{50}.                                               \tag{5.2}
+\]
+故实Hodge不分裂，有理Hodge及Nori分裂也不可能。
+这是继承的严格有限输入，不是本轮新推导的小数认证；
+本轮审阅了由(5.2)推出非分裂的逻辑，没有重放运输。
+$\log2\ne0$只控制上层，不能代替(5.2)。
+
+\section{显式矩阵与完整群各自依赖什么}
+\subsection{固定物理读出}
+后续顶层比较记录\cite{Top}为同一实际对象选择几何膜及对数形式，得到
+\[
+ P_8=
+ \begin{pmatrix}
+ P_6&0&0\\
+ \boldsymbol b&(2\pi i)^2&0\\
+ \boldsymbol q&-2(2\pi i)^2\log2&(2\pi i)^3
+ \end{pmatrix},\qquad
+ C_E=(2\pi i)^{-3}P_8^{\mathsf t}.
+                                                               \tag{6.1}
+\]
+其物理链标记为第八个Betti向量，物理对偶形式为第六个de Rham对偶向量的两倍。
+这两个标记分别依赖膜与正链的实际交数、留数杯积归一化。
+它们不能由$P_8$数值接近某个矩阵推断。
+\texttt{RELATIVE\_TOP\_AUDIT.md}单列了这些几何与符号责任。
+
+令$C_M=C_E^{-\mathsf t}$。复用上述固定基的几何比较后，
+\[
+ I^\mot=2(C_M^\mot)_{8,6},\qquad
+ \Delta I^\mot=
+ 2\sum_{j=1}^{8}(C_M^\mot)_{8,j}\otimes(g_{E,\dR}^{-\mathsf t})_{j,6}.
+                                                               \tag{6.2}
+\]
+(6.2)的实际性来自(4.3)及实际标记；数值证书只包围比较的复数值，
+不证明这些值代数独立。本篇不重复认证(6.1)的误差界。
+
+\subsection{群识别不由几何比较自动推出}
+实际群有权重块上界
+\[
+ \begin{pmatrix}H&x&z\\0&t&y\\0&0&1\end{pmatrix}.
+\]
+指定纤维的两个相邻扩张在Hodge实现中均非零。
+$\Hom(B,A)$与$\Hom(\Q(0),B)$分别为维数六和一的非同构简单表示，
+故幺幂Lie代数在相邻块的联合像为全部七维空间。
+交换子$(x,0),(0,y)\mapsto xy$生成六维中心，得到十三维完整幺幂核。
+Hodge群包含于Nori群而两者均受上述块上界约束，
+便给出相同幺幂核\cite{Mixed}。
+
+但是把纯分级群进一步写成$O(q)\times\Gm$，还需要
+\texttt{FIXED\_PURE\_GROUP.md}中的固定纤维算术论证：
+端同态域、良约化Frobenius、相应K3定理及行列式对象。
+这些证据不由(4.3)产生，也不能用参数几何单值群代替。
+本轮保留该记录的原范围，未声称完成一次新的全量算术复审。
+纯K3对象及其群的独立证明也不会仅因旧文保留一个相对比较假设而全部失效；
+受影响的是将这些结论转移到\emph{原物理周期}的合法性。
+
+\section{假设11.2的逐项结论与正文替换规则}
+\small
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.24\textwidth}
+>{\raggedright\arraybackslash}p{0.43\textwidth}
+>{\raggedright\arraybackslash}p{0.25\textwidth}}
+\toprule 原假设条款&本次可定位的证明链&严格范围\\\midrule
+\endfirsthead
+\toprule 原假设条款&本次可定位的证明链&严格范围\\\midrule
+\endhead
+解消代数对、有效实现&命题\ref{prop:pair}；原同调对直接给有效对象&正质量、非奇异欧氏参数\\
+限制、Gysin、Tate扭转&式(2.1)、命题\ref{prop:kernel}及两次局部化&指定边界模型；有理Nori范畴\\
+边界Kummer识别&引理\ref{lem:fibre}、单位杯积、旗标及式(3.4)&已固定余字符符号；同源意义\\
+物理双标架因子化&图(4.1)、共轭消失与形式周期等式(4.3)&同一实际对象，非数值反推\\
+纯核最小性&边界正交因子；$\rho=16$时完整超越核&指定点Picard证书单列\\
+源与完整对象最小性&命题\ref{prop:min}及非分裂证书(5.2)&固定$(1,2,4,8),-64$\\
+显式coaction条目&式(6.1)--(6.2)，实际膜、交数与杯积标记&固定有理框架；沿用P8证书\\
+完整固定群等号&下层与上层非分裂，加独立固定纯群证明&不外推其它点或基域\\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\textbf{可以替换的旧表述。}
+在上述接受域，原正参数周期通过(4.1)的实际活动对象，(4.3)及(4.4)成立。
+在指定有理纤维，继承Picard及下层非分裂证书后，活动对象就是秩八最小对象。
+因此不应继续把这些已给出实际箭头的部分一概写成未展开的假设11.2。
+
+\textbf{不能写成的表述。}
+“假设11.2在任意图、所有质量、所有参数及所有物理支上均已无条件证明。”
+很一般参数不能替代固定代数点；Picard跳跃、Kummer秩下降、物理链延拓
+以及其它物理模型必须重新注明范围。更不能从非Tate最小对象直接推出
+单个数值$I(-64)$不属于MZV。
+
+\textbf{后续验收。}
+本补篇提供旧稿的专门替换入口，尚未将全部315页统一稿逐段回写。
+下一步先对照分类表的K1行和实际coaction章节回写此证明链，
+同时清除早期独立稿末尾已经过时的“待证明”状态说明。
+如审阅固定群的独立算术输入发现缺口，应只下调依赖该输入的结论，
+保留已经建立的实际对象与规范余作用。
+这项工作服务于物理分类表的证据闭合，完整研究总目标仍未完成。
+
+\begin{thebibliography}{99}
+\bibitem{ABV} J. Ayoub and L. Barbieri-Viale,
+\emph{Nori 1-motives}, Theorem 8.12.
+\url{https://arxiv.org/pdf/1206.5923}.
+\bibitem{IM} F. Ivorra and S. Morel,
+\emph{The four operations on perverse motives}, Proposition 2.11, v3.
+\url{https://arxiv.org/pdf/1901.02096v3}.
+\bibitem{Tubach} S. Tubach,
+\emph{On the Nori and Hodge realisations of Voevodsky motives},
+Theorem 4.5, Corollaries 4.8 and 4.20, v4.
+\url{https://arxiv.org/html/2309.11999v4}.
+\bibitem{BKV} S. Bloch, M. Kerr and P. Vanhove,
+\emph{A Feynman integral via higher normal functions},
+Lemmas 6.1.1--6.1.4 and \S6.2.
+\url{https://arxiv.org/html/1406.2664v3}.
+\bibitem{Brown} F. Brown, \emph{Notes on motivic periods}, \S\S2.3--2.4.
+\url{https://arxiv.org/html/1512.06410}.
+\bibitem{Geom} 项目内部证明稿，\texttt{GEOMETRIC\_COMPARISON.md}：
+正链提升、有效同调对象、最大一动机商及物理链活动因子化。
+\bibitem{Hodge} 项目内部证明稿，\texttt{HODGE.md}：
+二十曲线边界、三十交点、环境限制与权重分层。
+\bibitem{Kernel} 项目内部证明稿，\texttt{K3\_KERNEL.md}：
+相对六运算对偶、边界Chow投影子及实际纯核嵌入。
+\bibitem{Kummer} 项目内部证明稿，\texttt{KUMMER\_BOUNDARY.md}：
+全部旗标、同伦纤维、局部化比较及单单位符号校准。
+\bibitem{Minimal} 项目内部证明稿，\texttt{MINIMALITY.md}、
+\texttt{LOWER\_REGULATOR.md}及\texttt{PICARD\_CERTIFICATE.md}：
+固定纤维最小性与独立非零输入。
+\bibitem{Top} 项目内部证明稿，\texttt{RELATIVE\_TOP\_COMPARISON.md}及
+\texttt{RELATIVE\_TOP\_AUDIT.md}：实际相对膜、物理标记、P8及读出。
+\bibitem{Mixed} 项目内部证明稿，\texttt{MIXED\_UNIPOTENT\_GROUP.md}、
+\texttt{FIXED\_PURE\_GROUP.md}：幺幂核与固定纯群的分开证明。
+\end{thebibliography}
+\end{document}
+

@@ -1,0 +1,592 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage[margin=25mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,longtable,array,fancyhdr,xcolor,pdflscape}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheoremstyle{cnplain}{7pt}{7pt}{\normalfont}{}{\bfseries}{。}{0.5em}{}
+\theoremstyle{cnplain}\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{定义}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{注}
+\renewcommand{\proofname}{证明}
+\newcommand{\Q}{\mathbb Q}\newcommand{\cC}{\mathcal C}
+\newcommand{\cS}{\mathcal S}\newcommand{\dR}{\mathrm{dR}}
+\newcommand{\rk}{\operatorname{rk}}\newcommand{\im}{\operatorname{im}}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\dd}{\mathrm d}
+\setlength{\emergencystretch}{3em}\allowdisplaybreaks[2]
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 费曼周期：可核查图族分类表}
+\fancyhead[R]{\small 二十三行及证据卡}\fancyfoot[C]{\thepage}
+\title{费曼周期的可核查图族分类表\\[5pt]
+\large 费曼图的周期类型、物理可见性与积分前预测}
+\author{费曼周期研究项目\quad 当前理论分类及研究总方案}
+\date{2026年10月14日}
+\begin{document}
+\maketitle
+\begin{abstract}
+本文将现有研究组织为二十三行分类表：逐行给出物理输入、MZV肯定证据、非Tate结构、物理可见性、完整扩张及特殊点。
+公开文献结论与项目内部证明分别标明，候选、上界和未决数字不升级为定理。
+表后附核查入口、两项层次区分命题、两个无需完整积分的判别实例，以及前四个物理子目标的后续验收。
+数学工作用于支撑这些物理判断，不另设脱离分类问题的主攻目标。
+这是同日统一主线稿第6节的独立阅读版；“主线~n.m”指
+\texttt{UNIFIED\_STRUCTURE\_THEOREM.pdf}中的对应编号。
+完整证明及其它核心、RG和物理基准详见统一全文；本表不是任意图完整分类已经完成的声明。
+\end{abstract}
+\tableofcontents
+\clearpage
+\section{可核查的图族分类表：从MZV证据到完整物理对象}
+\label{sec:familyclassification}
+
+本节以四个物理问题组织主线：为什么某些费曼图的周期是MZV；
+哪些实际振幅、局部系数或物理投影已有MZV肯定证明；
+哪些需要椭圆、K3等其它周期结构；如何由图和物理输入在完整积分以前预测。
+数论与几何为这些判断提供判据和证明，不另立脱离物理分类的主攻目标。
+所谓“需要椭圆、K3等”，指由质量与运动学决定的几何模参数和周期结构，
+并非新增自由物理参数。本表覆盖已有证据的图族和物理情形，不是任意图的完整分类。
+
+读表时先选定UV留数、振幅、截面或RG系数，再核对维数、质量、分子和减除，
+最后确认周期结构在物理求和与投影后是否保留。
+数学工作的优先级取决于它能否改进这些判断或覆盖更多物理图族。
+完整扩张一栏追踪纯核之外的边界、非齐次源和常数；
+给出有用的物理预测，不必等待所有抽象结构都已分类。
+
+\subsection{读表约定：六个不能合并的判断}
+\label{subsec:classsemantics}
+完整输入记为
+\[
+ {\cal I}=(G,D,\boldsymbol a,\boldsymbol m,\boldsymbol p,N,
+             K,\sigma,\text{解析支},\text{减除方案},\text{物理读出}).
+\]
+一行中出现的秩可以是完整载体秩、纯核秩、函数最小阶数或固定动机秩；
+下表逐一写明对象。除特别说明，质量为正代数数，
+从收敛的欧氏正链或明确的正能量链开始延拓。
+在函数行中删去几何判别式；不能把这个开集中的结论逐点照抄到边界。
+
+\textbf{MZV肯定证据}指普通实数代数
+\[
+ {\cal Z}=\Q[\zeta(n_1,\ldots,n_d):n_1\ge2,\ n_j\ge1],\qquad
+ \zeta(\boldsymbol n)=\sum_{k_1>\cdots>k_d\ge1}
+                       k_1^{-n_1}\cdots k_d^{-n_d}
+\]
+中的表达证明，或明确标出的形式MZV证明。
+测度中的$\pi$、$2\pi i$、代数系数和质量量纲须先声明；
+不能把$\overline\Q[{\cal Z},(2\pi i)^{\pm1}]$改称$\cal Z$。
+MPL是带变量和字母的函数类，混合Tate是范畴性质，MZV是特定端点的常数类。
+本表以MT表示混合Tate，以AT表示混合Artin--Tate；
+AT的有限角色经扩域可分裂，但质量对数和端点扩张仍可能存在。
+
+\textbf{非Tate证据}分三层：环境上同调出现非Tate；
+指定de Rham形式投到该组成非零；实际双标架的最小对象确实含该组成。
+数点、曲面名称、最大割或非零形式各自只证明相应一层。
+\textbf{物理可见性}必须另给链、管变分、正性或真实投影的证明。
+\textbf{完整扩张}必须说明是在$\mathbb C(s)$的微分范畴，
+还是指定数域、指定代数纤维的Nori范畴；两者不能互换。
+
+表中的“数值未判”是一个精确状态：所引证据不判定指定数值是否属于$\cal Z$。
+可见非Tate最小动机排除同一范畴内的混合Tate形式表示；
+要将它变成具体复数的否定判定，还需要适当共同范畴上的周期映射单射性，
+或一项独立的数论证明。本节没有假定该单射性。
+相比之下，可见的非虚幺幂单值群已足以给函数层面的MPL障碍。
+
+\subsection{图族总表}
+\label{subsec:familytable}
+每个编号在后文都有证据卡。M1--M2引自公开定理；N1单列公开非Tate基准。
+其余各行也有直接先行工作；表后证据卡与第\textup{[主线~41]}节逐项对照。
+本项目的具体推导不自动构成新颖性，内部可审阅性也不等于已通过外部同行评议。
+“未知”表示该行没有交付该结论，不表示不存在这种结构。
+
+\begin{landscape}
+\begingroup
+\renewcommand{\small}{\fontsize{8.8}{11.2}\selectfont}\small
+\setlength{\tabcolsep}{1.2mm}\renewcommand{\arraystretch}{1.08}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{19mm}>{\raggedright\arraybackslash}p{35mm}>{\raggedright\arraybackslash}p{27mm}>{\raggedright\arraybackslash}p{36mm}>{\raggedright\arraybackslash}p{35mm}>{\raggedright\arraybackslash}p{43mm}>{\raggedright\arraybackslash}p{34mm}@{}}
+\toprule 图族/编号&输入条件&MZV肯定证据&非Tate结构证据&物理可见性&完整扩张状态&特殊点及例外\\\midrule\endfirsthead
+\toprule 图族/编号&输入条件&MZV肯定证据&非Tate结构证据&物理可见性&完整扩张状态&特殊点及例外\\\midrule\endhead
+\bottomrule\endfoot
+\textbf{M1}\newline 小顶点宽度&无质量、$D=4$本原对数图周期；$N=2h\ge6$；存在边序宽度$\le3$&是；$P_G\in{\cal Z}$，权重至多$N-3$&该周期有MT控制；判据不给非Tate因子&正单纯形上的实际图周期；进入图的UV留数&给肯定归类；不逐图算最小秩及全部扩张参数&有质量、分子及运动学函数不在此结论内；宽度$>3$不是否定证据\\\midrule
+\textbf{M2}\newline zig-zag $Z_n$&$n\ge3$；无质量本原$D=4$周期、标准$\Omega/\Psi^2$规范&是；显式有理系数乘$\zeta(2n-3)$&无需非Tate结构来表示该数值&实际图周期公式；可作为局部RG图贡献&数值公式已定；不由公式认定整个图动机或全部扩张&整体振幅的图权相消另查；增加质量后须另立一行\\\midrule
+\textbf{M3}\newline 无质量串并联&双端分解证书；仅端点注入；正整数边指数；$D=4-2\varepsilon$，$q^2>0$&Euler规范后全阶系数在单$\zeta$代数；带尺度为$\mathcal Z_1[\log(q^2/\mu^2)]$&该读出有Gamma表示；无需椭圆/K3函数&实际卷积归纳；森林/RG须另核查子图余图及IR条件&所有展开系数已控制；不据此分类原生完整最小动机&减除点系数为MZV；一般尺度对数非自动MZV；质量、非整数指标、内部注入另判\\\midrule
+\textbf{M4}\newline 全零质量banana&$D=4-2\varepsilon$，$n\ge2$单位边；非零欧氏两点；指定MS/MOM&全阶单$\zeta$；MS有限项仅有理数与尺度对数&四线谱曲面的正规化有理；完整读出已显式&实际反项、MOM及正谱均已定；不是散射截面&完整正规化函数和全部$\varepsilon$系数已定；原生动机最小化另留&所有质量为零是奇异层；不能套用正质量K3；$D=2$有IR问题\\\midrule
+\textbf{A1}\newline 一圈标量族&$D=2d$，整数幂，$\sum a_i>d$；正质量欧氏；同极点集分子&一般无MZV肯定结论；MT不充分&完整相对载体AT；有限扩域后MT&实际参数标架给物理上界；排除椭圆/K3简单因子&三角/盒一般位置完整载体秩$7/8$，分级已定；标架最小化与扩张参数另判&判别式零、零质量IR、非整数维数均须重审\\\midrule
+\textbf{E1}\newline 三边banana&$D=2$，正质量，单位标量；正常阈值及其光滑延拓域&无一般MZV肯定结论；特殊数值未判&光滑三次曲线$H^1(E)$；几何群$\mathrm{SL}_2$&正阈值割非零，核完整可见；函数有MPL障碍&在$\mathbb C(s)$上非分裂秩$3$共同单位扩张；固定算术扩张未统一分类&$s=0$及伪阈值/阈值纤维需重算；等质量的光滑族仍可椭圆\\\midrule
+\textbf{E2}\newline theta细分族&三条串联路径、零内部注入；路径内异质量；私有阈值；限定分子次数&活动数$r>0$时无本表的MZV肯定证据；$r=0$为零&每个活动质量三元组给一份互异椭圆核&网格值非零当且仅当对应核可见&微分对象完整：秩$2r+1$，群$\mathbb G_a^{2r}\rtimes\mathrm{SL}_2^r$；不是固定绝对群&质量合流见E5上界；阈值重合及高次分子另判；固定圈数不界定$r$\\\midrule
+\textbf{E3}\newline 内部注入四边图&$D=2$三点$(2,1,1)$图；正质量；两端面及夹挤满足指定一般位置&没有一般肯定结论；数值未判&绝对极点曲面有理，但相对边界含两个椭圆核&单个标量读出各看见一次；非AT半单秩$4$&纯组成精确；完整粘合和固定纤维最小秩未定&注入为零可降到串联规则；同步退化和端面碰撞另查\\\midrule
+\textbf{E4}\newline 三体总率&$D=4$正质量，$m_1\ne m_2$；单位相空间或接触源读出&无一般肯定结论；固定能量未判&$y^2=\lambda(t,m_1^2,m_2^2)\lambda(s,t,m_3^2)$属一&正物理圈激发恰一份$H^1$&函数阶数$2$--$5$；混合扩张未完整确定&阈值、分支/极点碰撞另判；某个等质量极限不能直接套本行\\\midrule
+\textbf{E5}\newline theta质量合流&$D=2$正质量；路径内可重复；零内部注入；路径平方分子逐次真分式&无一般MZV肯定；合流本身不保证Tate&至多$R=r_1r_2r_3$个光滑sunrise椭圆载体；只是表示上界&有限喷射给升幂读出；零阶网格值不足；完整求和可见性另判&原积分函数有有限导数表示；原生标架比较及最小扩张未定&$r_a$数不同质量而非边数；曲线退化另判；不套E2的精确秩与群\\\midrule
+\textbf{P1}\newline 割点乘积族&接受theta块的实际割点拼接；独立块须跨块私有阈值&无普遍MZV肯定结论；继承各块证据&独立块给纯核外张量积；重复块给对称幂&实际乘法及最小性证明，非仅张量上界&独立时阶数$\prod_i(2r_i+1)$；重复$k$块为$\binom{2r+k}{k}$；微分对象已定&关联块不能当独立块；这些并非全属同一可重整化模型\\\midrule
+\textbf{K1}\newline 固定四线banana&$D=2$，$m=(1,2,4,8)$，$s=-64$，$K=\Q$；原正标量标架&数值MZV性未判；形式MT表示被排除&实际秩$6$超越K3，格$U\oplus U(2)\oplus A_2(-2)$&指定正链的最小秩$8$；K3确实可见&原积分标架等式已给；秩$8$继承Picard与非分裂证书；完整群另依赖固定算术输入&不能外推所有代数点；全四参数秩$10$载体不等于此点最小秩\\\midrule
+\textbf{K2}\newline 四粒子谱曲面&两对质量互异；$s\ne0$；四个$\lambda(s,a_\pm,b_\pm)\ne0$&无一般肯定结论；数值未判&$(4,4)$分支双覆盖消解为K3；$\rho\ge16$，$\mathrm{rk}\,T\le6$&$D=2$正谱是非零全纯二形式周期；精确简单性另需输入&一般质量只给载体/纯层上界，未给完整相对最小对象&质量相等或分支碰撞重算模型；Picard跳跃可降秩但不自动变Tate\\\midrule
+\textbf{K3}\newline 四线能量MOM&$D=4$，$m=(1,2,4,8)$，$s_0<0$，三次减除；指定有限能量代表&无一般肯定结论；$s=s_0$的值严格为$0$&函数中恰一份秩$6$K3无限单值因子&实际球面/谱比较加阈值下界；完整物理复合源读出&完整固定纤维扩张未定；独立森林代表的形式同一另判&$s=s_0$是零值例外；不能称此四维对象秩$8$\\\midrule
+\textbf{K4}\newline 多项式四体源&$D=4$，指定质量$(1,2,4,8)$；局部标量积多项式$N$；正平方权&无一般肯定结论；质量壳零类给零谱&无交换分母时非有限单值半单部分恰为一份K3&$\overline N\ne0$当且仅当该K3可见；角矩是有限投影&完整三圈函数继承该运动学核；混合粘合未定&先平均振幅再平方会丢信息；有符号权不适用正平方判据\\\midrule
+\textbf{K5}\newline 带交换四体源&同上质量；$f(a)=p(a)+\sum h_i/(a-c_i)$；全源比较取$1<c_i<9$&无一般肯定结论；数值未判&一份K3加每个保留简单极点一份椭圆核&合并极部、实际夹挤及完整谱证明各重数一&完整函数的无限单值半单部分精确；扩张、常数周期未定&零总留数删除；极点碰撞/高阶极部须重审；总阶数只知下界$6+2r$\\\midrule
+\textbf{O1}\newline $\phi^4$弹性总截面&同一极点质量、实标量、已声明两圈方案；$g^4$系数及完整角投影&无一般肯定结论；固定能量未判&双Kummer系数投影产生一份椭圆$H^1$&完整带干涉系数确有且仅一份；指定有限耦合变化保持&无限单值简单重数确定；完整扩张/最小总阶数未定&阈值及退化另判；超过四体阈值还须加产生通道\\\midrule
+\textbf{O2}\newline $\phi^4$四体产生&等质量，十个真实树图合并平方；$s>16m^2$，阶$g^4$&没有MZV分类结论&整体旋转纤维是Kummer；剩余五变量几何未分类&实际旋转推前保持干涉；总率严格正&旋转纤维已定；全率扩张未知。20点仅角尾界$<6{\cdot}10^{-17}$，总率窄认证待完&阈值归零；不能把Kummer纤维推广为全率MT，也不能套用K1的质量\\\midrule
+\textbf{N1}\newline 八圈$G_8$&无质量本原$D=4$、16条边；明确边表见证据卡&没有数值MZV肯定/否定判定&公开K3约化；费曼形式生成非对角$\mathrm{gr}^{13,11}$&de Rham标架非Tate已证；本表不额外声称双标架最小化&完整相对扩张未由所引定理确定&“非Tate形式”不是该数值非MZV的证明；不要与K1的K3混同\\\midrule
+\textbf{H1}\newline 高边数banana&任意有限$n\ge5$；正质量；$D=2k$的指定能量MOM&无统一肯定结论&二叉树谱双覆盖是实际载体；高维纯核未全面分类&正支比较成立；正常阈值非零；因子简单性须另证&有实际形式周期比较，未有全部最小纯核及扩张表&双覆盖不等于椭圆；高维载体不自动等于不可约CY核\\\midrule
+\textbf{H2}\newline 有质量BPHZ图&四维局部可重整化标量理论、任意有限圈；合并森林；欧氏正质量&无统一肯定结论&输出实际$N,U,F$和相对载体，不预判其Tate性&完整合并链的参数比较已给；不是逐项积分发散项&有限Nori入口及PF上界；最小组成/扩张未分类&零质量IR、一般Minkowski全局链、非整数维数另判\\\midrule
+\textbf{H3}\newline 圈星覆盖入口&满足原圈星接受条件的多重二次覆盖；给定分子角色&无统一肯定结论；属零仍需字母端点&各角色曲线属可精确算；相对三层边界可列&先得角色宿主；原完整图与指定链比较必须提交&紧割及相对曲线结构有规则；原图完整扩张非自动&分支碰撞、等源、角色消零须重算；不以局部立方体代K3核\\\midrule
+\textbf{H4}\newline 任意图能量支撑&单位标量、泛独立能量根、守恒外能量；指定字符&不是MZV判定器&dual-critical给精确非零字符支撑；未给动机类型&能量积分的代数支撑；空间推前仍有任务&尚不分类空间推前后的完整扩张&根间代数关系与物理特殊化可改变支撑；非零字符不等于非Tate\\
+\end{longtable}
+\endgroup
+\end{landscape}
+
+\subsection{肯定MZV的机制与否定结论的边界}
+\label{subsec:classproofs}
+\begin{proposition}[零、一字母证书的充分性]\label{prop:classmzv}
+设规范化实际周期通过有限个已证明的代数换元、相对Stokes、合法纤维推前和线性关系，
+化为有理系数的有限和与积；每项是$[0,1]$上仅含
+$\omega_0=dt/t$、$\omega_1=dt/(1-t)$的收敛迭代积分，
+或采用标准单位切向基点的shuffle正则化值。
+若没有未处理的端点常数、额外代数系数或Tate逆因子，则该数值属于$\cal Z$。
+\end{proposition}
+\begin{proof}
+固定迭代积分约定
+\[
+ I(a_1\cdots a_w)=\int_{1>t_1>\cdots>t_w>0}
+                \omega_{a_1}(t_1)\cdots\omega_{a_w}(t_w).
+\]
+收敛非空字以$0$开始、以$1$结束，唯一写成
+$0^{n_1-1}1\cdots0^{n_d-1}1$，其中$n_1\ge2$、$n_j\ge1$。
+展开$1/(1-t)$的几何级数，非负性允许交换逐项积分与求和，
+连续积分给严格嵌套求和，结果为$\zeta(n_1,\ldots,n_d)$。
+空字给$1$。shuffle恒等式把乘积化为字的有限和。
+标准正则化以两个端点对数的常数项定义；
+通过shuffle递归消去起首的$1$和末尾的$0$，该常数项是收敛字的有理线性组合。
+因此所有终点项均在$\cal Z$中，沿已证明的关系反向传回原周期即可。
+这不是声称任意图都存在这样的化简证书。
+更广的$M_{0,n}$周期解释见\cite{ClassMzero}；本命题只用上述显式字证书。
+\end{proof}
+
+MT对象不自动提供这个证书。一般数域、分歧素数、额外删点、
+质量Kummer类和切向基点缩放都可能增加常数。
+线性可约性给逐步超对数的计算途径，
+还须检查实际端点与分歧；一次约化失败只表示该途径未通过。
+它既不是非Tate的充分证据，也不是数值非MZV的证据。
+
+\begin{proposition}[函数MPL障碍与固定数字的区别]\label{prop:classmplobstruction}
+在代数参数曲线上，设实际标量函数的最小正则奇异系统含一个简单组成，
+其单值表示在任何有限底覆盖后仍非平凡且不可约，维数大于一。
+则该函数不能写为有限个对数微分迭代积分的和与积，
+配以代数函数系数和任意固定复常数。
+该结论包含本表的可见$\mathrm{SL}_2$椭圆标准核和$\mathrm{SO}_6$标准K3核，
+但不判定任一固定参数值的MZV性。
+\end{proposition}
+\begin{proof}
+假设有上述有限表达。取有限代数覆盖，使所有代数系数及字母单值，
+再删去其极点。总表达只涉及有界长度的迭代积分。
+按字长过滤时，续接每个迭代积分只增加更短的字及常数，
+故在有限维封闭的字空间上单值可同时上三角化，所有对角元为$1$。
+积由shuffle转为同类有限表达；固定复常数不贡献运动学单值。
+所以表达所生成的系统以及其全部子商的简单组成都为一维平凡表示。
+这与假定的简单组成矛盾。
+椭圆及当前K3核在有限覆盖后仍分别具有稠密$\mathrm{SL}_2$和$\mathrm{SO}_6$作用，
+满足假设。取一个点的值会丢掉这整个续接表示，故最后一句不需也不能由单值论加强。
+\end{proof}
+
+若已经确定\emph{固定}双标架最小Nori对象含非Tate简单组成，
+则它不属于混合Tate子范畴，从而该形式周期没有同一范畴中的MT表示；
+这使用最小周期对象的表述无关性\cite[\S2.4]{brown}。
+本结论适用于K1，而E2的微分群本身不能替代这样的固定算术证明。
+CM椭圆或高Picard数K3仍可有非对角Hodge型，
+“多了对称性”不能自动改成“变成Tate”。
+
+\subsection{证据卡一：无质量MZV族与非Tate基准}
+\label{subsec:classliterature}
+\paragraph{M1：纯拓扑的充分判据有严格的物理域。}
+给边序$e_1,\ldots,e_N$，令$V_i$为前$i$条边与剩余边都接触的顶点集。
+宽度是$\max_i|V_i|$；提交宽度至多三的一条边序就是有限组合证据。
+采用
+\[
+ P_G=\int_{\sigma}\frac{\Omega_{N-1}}{\Psi_G^2},\qquad
+ \Psi_G=\sum_{\text{生成树 }T}\prod_{e\notin T}\alpha_e,
+ \qquad N=2h_G\ge6,
+\]
+并要求每个非空真边子图满足$|E_\gamma|>2h_\gamma$，保证本原收敛周期。
+Brown的矩阵型与正性定理把该边序送到MZV肯定结论
+\cite[Theorems 1--2,118]{ClassWidth}。
+这是一条充分规则；它不把含第二Symanzik多项式的有质量族一并分类。
+此处没有恢复每个图的全部扩张参数。
+
+\paragraph{M2：显式值是最强的数值肯定证据，但不替代全对象。}
+标准zig-zag族按文献图定义，$n\ge3$时
+\[
+ P_{Z_n}=4\frac{(2n-2)!}{n!(n-1)!}
+ \left(1-\frac{1-(-1)^n}{2^{2n-3}}\right)\zeta(2n-3).
+\]
+这是Brown--Schnetz的Theorem 1.1\cite{ClassZigzag}，
+输入是本原无质量图周期及其标准正链。
+数值公式与正系数给实际非零值；任何进一步的全图动机最小化须有自己的证明。
+
+\paragraph{N1：作为非Tate证据分级的公开校准。}
+$G_8$有顶点$1,\ldots,9$，有序边表为
+\[
+ (34,14,13,12,27,25,58,78,89,59,49,47,35,36,67,69).
+\]
+这里$ij$表示无向边$\{i,j\}$；采用\cite[\S6.2,式(30)]{ClassKthree}的版本和边序。
+该文的约化得到K3。
+Brown--Doryn的Theorem 5进一步证明
+\[
+ \operatorname{gr}^{13,11}H^{15}_{\dR}(\mathbb P^{15}\setminus X_{G_8})
+\]
+一维且由费曼形式类生成\cite{ClassFraming}。
+这一公开结论强于只对环境数点；所引定理在绝对上同调层。
+本表保留完整相对对象、物理双标架最小化与数字非MZV性各自的责任，
+不把它们填写为已证。
+
+\subsection{证据卡二：一圈、椭圆族和拼接}
+\paragraph{M3--M4：可直接检查的无质量物理肯定族。}
+定理\textup{[主线~38.2]}给串并联输入的全阶单$\zeta$证据，
+命题\textup{[主线~38.3]}给有限边表核查界；
+每条物理森林需另满足命题\textup{[主线~38.4]}的闭合与IR条件。
+无质量banana则由定理\textup{[主线~38.5]}实际完成真森林判断，
+推论\textup{[主线~38.6]}给MS、MOM和正谱，
+命题\textup{[主线~38.7]}解释与正质量K3同拓扑却异类型的原因。
+这里只固定标准单尺度和Euler规范，不把一般尺度上的对数值无条件认定为MZV。
+
+\label{subsec:classelliptic}
+\paragraph{A1：二次型及其边界足以给出上界。}
+令$U=\sum\alpha_i$，
+$F=U\sum\mu_i\alpha_i+\sum_{i<j}\kappa_{ij}\alpha_i\alpha_j$。
+实际载体是射影空间去掉$F=0$以及形式必要时的$U=0$，
+相对于坐标边界的上同调。
+命题\textup{[主线~8.1]}证明完整载体AT；
+定理\textup{[主线~8.2]}给三角图和盒图的完整分级。
+检查有限个受限二次型的判别式就能输入该规则。
+7与8为一般位置载体秩，不能填入“最小物理秩”格。
+质量比与平方类没有经过MZV端点检验，因此MZV栏保留未知。
+
+\paragraph{E1--E2：给定图与质量，先决定活动椭圆清单。}
+theta骨架是两端点之间三条内部不交的路径，
+第$a$条路径有$r_a$条边、质量$m_{ai}$，内部二价顶点不注入外动量。
+令$\mu_{ai}=m_{ai}^2$，路径内要求两两互异。
+每个三元组$t=(i_1,i_2,i_3)$给
+\begin{align*}
+ E_t(s):\quad &(\mu_{1i_1}X+\mu_{2i_2}Y+\mu_{3i_3}Z)
+                         (XY+XZ+YZ)-sXYZ=0,\\
+ \mathcal D_t&=\{0,\infty\}\cup
+   \{(\pm m_{1i_1}\pm m_{2i_2}\pm m_{3i_3})^2\},\qquad
+ \tau_t=(m_{1i_1}+m_{2i_2}+m_{3i_3})^2.
+\end{align*}
+接受条件为$\tau_t\notin\mathcal D_u$对$t\ne u$。
+限定$\deg_{Z_a}P\le r_a-1$，活动集为
+\[
+ J_P=\{t:P(-\mu_{1i_1},-\mu_{2i_2},-\mu_{3i_3})\ne0\}.
+\]
+完整相对Stokes下降、私有阈值和非分裂单位扩张分别见
+命题\textup{[主线~13.2]}，定理\textup{[主线~13.3]}、
+\textup{[主线~13.4]}、\textup{[主线~14.4]}、\textup{[主线~14.5]}。
+因此这行是\emph{无限图族的有限输入规则}，不是若干积分值的拟合。
+$r_1=r_2=r_3=1$给E1；私有阈值条件此时为空。
+固定代数$s$时，微分常数中的质量对数、regulator及绝对群仍需另判。
+
+
+\paragraph{A1与E1--E2：明确先行对象与本表输出。}
+一圈动量空间Nori对象、切割/收缩及图式余作用已有
+Mounoud的直接结果\cite{LitMou}；本表的参数域、边指数、分子和特殊化须逐条比较，
+不能把AT上界解释成普通MZV肯定结论。
+任意质量sunrise的椭圆二重对数\cite{LitABW}、
+模空间$\varepsilon$形式\cite{LitBMW}、一般质量余作用与边细分\cite{LitTap}
+均为直接近邻。Tapušković的命题3.3/推论3.4保留原边质量；
+本表E2的路径内异质量不在该同质量细分操作内，
+具体图多项式分界见命题\textup{[主线~42.1]}。
+其命题4.1/定理4.4是在实现范畴中的秩六载体及余作用；
+E1固定质量后的$\mathbb C(s)$秩三不能替代它的全参数算术比较，
+常数扩张反例见引理\textup{[主线~42.4]}。
+本表仍不据这些范围差异宣布新颖性。
+
+\paragraph{E5：质量合流必须保留喷射。}
+路径$a$的不同平方质量为$\mu_{aj}$、重数$n_{aj}$，$N_a=\sum_j n_{aj}$。
+输入要求$\deg_{Z_a}P<N_a$，所有内部顶点零注入；不涵盖一般张量分子。
+定理\textup{[主线~42.2]}给有限混合导数系数，
+命题\textup{[主线~42.3]}把完整欧氏函数写成至多$r_1r_2r_3$种sunrise的质量导数。
+每种仍用同一相对对，提高极点阶数不新添极点支撑。
+这是椭圆表示上界，不是全部非零系数都幸存的下界。
+例如两条同质量边配分子$P=Z_1+\mu$时，零阶值全零，
+但约去一个传播子后恰为非零sunrise；一阶喷射检测到它。
+原合流图的原生Nori标架比较、全和最小性和退化点仍未由本规则完成。
+
+\paragraph{E3：相对边界不能从表中删除。}
+取顶点$A,B,C$，两条$AB$边质量$m,m$，$AC,CB$边质量$a,b$，
+各顶点注入守恒外动量；以参数$x,y,u,v$标记这些边。
+该行可由图多项式直接识别：
+\[
+ U=xy+(x+y)(u+v),\quad
+ F=[m^2(x+y)+a^2u+b^2v]U-s_Axyu-s_Bxyv-s_Cuv(x+y).
+\]
+检查$(a^2+b^2-s_C)^2-4a^2b^2\ne0$、两个椭圆端面光滑、
+所列普通节点及正常交叉模型，并排除阈值处其它同步退化。
+命题\textup{[主线~10.2]}给几何，
+定理\textup{[主线~11.4]}给单标量物理下界。
+此例说明绝对几何不能代替完整相对对象。
+DHV定理5.1、7.5及命题7.6已经覆盖超椭圆型Hodge上界及适用域内的相对上界
+\cite{DHV}；$(2,1,1),D=2$满足$3D/2=a+c$。
+本表的精确物理重数须在这一先行结果上另作比较，不能宣称DHV只研究绝对几何。
+
+\paragraph{E4与P1：改变物理读出或拼接方式必须更换规则。}
+E4由实际两体相空间的卷积得到，
+定理\textup{[主线~20.3]}给精确椭圆简单重数和阶数界。
+P1须先满足实际割点动量分配，再检查不同块的私有阈值是否跨块分离；
+命题\textup{[主线~16.1]}、\textup{[主线~16.2]}和
+定理\textup{[主线~16.3]}、\textup{[主线~16.4]}分别给乘法、独立性和最小性。
+独立两个sunrise块阶数为9，重复同一个块为6；
+只看两个块的各自标签，无法区分两者。
+两顶点平行拼接则是卷积推前，可能从代数根产生椭圆或K3，
+必须使用定理\textup{[主线~17.2]}，不能套割点张量公式。
+
+\subsection{证据卡三：K3、完整扩张与实际可观测量}
+\label{subsec:classkthree}
+\paragraph{K1：本项目目前最完整的固定算术行。}
+固定的是质量$m=(1,2,4,8)$，不是质量平方列表；$s=-64$、基域$\Q$。
+实际箭头链见第\textup{[主线~39]}节：
+引理\textup{[主线~39.1]}比较单位符号与相对扩张，
+定理\textup{[主线~39.2]}证明链沿$i$提升、形式沿$i^\vee$下降的求值前等式；
+推论\textup{[主线~39.3]}再用固定Picard与下层非分裂证书给最小秩八。
+规范coaction存在、实际矩阵读出及完整群识别不是同一验收。
+文献的$15$个维数正规化主积分与这里的$6/10/8$维对象也不能按数字直接等同；
+奇异$\varepsilon$基变换的特殊化反例见命题\textup{[主线~42.5]}。
+六维超越核、质量Kummer一维与顶层单位一维构成活动秩八对象；
+分级不是把两个非零扩张拆开的理由。
+实际整格、绝对比较、固定纯群和幺幂根基有单独证据，
+不由参数单值群替代固定群。
+定理\textup{[主线~35.3]}及推论\textup{[主线~35.5]}
+给原周期与谱读出的形式等式$I^{\mathfrak m}=8J^{\mathfrak m}$，
+因此完整最小对象及coaction一并转移。
+具体核查入口是\texttt{FIXED\_PURE\_GROUP.md}、
+\texttt{RELATIVE\_TOP\_AUDIT.md}及主文核心实例的P6/P7/P8证据索引。
+它们记录的有限精度和几何输入范围仍保留，表本身不代替证书。
+Charles与Elsenhans--Jahnel提供的工具及其条件见\cite{LitCharles,LitEJ}；
+不将具体纤维证书称为新的通用Picard或CM排除算法。
+
+\paragraph{K2：K3的几何识别先于周期求值。}
+令$a_\pm=(m_1\pm m_2)^2$，$b_\pm=(m_3\pm m_4)^2$，
+$A(a)=(a-a_-)(a-a_+)$，$B(b)=(b-b_-)(b-b_+)$，
+$\lambda(x,y,z)=x^2+y^2+z^2-2xy-2xz-2yz$。
+对表中的接受输入，
+\[
+ X_s:\quad y^2=A(a)B(b)\lambda(s,a,b)
+\]
+是$\mathbb P^1\times\mathbb P^1$上的$(4,4)$分支双覆盖。
+奇点消解、典范类和上同调给K3而非通过数值周期猜测，
+见定理\textup{[主线~17.4]}及命题\textup{[主线~17.5]}。
+一般质量的$\rho\ge16$不能改成$\rho=16$；
+指定质量射线的秩六简单性需要既有单值/格输入。
+任意四质量banana系统已有两组直接先行工作\cite{LitDMPS,LitPTWW}；
+项目采用的公开纯矩阵归于前者。
+特殊质量子族的K3周期可出现椭圆乘积分解\cite{LitDM,LitDMfull}，
+故特殊点栏还须区分几何K3、纯核不可约性和整个函数的表示。
+
+\paragraph{K3--K4：保持纯核与完成扩张是两件事。}
+偶数维单位谱的纯组成上界、正常阈值下界见
+定理\textup{[主线~28.6]}。
+能量MOM的实际比较见定理\textup{[主线~36.3]}及
+推论\textup{[主线~36.5]}；$D=4,n=4$最少需要三次减除。
+多项式分子先在正质量壳约化，再对平方作实际角投影；
+定理\textup{[主线~33.2]}、\textup{[主线~33.4]}、\textup{[主线~33.6]}
+给正谱及完整局部源函数的充要规则。
+未完的部分是相对边界粘合、固定常数周期及对应的最小算术对象，
+不能把六维纯下界填成完整阶数六。
+
+\paragraph{K5：交换极点给出可核查的新椭圆行。}
+先合并同一$a$极点的所有图，保留非零总留数$h_i$。
+在质量$(1,2,4,8)$下，候选曲线明确为
+\[
+ E_{c,s}:\quad v^2=(c-1)(c-9)(b-16)(b-144)\lambda(s,c,b).
+\]
+相空间规则允许$0<c<9,c\ne1$；接到表中稳定完整源的范围收紧为$1<c<9$。
+定理\textup{[主线~30.3]}证明每个保留极点的精确重数；
+定理\textup{[主线~31.4]}、\textup{[主线~32.4]}
+将它们与K3一并传到完整三圈系数。
+“精确”指无限单值半单组成，固定环境可以另含非Tate常数。
+极点数不是原始图数，也不是完整扩张秩。
+
+\paragraph{O1--O2：算到物理出口后重新分类。}
+O1中的参数$a=x-4$、$x=s/m^2$，椭圆曲线为
+$Y^2=v(v+4)(a-v)(a-v+4)$；
+推论\textup{[主线~22.4]}处理完整双Kummer系数和干涉，
+定理\textup{[主线~21.4]}限制允许的方案变化。
+O2的十图完整旋转下降见定理\textup{[主线~34.4]}和
+命题\textup{[主线~34.5]}。
+一个纤维的Kummer性不能决定它随五个剩余变量推前后的全对象。
+四体阈值以上包容截面须合并弹性与产生通道，
+两行各自的证据不能自动证明这个物理和的最小对象。
+这不影响已有指定能量的包容数值，但也不将它升级为全函数算术分类。
+
+
+\paragraph{O1--O2的精度与独立验证。}
+20点的包容系数已经合并四体贡献，但仍是普通数值。
+推论\textup{[主线~40.3]}只给角截断误差；命题\textup{[主线~40.4]}给剩余积分的有限包围路线，
+没有交付窄总率区间。
+初次目标是完整正区间$[L,U]$满足$(U-L)/L\le10^{-3}$；
+弹性系数、包容传播与独立三圈前向全切割分别验收。
+2026年Higgs四体切割积分族已有MPL/椭圆/K3混合先行结果\cite{LitWWW}，
+其模型与本$\phi^4$不同，积分族求解也不能代替总截面的完整投影。
+
+\subsection{证据卡四：高维与一般图的有限入口}
+\label{subsec:classopen}
+\paragraph{H1：载体可构造不等于类型已分类。}
+任意$n$的正质量banana可以选满二叉树；每个内部顶点给
+$\lambda(h_v,h_L,h_R)$，根变量为$s$的谱变量，叶变量为质量平方。
+实际双覆盖$y^2=\prod_v\lambda(h_v,h_L,h_R)$及正链由
+定理\textup{[主线~35.6]}、\textup{[主线~36.3]}给出。
+在$D=2k$中能量代表的最少减除次数为$(k-1)(n-1)$；二维不需减除。
+变化的是微分、边界和Tate归一化；二次覆盖的次数不限制高维中间上同调的复杂性。
+高维CY候选必须另查消解、典范类、实际纯子商与物理链。
+
+\paragraph{H2：一般有质量图已经有实际入口，分类仍在其后。}
+将完整BPHZ森林合并为一个收敛有理密度，
+保留局部插入、图权与路由，再作有限扇区参数化。
+定理\textup{[主线~25.1]}、\textup{[主线~27.4]}
+及推论\textup{[主线~27.5]}给真实形式周期比较和有限相对模型。
+其输出的$U,F$、删点及边界是待分类的对象；
+动量纤维的Tate性不迫使参数底空间Tate。
+本行不再把该接受域的全圈动量/参数比较误写为完全缺失，
+也不声称最小纯核与全部算术扩张已可自动决定。
+
+\paragraph{H3--H4：组合入口必须继续走到双标架。}
+圈星的覆盖角色、属、边界三层及端点源见
+命题\textup{[主线~5.1]}、\textup{[主线~5.2]}和定理\textup{[主线~5.3]}。
+任意图独立能量根的dual-critical判据见\texttt{BOUNDED\_GRAPH\_SUPPORT.md}
+及原\texttt{energy\_character\_classification}定义。
+它决定一个代数能量核的字符是否出现；
+后续空间积分仍可能形成新的纯核和扩张。
+表中为这些输入保留独立行，正是为了避免把已有精确组合定理夸大成完整周期分类。
+
+\subsection{两个无需完整积分的判别实例}
+\label{subsec:classworked}
+\begin{proposition}[同一四边拓扑的精确结构选择]\label{prop:classthetaselector}
+取E2中路径长度$(2,1,1)$、路径质量$(1,2)$、$(5)$、$(20)$，
+零内部注入，$D=2$。设$Z$为第一路径的欧氏动量平方。
+分子$P=1$时完整函数的最小齐次阶数为5，含两份互不同构椭圆核；
+$P=Z+4$时为3，仅保留质量$(1,5,20)$的sunrise；
+$P=Z+1$时为3，仅保留质量$(2,5,20)$的sunrise。
+\end{proposition}
+\begin{proof}
+两个正常阈值为$26^2=676$和$27^2=729$。
+对应有限退化集合除$0$外分别为
+\[
+ \{196,256,576,676\},\qquad\{169,289,529,729\}.
+\]
+故每个正常阈值只属于自己的集合，满足私有阈值条件。
+路径内质量平方为$1,4$，部分分式系数为$1/3,-1/3$。
+当$P=1$时两个网格读出皆非零，$r=2$。
+当$P=Z+4$时，$P(-1)=3,P(-4)=0$，故完整Stokes关系给
+$I_P=S_{(1,5,20)}$；另一分子相同计算给$S_{(2,5,20)}$。
+所有输入符合次数界；定理\textup{[主线~14.4]}给$2r+1$，得结论。
+本证明只用质量代数和已有实际比较，不求这三个完整积分。
+\end{proof}
+
+\begin{proposition}[非Tate函数可以有严格MZV零值]\label{prop:classmomzero}
+取K3行中的同一四维能量MOM函数$E(s;s_0)$，$s_0<0$为光滑点。
+则$E(s_0;s_0)=0\in\cal Z$，且它作为$s$的函数仍含可见秩六K3核。
+\end{proposition}
+\begin{proof}
+实际有限核为
+\[
+ K_3(x;s,s_0)=\frac{(s-s_0)^3}{(x-s)(x-s_0)^3}.
+\]
+谱支上$x\ge225>0$；在$s=s_0<0$，分母无零点而分子恒为零，
+故实际收敛积分等于零。
+邻域内这是三次MOM减除的同一函数，
+推论\textup{[主线~36.5]}已给其延拓系统的一份可见K3。
+固定一个零值不会抹去这个函数系统。
+\end{proof}
+
+这两个实例给表的两条必要设计原则：分子必须写进输入；
+特殊点必须写进例外。仅从裸图给一个“MZV/椭圆/K3”标签会遗漏这两类可证明变化。
+它们不表示所有非零非Tate周期都能在某点化成MZV。
+
+\subsection{从边表到分类行的执行规则及下一阶段验收}
+\label{subsec:classprogram}
+先检查图、维数、质量、分子、链与方案，再匹配表中接受条件。
+M1允许直接提交边序作为MZV充分证据；
+E2允许直接由质量网格和私有阈值确定全部活动核及微分扩张；
+K2允许由分支除子和消解确定几何；
+其它行则按其现有规则输出上界、下界或明确未知。
+若只得到一个$U,F$载体，流程不得自动填入椭圆、K3或CY。
+
+每次扩展分类表，应交付四个具体东西：一项可判定的接受条件；
+一个实际对象或受控子商；一个与物理链相容的可见性证明；
+以及一份保留扩张和特殊化责任的结论。
+允许输出“该行接受失败/需要补充引理”，不把失败解释为相反分类。
+已有证明和有限证书可作为输入复用，不通过重复求积增加表的可信度。
+
+接下来的主线依照前四个物理问题连接；第五项数学工作按这些问题的需要展开：
+\begin{enumerate}
+ \item 扩展\emph{MZV肯定列}：在已有实际参数入口中找出能够证明端点无分歧、
+ 字母为$0,1$或可化到该情形的图操作族；提交充分证书，随后研究判据的必要边界。
+ \item 扩展\emph{非Tate且物理可见列}：从纯核候选走到实际双标架；
+ 优先补真正增加图族覆盖的推前、收缩和森林规则。
+ \item 补\emph{完整扩张列}：尤其是从函数半单分类到固定算术对象，
+ 需要质量单位、边界一动机、regulator和常数环境，不能仅加微分方程阶数。
+ \item 补\emph{特殊点列}：区分分支碰撞、Picard跳跃、CM、质量合流、
+ 分子零核和MOM零值；每个例外明确哪些结论保留、哪些必须重证。
+ \item \emph{必要的数学支撑}：当某个物理分类判断确实需要时，研究分歧、
+ Hodge型、代数循环、扩张或周期映射。
+ 不以不断深化抽象群或几何本身作为主要进度；
+ 具体数字的MZV否定结论仍须单独承担证明责任。
+\end{enumerate}
+切割、重整化、RG和临界响应仍属完整总目标。
+它们现在通过“同一行在实际操作后如何变到另一行”的方式组织：
+例如从图周期进入局部RG前必须先完成森林与局部投影，
+从振幅进入总率前必须完成相空间推前及物理求和。
+局部性只限制运动学依赖，不自动使剩余常数成为MZV；
+有限阶的形式MZV临界响应也不自动认定每个原始图的规范动机提升。
+这一分类表是当前理论的可审阅总入口，完整总目标仍未完成。
+
+
+\begin{thebibliography}{99}
+\bibitem{brown}F. Brown, \emph{Notes on motivic periods},
+\href{https://arxiv.org/abs/1512.06410}{arXiv:1512.06410},
+\S2.4, Lemma 2.4.
+\bibitem{DHV}C. F. Doran, A. Harder, P. Vanhove, with appendix by E. Pichon-Pharabod,
+\emph{Motivic geometry of two-loop Feynman integrals}.
+\href{https://arxiv.org/abs/2302.14840}{arXiv:2302.14840}.
+本篇所用保存版本的定理5.1、7.5与命题7.6。
+\bibitem{ClassWidth}F. Brown, \emph{On the periods of some Feynman integrals}, arXiv:0910.0114v2. Theorems 1--2,118; \url{https://arxiv.org/abs/0910.0114}.
+\bibitem{ClassZigzag}F. Brown and O. Schnetz, \emph{Proof of the zig-zag conjecture}, arXiv:1208.1890. Theorem 1.1; \url{https://www.ihes.fr/~brown/ZigZag.pdf}.
+\bibitem{ClassKthree}F. Brown and O. Schnetz, \emph{A K3 in phi4}, arXiv:1006.4064; final author version, \S6.2, equation (30), \S7. \url{https://www.ihes.fr/~brown/K3inphi4.pdf}.
+\bibitem{ClassFraming}F. Brown and D. Doryn, \emph{Framings for graph hypersurfaces}, arXiv:1301.3056. Theorem 5 and the following scope discussion; \url{https://www.ihes.fr/~brown/Framings.pdf}.
+\bibitem{ClassMzero}F. Brown, \emph{Multiple zeta values and periods of moduli spaces M0,n}, Ann. Sci. Ec. Norm. Super. 42 (2009), 371--489. \url{https://arxiv.org/abs/math/0606419}.
+\bibitem{LitABW}L. Adams, C. Bogner, S. Weinzierl,
+\emph{The two-loop sunrise graph in two space-time dimensions with arbitrary masses in terms of elliptic dilogarithms}.
+\href{https://arxiv.org/abs/1405.5640v2}{arXiv:1405.5640v2} (2014).
+\bibitem{LitBMW}C. Bogner, S. Müller-Stach, S. Weinzierl,
+\emph{The unequal mass sunrise integral expressed through iterated integrals on
+$\overline{\mathcal M}_{1,3}$}.
+\href{https://arxiv.org/abs/1907.01251v2}{arXiv:1907.01251v2} (2020).
+\bibitem{LitTap}M. Tapušković,
+\emph{The cosmic Galois group, the sunrise Feynman integral, and the relative completion of $\Gamma_1(6)$}.
+\href{https://arxiv.org/abs/2303.17534}{arXiv:2303.17534} (2023).
+当前核对第1.2、3、4节相关定义、命题及证明；第5节与全部附录未作逐式审阅。
+\bibitem{LitMou}U. Mounoud,
+\emph{Motivic Galois theory for one-loop Feynman integrals in momentum space}.
+\href{https://arxiv.org/abs/2605.20106v1}{arXiv:2605.20106v1} (2026).
+\bibitem{LitDMPS}C. Duhr, S. Maggio, F. Porkert, C. Semper, S. F. Stawinski,
+\emph{Three-loop banana integrals with four unequal masses}.
+\href{https://arxiv.org/abs/2507.23061}{arXiv:2507.23061}, JHEP 12 (2025) 034.
+\bibitem{LitPTWW}S. Pögel, T. Teschke, X. Wang, S. Weinzierl,
+\emph{The unequal-mass three-loop banana integral}.
+\href{https://arxiv.org/abs/2507.23594v2}{arXiv:2507.23594v2},
+\href{https://doi.org/10.1007/JHEP01(2026)021}{JHEP 01 (2026) 021}.
+\bibitem{LitDM}C. Duhr, S. Maggio,
+\emph{Feynman integrals, elliptic integrals and two-parameter K3 surfaces}.
+\href{https://arxiv.org/abs/2502.15326}{arXiv:2502.15326}, JHEP 06 (2025) 250.
+\bibitem{LitDMfull}C. Duhr, S. Maggio,
+\emph{Three-loop banana integrals with three equal masses}.
+\href{https://arxiv.org/abs/2511.19245}{arXiv:2511.19245} (2025).
+\bibitem{LitCharles}F. Charles,
+\emph{On the Picard number of K3 surfaces over number fields}.
+\href{https://arxiv.org/abs/1111.4117}{arXiv:1111.4117}.
+本篇核对定理1、6和备注8。
+\bibitem{LitEJ}A.-S. Elsenhans, J. Jahnel,
+\emph{On the component group of the algebraic monodromy group of a K3 surface}.
+\href{https://arxiv.org/abs/2304.07585v2}{arXiv:2304.07585v2} (2024).
+本篇核对定理7.5、7.7及其证明。
+\bibitem{LitWWW}J. Wang, X. Wang, Y. Wang,
+\emph{Analytic result of a three-loop integral family in the Higgs decay to four massive bottom quarks}.
+\href{https://arxiv.org/abs/2607.03398v1}{arXiv:2607.03398v1} (2026).
+\end{thebibliography}
+\end{document}

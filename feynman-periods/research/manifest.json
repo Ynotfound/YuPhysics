@@ -1,0 +1,1139 @@
+{
+  "snapshot": "U41",
+  "publication_date": "2026-10-14",
+  "author": "Yu Zhehao",
+  "affiliation": "School of Physics, Peking University",
+  "counts": {
+    "pdfs": 14,
+    "latex_sources": 14,
+    "scientific_notes": 49,
+    "python_scripts": 107,
+    "certificate_json_files": 840
+  },
+  "files": [
+    {
+      "path": "manuscripts/feynman_periods_research_unified.tex",
+      "source_path": "U41-reexport/feynman_periods_research_unified.tex",
+      "bytes": 1032130,
+      "sha256": "5b221c5ad56c9c1820452ad0c35d2e642338b8ed83ec91e72507565b4c39399c"
+    },
+    {
+      "path": "manuscripts/feynman_periods_research_unified.pdf",
+      "source_path": "U41-reexport/feynman_periods_research_unified.pdf",
+      "bytes": 2477444,
+      "sha256": "c76b2e182bfe8ad26b6649121c17a25d66922f18c5f053ee00f64dc64b26671c",
+      "pages": 329
+    },
+    {
+      "path": "manuscripts/GRAPH_FAMILY_CLASSIFICATION.tex",
+      "source_path": "U41-reexport/GRAPH_FAMILY_CLASSIFICATION.tex",
+      "bytes": 44010,
+      "sha256": "e8b976400661e8981c6f032cf4c6c6cbc0da7ccec617481db89639deac08fcd6"
+    },
+    {
+      "path": "manuscripts/GRAPH_FAMILY_CLASSIFICATION.pdf",
+      "source_path": "U41-reexport/GRAPH_FAMILY_CLASSIFICATION.pdf",
+      "bytes": 470432,
+      "sha256": "ffd589937152aeb092fb33a356a8f60f617a73890ba56bb6e313ed45cf7e42bd",
+      "pages": 13
+    },
+    {
+      "path": "manuscripts/UNIFIED_STRUCTURE_THEOREM.tex",
+      "source_path": "U41-reexport/UNIFIED_STRUCTURE_THEOREM.tex",
+      "bytes": 641823,
+      "sha256": "4c6e7ce11ae8f218c72563b9c304b754c162755309e14f8269b557728c7aaa80"
+    },
+    {
+      "path": "manuscripts/UNIFIED_STRUCTURE_THEOREM.pdf",
+      "source_path": "U41-reexport/UNIFIED_STRUCTURE_THEOREM.pdf",
+      "bytes": 1811331,
+      "sha256": "bd9a2f080c825ec31011e0a41e95215bf2cebe3df58215c41560dc649bfe2fc4",
+      "pages": 191
+    },
+    {
+      "path": "manuscripts/MASSLESS_MZV_PREDICTION.tex",
+      "source_path": "MASSLESS_MZV_PREDICTION.tex",
+      "bytes": 18024,
+      "sha256": "d73addd5d91ef97e2f9f1f6b6aa336ec60492038609f03ff58ee2d049a31975a"
+    },
+    {
+      "path": "manuscripts/MASSLESS_MZV_PREDICTION.pdf",
+      "source_path": "output/latex/MASSLESS_MZV_PREDICTION.pdf",
+      "bytes": 280223,
+      "sha256": "2ca0840671ef054c7cd62c66651605d07cd98f63dfab6fe0320a685abb7ff997",
+      "pages": 6
+    },
+    {
+      "path": "manuscripts/HYPOTHESIS_11_2_AUDIT.tex",
+      "source_path": "HYPOTHESIS_11_2_AUDIT.tex",
+      "bytes": 24613,
+      "sha256": "3d70b2c54fcaa3eb280e806dd8a2b459075980e07d4095f0ed70114844985f3a"
+    },
+    {
+      "path": "manuscripts/HYPOTHESIS_11_2_AUDIT.pdf",
+      "source_path": "output/latex/HYPOTHESIS_11_2_AUDIT.pdf",
+      "bytes": 364382,
+      "sha256": "31692baa312a0c956bf1495e5ac80e19a23eeaa6e419e85509f6e7b64fee50b3",
+      "pages": 9
+    },
+    {
+      "path": "manuscripts/SUBDIVISION_COMPARISON_AUDIT.tex",
+      "source_path": "SUBDIVISION_COMPARISON_AUDIT.tex",
+      "bytes": 16292,
+      "sha256": "f745b9ca20cc16137745ba7f996954f91a1152c03c97a6eb975a545d3a071645"
+    },
+    {
+      "path": "manuscripts/SUBDIVISION_COMPARISON_AUDIT.pdf",
+      "source_path": "output/latex/SUBDIVISION_COMPARISON_AUDIT.pdf",
+      "bytes": 279013,
+      "sha256": "29b4ec4469c08f1aff0a7166980efa0e12e6a44d0dae448bd05648457bf885e1",
+      "pages": 5
+    },
+    {
+      "path": "manuscripts/PHYSICS_CERTIFICATION_LITERATURE_AUDIT.tex",
+      "source_path": "PHYSICS_CERTIFICATION_LITERATURE_AUDIT.tex",
+      "bytes": 25158,
+      "sha256": "d1105e1907f1e264124e24f9e0b1c70d64927a410fcd435dca4f468a1e4b2724"
+    },
+    {
+      "path": "manuscripts/PHYSICS_CERTIFICATION_LITERATURE_AUDIT.pdf",
+      "source_path": "output/latex/PHYSICS_CERTIFICATION_LITERATURE_AUDIT.pdf",
+      "bytes": 374235,
+      "sha256": "1461b3c7ef322dc5934bfc5b7c203d7c95dde84bb218ac6d975a8a7ae7187a26",
+      "pages": 9
+    },
+    {
+      "path": "manuscripts/BANANA_DIFFERENTIAL_VISIBILITY.tex",
+      "source_path": "BANANA_DIFFERENTIAL_VISIBILITY.tex",
+      "bytes": 25164,
+      "sha256": "c15bd90554e5e985821704a73340ff19776b86c8434ad9cdeacdec4b0b7271c9"
+    },
+    {
+      "path": "manuscripts/BANANA_DIFFERENTIAL_VISIBILITY.pdf",
+      "source_path": "output/latex/BANANA_DIFFERENTIAL_VISIBILITY.pdf",
+      "bytes": 334586,
+      "sha256": "354dec81fa3e351b243a9d904938a3c7049ab72079052e1fed2839d71acb4822",
+      "pages": 9
+    },
+    {
+      "path": "manuscripts/OPERATIONAL_MOTIVIC_INTERFACE.tex",
+      "source_path": "OPERATIONAL_MOTIVIC_INTERFACE.tex",
+      "bytes": 26307,
+      "sha256": "7b292d56b7a5c0f06b8c80d2bd88c044c089e9393b73c9c71419694c09580758"
+    },
+    {
+      "path": "manuscripts/OPERATIONAL_MOTIVIC_INTERFACE.pdf",
+      "source_path": "output/latex/OPERATIONAL_MOTIVIC_INTERFACE.pdf",
+      "bytes": 360775,
+      "sha256": "b078cfbef499de88e5f7d6ce5b6bfddd69dd8266b4d58082a3fa755f7d69ee05",
+      "pages": 10
+    },
+    {
+      "path": "manuscripts/FOREST_DIFFERENTIAL_DESCENT.tex",
+      "source_path": "FOREST_DIFFERENTIAL_DESCENT.tex",
+      "bytes": 24056,
+      "sha256": "e2d0c3e1a8a157eb791e3a29f87112e789db144b9b0e099bedb0a3a6995af12f"
+    },
+    {
+      "path": "manuscripts/FOREST_DIFFERENTIAL_DESCENT.pdf",
+      "source_path": "output/latex/FOREST_DIFFERENTIAL_DESCENT.pdf",
+      "bytes": 343871,
+      "sha256": "6a60a9db6a2a9e680b4cd9c70ba22e3f3d6bc76c449a9ceb693360a7a8b65e2a",
+      "pages": 8
+    },
+    {
+      "path": "manuscripts/FINITE_MOM_MOTIVIC_COMPARISON.tex",
+      "source_path": "FINITE_MOM_MOTIVIC_COMPARISON.tex",
+      "bytes": 23286,
+      "sha256": "1e28bf68eb858f2dc69843f439dc5b66d1fdb2445419312c861bf2e9e2575c2a"
+    },
+    {
+      "path": "manuscripts/FINITE_MOM_MOTIVIC_COMPARISON.pdf",
+      "source_path": "output/latex/FINITE_MOM_MOTIVIC_COMPARISON.pdf",
+      "bytes": 319905,
+      "sha256": "27166cce524a9c1507ca357e3dc45325a23e07ce6900b8cc8eece010ec9ec3c1",
+      "pages": 8
+    },
+    {
+      "path": "manuscripts/SUNSET_JET_MOTIVE.tex",
+      "source_path": "SUNSET_JET_MOTIVE.tex",
+      "bytes": 27993,
+      "sha256": "32f4000f2924e7b704d9337d8375383502928e42ecf4de8f79d221eb3c0c4c09"
+    },
+    {
+      "path": "manuscripts/SUNSET_JET_MOTIVE.pdf",
+      "source_path": "output/latex/SUNSET_JET_MOTIVE.pdf",
+      "bytes": 324248,
+      "sha256": "69fbde1831f48b2b53856ba3ea1a81ac3048867198f6403c2299ad36dff1bba8",
+      "pages": 8
+    },
+    {
+      "path": "manuscripts/MOM_RG_ENDPOINTS.tex",
+      "source_path": "MOM_RG_ENDPOINTS.tex",
+      "bytes": 22530,
+      "sha256": "62d74af0b7cbec5c9dc61f263d6205215bf51a6ffb3102695d27f1739a0ee9bc"
+    },
+    {
+      "path": "manuscripts/MOM_RG_ENDPOINTS.pdf",
+      "source_path": "output/latex/MOM_RG_ENDPOINTS.pdf",
+      "bytes": 304637,
+      "sha256": "dcf962bf25f3c0dfb795d2d8ed66bed18f4a5ea9d4bf5d0973b8f5690d41a3e6",
+      "pages": 7
+    },
+    {
+      "path": "manuscripts/feynman_periods_research.tex",
+      "source_path": "output/latex/feynman_periods_research.tex",
+      "bytes": 247333,
+      "sha256": "89af55a0219500fe3634c4f7b8dbf98fb0f466aa35f602ff19729cb3e60dd692"
+    },
+    {
+      "path": "manuscripts/feynman_periods_research.pdf",
+      "source_path": "output/latex/feynman_periods_research.pdf",
+      "bytes": 999835,
+      "sha256": "ea103307ce7d728a4a0def16870df1d84ca10dd02d599507bac9c5309f856a5f",
+      "pages": 97
+    },
+    {
+      "path": "support/ABSOLUTE_COMPARISON.md",
+      "source_path": "ABSOLUTE_COMPARISON.md",
+      "bytes": 7159,
+      "sha256": "190f580e9f586385b723f416abde8b73edc19c37b229e8e2e1bb83fac90b5fac"
+    },
+    {
+      "path": "support/BANANA_PAIRING.md",
+      "source_path": "BANANA_PAIRING.md",
+      "bytes": 7329,
+      "sha256": "023c251d1422689360681d6c6cbd8b2f087820ec80fe0d66500e92833fddf915"
+    },
+    {
+      "path": "support/BASED_NODE_TRANSPORT.md",
+      "source_path": "BASED_NODE_TRANSPORT.md",
+      "bytes": 9342,
+      "sha256": "300bb366ebde0176acb0761c6194d488f72e08e29d3f32598a6bb63aa9f522e8"
+    },
+    {
+      "path": "support/BOUNDED_GRAPH_SUPPORT.md",
+      "source_path": "BOUNDED_GRAPH_SUPPORT.md",
+      "bytes": 13643,
+      "sha256": "b088db1e8a5895b542e99f8996d17e40f3da010c4d96479472890798230a83f7"
+    },
+    {
+      "path": "support/CONTRACTION_FOREST_GEOMETRY.md",
+      "source_path": "CONTRACTION_FOREST_GEOMETRY.md",
+      "bytes": 22526,
+      "sha256": "45c3063af419cf14a7d25d55de834f6ab2ff30c24db65577ad982cc032d1c0fd"
+    },
+    {
+      "path": "support/CUT_RESIDUE_VISIBILITY.md",
+      "source_path": "CUT_RESIDUE_VISIBILITY.md",
+      "bytes": 18634,
+      "sha256": "621af12f2ef65413c55a73b3cae8198d299beada7e7289fa20d6309b3d5d7add"
+    },
+    {
+      "path": "support/DE_RHAM_MINIMALITY.md",
+      "source_path": "DE_RHAM_MINIMALITY.md",
+      "bytes": 12797,
+      "sha256": "6a39c5f6a5880ab0dff3be6e61567cb3068d80f70394f40112d9c6ac231b0e98"
+    },
+    {
+      "path": "support/DEGENERATE_EXTENSIONS.md",
+      "source_path": "DEGENERATE_EXTENSIONS.md",
+      "bytes": 18146,
+      "sha256": "0728a18f2321a6c0526e8fc49236bfca88b27c4a3b68e7cac6bcbdb92454759a"
+    },
+    {
+      "path": "support/FIXED_PURE_GROUP.md",
+      "source_path": "FIXED_PURE_GROUP.md",
+      "bytes": 14019,
+      "sha256": "3b9a256a142ad88d5f78e0b732a1c91f125a64f695e50ec162742d358246c3a0"
+    },
+    {
+      "path": "support/FOREST_RENORMALIZED_MOTIVE.md",
+      "source_path": "FOREST_RENORMALIZED_MOTIVE.md",
+      "bytes": 16767,
+      "sha256": "ae9f64a0bffbf0135e1c050c84b06e96d1c4e6913811090811ea91450dddf0b5"
+    },
+    {
+      "path": "support/FOUR_PARAMETER_CONNECTION.md",
+      "source_path": "FOUR_PARAMETER_CONNECTION.md",
+      "bytes": 8750,
+      "sha256": "021f0c3d9adceb83c237c53ea7fb6f9c9df9535abe41087d066e2b2f0d1d4580"
+    },
+    {
+      "path": "support/FROBENIUS_REFLECTION.md",
+      "source_path": "FROBENIUS_REFLECTION.md",
+      "bytes": 7072,
+      "sha256": "71df7c62c3004e1a4516d44308ad31eefa8f8393909a8b3c7627692fddc6a208"
+    },
+    {
+      "path": "support/GEOMETRIC_COMPARISON.md",
+      "source_path": "GEOMETRIC_COMPARISON.md",
+      "bytes": 13955,
+      "sha256": "8452f16be0b1caad9d0e133a2f7d5994bd194bb36eb5729664b3e54f22766682"
+    },
+    {
+      "path": "support/GEOMETRIC_MONODROMY_GROUP.md",
+      "source_path": "GEOMETRIC_MONODROMY_GROUP.md",
+      "bytes": 4089,
+      "sha256": "4b976c268e893a48c54735e5aab09c82ddc509a74fd3e59d725bb30959026adc"
+    },
+    {
+      "path": "support/HIGH_TRUNK_TRANSPORT.md",
+      "source_path": "HIGH_TRUNK_TRANSPORT.md",
+      "bytes": 10586,
+      "sha256": "ed318631561179aa3227b62d72088b58be7836660c0f708c34878500be3aa3d8"
+    },
+    {
+      "path": "support/HODGE.md",
+      "source_path": "HODGE.md",
+      "bytes": 11481,
+      "sha256": "7c0026ebe47d0e9e520fadbfeb5fee58eb08b020435e989cfacb74ae49b989b5"
+    },
+    {
+      "path": "support/HORIZONTAL_TRANSPORT.md",
+      "source_path": "HORIZONTAL_TRANSPORT.md",
+      "bytes": 6473,
+      "sha256": "879074e32bba154dd7a68fc797731d0b2acad874af7213addc4aa26f5bb55070"
+    },
+    {
+      "path": "support/K3_KERNEL.md",
+      "source_path": "K3_KERNEL.md",
+      "bytes": 11624,
+      "sha256": "9e759bd1b2d0c9c424b6b39e6f656b6cf9c7c656d68904fc372ec1e3f74d8259"
+    },
+    {
+      "path": "support/K3_SATURATION_INTAKE.md",
+      "source_path": "K3_SATURATION_INTAKE.md",
+      "bytes": 6223,
+      "sha256": "c0a459bdc0cfcc8c4f05be61d0228f795685b1b5689bf34e31986ba90317f2e9"
+    },
+    {
+      "path": "support/KUMMER_BOUNDARY.md",
+      "source_path": "KUMMER_BOUNDARY.md",
+      "bytes": 15755,
+      "sha256": "85296e8a22780748d8297b59569e7571c82fb6e6e0345e2d783d1d62666a0513"
+    },
+    {
+      "path": "support/LATTICE_SATURATION.md",
+      "source_path": "LATTICE_SATURATION.md",
+      "bytes": 7543,
+      "sha256": "60f80d101d8f0b53eec7119d7cc135d53a6b9bd9c8032f865fae8a5f5ae21329"
+    },
+    {
+      "path": "support/LOWER_COMPARISON.md",
+      "source_path": "LOWER_COMPARISON.md",
+      "bytes": 9178,
+      "sha256": "1fef45824d8d1959e75f3df3ef5ae9f40bfec4425680130f801c6f6f01310aa3"
+    },
+    {
+      "path": "support/LOWER_REGULATOR.md",
+      "source_path": "LOWER_REGULATOR.md",
+      "bytes": 10538,
+      "sha256": "51561a679d478ebad9a3a4312f6f677d06969d8260d1bdac825c6d3d5e8bc54b"
+    },
+    {
+      "path": "support/MARKED_LATTICE.md",
+      "source_path": "MARKED_LATTICE.md",
+      "bytes": 6619,
+      "sha256": "c8ad467e36a138b8cac5fe7508946164f00992c11b825353ac14bb2eec29e1b5"
+    },
+    {
+      "path": "support/MARKED_SATURATION.md",
+      "source_path": "MARKED_SATURATION.md",
+      "bytes": 8586,
+      "sha256": "125490bad64f8a392350c4609343d05071e67970ee7578f04ba8af5f4d4c5ef6"
+    },
+    {
+      "path": "support/MINIMALITY.md",
+      "source_path": "MINIMALITY.md",
+      "bytes": 9411,
+      "sha256": "4f401b8cbc570e446434c8f9d020ede4558a8d3606bff35c5ae9a607569a4882"
+    },
+    {
+      "path": "support/MIXED_PARAMETER_CONNECTION.md",
+      "source_path": "MIXED_PARAMETER_CONNECTION.md",
+      "bytes": 14941,
+      "sha256": "11365a91bc7d24f583e59ef516c2fc97b066e1f9049c60270366d5d8716eca7a"
+    },
+    {
+      "path": "support/MIXED_UNIPOTENT_GROUP.md",
+      "source_path": "MIXED_UNIPOTENT_GROUP.md",
+      "bytes": 6987,
+      "sha256": "5c49d4e44b4867e11747a01f9600c817b8e91da25801252937efdf736f1d4e8f"
+    },
+    {
+      "path": "support/NODE_REFLECTION_CERTIFICATES.md",
+      "source_path": "NODE_REFLECTION_CERTIFICATES.md",
+      "bytes": 9193,
+      "sha256": "9babd047ecbb23510b2fe1ae6b47b48ccb39e48cdeac3e53722b2f9055bd6d9c"
+    },
+    {
+      "path": "support/PHI4_BENCHMARK.md",
+      "source_path": "PHI4_BENCHMARK.md",
+      "bytes": 15914,
+      "sha256": "7df8634c8a4f115943957673b40f21f9e68c7f988e20c3e9256a4d24e465e2f9"
+    },
+    {
+      "path": "support/PHI4_FOUR_BODY.md",
+      "source_path": "PHI4_FOUR_BODY.md",
+      "bytes": 11795,
+      "sha256": "2762273add45a8f9a323825e96d6164463f3c1489dc00e577ddd34d3234316d9"
+    },
+    {
+      "path": "support/PICARD_CERTIFICATE.md",
+      "source_path": "PICARD_CERTIFICATE.md",
+      "bytes": 7361,
+      "sha256": "8b68f8a3e2a6808a488dbea3b9754f832fd3241da4105a7a10506b9e248581cc"
+    },
+    {
+      "path": "support/POLARIZED_TRANSPORT.md",
+      "source_path": "POLARIZED_TRANSPORT.md",
+      "bytes": 11746,
+      "sha256": "8a430fd059b887a4f135649e5d303386e072cef2f0f43da938acc07d6a62547a"
+    },
+    {
+      "path": "support/PRIMITIVE_RENORMALIZED_MOTIVE.md",
+      "source_path": "PRIMITIVE_RENORMALIZED_MOTIVE.md",
+      "bytes": 18635,
+      "sha256": "193f58e751ccdb74f888dbd5074d0e97c15d45d36b3ec2593061bc6663c1203f"
+    },
+    {
+      "path": "support/PURE_CONNECTION.md",
+      "source_path": "PURE_CONNECTION.md",
+      "bytes": 6829,
+      "sha256": "8655497f2839969e44d81804838f0f8c69b7c4fbf520b5f8fd615050f57491b0"
+    },
+    {
+      "path": "support/PURE_RAY_SYSTEM.md",
+      "source_path": "PURE_RAY_SYSTEM.md",
+      "bytes": 9673,
+      "sha256": "c6c828ee8973790f4339225a001c991373e4a49d367d65dd92f2162c80fdcfc6"
+    },
+    {
+      "path": "support/Q6.md",
+      "source_path": "Q6.md",
+      "bytes": 10344,
+      "sha256": "15f09ec898beac218db460eade41ee36a53d6e6bec71fa3161f05e5d382da093"
+    },
+    {
+      "path": "support/Q6_GEOMETRIC_CERTIFICATE.md",
+      "source_path": "Q6_GEOMETRIC_CERTIFICATE.md",
+      "bytes": 5336,
+      "sha256": "9d198ae0a0fd18fc3d0701ac86a6621a223420b49eda94443570a2a8d3c4f27c"
+    },
+    {
+      "path": "support/REGULATOR_COMPARISON.md",
+      "source_path": "REGULATOR_COMPARISON.md",
+      "bytes": 12460,
+      "sha256": "2c8ae17a1c5cff90fda6f758c0df63361317d10547acbb7ee52660f9550258ae"
+    },
+    {
+      "path": "support/REGULATOR_RANK_AND_GROUP.md",
+      "source_path": "REGULATOR_RANK_AND_GROUP.md",
+      "bytes": 15260,
+      "sha256": "a2bf2a44cb09078c05a2a0d33a4d99ba64d1fd4582f9ba0da2689ce723dc5d5a"
+    },
+    {
+      "path": "support/RELATIVE_TOP_AUDIT.md",
+      "source_path": "RELATIVE_TOP_AUDIT.md",
+      "bytes": 2738,
+      "sha256": "ebf840684ce93efc302b52de251ed7fb6afbf9cb2563cc47c202d549e6185172"
+    },
+    {
+      "path": "support/RELATIVE_TOP_COMPARISON.md",
+      "source_path": "RELATIVE_TOP_COMPARISON.md",
+      "bytes": 13524,
+      "sha256": "7073062f89372fc2b176e14ae91547c4eb7a2bc002ff8b97beca7a15b5037525"
+    },
+    {
+      "path": "support/RESEARCH_OVERVIEW_20261013.md",
+      "source_path": "RESEARCH_OVERVIEW_20261013.md",
+      "bytes": 41433,
+      "sha256": "b9f87bc3c1654550d0caef39b89a8ade00b60ed6f0a61c6fb1a37bb3c5ac77c0"
+    },
+    {
+      "path": "support/RG_CRITICAL_VISIBILITY.md",
+      "source_path": "RG_CRITICAL_VISIBILITY.md",
+      "bytes": 21060,
+      "sha256": "a7de04b53644d7a5f029fce29f83b6e1c954e54a13c716b66f3ec0741ef4b38e"
+    },
+    {
+      "path": "support/SOURCE_AUDIT.md",
+      "source_path": "SOURCE_AUDIT.md",
+      "bytes": 92859,
+      "sha256": "8899c2c515e987bdf01ce12bd6a786f31e2335679ee90855a23c595359d1d3ad"
+    },
+    {
+      "path": "support/THEORY_MANUSCRIPT.md",
+      "source_path": "THEORY_MANUSCRIPT.md",
+      "bytes": 189726,
+      "sha256": "7d6f3816c69c5830fbfc776c52976bc34ee46563cdd95fb15eb203a0a22951d6"
+    },
+    {
+      "path": "support/VISIBILITY_AND_CORADICAL.md",
+      "source_path": "VISIBILITY_AND_CORADICAL.md",
+      "bytes": 15937,
+      "sha256": "f12ac269c2305aec7d845c22495d27e0be6761d341f932e4942fb69a9b431998"
+    },
+    {
+      "path": "support/ZERO_MOMENTUM_FOREST_MOTIVE.md",
+      "source_path": "ZERO_MOMENTUM_FOREST_MOTIVE.md",
+      "bytes": 17746,
+      "sha256": "684c98a3b34153b70447b704e4c5de48f3c9bfe83e1f100d5395aed81a261169"
+    },
+    {
+      "path": "support/ZERO_MONODROMY.md",
+      "source_path": "ZERO_MONODROMY.md",
+      "bytes": 6580,
+      "sha256": "c16b09c5fc29b015dea23c68bbe1903fc8c4f05a5efeb1987dcccff8e43e11ad"
+    },
+    {
+      "path": "support/code/bound_phi4_four_body.py",
+      "source_path": "code/bound_phi4_four_body.py",
+      "bytes": 2326,
+      "sha256": "cd4f447afa1076137411b13378a05a12e5237aebd4a8e87e8415a6faaa60b86e"
+    },
+    {
+      "path": "support/code/build_banana_active_lower.py",
+      "source_path": "code/build_banana_active_lower.py",
+      "bytes": 1336,
+      "sha256": "424138d195cbe9c50e5fb0c4ac6dcc59585e6f95a73f773d7605f239679f42df"
+    },
+    {
+      "path": "support/code/build_banana_paths.py",
+      "source_path": "code/build_banana_paths.py",
+      "bytes": 2899,
+      "sha256": "3df529e213e124fd0c54973235b6a6e48390cc1d4683715e611fbe0704706997"
+    },
+    {
+      "path": "support/code/build_high_trunk_plan.py",
+      "source_path": "code/build_high_trunk_plan.py",
+      "bytes": 1480,
+      "sha256": "055bc61a616058e941018c7314ce7a7ed8791bc76450a9649b5ad08507f5c803"
+    },
+    {
+      "path": "support/code/build_horizontal_plan.py",
+      "source_path": "code/build_horizontal_plan.py",
+      "bytes": 1584,
+      "sha256": "5fb1bd08513832bd8a4b43642c5a4487e3112d5c5262f4c483476f352ca6d64d"
+    },
+    {
+      "path": "support/code/build_node_branch_plan.py",
+      "source_path": "code/build_node_branch_plan.py",
+      "bytes": 2456,
+      "sha256": "58e23b261c7aa40b1cfe88715bd8a092ffbedc2d092a3c7bf0bc0850e363c5f9"
+    },
+    {
+      "path": "support/code/certify_absolute_periods.py",
+      "source_path": "code/certify_absolute_periods.py",
+      "bytes": 5041,
+      "sha256": "8d11a7fe5508a15f4c15ecc11f021bb6122383bf23f7b5b353c8fd9a62084530"
+    },
+    {
+      "path": "support/code/certify_banana_four_parameter.py",
+      "source_path": "code/certify_banana_four_parameter.py",
+      "bytes": 4751,
+      "sha256": "b3c8b06fc52e7fc19f0cf414b84009a12634848d27dfa042b0322a99c5d9506e"
+    },
+    {
+      "path": "support/code/certify_banana_mixed_parameter.py",
+      "source_path": "code/certify_banana_mixed_parameter.py",
+      "bytes": 2773,
+      "sha256": "e553d37cc5480c529c7257c3b24ff0e5ce0a4879f8431bbbba36c0ec721a351e"
+    },
+    {
+      "path": "support/code/certify_banana_ordinary_step.py",
+      "source_path": "code/certify_banana_ordinary_step.py",
+      "bytes": 5693,
+      "sha256": "82f2ee25d5cb3af5008a356a96956fe384f05fb61b6f6b072753c3ea7d3e8ad3"
+    },
+    {
+      "path": "support/code/certify_extra_cycle.py",
+      "source_path": "code/certify_extra_cycle.py",
+      "bytes": 4547,
+      "sha256": "4fbf869722b159453991c54bb3276136d42044223422c531e37912476d751d02"
+    },
+    {
+      "path": "support/code/certify_five_node_traces.py",
+      "source_path": "code/certify_five_node_traces.py",
+      "bytes": 3546,
+      "sha256": "83a35221c281e924b4f441e61564dcab03f343ae7882b083fa0ade1d2ccfd3a5"
+    },
+    {
+      "path": "support/code/certify_fixed_pure_group.py",
+      "source_path": "code/certify_fixed_pure_group.py",
+      "bytes": 4304,
+      "sha256": "153ea7c2e10af8c1408fc4d2aa1028ce7403b06b0b689067ee1ff7fa1aafcb03"
+    },
+    {
+      "path": "support/code/certify_four_parameter_determinant.py",
+      "source_path": "code/certify_four_parameter_determinant.py",
+      "bytes": 3259,
+      "sha256": "3d4feae525c5cf194092af630ea873bf2c23a569a23fa3e9b6da2d75b578e0ca"
+    },
+    {
+      "path": "support/code/certify_geometric_monodromy.py",
+      "source_path": "code/certify_geometric_monodromy.py",
+      "bytes": 2036,
+      "sha256": "ce2d618434640dea3bfcc75b7a9d78d9dd21064d41e6dd581436f2fc5045c681"
+    },
+    {
+      "path": "support/code/certify_graph_support.py",
+      "source_path": "code/certify_graph_support.py",
+      "bytes": 4856,
+      "sha256": "6ba2d8d80e9ec6760d767d573f4b9022d11af03969c33b90ff0c5ad153ee8b1a"
+    },
+    {
+      "path": "support/code/certify_high_trunk.py",
+      "source_path": "code/certify_high_trunk.py",
+      "bytes": 5121,
+      "sha256": "3314788b2704fa5ed2f56e363d498b3a8ba8b2d5609f8025eb14fc27c1d75b02"
+    },
+    {
+      "path": "support/code/certify_horizontal_landmarks.py",
+      "source_path": "code/certify_horizontal_landmarks.py",
+      "bytes": 2828,
+      "sha256": "626b8939479774e30f392cb20c8c0a4bd0be14eb6dd3cc9334d47a197bbceaa3"
+    },
+    {
+      "path": "support/code/certify_horizontal_trunk.py",
+      "source_path": "code/certify_horizontal_trunk.py",
+      "bytes": 4554,
+      "sha256": "9f526ea8b5af240625ce5ccf90d7ed55d6e54965cbf91f03d74e745016baaa62"
+    },
+    {
+      "path": "support/code/certify_lower_comparison.py",
+      "source_path": "code/certify_lower_comparison.py",
+      "bytes": 6353,
+      "sha256": "ab1980785859982799b064fb8ad4f74eae6a314ca10ba7b321f1e16524207b05"
+    },
+    {
+      "path": "support/code/certify_lower_regulator.py",
+      "source_path": "code/certify_lower_regulator.py",
+      "bytes": 8740,
+      "sha256": "9e142c9141a5685f8702788b2f489ffc81a295693d9eedb9c7404000f336b87b"
+    },
+    {
+      "path": "support/code/certify_marked_saturation.py",
+      "source_path": "code/certify_marked_saturation.py",
+      "bytes": 4664,
+      "sha256": "ebb0a97aca9cd54ea2615a7f6304b3abcc79fd75296c1755c44c75bba0ca8b55"
+    },
+    {
+      "path": "support/code/certify_marked_zero.py",
+      "source_path": "code/certify_marked_zero.py",
+      "bytes": 5229,
+      "sha256": "9d592d049d2539326f5a3e4e24b6f5a7a9bf5b24d99e93907e68f791b5378221"
+    },
+    {
+      "path": "support/code/certify_node_branches.py",
+      "source_path": "code/certify_node_branches.py",
+      "bytes": 6327,
+      "sha256": "fa363853491ef0302a271f00c8e726c31b9ce6e0c7aeb758cda0be6b9502e6a2"
+    },
+    {
+      "path": "support/code/certify_node_frobenius.py",
+      "source_path": "code/certify_node_frobenius.py",
+      "bytes": 3223,
+      "sha256": "1fcc85aa62a7df23098bdb0a96903fbed56bcc7786487188a38833d0e1d44105"
+    },
+    {
+      "path": "support/code/certify_phi4_graphs.py",
+      "source_path": "code/certify_phi4_graphs.py",
+      "bytes": 3593,
+      "sha256": "c4246aeeab3b2a6f0ecd4d60229ed07e5c6ac4ebd7a7e73102d58bac4a0c5be1"
+    },
+    {
+      "path": "support/code/certify_physical_readout.py",
+      "source_path": "code/certify_physical_readout.py",
+      "bytes": 2877,
+      "sha256": "db039bbd0178508f7702aca3f7bf67926c41c753b92bbf7ed871545367742971"
+    },
+    {
+      "path": "support/code/certify_picard_counts.py",
+      "source_path": "code/certify_picard_counts.py",
+      "bytes": 10345,
+      "sha256": "cce6341d6d4b085ce3651b307acaaa2fe94e850d38ba19860056ab1b218055d8"
+    },
+    {
+      "path": "support/code/certify_q6_traces.py",
+      "source_path": "code/certify_q6_traces.py",
+      "bytes": 2632,
+      "sha256": "dce2e6beedfc377c8d2608dd4788729da95963e3bc2b9fdf2f04aaa055aec9d2"
+    },
+    {
+      "path": "support/code/certify_relative_top.py",
+      "source_path": "code/certify_relative_top.py",
+      "bytes": 9402,
+      "sha256": "979cf72d5e8b0fe1d2994ec63d8dd9599cabe0546bb2a48b823dbc3618ecfe1c"
+    },
+    {
+      "path": "support/code/certify_trunk_inverse.py",
+      "source_path": "code/certify_trunk_inverse.py",
+      "bytes": 2135,
+      "sha256": "c5365591ad7fa6298c772df4deec77ff68d44d769623c2a807e38112ecdf570b"
+    },
+    {
+      "path": "support/code/certify_zero_frobenius.py",
+      "source_path": "code/certify_zero_frobenius.py",
+      "bytes": 2316,
+      "sha256": "5bf1bc4d76f1fbb43cd3c5a121d5efae366b719d60ac12ca972d3531ba46f048"
+    },
+    {
+      "path": "support/code/certify_zero_transport.py",
+      "source_path": "code/certify_zero_transport.py",
+      "bytes": 8170,
+      "sha256": "6af6a72dcbae5015fb549bf2873edcb3c220e40ff7467642632a4a8d744a396d"
+    },
+    {
+      "path": "support/code/check_banana_source_pairing.py",
+      "source_path": "code/check_banana_source_pairing.py",
+      "bytes": 1875,
+      "sha256": "f7775506b17c5629f3c892253c8622c779a4777c49e38a71a8473dee462f55fd"
+    },
+    {
+      "path": "support/code/check_frobenius_reflection_lemma.py",
+      "source_path": "code/check_frobenius_reflection_lemma.py",
+      "bytes": 3000,
+      "sha256": "9f862c66f83717cab7927920f6896b54767ee05bf4df37aa66ff39418efc6ce0"
+    },
+    {
+      "path": "support/code/check_intervals.py",
+      "source_path": "code/check_intervals.py",
+      "bytes": 3618,
+      "sha256": "9d6004b236030bbdd4899989a7edef566c307d650497c4b5758596bde9a2e2dc"
+    },
+    {
+      "path": "support/code/check_node_geometry.py",
+      "source_path": "code/check_node_geometry.py",
+      "bytes": 1828,
+      "sha256": "4e774fbf3a3e6f37487b70930bb7d8beb4de1ccb4b89533ef9778513280b94ef"
+    },
+    {
+      "path": "support/code/compute_phi4_elastic_total.py",
+      "source_path": "code/compute_phi4_elastic_total.py",
+      "bytes": 2632,
+      "sha256": "c3703138a612fd14ba0df37edb4e4b883d6c7338defb6d99b8cf3653106e5497"
+    },
+    {
+      "path": "support/code/compute_phi4_four_body.py",
+      "source_path": "code/compute_phi4_four_body.py",
+      "bytes": 5028,
+      "sha256": "4a1ed1f1f1299c0d5b8118340086373892cfb47c4fc2c5201c2be09860e876c2"
+    },
+    {
+      "path": "support/code/extract_banana_four_parameter.py",
+      "source_path": "code/extract_banana_four_parameter.py",
+      "bytes": 3412,
+      "sha256": "b0755ff46a3d0ba7f844182957ecf1d4790fdb85ade4db31690ecf4851172453"
+    },
+    {
+      "path": "support/code/fetch_fixed_pure_sources.py",
+      "source_path": "code/fetch_fixed_pure_sources.py",
+      "bytes": 1165,
+      "sha256": "3ed4ef2e37fc871ea1388e96afaee6c3cfed00924b6144937681da8104f0138b"
+    },
+    {
+      "path": "support/code/fetch_graph_sources.py",
+      "source_path": "code/fetch_graph_sources.py",
+      "bytes": 1218,
+      "sha256": "a63f8e41d8b0fa6fd94b2e21d78a4bb03dc02f65a582ecb474a58b449b5d3f28"
+    },
+    {
+      "path": "support/code/fetch_phi4_sources.py",
+      "source_path": "code/fetch_phi4_sources.py",
+      "bytes": 1229,
+      "sha256": "447fc432b0957e0ca7cda92f2fe3415e76dc44fb5be544e97f3a9202a37ece1c"
+    },
+    {
+      "path": "support/code/four_parameter_algebra.py",
+      "source_path": "code/four_parameter_algebra.py",
+      "bytes": 3448,
+      "sha256": "21b008430af6e89b310e59daef1fc3df6b0146b5f5d5c8a41ab1748a5a1361e8"
+    },
+    {
+      "path": "support/code/gaussian_transport.py",
+      "source_path": "code/gaussian_transport.py",
+      "bytes": 5643,
+      "sha256": "52dded0edde8244bed3f822080be0c6aa89ddfc220fc6aae6809889a74f16be8"
+    },
+    {
+      "path": "support/code/graph_support.py",
+      "source_path": "code/graph_support.py",
+      "bytes": 4430,
+      "sha256": "749163d6817342109373dc42593876242705f3aebfbeb248dd37bd2aaba93749"
+    },
+    {
+      "path": "support/code/index_sources.py",
+      "source_path": "code/index_sources.py",
+      "bytes": 1627,
+      "sha256": "9b2e86769388cda8b35b42077996d526799131d1b3481f23d2b60af4c552321c"
+    },
+    {
+      "path": "support/code/node_branch_transport.py",
+      "source_path": "code/node_branch_transport.py",
+      "bytes": 1649,
+      "sha256": "6057dcb691bb29e9e1e74b75bd335eb444c648f8f70e8caba793e368beb3b949"
+    },
+    {
+      "path": "support/code/node_frobenius.py",
+      "source_path": "code/node_frobenius.py",
+      "bytes": 5145,
+      "sha256": "bebf2c026a022f03b5f0a34b780329616a01f32ec26fb5dfbf4cf4bcf8c1b5f2"
+    },
+    {
+      "path": "support/code/probe_lattice_discriminant_action.py",
+      "source_path": "code/probe_lattice_discriminant_action.py",
+      "bytes": 886,
+      "sha256": "346d4d6f331deb29e4509e7cf1d440957a494e53c8698d338eea38feb81699c3"
+    },
+    {
+      "path": "support/code/rational_flint.py",
+      "source_path": "code/rational_flint.py",
+      "bytes": 2597,
+      "sha256": "63b04db2f5571b4db55172adec363ef17330bf614fe584930f32b45a41bd25f1"
+    },
+    {
+      "path": "support/code/reconstruct_banana_mixed_parameter.py",
+      "source_path": "code/reconstruct_banana_mixed_parameter.py",
+      "bytes": 4681,
+      "sha256": "54e14940acb830aff9474d01b8a7c9d361bc44af78d4dd88eb32a4e5b1642e34"
+    },
+    {
+      "path": "support/code/recover_banana_pure_ray.py",
+      "source_path": "code/recover_banana_pure_ray.py",
+      "bytes": 3991,
+      "sha256": "14c9077aa2d744dce8f1dcfcb2870cfdbabbb2c8ce784330b1b4301b391ced90"
+    },
+    {
+      "path": "support/code/refined_transport.py",
+      "source_path": "code/refined_transport.py",
+      "bytes": 873,
+      "sha256": "8d435847a845a18982144b974df1597b167c5602a12f55878cfcf00dd57d9731"
+    },
+    {
+      "path": "support/code/regularize_banana_pure_ray.py",
+      "source_path": "code/regularize_banana_pure_ray.py",
+      "bytes": 2861,
+      "sha256": "e66c7c31143506fbd6f16a6e41a3b026331b6094639087d7d757d214f7904021"
+    },
+    {
+      "path": "support/code/update_fixed_pure_documents.py",
+      "source_path": "code/update_fixed_pure_documents.py",
+      "bytes": 18113,
+      "sha256": "943261411046554cc66dd91f7568344a0d3274f133be032bcbf09b0a2e832c68"
+    },
+    {
+      "path": "support/code/update_four_parameter_documents.py",
+      "source_path": "code/update_four_parameter_documents.py",
+      "bytes": 15178,
+      "sha256": "da1ad3bcbcb05f40e40aa5b37e8a4a58565cfade9c946e88cb390d68c7ff4234"
+    },
+    {
+      "path": "support/code/update_graph_support_documents.py",
+      "source_path": "code/update_graph_support_documents.py",
+      "bytes": 15980,
+      "sha256": "e982829871978cadc1210cee2f5454cb184690e98ae31d2df9479c6dded7b806"
+    },
+    {
+      "path": "support/code/update_lower_comparison_documents.py",
+      "source_path": "code/update_lower_comparison_documents.py",
+      "bytes": 11196,
+      "sha256": "80dbab8bd881fc77a9f323237d72b8df9adce7218cc3fb28c00cd4a475bb943a"
+    },
+    {
+      "path": "support/code/update_lower_regulator_documents.py",
+      "source_path": "code/update_lower_regulator_documents.py",
+      "bytes": 17961,
+      "sha256": "56ff9c90c15e2c25d2f88a1f47455eca67468e0efff6a8627bb57624d1da611b"
+    },
+    {
+      "path": "support/code/update_marked_saturation_documents.py",
+      "source_path": "code/update_marked_saturation_documents.py",
+      "bytes": 15527,
+      "sha256": "79ae171330d761e83e9ad1c725b8c1d8e0799824059a9ed5cc0c1a0e04227a72"
+    },
+    {
+      "path": "support/code/update_mixed_parameter_documents.py",
+      "source_path": "code/update_mixed_parameter_documents.py",
+      "bytes": 15794,
+      "sha256": "757db0f048a329d44707d99323e76c85ccce8c3bc6e56fe54e2e6de62c9e1eca"
+    },
+    {
+      "path": "support/code/update_phi4_documents.py",
+      "source_path": "code/update_phi4_documents.py",
+      "bytes": 14286,
+      "sha256": "ff1ddb981f089087a8e9a308e9ee79370a92d19354abf13b3f7b25ad2810aa1a"
+    },
+    {
+      "path": "support/code/update_phi4_four_body_documents.py",
+      "source_path": "code/update_phi4_four_body_documents.py",
+      "bytes": 16029,
+      "sha256": "ce898f1ceca283f3013361f445e95cee4e231a5532af3a446c43cbffbf16002a"
+    },
+    {
+      "path": "support/code/update_relative_top_documents.py",
+      "source_path": "code/update_relative_top_documents.py",
+      "bytes": 13500,
+      "sha256": "54a1b2755c1895ed735c49aee156e94b2c6c6f0c715db68f766132bb0bb30ac8"
+    },
+    {
+      "path": "support/code/verify_absolute_periods.py",
+      "source_path": "code/verify_absolute_periods.py",
+      "bytes": 5150,
+      "sha256": "1a5dcd3e59ddff3544574069257e258d23a4985e4569d720a58ca3856f95ec2d"
+    },
+    {
+      "path": "support/code/verify_banana_four_parameter.py",
+      "source_path": "code/verify_banana_four_parameter.py",
+      "bytes": 7278,
+      "sha256": "83a1c2275e749322fa9abbc9caa24b2d6592796015ab19b470b1eeae620bd0b2"
+    },
+    {
+      "path": "support/code/verify_banana_metric.py",
+      "source_path": "code/verify_banana_metric.py",
+      "bytes": 6391,
+      "sha256": "c7ddb4fe6d23591bdd4e800884e567d52955ca4565d645f9d0098f5d78d5958b"
+    },
+    {
+      "path": "support/code/verify_banana_mixed_parameter.py",
+      "source_path": "code/verify_banana_mixed_parameter.py",
+      "bytes": 5327,
+      "sha256": "ff444144db2e8d498af704f20268f8db65e20a7cb4ac3e5743708e6440eb6609"
+    },
+    {
+      "path": "support/code/verify_banana_pure_ray.py",
+      "source_path": "code/verify_banana_pure_ray.py",
+      "bytes": 3671,
+      "sha256": "33e54ad5a3e76fafb17e92bcef01808329f188a70f1e90e24df8b1281a32906b"
+    },
+    {
+      "path": "support/code/verify_banana_ray_pairing.py",
+      "source_path": "code/verify_banana_ray_pairing.py",
+      "bytes": 3389,
+      "sha256": "ad3495b3fe08688dcec930fc44a75f0c127afbe2c211b9102781dc2e2204b01b"
+    },
+    {
+      "path": "support/code/verify_banana_step_certificate.py",
+      "source_path": "code/verify_banana_step_certificate.py",
+      "bytes": 2735,
+      "sha256": "6ddc9795543a0d006c33ea02c980f72d129326a8863c35b545fec13ff70e7c99"
+    },
+    {
+      "path": "support/code/verify_boundary_kummer.py",
+      "source_path": "code/verify_boundary_kummer.py",
+      "bytes": 5934,
+      "sha256": "ff3c256988fe7d9cc91b95008082525d6eeacebc86c02603a50278bb7e9a0b97"
+    },
+    {
+      "path": "support/code/verify_boundary_projector.py",
+      "source_path": "code/verify_boundary_projector.py",
+      "bytes": 3664,
+      "sha256": "a8c841ddec9c521a6279fff4e027beadd822cb3af852f362f0fe7e7e2fd8efde"
+    },
+    {
+      "path": "support/code/verify_extra_cycle.py",
+      "source_path": "code/verify_extra_cycle.py",
+      "bytes": 4539,
+      "sha256": "e10145dbb649e6ef64a18fa97b81aa62e2a7551761d4dfc9841cfd607cef8123"
+    },
+    {
+      "path": "support/code/verify_five_node_traces.py",
+      "source_path": "code/verify_five_node_traces.py",
+      "bytes": 4135,
+      "sha256": "b796661ef00e48ac9db57ed5d882dc004adecd73c3f328c3319f22a0695fbbae"
+    },
+    {
+      "path": "support/code/verify_fixed_pure_group.py",
+      "source_path": "code/verify_fixed_pure_group.py",
+      "bytes": 5565,
+      "sha256": "bbe8752179dc3b44cb0a8adf2007b939dbe113864a68123e9f714bd42f64692a"
+    },
+    {
+      "path": "support/code/verify_geometric_monodromy.py",
+      "source_path": "code/verify_geometric_monodromy.py",
+      "bytes": 3220,
+      "sha256": "0ca753c74eb2c69e9637cd6e17488bb4ddb755622b1cf4c5e825748715fad4b7"
+    },
+    {
+      "path": "support/code/verify_graph_support.py",
+      "source_path": "code/verify_graph_support.py",
+      "bytes": 8177,
+      "sha256": "d7f3fa5be5632a19f638fe425aee9bae1e44fe02fb501a595bfb8e0b88814e54"
+    },
+    {
+      "path": "support/code/verify_hessian_lattice.py",
+      "source_path": "code/verify_hessian_lattice.py",
+      "bytes": 5303,
+      "sha256": "1d35bca57dc1b2c46aeabbdd3e949e0455fa25e31fcc607581e20112e2e72190"
+    },
+    {
+      "path": "support/code/verify_high_trunk.py",
+      "source_path": "code/verify_high_trunk.py",
+      "bytes": 6484,
+      "sha256": "bd370e8a3e0fbb5dedb0b38fcc3a8893b05faf5299e7ce27ea1dc400570d73bc"
+    },
+    {
+      "path": "support/code/verify_horizontal_landmarks.py",
+      "source_path": "code/verify_horizontal_landmarks.py",
+      "bytes": 2886,
+      "sha256": "29b048dfc742e1050bf0c33d1dafb14379162593070257631cb6747b463221c1"
+    },
+    {
+      "path": "support/code/verify_horizontal_trunk.py",
+      "source_path": "code/verify_horizontal_trunk.py",
+      "bytes": 4529,
+      "sha256": "4683163c92a5d02ffd5f0dc52d9ffcdac7c2e57e4ef4d33d565850fc6c11be15"
+    },
+    {
+      "path": "support/code/verify_log_forms.py",
+      "source_path": "code/verify_log_forms.py",
+      "bytes": 5390,
+      "sha256": "1307884631e0066129cdc52fc344d3bf6e6fefcaf55cf1f0eff1362a29b895a3"
+    },
+    {
+      "path": "support/code/verify_lower_comparison.py",
+      "source_path": "code/verify_lower_comparison.py",
+      "bytes": 8492,
+      "sha256": "efec7f8c5a4716c224546da7d280133ab81d83b3dc305a0e3d525704f131e35d"
+    },
+    {
+      "path": "support/code/verify_lower_regulator.py",
+      "source_path": "code/verify_lower_regulator.py",
+      "bytes": 11091,
+      "sha256": "f03d5c881e1c9c67e6f4c73d3c84b1db630e4b17433c6f4d4679d1ff3ea69bd4"
+    },
+    {
+      "path": "support/code/verify_marked_saturation.py",
+      "source_path": "code/verify_marked_saturation.py",
+      "bytes": 5759,
+      "sha256": "c28e987f97e1120847d837dff1f2324ee596339cf47970076ad8933d5d5f29c7"
+    },
+    {
+      "path": "support/code/verify_marked_zero.py",
+      "source_path": "code/verify_marked_zero.py",
+      "bytes": 5125,
+      "sha256": "e2dcd698e31e8cfb6513ad3adaf0f95c1bd2cf4c5ffe78eaf9f59496de1840d4"
+    },
+    {
+      "path": "support/code/verify_minimality_cycle.py",
+      "source_path": "code/verify_minimality_cycle.py",
+      "bytes": 2970,
+      "sha256": "248e44155e24554d8de89ba66ff10f54f7293089d3f138ca078ec9d71f29d88b"
+    },
+    {
+      "path": "support/code/verify_morse_scales.py",
+      "source_path": "code/verify_morse_scales.py",
+      "bytes": 1832,
+      "sha256": "e4a6c50e78310cb7aa177e2010dbc1c7a5018271eef6f57e4625aefe11afb99f"
+    },
+    {
+      "path": "support/code/verify_node_branch_plan.py",
+      "source_path": "code/verify_node_branch_plan.py",
+      "bytes": 3577,
+      "sha256": "4d458560b00c4aadab85e27b73fa55d07ba0d3ae46ab35b42341e11983aa4b84"
+    },
+    {
+      "path": "support/code/verify_node_branches.py",
+      "source_path": "code/verify_node_branches.py",
+      "bytes": 7711,
+      "sha256": "4001f33b03c40e2b0951fd8e8b8afdf8413e9aa5d03a52e954e11708e5226721"
+    },
+    {
+      "path": "support/code/verify_node_frobenius.py",
+      "source_path": "code/verify_node_frobenius.py",
+      "bytes": 6849,
+      "sha256": "83c81169428d199969c0e4ef868d8548895bc5cca21ccbcd148aa50cfe57b803"
+    },
+    {
+      "path": "support/code/verify_phi4_benchmark.py",
+      "source_path": "code/verify_phi4_benchmark.py",
+      "bytes": 8158,
+      "sha256": "a1b97815c438a7dc2fb3ab7be89a93be88fff83b897e0036d614a8938d2e37fa"
+    },
+    {
+      "path": "support/code/verify_phi4_four_body.py",
+      "source_path": "code/verify_phi4_four_body.py",
+      "bytes": 3703,
+      "sha256": "91d6dde482d5561346da5595a6d6771ae2f559cec2f8d3bca34fd0363161f43b"
+    },
+    {
+      "path": "support/code/verify_phi4_four_body_bounds.py",
+      "source_path": "code/verify_phi4_four_body_bounds.py",
+      "bytes": 2911,
+      "sha256": "cc72d3af133887af6b29c55919cfeaa22bef263b4ffe9bc80acb4c35b65dddfe"
+    },
+    {
+      "path": "support/code/verify_polarized_banana_geometry.py",
+      "source_path": "code/verify_polarized_banana_geometry.py",
+      "bytes": 3832,
+      "sha256": "6f7220a9c77c3fe38c396cbbb00a2bdc36662e2f358c152805e35184ec49677e"
+    },
+    {
+      "path": "support/code/verify_polarized_connection.py",
+      "source_path": "code/verify_polarized_connection.py",
+      "bytes": 2776,
+      "sha256": "2f1f59b42eba93b37306c50a94516133e392db540364552ee5f91be1666f83a0"
+    },
+    {
+      "path": "support/code/verify_q6_traces.py",
+      "source_path": "code/verify_q6_traces.py",
+      "bytes": 4626,
+      "sha256": "85154709310d661feab32032fe71d72a11f1bee01e29554250dc3453be98effa"
+    },
+    {
+      "path": "support/code/verify_recovered_algebra.py",
+      "source_path": "code/verify_recovered_algebra.py",
+      "bytes": 6174,
+      "sha256": "e46cf41a6df3e91d917147b46cc48e9886d8e56cf57a0d8a5565bae29ea487bf"
+    },
+    {
+      "path": "support/code/verify_regulator_cups.py",
+      "source_path": "code/verify_regulator_cups.py",
+      "bytes": 3701,
+      "sha256": "9dd97d3964edb335e58f743dd5b0be1538dbaa9d3a9e7370cb748ed42dc5803f"
+    },
+    {
+      "path": "support/code/verify_relative_top.py",
+      "source_path": "code/verify_relative_top.py",
+      "bytes": 11583,
+      "sha256": "a15cd2ba8f1677fe1ace095d572afd4afb853e347b90484253e8fbcde3017b6c"
+    },
+    {
+      "path": "support/code/verify_sector_geometry.py",
+      "source_path": "code/verify_sector_geometry.py",
+      "bytes": 1938,
+      "sha256": "8bda3c7cce4fd6c81dc297bc434874045083dfc2c16640d5e8caaa055133c287"
+    },
+    {
+      "path": "support/code/verify_trunk_geometry_and_backend.py",
+      "source_path": "code/verify_trunk_geometry_and_backend.py",
+      "bytes": 5208,
+      "sha256": "2d85d4ca3a9b649457f821bc3fe6a7dccef9d0c67af4b2a1e51a437113dc885e"
+    },
+    {
+      "path": "support/code/verify_zero_frobenius.py",
+      "source_path": "code/verify_zero_frobenius.py",
+      "bytes": 4910,
+      "sha256": "1e07866f960c4fe8455b507824ef26f12cd726bed38151a7deb7c3cec6e51997"
+    },
+    {
+      "path": "support/code/verify_zero_transport.py",
+      "source_path": "code/verify_zero_transport.py",
+      "bytes": 8931,
+      "sha256": "0b4f3464099754c766e33e4b9328434a4bb243d0067e166c984de9f59db0034d"
+    },
+    {
+      "path": "support/code/zero_frobenius.py",
+      "source_path": "code/zero_frobenius.py",
+      "bytes": 3258,
+      "sha256": "1a73a369459c880afdc052dc637dbf686468c45bea069fd7271989b40332e3e3"
+    },
+    {
+      "path": "support/certificates.zip",
+      "bytes": 81406304,
+      "sha256": "5db8f7f9a889f99aeaca719409192e5d5980673d839d9a932b2c64aea42337c0",
+      "archived_files": 840
+    }
+  ]
+}

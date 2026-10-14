@@ -1,0 +1,302 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage[margin=25mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs,longtable,array,fancyhdr,xcolor,pdflscape}
+\usepackage[unicode,colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheoremstyle{cnplain}{7pt}{7pt}{\normalfont}{}{\bfseries}{。}{0.5em}{}
+\theoremstyle{cnplain}\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{定义}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{注}
+\renewcommand{\proofname}{证明}
+\newcommand{\Q}{\mathbb Q}\newcommand{\cC}{\mathcal C}
+\newcommand{\cS}{\mathcal S}\newcommand{\dR}{\mathrm{dR}}
+\newcommand{\rk}{\operatorname{rk}}\newcommand{\im}{\operatorname{im}}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\dd}{\mathrm d}
+\setlength{\emergencystretch}{3em}\allowdisplaybreaks[2]
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small 费曼周期：质量细分与文献比较}
+\fancyhead[R]{\small 理论及来源审阅}\fancyfoot[C]{\thepage}
+\title{质量细分、合流喷射与周期分类\\[5pt]
+\large sunrise与四质量banana的直接文献比较}
+\author{费曼周期研究项目}
+\date{2026年10月14日}
+\begin{document}\maketitle
+\begin{abstract}
+同一图拓扑配不同质量，不能无条件套用同质量细分定理。
+本文给出图多项式的精确差项，证明合流质量下的有限喷射部分分式规则，
+并将正质量二维theta读出归为有限个sunrise质量导数，获得椭圆载体上界。
+一个传播子消去例子表明零阶网格值不能跨质量碰撞使用。
+另用Kummer常数扩张和奇异正规化基变换两个例子说明，微分秩与固定动机秩不能互换。
+这些推导服务于可核查分类表；既有sunrise余作用与banana主积分系统明确归原作者，
+新颖性、原生合流动机最小化及完整物理窄误差均不在本篇宣称完成。
+\end{abstract}
+\tableofcontents\bigskip
+\section{带质量的细分、合流喷射与文献秩数的可比性}
+\label{sec:subdivisioncomparison}
+
+文献对照应比较同一物理输入与同一对象，不能只比较“椭圆”“K3”或矩阵阶数。
+本节先定位三个直接近邻，再给出质量合流的有限规则。
+规则的目标是确定哪些椭圆曲线足以承载给定函数，而不是从环境标签断言每个因子都可见。
+
+\subsection{三个直接近邻及其精确接口}
+\label{subsec:directneighbours}
+Tapušković\cite{LitTap}在实现范畴$\mathcal H(S)$中工作（第1.2节），
+仅处理收敛积分。同质量、零新顶点注入的细分由命题3.3及推论3.4处理。
+命题4.1给sunrise载体
+\[
+ \operatorname{gr}^{W}M
+ =H^1(E)(-1)\oplus\Q(-1)^3\oplus\Q(0).
+\]
+命题4.3及定理4.4给显式余作用；式(51)显示质量比对数，
+第4.3.3节式(53)在等质量层给秩三对象。
+这些是本项目E1--E2的先行结果，而非仅有积分表示的背景。
+实现范畴的结论不自行识别本项目指定Nori固定纤维。
+
+Duhr等\cite{LitDMPS}第2节式(4)、(7)--(8)给$15$个主积分和全四变量系统；
+第3节式(24)、(30)、(32)--(33)给六个K3周期与配对。
+第4--6节及附录C处理规范基与初值。本项目复用其纯系统，
+没有另行首创全质量banana微分方程。
+
+Pögel等\cite{LitPTWW}第2节式(9)、(11)--(14)同样从$15=4+11$主积分出发；
+引言和第3节的Baikov过滤把顶扇区分成六个K3方向与五个附加方向。
+式(56)和附录B式(95)的基变换含$\varepsilon^{-1}$、$\varepsilon^{-2}$。
+这提示必须审阅特殊化过程，不能把规范系统直接置$\varepsilon=0$作为实际几何比较。
+
+\subsection{为什么不同质量的细分不能直接套同质量定理}
+\begin{proposition}[细分后的质量项]\label{prop:splitmassidentity}
+设连通图$G$的一条边$e$被分成两条串联边，新顶点没有外动量注入。
+记其平方质量为$\mu_1,\mu_2$。在参数变换
+\[
+ \alpha_{e_1}=y\alpha_e,\qquad
+ \alpha_{e_2}=(1-y)\alpha_e
+\]
+下，第一图多项式$U$与无质量运动学部分$F^0$分别拉回$U_G,F_G^0$，而
+\begin{equation}\label{eq:splitmassidentity}
+ \rho^*F_{G_s}
+ =F_G\big|_{\mu_e=\mu_2}
+   +(\mu_1-\mu_2)y\alpha_eU_G.
+\end{equation}
+因而在$\alpha_eU_G\ne0$的稠密开集，右端与$y$无关当且仅当$\mu_1=\mu_2$。
+\end{proposition}
+\begin{proof}
+用$U=\sum_T\prod_{f\notin T}\alpha_f$的约定。
+若生成树含原边，细分后树含两条新边；若不含原边，新树恰含其中一条，
+两项之和以$\alpha_{e_1}+\alpha_{e_2}$替代$\alpha_e$。
+生成二森林同理。唯一额外可能是新顶点单独成为一个分支；其注入动量为零，
+所以对$F^0$没有贡献。
+最后用$F=F^0+U\sum_f\mu_f\alpha_f$，新边的质量项拉回为
+$[\mu_2+(\mu_1-\mu_2)y]\alpha_eU_G$，得到所述公式。
+$U_G$非零，故稠密开集上的充要性成立。
+\end{proof}
+
+这是图多项式的恒等式；“$y$不再出现”才是此处受质量约束的结论。
+它没有证明不同质量永远不存在其它几何对应。
+在同一动量流$q$上，不同质量的两传播子改用
+\[
+ \frac1{(q^2+\mu_1)(q^2+\mu_2)}
+ =\frac1{\mu_2-\mu_1}
+   \left(\frac1{q^2+\mu_1}-\frac1{q^2+\mu_2}\right).
+\]
+它产生两个质量特化的读出，而非直接产生原单一质量纤维中的升幂读出。
+两类操作都可以研究，不能共享未经核对的“细分保持”结论。
+
+\subsection{质量碰撞后的有限导数规则}
+\label{subsec:confluenttheta}
+取两端点间三条内部不交的路径，所有内部顶点零注入；仅两个端点有欧氏外动量。
+路径$a$上有$r_a$种互异正平方质量$\mu_{aj}$，相应重数为$n_{aj}\ge1$。
+令$N_a=\sum_j n_{aj}$，并限定分子为三条路径的动量平方$Z_1,Z_2,Z_3$的多项式$P$，
+满足$\deg_{Z_a}P<N_a$。一般夹角/张量分子不在本规则内。
+\begin{theorem}[合流质量的有限部分分式证书]\label{thm:confluentcertificate}
+定义
+\[
+ H_{\boldsymbol j}(\boldsymbol Z)=
+ \frac{P(\boldsymbol Z)}{
+  \prod_{a=1}^3\prod_{\ell\ne j_a}(Z_a+\mu_{a\ell})^{n_{a\ell}}}.
+\]
+对$1\le k_a\le n_{aj_a}$置
+\begin{equation}\label{eq:confluentcoeff}
+ C_{\boldsymbol j,\boldsymbol k}=
+ \left.
+ \left(\prod_{a=1}^3
+ \frac{\partial_{Z_a}^{\,n_{aj_a}-k_a}}{(n_{aj_a}-k_a)!}\right)
+ H_{\boldsymbol j}(\boldsymbol Z)
+ \right|_{Z_a=-\mu_{aj_a}}.
+\end{equation}
+则有唯一的恒等式
+\begin{equation}\label{eq:confluentpartial}
+ \frac{P(\boldsymbol Z)}{
+       \prod_{a,j}(Z_a+\mu_{aj})^{n_{aj}}}
+ =\sum_{\boldsymbol j,\boldsymbol k}
+      \frac{C_{\boldsymbol j,\boldsymbol k}}
+           {\prod_{a=1}^3(Z_a+\mu_{aj_a})^{k_a}}.
+\end{equation}
+只需有限个代数域运算和有限阶多项式导数，不需要完整费曼积分。
+所有系数为零当且仅当$P=0$。
+\end{theorem}
+\begin{proof}
+单变量真分式在极点$-\mu_j$的主部由
+$(Z+\mu_j)^{n_j}P(Z)/\prod_\ell(Z+\mu_\ell)^{n_\ell}$
+的前$n_j$项Taylor系数给出；这正是式\eqref{eq:confluentcoeff}。
+减去全部主部后，无有限极点且在无穷远趋零，故余项为零。
+在其它变量的有理函数域上依次使用这一恒等式。
+每一变量的次数条件保证无多项式余项，三个局部系数操作可交换，
+从而给出所列混合导数。
+局部主部的唯一性逐变量证明展开唯一；有理函数恒零又等价于其非零共同分母的分子恒零。
+\end{proof}
+
+当全部$n_{aj}=1$时，上式退化为原网格值公式。
+有重复质量时，网格值必须换为有限Taylor喷射。
+但$P\ne0$只说明有理被积函数非零；它不是所有积分非零或每个椭圆因子可见的充分条件。
+不同导数项之间仍可能发生精确抵消。
+
+\begin{proposition}[积分读出及椭圆载体上界]\label{prop:confluentelliptic}
+在$D=2$及上述正质量欧氏条件下，取测度$d^2k\,d^2\ell/\pi^2$。
+记$S(s;\mu_1,\mu_2,\mu_3)$为单位边三线sunrise，$s=-p_E^2$。
+式\eqref{eq:confluentpartial}的积分等于
+\begin{equation}\label{eq:confluentintegral}
+ I_P=\sum_{\boldsymbol j,\boldsymbol k}
+ C_{\boldsymbol j,\boldsymbol k}
+ \frac{(-1)^{|\boldsymbol k|-3}}{\prod_a(k_a-1)!}
+ \left.
+ \partial_{\mu_1}^{k_1-1}
+ \partial_{\mu_2}^{k_2-1}
+ \partial_{\mu_3}^{k_3-1}S(s;\boldsymbol\mu)
+ \right|_{\mu_a=\mu_{aj_a}}.
+\end{equation}
+每个导数项有同一个sunrise相对代数对上的周期表示。
+若所有对应平面三次曲线$E_{\boldsymbol j}(s)$光滑，便得到至多
+$R=r_1r_2r_3$个椭圆载体的表示上界。
+在这些相对载体中，非Tate权重组成仅来自各$H^1(E_{\boldsymbol j})(-1)$，
+路径重数增大本身不强制引入K3载体。
+\end{proposition}
+\begin{proof}
+每个正质量升幂传播子满足
+\[
+ (q^2+\mu)^{-k}
+ =\frac{(-1)^{k-1}}{(k-1)!}\partial_\mu^{k-1}(q^2+\mu)^{-1}.
+\]
+在正质量紧邻域内，所有有限阶导数均被一个固定常数乘单位三线sunrise绝对被积函数控制。
+后者在二维欧氏区收敛；有限和及受控微分均可通过积分。
+次数条件与有限部分分式也给原被积函数的绝对收敛，证明式\eqref{eq:confluentintegral}。
+
+为明确周期表示，令$A=k_1+k_2+k_3$，$U=\alpha_1\alpha_2+\alpha_2\alpha_3+\alpha_3\alpha_1$，
+$F=(\sum\mu_a\alpha_a)U-s\alpha_1\alpha_2\alpha_3$。
+单位sunrise的参数形式为$\Omega/F$。微分后得到
+\begin{equation}\label{eq:confluentform}
+ \omega_{\boldsymbol k}=
+ \frac{(A-3)!}{\prod_a(k_a-1)!}
+ \frac{\prod_a\alpha_a^{k_a-1}U^{A-3}}{F^{A-2}}\,\Omega.
+\end{equation}
+它也是正整数幂参数公式，Gamma规范与上式一致。
+提高极点阶数不增加$F=0$之外的新极点支撑；
+在原三角形角点解消上，它是同一族相对上同调的Gauss--Manin导数类。
+故每个三元组仍使用其原相对对，而非引入新的曲面。
+该对的留数序列把唯一的非Tate权重项放在$H^1(E)(-1)$；
+Tate边界和椭圆部分的秩数可由前述命题4.1核对。
+有限直和给出载体上界，证明完毕。
+\end{proof}
+
+这里得到的是原积分函数的具体有限表示和所用相对载体的上界。
+尚未构造整个合流图原生Nori对象到该直和的所有标架态射，
+也未求上述和的最小子商。
+因此不能写成“原生最小秩等于$6R$”，不能自动套用互异质量行的$2r+1$，
+更不能由部分分式项非零认定对应核在最后求和中幸存。
+椭圆载体可用的结论也不证明某个特殊数值不属于MZV。
+
+\paragraph{一个不需求积的反例。}
+令第一条路径有两条同质量边，$n_{11}=2$、$\mu_{11}=\mu>0$，
+另两条路径各有一条边，平方质量为$\nu,\lambda>0$。
+取$P=Z_1+\mu$。所有零阶网格值为零，然而
+\[
+ \frac{Z_1+\mu}{(Z_1+\mu)^2(Z_2+\nu)(Z_3+\lambda)}
+ =\frac1{(Z_1+\mu)(Z_2+\nu)(Z_3+\lambda)}.
+\]
+喷射公式给$C_{(1,1,1),(1,1,1)}=1$，其它系数为零。
+物理读出正是非零sunrise；在原E1接受的正常阈值族上，其椭圆核可见。
+因此把“零网格值导致消失”外推到质量合流层会直接给错答案。
+这同时提供分类表特殊质量栏的可核查测试，而不是一个数值拟合例子。
+
+\subsection{固定质量后的微分秩为什么不是算术秩}
+\begin{lemma}[遗忘连接会丢失常数扩张]\label{lem:constantkummerloss}
+取$a\in\Q_{>0}$且$a\ne1$。其Kummer一动机$[\mathbb Z\to\mathbb G_m]$，$1\mapsto a$，
+拉回任意$s$开集后，单看$s$方向的代数连接是常值的。
+其对数读出在$\mathbb C(s)$上的最小齐次微分阶数为一，
+但原混合Hodge扩张不分裂。
+\end{lemma}
+\begin{proof}
+所有代数几何数据来自固定纤维，拉回后沿$s$导数为零。
+非零常函数$\log a$被$\partial_s$消去，不被非零零阶算子消去。
+相应Hodge扩张的类为
+\[
+ [\log a]\in\operatorname{Ext}^1_{\mathrm{MHS}}(\Q(0),\Q(1))
+       =\mathbb C/(2\pi i\Q).
+\]
+$\log a$为非零实数，而$2\pi i\Q$为纯虚数，故类不为零。
+这给出常值连接与非分裂比较数据并存的明确例子；不需假设周期映射单射。
+\end{proof}
+
+因此E1的$\mathbb C(s)$秩三与全参数sunrise的实现载体秩六不是相互反驳。
+质量对数作为复常数进入系数域，不表示其算术扩张已消失。
+等质量使质量比对数实际为零，与把非零对数纳入常数域，是两个不同操作。
+E2微分群、K1固定算术群、K2纯几何载体应继续保留各自的对象与基域标签。
+
+\subsection{正则化参数特殊化的必要数据}
+\begin{proposition}[奇异基变换不能直接特殊化]\label{prop:epsilonlattice}
+令$K=\mathbb C(s)$，$R=K[\varepsilon]_{(\varepsilon)}$。
+即使两个自由$R$模上的稳定连接在$K(\varepsilon)$上同构，
+它们模$\varepsilon$的连接也可以不同构。
+若两个模型由$\mathrm{GL}_r(R)$中的连接相容基变换联系，才可直接诱导同构的特殊纤维。
+\end{proposition}
+\begin{proof}
+在$K(\varepsilon)$上取$e_1,e_2$及
+\[
+ \nabla e_1=0,\qquad \nabla e_2=e_1\,\frac{ds}{s}.
+\]
+令$L=Re_1+Re_2$，$L'=Re_1+R(\varepsilon e_2)$。
+两者均为自由稳定格，且泛纤维相同。
+$L/\varepsilon L$保留非平凡对数扩张；否则$1/s$有$K$中原函数，
+与有理函数的导数在$s=0$处留数为零矛盾。
+但$L'/\varepsilon L'$中的连接矩阵为零，因
+$\nabla(\varepsilon e_2)=\varepsilon e_1 ds/s$。
+这两个特殊纤维不同构。若基变换及逆都在$R$上正则，
+模$\varepsilon$后仍可逆并保持连接，最后一句立即成立。
+\end{proof}
+
+此外，自由秩$r$的$R$格模$\varepsilon$仍为秩$r$。
+故把$15$主积分系统与本项目严格二维秩十活动实现联系起来，
+需要明确选择正则模型、有限项/极点项、实际子商及物理初值，
+不能只做矩阵代入。这不是说文献的$15$维结果错误；两个任务的输入和输出不同。
+本节没有构造$15\to10$的实际比较，也没有以维数正规化解代替原始Nori标架比较。
+
+\subsection{本批对分类和查新的实际改变}
+同质量细分的几何保持与不同质量的有限和现在有式\eqref{eq:splitmassidentity}作为分界。
+合流层由定理\ref{thm:confluentcertificate}和命题\ref{prop:confluentelliptic}给可执行上界规则，
+零阶值判据的反例阻止错误外推。
+分类表新增E5，只记录这一接受域、椭圆表示上界和未完成的最小性。
+
+文献优先权方面，sunrise显式余作用、同质量细分及全质量banana规范系统均已存在。
+本项目的差异候选仍须与同一范畴、同一参数层、同一标架及同一输出强度逐项比较。
+本节的部分分式、喷射和格的反例属于标准方法的明确推导与应用，不宣称这些方法本身新颖。
+ABW的任意质量椭圆表示、DHV相对上界、Charles/EJ算术条件及2026近邻
+继续按统一主线第41节的来源等级保留；未逐式审阅的文献不因本批读取三篇而升级。
+完整窄截面及三圈前向全切割也未由这些代数结论完成。
+
+
+\begin{thebibliography}{9}
+\bibitem{LitTap}M. Tapušković,
+\emph{The cosmic Galois group, the sunrise Feynman integral, and the relative completion of $\Gamma_1(6)$}.
+\href{https://arxiv.org/abs/2303.17534}{arXiv:2303.17534} (2023).
+当前核对第1.2、3、4节相关定义、命题及证明；第5节与全部附录未作逐式审阅。
+\bibitem{LitDMPS}C. Duhr, S. Maggio, F. Porkert, C. Semper, S. F. Stawinski,
+\emph{Three-loop banana integrals with four unequal masses}.
+\href{https://arxiv.org/abs/2507.23061}{arXiv:2507.23061}, JHEP 12 (2025) 034.
+\bibitem{LitPTWW}S. Pögel, T. Teschke, X. Wang, S. Weinzierl,
+\emph{The unequal-mass three-loop banana integral}.
+\href{https://arxiv.org/abs/2507.23594v2}{arXiv:2507.23594v2},
+\href{https://doi.org/10.1007/JHEP01(2026)021}{JHEP 01 (2026) 021}.
+\end{thebibliography}
+\end{document}
